@@ -353,7 +353,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalCPValue.toFixed(0)} Kg 
+            {TotalCPValue.toFixed(2)} Kg 
           </Text>
           
      </View>
@@ -401,7 +401,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalWangaValue.toFixed(0)} Kg 
+            {TotalWangaValue.toFixed(2)} Kg 
           </Text>
           
      </View>
@@ -452,7 +452,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalMafutaValue.toFixed(0)} Kg 
+            {TotalMafutaValue.toFixed(2)} Kg 
           </Text>
           
      </View>
@@ -503,7 +503,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalDCPValue.toFixed(0)} Kg 
+            {TotalDCPValue.toFixed(2)} Kg 
           </Text>
           
      </View>
@@ -554,7 +554,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalPREMIXValue.toFixed(0)} Kg 
+            {TotalPREMIXValue.toFixed(2)} Kg 
           </Text>
           
      </View>
@@ -603,7 +603,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalLysinValue.toFixed(0)} Kg 
+            {TotalLysinValue.toFixed(2)} Kg 
           </Text>
           
      </View>
@@ -654,7 +654,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalMETHValue.toFixed(0)} Kg 
+            {TotalMETHValue.toFixed(2)} Kg 
           </Text>
           
      </View>
@@ -702,7 +702,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalTryptophanValue.toFixed(0)} Kg 
+            {TotalTryptophanValue.toFixed(2)} Kg 
           </Text>
           
      </View>
@@ -777,7 +777,7 @@ const ReportCard = ({item,calculatedItem , index}) => {
               color:'green',
               fontFamily:'Bold'
             }}>
-             {calculatedItem.Amount_For_Each_Product.toFixed(0)} Kg
+             {calculatedItem.Amount_For_Each_Product.toFixed(2)} Kg
             </Text>  
             
           </Text>
@@ -806,7 +806,7 @@ const ReportCard = ({item,calculatedItem , index}) => {
               color:'green',
               fontFamily:'Bold'
             }}>
-             {calculatedItem.NewPercentage.toFixed(0)}%
+             {calculatedItem.NewPercentage.toFixed(2)}%
             </Text>  
             
           </Text>*/}

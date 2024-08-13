@@ -356,7 +356,7 @@ const ReportCard = ({item,calculatedItem , index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-         {calculatedItem.Amount_For_Each_Product.toFixed(0)} Kg 
+         {calculatedItem.Amount_For_Each_Product.toFixed(2)} Kg 
           </Text>
           
      </View>

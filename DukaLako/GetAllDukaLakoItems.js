@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useContext,useRef, useEffect } from 'react';
 import  {
   View,StyleSheet,Image,
   ActivityIndicator,
   ImageBackground,
+  Dimensions,
   Platform,Text,TouchableOpacity,TextInput,FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -22,6 +23,122 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
+//import Carousel from 'react-native-snap-carousel';
+const { width, height } = Dimensions.get('screen');
+
+
+
+
+
+
+
+const Carousel = ({ images }) => {
+  const flatlistRef = useRef();
+  const screenWidth = Dimensions.get("window").width;
+  const [activeIndex, setActiveIndex] = useState(0);
+
+
+
+
+
+ useEffect(() => {
+  if (flatlistRef.current && images.length > 0) {
+    const interval = setInterval(() => {
+      const newIndex = (activeIndex + 1) % images.length;
+      flatlistRef.current.scrollToIndex({
+        index: newIndex,
+        animated: true,
+      });
+      setActiveIndex(newIndex);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }
+}, [activeIndex, images.length]);
+
+  const getItemLayout = (data, index) => ({
+    length: screenWidth,
+    offset: screenWidth * index, // for first image - 300 * 0 = 0pixels, 300 * 1 = 300, 300*2 = 600
+    index: index,
+  });
+  // Data for carousel
+
+
+
+
+
+
+
+  const Slide = ({ item }) => (
+    <View>
+      <TouchableOpacity activeOpacity={1}>
+      <Image
+         source={{ uri: `${EndPoint}/${item}` }}
+          style={{
+           // height: 180,
+           height:height/4 + 10,
+            width: screenWidth,
+            borderRadius:10, 
+          }}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+
+  const handleScroll = (event) => {
+    const scrollPosition = event.nativeEvent.contentOffset.x;
+    const index = scrollPosition / screenWidth;
+    setActiveIndex(index);
+  };
+
+  const renderDotIndicators = () => (
+    images.map((_, index) => (
+      <View
+        key={index}
+        style={{
+          backgroundColor: activeIndex === index ? 'green' : 'red',
+          height: 10,
+          width: 10,
+          borderRadius: 5,
+          marginHorizontal: 6,
+        }}
+      />
+    ))
+  );
+
+  return (
+    <View>
+      <FlatList
+        data={images}
+        ref={flatlistRef}
+        getItemLayout={getItemLayout}
+        renderItem={Slide}
+        keyExtractor={(item, index) => index.toString()}
+        horizontal
+        pagingEnabled
+        onScroll={handleScroll}
+        // getItemLayout={(data, index) => ({
+        //   length: width,
+        //   offset: width * index,
+        //   index,
+        // })}
+      />
+      <View style={{ 
+        flexDirection: "row",
+         justifyContent: "center",
+          marginTop: 15,
+          marginBottom:15,
+        }}>
+        {renderDotIndicators()}
+      </View>
+    </View>
+  );
+};
+
+
+
+
+
 
 export default function GetAllDukaLakoItems ({navigation}) {
 
@@ -59,39 +176,6 @@ export default function GetAllDukaLakoItems ({navigation}) {
   };
 
 
-
-  // const nav = useNavigation();
-  // const DATA = [
-  //   {
-  //     id: 1,
-  //     name: "Bajeti Ya Chakula",
-  //     backgroundColor:"#6BC5E8",
-  //     imagesrc:im1
-      
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Kumbusho La Shamba",
-  //     backgroundColor:"#3A9EC2",
-  //     imagesrc:im2
-  //   },
-
-  //   {
-  //     id: 3,
-  //     name: "Kitabu Shamba",
-  //     backgroundColor:"#3A9EC2",
-  //     imagesrc:im3
-  //   },
-
-  //   {
-  //     id: 4,
-  //     name: "Jamii Ya Mfugaji",
-  //     backgroundColor:"#3A9EC2",
-  //     imagesrc:im4
-  //   }
-
-
-  // ];
 
 const [userToken, setUserToken] = useState('');
 const [shouldReload, setShouldReload] = useState(false);
@@ -221,8 +305,24 @@ setUserToken(token);
 
 
 
+
   const transportItem = ({item}) => {
-    
+
+     const carouselItems = [
+      item.PichaYaPost,
+      item.PichaYaPost2,
+      item.PichaYaPost3,
+      item.PichaYaPost4,
+      item.PichaYaPost5,
+      // { src: item.PichaYaPost},
+      // { src: item.PichaYaPost2},
+      // { src: item.PichaYaPost2},
+      // { src: item.PichaYaPost4},
+      // { src: item.PichaYaPost5},
+    ].filter(Boolean); // Filter out any null or undefined values
+
+    //console.log("Carousel Items:", carouselItems);
+
 
     if (input === ""){
 
@@ -286,33 +386,43 @@ setUserToken(token);
                 }}>
                   <Text 
 
-                  style={globalStyles.AppItemNameHomeScreen}
+                  style={[globalStyles.AppItemNameHomeScreen,
+                    {
+                      marginBottom:15,
+                    }
+
+                    ]}
 
                  >{item.Title}</Text>
 
 
-               <View 
-                style={globalStyles.AppItemImageContainerHomeScreen}
-              >
-              {item.PichaYaPost ? ( 
-                  <Image
+ 
 
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={{
-                      uri: EndPoint + '/' + item.PichaYaPost
-                    }}
-                      
-                      >
-                  </Image>
-                  ):(
-                  <Image
 
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={require('../assets/500.png')} 
-                  >
-                  </Image>
-                )}
-               </View>
+<Carousel images={carouselItems} />
+
+
+    
+    {/* <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 0,
+        }}
+      >
+        {renderDotIndicators()}
+      </View>*/}
+
+
+
+
+
+
+
+
+
+
+
 
            {item.Maelezo && (
                <TouchableOpacity style={{
@@ -411,8 +521,7 @@ setUserToken(token);
 }
 
  if(item.Title.toLowerCase().includes(input.toLowerCase()) || item.username.toLowerCase().includes(input.toLowerCase()) || item.phone.toLowerCase().includes(input.toLowerCase()) || item.Location.toLowerCase().includes(input.toLowerCase())){
-
-    return (
+   return (
 
       <CustomCard >
               <View 
@@ -472,33 +581,43 @@ setUserToken(token);
                 }}>
                   <Text 
 
-                  style={globalStyles.AppItemNameHomeScreen}
+                  style={[globalStyles.AppItemNameHomeScreen,
+                    {
+                      marginBottom:15,
+                    }
+
+                    ]}
 
                  >{item.Title}</Text>
 
 
-               <View 
-                style={globalStyles.AppItemImageContainerHomeScreen}
-              >
-              {item.PichaYaPost ? ( 
-                  <Image
+ 
 
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={{
-                      uri: EndPoint + '/' + item.PichaYaPost
-                    }}
-                      
-                      >
-                  </Image>
-                  ):(
-                  <Image
 
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={require('../assets/500.png')} 
-                  >
-                  </Image>
-                )}
-               </View>
+<Carousel images={carouselItems} />
+
+
+    
+    {/* <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 0,
+        }}
+      >
+        {renderDotIndicators()}
+      </View>*/}
+
+
+
+
+
+
+
+
+
+
+
 
            {item.Maelezo && (
                <TouchableOpacity style={{
@@ -552,7 +671,7 @@ setUserToken(token);
 
        {/*mwanzo wa view ya right*/}
          <TouchableOpacity 
-
+          onPress={() => handleLikeToggle(item.id)}
           >
          <View style={globalStyles.RightBtnContainer}>
          <View>
@@ -561,14 +680,14 @@ setUserToken(token);
           fontFamily:'Bold',
           color:'red',
           marginTop:5,
-         }}>2 
+         }}> {item.Likes}
          </Text>
          </View>
         
         <View>
-           <FontAwesome name='thumbs-o-up' 
+           <FontAwesome name='heart' 
       size={20}
-      color='blue'  
+      color='red'  
       
        />
         </View>
@@ -589,6 +708,7 @@ setUserToken(token);
 
 
            )
+
 
 
 
@@ -777,5 +897,42 @@ setUserToken(token);
 }
 
 const styles = StyleSheet.create({
+
+   slideContainer: {
+    width:width-20,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+  slideImage: {
+    width,
+    height: height/4, // Adjust the height to fit your design
+    resizeMode: 'cover',
+  },
+  carouselContainer: {
+    marginVertical: 10,
+    overflow: 'hidden',
+
+  },
+  carouselContent: {
+    alignItems: 'center',
+  },
+  descriptionContainer: {
+    marginTop: 5,
+  },
+  descriptionText: {
+    fontSize: 14,
+    color: COLORS.gray,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  likeCount: {
+    fontSize: 14,
+    marginRight: 5,
+    color: 'red',
+  },
  
 });

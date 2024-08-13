@@ -219,8 +219,6 @@ const [Maelezo, setMaelezo] = useState('');
   const [isPending, setPending] = useState(false);
   const emailRegex = /\S+@\S+\.\S+/;
 
-  console.log("PichaYaPost", PichaYaPost);
-
   const handleErrorMessage = (error) => {
     if (error.response) {
       // Handle server errors here if needed
@@ -233,13 +231,15 @@ const [Maelezo, setMaelezo] = useState('');
       setIsLoading(false);
     }
   };
-const handleUpdate = async () => {
+
+  const handleUpdate = async () => {
     setIsLoading(true);
     const token = await AsyncStorage.getItem('userToken');
 
     if (userToken) {
-        const formData = new FormData();
-        
+      const formData = new FormData();
+      
+       // Hakikisha kuwa selectedMkoa na selectedAinaYaKuku sio null
         if (Title) {
             formData.append('Title', Title);
         } else {
@@ -248,7 +248,8 @@ const handleUpdate = async () => {
             return;
         }
 
-        if (Maelezo) {
+
+         if (Maelezo) {
             formData.append('Maelezo', Maelezo);
         } else {
             showAlertFunction('Tafadhali weka maelezo ya posti yako ?');
@@ -256,65 +257,70 @@ const handleUpdate = async () => {
             return;
         }
 
-        // Ongeza picha kwenye `FormData` tu kama imechaguliwa
-        if (PichaYaPost) {
-            formData.append('PichaYaPost', {
-                uri: PichaYaPost,
-                name: 'PichaYaPost.jpg',
-                type: 'image/jpeg',
-            });
-        }
+     
 
-        if (PichaYaPost2) {
-            formData.append('PichaYaPost2', {
-                uri: PichaYaPost2,
-                name: 'PichaYaPost2.jpg',
-                type: 'image/jpeg',
-            });
-        }
+      // formData.append('Mkoa', selectedMkoa.id);
+      // //formData.append('Level', selectedLevel.id);
+      // formData.append('AinaYaKuku', selectedAinaYaKuku.id);
 
-        if (PichaYaPost3) {
-            formData.append('PichaYaPost3', {
-                uri: PichaYaPost3,
-                name: 'PichaYaPost3.jpg',
-                type: 'image/jpeg',
-            });
-        }
 
-        if (PichaYaPost4) {
-            formData.append('PichaYaPost4', {
-                uri: PichaYaPost4,
-                name: 'PichaYaPost4.jpg',
-                type: 'image/jpeg',
-            });
-        }
+       // Append the image file
+    formData.append('PichaYaPost', {
+      uri: PichaYaPost,
+      name: 'PichaYaPost.jpg',
+      type: 'image/jpeg',
+    });
 
-        if (PichaYaPost5) {
-            formData.append('PichaYaPost5', {
-                uri: PichaYaPost5,
-                name: 'PichaYaPost5.jpg',
-                type: 'image/jpeg',
-            });
-        }
+     formData.append('PichaYaPost2', {
+      uri: PichaYaPost2,
+      name: 'PichaYaPost2.jpg',
+      type: 'image/jpeg',
+    });
 
-        axios.post(EndPoint + '/AddDukaLakoView/', formData, {
-            headers: {
-                Authorization: `Token ${userToken}`,
-                'Content-Type': 'multipart/form-data',
-            },
-        }).then(response => {
-            setIsLoading(false);
-            showAlertFunction("Umefanikiwa Kuweka huduma yako mpya");
-            setdisplayContentsState(true);
-            console.log("Well");
-        }).catch(error => {
-            setIsLoading(false);
-            setdisplayContentsState(false);
-            console.log("ERRORR", error);
-            handleErrorMessage(error);
-        });
+      formData.append('PichaYaPost3', {
+      uri: PichaYaPost3,
+      name: 'PichaYaPost3.jpg',
+      type: 'image/jpeg',
+    });
+
+     formData.append('PichaYaPost4', {
+      uri: PichaYaPost4,
+      name: 'PichaYaPost4.jpg',
+      type: 'image/jpeg',
+    });
+
+
+      formData.append('PichaYaPost5', {
+      uri: PichaYaPost5,
+      name: 'PichaYaPost5.jpg',
+      type: 'image/jpeg',
+    });
+
+    // formData.append('pdf', {
+    //   uri: pdf,
+    //   name: 'project.pdf',
+    //   type: 'application/pdf',
+    // });
+
+      axios.post(EndPoint + '/AddDukaLakoView/', formData, {
+        headers: {
+          Authorization: `Token ${userToken}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      }).then(response => {
+        setIsLoading(false);
+        showAlertFunction("Umefanikiwa Kuweka huduma yako mpya");
+        setdisplayContentsState(true);
+        console.log("Well");
+      }).catch(error => {
+        setIsLoading(false);
+        setdisplayContentsState(false);
+        console.log("ERRORR", error);
+        handleErrorMessage(error);
+      });
     }
-};
+  };
+
   return (
     <>
       {!fontsLoaded ? (<View />) : (

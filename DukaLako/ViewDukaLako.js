@@ -27,7 +27,7 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
-import React, {useState,useCallback, useEffect, useContext} from 'react';
+import React, {useState,useCallback,useRef, useEffect, useContext} from 'react';
 
 import Html from 'react-native-render-html';
 import { FontAwesome} from '@expo/vector-icons';
@@ -35,6 +35,114 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const {width, height} = Dimensions.get('window');
+
+
+
+const Carousel = ({ images }) => {
+  const flatlistRef = useRef();
+  const screenWidth = Dimensions.get("window").width;
+  const [activeIndex, setActiveIndex] = useState(0);
+
+
+
+
+
+ useEffect(() => {
+  if (flatlistRef.current && images.length > 0) {
+    const interval = setInterval(() => {
+      const newIndex = (activeIndex + 1) % images.length;
+      flatlistRef.current.scrollToIndex({
+        index: newIndex,
+        animated: true,
+      });
+      setActiveIndex(newIndex);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }
+}, [activeIndex, images.length]);
+
+  const getItemLayout = (data, index) => ({
+    length: screenWidth,
+    offset: screenWidth * index, // for first image - 300 * 0 = 0pixels, 300 * 1 = 300, 300*2 = 600
+    index: index,
+  });
+  // Data for carousel
+
+
+
+
+
+
+
+  const Slide = ({ item }) => (
+    <View>
+      <TouchableOpacity activeOpacity={1}>
+      <Image
+         source={{ uri: `${EndPoint}/${item}` }}
+          style={{
+           // height: 180,
+           height:height/4 + 10,
+            width: screenWidth,
+            borderRadius:10, 
+          }}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+
+  const handleScroll = (event) => {
+    const scrollPosition = event.nativeEvent.contentOffset.x;
+    const index = scrollPosition / screenWidth;
+    setActiveIndex(index);
+  };
+
+  const renderDotIndicators = () => (
+    images.map((_, index) => (
+      <View
+        key={index}
+        style={{
+          backgroundColor: activeIndex === index ? 'green' : 'red',
+          height: 10,
+          width: 10,
+          borderRadius: 5,
+          marginHorizontal: 6,
+        }}
+      />
+    ))
+  );
+
+  return (
+    <View>
+      <FlatList
+        data={images}
+        ref={flatlistRef}
+        getItemLayout={getItemLayout}
+        renderItem={Slide}
+        keyExtractor={(item, index) => index.toString()}
+        horizontal
+        pagingEnabled
+        onScroll={handleScroll}
+        // getItemLayout={(data, index) => ({
+        //   length: width,
+        //   offset: width * index,
+        //   index,
+        // })}
+      />
+      <View style={{ 
+        flexDirection: "row",
+         justifyContent: "center",
+          marginTop: 15,
+          marginBottom:15,
+        }}>
+        {renderDotIndicators()}
+      </View>
+    </View>
+  );
+};
+
+
+
 export default function ViewDukaLako ({navigation, route}) {
 
    const { 
@@ -48,11 +156,19 @@ export default function ViewDukaLako ({navigation, route}) {
     Location,
     Created,
     PichaYaPost,
+    PichaYaPost2,
+    PichaYaPost3,
+    PichaYaPost4,
+    PichaYaPost5,
     profile_image,
+    Likes,
     email
    } = route.params
 
 
+
+
+ 
   let [fontsLoaded] = useFonts({
     
     'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
@@ -225,6 +341,39 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
 
 
 
+//const [likes, setLikes] = useState(0);
+ const handleLikeToggle = async (itemId) => {
+  try {
+    const response = await axios.post(
+      `${EndPoint}/ToggleLikeView/${itemId}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
+      }
+    );
+    
+    // Pata item iliyosasishwa
+    const updatedLikes = response.data.Likes;
+
+    // Sasisha queryset
+    const updatedQueryset = queryset.map((item) =>
+      item.id === itemId ? { ...item, Likes: updatedLikes } : item
+    );
+    setQueryset(updatedQueryset);
+    console.log("Umeweka like");
+  } catch (error) {
+    console.error('Error toggling like:', error);
+  }
+};
+
+
+
+
+
+
+
 
 
     const [showAlert, setShowAlert] = useState(false);
@@ -360,7 +509,22 @@ const getItems = () => {
 
 
 const InventoryCard = ({item, index}) => {
-  
+   const carouselItems = [
+      item.PichaYaPost,
+      item.PichaYaPost2,
+      item.PichaYaPost3,
+      item.PichaYaPost4,
+      item.PichaYaPost5,
+      // { src: item.PichaYaPost},
+      // { src: item.PichaYaPost2},
+      // { src: item.PichaYaPost2},
+      // { src: item.PichaYaPost4},
+      // { src: item.PichaYaPost5},
+    ].filter(Boolean); // Filter out any null or undefined values
+
+    //console.log("Carousel Items:", carouselItems);
+
+
 
 
     return (
@@ -382,28 +546,8 @@ const InventoryCard = ({item, index}) => {
                  >{item.Title}</Text>
 
 
-               <View 
-                style={globalStyles.AppItemImageContainerHomeScreen}
-              >
-              {item.PichaYaPost ? ( 
-                  <Image
+               <Carousel images={carouselItems} />
 
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={{
-                      uri: EndPoint + '/' + item.PichaYaPost
-                    }}
-                      
-                      >
-                  </Image>
-                  ):(
-                  <Image
-
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={require('../assets/500.png')} 
-                  >
-                  </Image>
-                )}
-               </View>
 
            {item.Maelezo && (
                <Pressable style={{
@@ -421,6 +565,74 @@ const InventoryCard = ({item, index}) => {
                  
                </Pressable>
                )}
+
+
+
+                  <TouchableOpacity 
+
+                  style={[globalStyles.AppItemButtonHomeScreen,
+                    {
+                      width:'90%',
+                    //padding:5,
+                   // borderRadius:6,
+                    marginTop:20,
+                    flexDirection:'row',
+                    justifyContent:'space-between',
+                    }
+
+
+                    ]}
+
+                 
+                >
+            {/*mwanzo wa view ya left*/}
+              <TouchableOpacity 
+
+             onPress={() => {
+           navigation.navigate('View Duka Lako', item);    
+        }} >
+           <View style={globalStyles.LeftBtnContainer}>
+            {/*<Text 
+          style={globalStyles.AppItemButtonTextHomeScreen}
+        >Wasiliana naye</Text>*/}
+         </View>
+         </TouchableOpacity>
+          {/*mwisho wa view ya left*/}
+
+
+       {/*mwanzo wa view ya right*/}
+         <TouchableOpacity 
+          onPress={() => handleLikeToggle(item.id)}
+          >
+         <View style={globalStyles.RightBtnContainer}>
+         <View>
+           <Text style={{
+          marginRight:5,
+          fontFamily:'Bold',
+          color:'red',
+          marginTop:5,
+         }}> {item.Likes}
+         </Text>
+         </View>
+        
+        <View>
+           <FontAwesome name='heart' 
+      size={20}
+      color='red'  
+      
+       />
+        </View>
+        
+
+         </View>
+         </TouchableOpacity>
+          {/*mwisho wa view ya right*/}
+
+
+                  </TouchableOpacity>
+
+
+
 
 
                 </View>
@@ -765,23 +977,24 @@ keyboardShouldPersistTaps="handled"
 
                  >{Title}</Text>
 
-         <Pressable 
-             // onPress={() => {Linking.openURL(Youtube)}}
-             >
-     
-               <View 
-                style={globalStyles.AppItemImageContainerYoutubeChannel}
+
+
+
+            {/* <Carousel images={carouselItems} />
+*/}
+
+           <View 
+                style={[globalStyles.AppItemImageContainerHomeScreen,
+                  {
+                    marginBottom:15,
+                  }
+
+                  ]}
               >
               {PichaYaPost ? ( 
                   <Image
 
-                  style={[globalStyles.AppItemImageYoutubeChannel,
-                    {
-                      height:200,
-                      width:'100%',
-                    }
-
-                    ]}
+                  style={globalStyles.AppItemImageHomeScreen}
                    source={{
                       uri: EndPoint + '/' + PichaYaPost
                     }}
@@ -791,13 +1004,30 @@ keyboardShouldPersistTaps="handled"
                   ):(
                   <Image
 
-                  style={globalStyles.AppItemImageYoutubeChannel}
+                  style={globalStyles.AppItemImageHomeScreen}
                    source={require('../assets/500.png')} 
                   >
                   </Image>
                 )}
                </View>
-               </Pressable>
+
+
+           {Maelezo && (
+               <TouchableOpacity style={{
+                 width:'90%',
+                 marginHorizontal:20,
+               }}>
+             
+             
+               <Text style={{
+                color:'black',
+                fontFamily:'Light',
+               }}>
+                 {Maelezo}
+               </Text>
+                 
+               </TouchableOpacity>
+               )}
 
 
                 </View>

@@ -1,183 +1,781 @@
+import React, { useState, useEffect } from 'react';
+import  {
+  View,StyleSheet,Image,
+  ActivityIndicator,
+  ImageBackground,
+  Platform,Text,TouchableOpacity,TextInput,FlatList} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
+import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
 
+import COLORS  from '../Constant/colors';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { StyleSheet, Platform, TextInput, ActivityIndicator, Pressable, Text, Animated, ScrollView, View, Image, Button, FlatList, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard, Dimensions, ImageBackground, KeyboardAvoidingView } from 'react-native';
-import React, { useState, useRef, useEffect, useContext } from 'react';
-
-import { globalStyles } from '../Styles/GlobalStyles';
-import { EndPoint } from "../Constant/links";
+import {useFonts} from 'expo-font';
+import AwesomeAlert from 'react-native-awesome-alerts';
+import {globalStyles} from '../Styles/GlobalStyles';
+import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import { MaterialIcons, Entypo, MaterialCommunityIcons, FontAwesome5, Ionicons, Feather, AntDesign, FontAwesome } from '@expo/vector-icons';
-import COLORS from '../Constant/colors';
+//import { useNavigation } from '@react-navigation/native';
+import { EndPoint } from '../Constant/links';
+import LotterViewScreen from '../Screens/LotterViewScreen';
 
-const { width, height } = Dimensions.get('window');
+import {CustomCard} from '../RenderedComponents/CustomCard';
+import MinorHeader from '../Header/MinorHeader';
 
-const VyakulaVyote = ({ navigation, route }) => {
-  const { StaterFeed, FinisherFeed, LayerFeed, GrowerFeed, AinaYaKuku, UmriKwaWiki, UmriKwaSiku, IdadiYaKilos, KukuId, UmriwaKukuId } = route.params;
+export default function GetAllDukaLakoItems ({navigation}) {
+
+   //  const { 
+    
+   //  id,
+   //  JinaLaHuduma 
+   // } = route.params
+
+
+  let [fontsLoaded] = useFonts({
+    
+    'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    'Medium': require('../assets/fonts/Poppins-Medium.ttf'),
+    'SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
+    'Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+    'Thin': require('../assets/fonts/Poppins-Thin.ttf'),
+    'Light': require('../assets/fonts/Poppins-Light.ttf'),
+    
+    
   
-  const [queryset, setQueryset] = useState([]);
-  const [queryset2, setQueryset2] = useState([]);
-  const [queryset3, setQueryset3] = useState([]);
-  const [queryset4, setQueryset4] = useState([]);
-  const [currentQueryset, setCurrentQueryset] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [endReached, setEndReached] = useState(false);
-  
-  useEffect(() => {
-    loadQueryset(1);
-  }, []);
+});
 
-  const loadQueryset = async (querysetNumber) => {
-    if (endReached) return;
 
-    setIsLoading(true);
-    let url = '';
+    const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
-    switch (querysetNumber) {
-      case 1:
-        url = EndPoint + `/GetAllVyakulaView/?page=1&page_size=150`;
-        break;
-      case 2:
-        url = EndPoint + `/GetAllVyakulaWangaView/?page=1&page_size=150`;
-        break;
-      case 3:
-        url = EndPoint + `/GetAllVyakulaMadiniNaVitaminiView/?page=1&page_size=150`;
-        break;
-      case 4:
-        url = EndPoint + `/GetAllVyakulaVimengenyaView/?page=1&page_size=150`;
-        break;
-    }
-
-    try {
-      const response = await fetch(url);
-      const data = await response.json();
-      switch (querysetNumber) {
-        case 1:
-          setQueryset(data.queryset);
-          break;
-        case 2:
-          setQueryset2(data.queryset2);
-          break;
-        case 3:
-          setQueryset3(data.queryset3);
-          break;
-        case 4:
-          setQueryset4(data.queryset4);
-          break;
-      }
-      setIsLoading(false);
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-    }
+ const showAlertFunction = (message) => {
+    setAlertMessage(message);
+    setShowAlert(true);
   };
 
-  const renderProducts = () => {
-    let dataToRender = [];
-    switch (currentQueryset) {
-      case 1:
-        dataToRender = queryset;
-        break;
-      case 2:
-        dataToRender = queryset2;
-        break;
-      case 3:
-        dataToRender = queryset3;
-        break;
-      case 4:
-        dataToRender = queryset4;
-        break;
-    }
+  const hideAlert = () => {
+    setShowAlert(false);
+  };
+
+
+
+  // const nav = useNavigation();
+  // const DATA = [
+  //   {
+  //     id: 1,
+  //     name: "Bajeti Ya Chakula",
+  //     backgroundColor:"#6BC5E8",
+  //     imagesrc:im1
+      
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Kumbusho La Shamba",
+  //     backgroundColor:"#3A9EC2",
+  //     imagesrc:im2
+  //   },
+
+  //   {
+  //     id: 3,
+  //     name: "Kitabu Shamba",
+  //     backgroundColor:"#3A9EC2",
+  //     imagesrc:im3
+  //   },
+
+  //   {
+  //     id: 4,
+  //     name: "Jamii Ya Mfugaji",
+  //     backgroundColor:"#3A9EC2",
+  //     imagesrc:im4
+  //   }
+
+
+  // ];
+
+const [userToken, setUserToken] = useState('');
+const [shouldReload, setShouldReload] = useState(false);
+const [userData, setUserData] = useState({});
+
+
+
+//FOR SEARCHING
+const [input, setInput] = useState('');
+
+//Load more
+const [queryset, setQueryset] = useState([]);
+const [current_page, setcurrent_page] = useState(1);
+const [isLoading, setIsLoading] = useState(false);
+const [loading, setLoading] = useState(false);
+const [endReached, setEndReached] = useState(false)
+const [isPending, setPending] = useState(true);
+
+
+
+
+const getItems = () => {
+  if (endReached) {
+    setLoading(false);
+    setIsLoading(false);
+    setPending(false);
+    return;
+  } else {
+    setIsLoading(true);
+    //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
+   const url = EndPoint + `/GetAllDukaLakoView/?page=${current_page}&page_size=2`
+    // console.log(url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.queryset.length > 0) {
+          setQueryset([...queryset, ...data.queryset]);
+          setIsLoading(false);
+          setLoading(false);
+          setcurrent_page(current_page + 1);
+          setPending(false);
+
+          // console.log("NEW CRRRENT", current_page);
+          // console.log(queryset);
+
+        } else {
+          setIsLoading(false);
+          setEndReached(true);
+          setLoading(false);
+          setPending(false);
+        }
+      });
+  }
+};
+
+
+
+
+
+ const renderLoader = () => {
     return (
-      <FlatList
-        data={dataToRender}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <View style={globalStyles.card}>
-            <Text>{item.product_name}</Text>
-            <Text>{item.description}</Text>
-          </View>
-        )}
-        ListFooterComponent={renderLoader}
-        onEndReached={handleScroll}
-        onEndReachedThreshold={0.5}
-      />
+      isLoading ?
+        <View style={globalStyles.loaderStyle}>
+          <ActivityIndicator size="large" color="red" />
+        </View> : null
     );
   };
 
-  const renderLoader = () => {
-    return isLoading ? (
-      <View style={globalStyles.loaderStyle}>
-        <ActivityIndicator size="large" color="red" />
-      </View>
-    ) : null;
-  };
+  // const loadMoreItem = () => {
+  //   setcurrent_page(current_page + 1);
+  // };
 
-  const handleScroll = () => {
-    loadQueryset(currentQueryset);
-  };
+  useEffect(() => {
+    setLoading(true)
+    getItems();
+  }, []);
 
-  const handleQuerysetChange = (querysetNumber) => {
-    setCurrentQueryset(querysetNumber);
-    loadQueryset(querysetNumber);
-  };
 
-  return (
-    <View style={globalStyles.container}>
-      {renderProducts()}
 
-      <View style={styles.buttonsContainer}>
-        {currentQueryset > 1 && (
-          <Button
-            title={`See queryset${currentQueryset - 1} products`}
-            onPress={() => handleQuerysetChange(currentQueryset - 1)}
-          />
-        )}
-        {currentQueryset < 4 && (
-          <Button
-            title={`See queryset${currentQueryset + 1} products`}
-            onPress={() => handleQuerysetChange(currentQueryset + 1)}
-          />
-        )}
-      </View>
-    </View>
-  );
+
+useEffect(() => {
+
+   
+    checkLoggedIn();
+    // Fetch cart items only if the user is authenticated
+    // if (userToken) {
+    //   fetchCartItems();
+    // }
+
+  }, [userToken]);
+
+const checkLoggedIn = async () => {
+const token = await AsyncStorage.getItem('userToken');
+setUserToken(token);
+ 
 };
 
-const styles = StyleSheet.create({
-  buttonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-  },
-});
 
-export default VyakulaVyote;
+
+//const [likes, setLikes] = useState(0);
+ const handleLikeToggle = async (itemId) => {
+  try {
+    const response = await axios.post(
+      `${EndPoint}/ToggleLikeView/${itemId}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
+      }
+    );
+    
+    // Pata item iliyosasishwa
+    const updatedLikes = response.data.Likes;
+
+    // Sasisha queryset
+    const updatedQueryset = queryset.map((item) =>
+      item.id === itemId ? { ...item, Likes: updatedLikes } : item
+    );
+    setQueryset(updatedQueryset);
+    console.log("Umeweka like");
+  } catch (error) {
+    console.error('Error toggling like:', error);
+  }
+};
+
+
+
+
+  const transportItem = ({item}) => {
+    
+
+    if (input === ""){
+
+    return (
+
+      <CustomCard >
+              <View 
+              style={globalStyles.AppItemContainerHomeScreen}
+              >
+
+
+
+         {/*mwanzo mwa informations za mtu aliyepost*/}
+
+            <View style={globalStyles.UserInfoContainer}>
+              
+            {/*mwanzo wa left info*/}
+             <View style={globalStyles.UserInfoLeftContainer}>
+             {item.profile_image ? ( 
+                  <Image
+
+                  style={globalStyles.UserInfoLeftImage}
+                   source={{
+                      uri: EndPoint + '/' + item.profile_image
+                    }}
+                      
+                      >
+                  </Image>
+                  ):(
+                  <Image
+
+                  style={globalStyles.UserInfoLeftImage}
+                   source={require('../assets/profile.jpg')} 
+                  >
+                  </Image>
+                )}
+               
+             </View>
+           {/*mwisho wa left info*/}
+             
+             {/*mwanzo wa right info*/}
+           <View style={globalStyles.UserInfoRightContainer}>
+           {item.company_name ? (
+             <Text style={globalStyles.UserInfoUsername}>
+             {item.company_name}</Text>
+             ):(
+              <Text style={globalStyles.UserInfoUsername}>
+             {item.username}</Text>
+             )}
+           </View>
+            {/*mwisho wa right info*/}
+
+
+
+            </View>
+           
+           {/*mwanzo mwa informations za mtu aliyepost*/}
+
+                <View style={{
+                  //justifyContent:"space-between",
+                }}>
+                  <Text 
+
+                  style={globalStyles.AppItemNameHomeScreen}
+
+                 >{item.Title}</Text>
+
+
+               <View 
+                style={globalStyles.AppItemImageContainerHomeScreen}
+              >
+              {item.PichaYaPost ? ( 
+                  <Image
+
+                  style={globalStyles.AppItemImageHomeScreen}
+                   source={{
+                      uri: EndPoint + '/' + item.PichaYaPost
+                    }}
+                      
+                      >
+                  </Image>
+                  ):(
+                  <Image
+
+                  style={globalStyles.AppItemImageHomeScreen}
+                   source={require('../assets/500.png')} 
+                  >
+                  </Image>
+                )}
+               </View>
+
+           {item.Maelezo && (
+               <TouchableOpacity style={{
+                 width:'90%',
+                 marginHorizontal:20,
+               }}>
+             
+             
+               <Text style={{
+                color:'black',
+                fontFamily:'Light',
+               }}>
+                 {item.Maelezo}
+               </Text>
+                 
+               </TouchableOpacity>
+               )}
+
+
+                  <TouchableOpacity 
+
+                  style={[globalStyles.AppItemButtonHomeScreen,
+                    {
+                      width:'90%',
+                    //padding:5,
+                   // borderRadius:6,
+                    marginTop:20,
+                    flexDirection:'row',
+                    justifyContent:'space-between',
+                    }
+
+
+                    ]}
+
+                 
+                >
+            {/*mwanzo wa view ya left*/}
+              <TouchableOpacity 
+
+             onPress={() => {
+           navigation.navigate('View Duka Lako', item);    
+        }} >
+           <View style={globalStyles.LeftBtnContainer}>
+            <Text 
+          style={globalStyles.AppItemButtonTextHomeScreen}
+        >Wasiliana naye</Text>
+         </View>
+         </TouchableOpacity>
+          {/*mwisho wa view ya left*/}
+
+
+       {/*mwanzo wa view ya right*/}
+         <TouchableOpacity 
+          onPress={() => handleLikeToggle(item.id)}
+          >
+         <View style={globalStyles.RightBtnContainer}>
+         <View>
+           <Text style={{
+          marginRight:5,
+          fontFamily:'Bold',
+          color:'red',
+          marginTop:5,
+         }}> {item.Likes}
+         </Text>
+         </View>
+        
+        <View>
+           <FontAwesome name='heart' 
+      size={20}
+      color='red'  
+      
+       />
+        </View>
+        
+
+         </View>
+         </TouchableOpacity>
+          {/*mwisho wa view ya right*/}
+
+
+                  </TouchableOpacity>
+                </View>
+                <View>
+                 
+                </View>
+              </View>
+           </CustomCard>
+
+
+           )
+
+
+
+
+     // hili bano la chini ni la if ya juu kama mtu akitype   
+}
+
+ if(item.Title.toLowerCase().includes(input.toLowerCase()) || item.username.toLowerCase().includes(input.toLowerCase()) || item.phone.toLowerCase().includes(input.toLowerCase()) || item.Location.toLowerCase().includes(input.toLowerCase())){
+
+    return (
+
+      <CustomCard >
+              <View 
+              style={globalStyles.AppItemContainerHomeScreen}
+              >
+
+
+
+         {/*mwanzo mwa informations za mtu aliyepost*/}
+
+            <View style={globalStyles.UserInfoContainer}>
+              
+            {/*mwanzo wa left info*/}
+             <View style={globalStyles.UserInfoLeftContainer}>
+             {item.profile_image ? ( 
+                  <Image
+
+                  style={globalStyles.UserInfoLeftImage}
+                   source={{
+                      uri: EndPoint + '/' + item.profile_image
+                    }}
+                      
+                      >
+                  </Image>
+                  ):(
+                  <Image
+
+                  style={globalStyles.UserInfoLeftImage}
+                   source={require('../assets/profile.jpg')} 
+                  >
+                  </Image>
+                )}
+               
+             </View>
+           {/*mwisho wa left info*/}
+             
+             {/*mwanzo wa right info*/}
+           <View style={globalStyles.UserInfoRightContainer}>
+           {item.company_name ? (
+             <Text style={globalStyles.UserInfoUsername}>
+             {item.company_name}</Text>
+             ):(
+              <Text style={globalStyles.UserInfoUsername}>
+             {item.username}</Text>
+             )}
+           </View>
+            {/*mwisho wa right info*/}
+
+
+
+            </View>
+           
+           {/*mwanzo mwa informations za mtu aliyepost*/}
+
+                <View style={{
+                  //justifyContent:"space-between",
+                }}>
+                  <Text 
+
+                  style={globalStyles.AppItemNameHomeScreen}
+
+                 >{item.Title}</Text>
+
+
+               <View 
+                style={globalStyles.AppItemImageContainerHomeScreen}
+              >
+              {item.PichaYaPost ? ( 
+                  <Image
+
+                  style={globalStyles.AppItemImageHomeScreen}
+                   source={{
+                      uri: EndPoint + '/' + item.PichaYaPost
+                    }}
+                      
+                      >
+                  </Image>
+                  ):(
+                  <Image
+
+                  style={globalStyles.AppItemImageHomeScreen}
+                   source={require('../assets/500.png')} 
+                  >
+                  </Image>
+                )}
+               </View>
+
+           {item.Maelezo && (
+               <TouchableOpacity style={{
+                 width:'90%',
+                 marginHorizontal:20,
+               }}>
+             
+             
+               <Text style={{
+                color:'black',
+                fontFamily:'Light',
+               }}>
+                 {item.Maelezo}
+               </Text>
+                 
+               </TouchableOpacity>
+               )}
+
+
+                  <TouchableOpacity 
+
+                  style={[globalStyles.AppItemButtonHomeScreen,
+                    {
+                      width:'90%',
+                    //padding:5,
+                   // borderRadius:6,
+                    marginTop:20,
+                    flexDirection:'row',
+                    justifyContent:'space-between',
+                    }
+
+
+                    ]}
+
+                 
+                >
+            {/*mwanzo wa view ya left*/}
+              <TouchableOpacity 
+
+             onPress={() => {
+           navigation.navigate('View Duka Lako', item);    
+        }} >
+           <View style={globalStyles.LeftBtnContainer}>
+            <Text 
+          style={globalStyles.AppItemButtonTextHomeScreen}
+        >Wasiliana naye</Text>
+         </View>
+         </TouchableOpacity>
+          {/*mwisho wa view ya left*/}
+
+
+       {/*mwanzo wa view ya right*/}
+         <TouchableOpacity 
+
+          >
+         <View style={globalStyles.RightBtnContainer}>
+         <View>
+           <Text style={{
+          marginRight:5,
+          fontFamily:'Bold',
+          color:'red',
+          marginTop:5,
+         }}>2 
+         </Text>
+         </View>
+        
+        <View>
+           <FontAwesome name='thumbs-o-up' 
+      size={20}
+      color='blue'  
+      
+       />
+        </View>
+        
+
+         </View>
+         </TouchableOpacity>
+          {/*mwisho wa view ya right*/}
+
+
+                  </TouchableOpacity>
+                </View>
+                <View>
+                 
+                </View>
+              </View>
+           </CustomCard>
+
+
+           )
+
+
+
+
+// hili bano la chini ni la if ya pili mwisho
+  }
+
+
+
+// mwisho wa render
+  };
+
+
+
+
+  return (
+
+       <>{!fontsLoaded ? (<View/>):(
+
+          <View style={globalStyles.container}>
+
+
+
+
+
+<MinorHeader title="Duka Lako" />
+
+
+
+    <View style={globalStyles.searchbarOtherPages}>
+
+                 <View style={globalStyles.searchbarIconContainerOtherPages}>
+                    <Ionicons name="search-outline" 
+                    size={25} 
+                    color={COLORS.black} 
+
+                    style={globalStyles.AppIConHomeScreenOtherPages}
+
+                      />
+                    </View>
+
+                    <View style={globalStyles.searchbarInputContainerOtherPages}>
+                    <TextInput 
+                    value={input} onChangeText ={(text) => setInput(text)}
+                    placeholder="Ingiza jina / mahali " 
+                     placeholderTextColor='black'
+                    style={globalStyles.AppInputHomeScreenOtherPages}
+                    
+                    ></TextInput>
+                    </View>
+
+                  </View>
+
+
+
+              <View style={globalStyles.bottomview}>
+
+
+
+          {/*  mwanzo wa Itself container*/}
+              <View style={globalStyles.ItselfMajorContainer}>
+             
+             <View style={globalStyles.ItselfLeftMinorContainer}>
+             <TouchableOpacity 
+               onPress={() => {
+            navigation.navigate('Your Posts');    
+        }}
+             >
+              <Text style={globalStyles.ItselfLeftMinorText}>Duka Langu</Text>
+              </TouchableOpacity>
+              </View>
+             
+              <TouchableOpacity 
+            onPress={() => {
+            navigation.navigate('Duka Lako Form');    
+        }}
+              style={globalStyles.ItselfRightMinorContainer}>
+              <View >
+                  <FontAwesome name='plus-square-o' 
+                  size={30}
+                  color='brown'  
+                  
+                   />
+              </View>
+              </TouchableOpacity>
+                
+              </View>
+             {/*  mwisho wa Itself container*/}
+            
+
+
+
+                <Text
+                style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+                
+                >Huduma mbalimbali za watu</Text>
+
+
+            {/*mwanzo wa Item View*/}
+                <View 
+                style={globalStyles.AppFlatListContainerHomeScreen} 
+               
+                >
+
+{ !isPending ? (
+  <>
+      
+      { queryset && queryset.length > 0 ? (
+        <>
+
+         {setLoading===true?(<ActivityIndicator/>):(
+      <>
+
+                    <FlatList
+                    data={queryset}
+                    renderItem={transportItem}
+                    keyExtractor={(item) => item.id}
+                    showsVerticalScrollIndicator={false}
+
+                    ListFooterComponent={renderLoader}
+                    onEndReached={getItems}
+                    onEndReachedThreshold={0.5}
+                  />
+
+
+                        </>
+      )}
+
+         </>
+
+
+
+      ) : (
+       
+
+ <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
+  <Text style={globalStyles.noitemText}>Hakuna huduma yoyote iliyopo kwasasa!! !
+  </Text>
+
+
+  <View style={globalStyles.ErrorImageContainerHomePage}>
+      <Image 
+          source={require('../assets/500.png')}  
+           style={globalStyles.ErrorImageHomePage}
+          
+          //source={item.ArticleImage} 
+          //resizeMode='contain'
+          contentContainerStyle={{ padding: 20 }}
+          
+          />
+  </View>
+
+
+</View>
+      )}
+ </>
+
+):(
+<LotterViewScreen />
+
+
+)} 
+                </View>
+
+          {/*Mwisho wa item View*/}
+
+
+
+
+
+               
+                </View>
+
+
+
+
+
+
+
+          </View>
+
+
+          )}</>
+
+          );
+}
+
+const styles = StyleSheet.create({
+ 
+});

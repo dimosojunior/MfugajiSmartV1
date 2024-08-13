@@ -23,9 +23,12 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
-import { useFocusEffect } from '@react-navigation/native';
+//import Carousel from 'react-native-snap-carousel';
+const { width, height } = Dimensions.get('screen');
 
-const { width, height } = Dimensions.get('window');
+
+
+
 
 
 
@@ -134,31 +137,35 @@ const Carousel = ({ images }) => {
 
 
 
-export default function YourPosts ({navigation}) {
+
+
+
+export default function GetAllDukaLakoItems ({navigation}) {
 
    //  const { 
     
    //  id,
    //  JinaLaHuduma 
    // } = route.params
- const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-  const [queryset, setQueryset] = useState([]);
-  const [current_page, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [endReached, setEndReached] = useState(false);
-  const [userToken, setUserToken] = useState('');
-  const [isPending, setIsPending] = useState(true);
-
-   const [modalVisible, setModalVisible] = useState(false);
- const [isModalVisible, setIsModalVisible] = useState(false); // New state variable
 
 
-//FOR SEARCHING
-const [input, setInput] = useState('');
-
+  let [fontsLoaded] = useFonts({
+    
+    'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    'Medium': require('../assets/fonts/Poppins-Medium.ttf'),
+    'SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
+    'Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+    'Thin': require('../assets/fonts/Poppins-Thin.ttf'),
+    'Light': require('../assets/fonts/Poppins-Light.ttf'),
+    
+    
   
+});
+
+
+    const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
  const showAlertFunction = (message) => {
     setAlertMessage(message);
     setShowAlert(true);
@@ -169,99 +176,60 @@ const [input, setInput] = useState('');
   };
 
 
-  let [fontsLoaded] = useFonts({
-    'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-    'Medium': require('../assets/fonts/Poppins-Medium.ttf'),
-    'SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
-    'Regular': require('../assets/fonts/Poppins-Regular.ttf'),
-    'Thin': require('../assets/fonts/Poppins-Thin.ttf'),
-    'Light': require('../assets/fonts/Poppins-Light.ttf'),
-  });
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const updateUserToken = async () => {
-        const token = await AsyncStorage.getItem('userToken');
-        setUserToken(token || '');
-      };
-      updateUserToken();
-      const unsubscribe = navigation.addListener('updateUserToken', updateUserToken);
-      return unsubscribe;
-    }, [navigation])
-  );
+const [userToken, setUserToken] = useState('');
+const [shouldReload, setShouldReload] = useState(false);
+const [userData, setUserData] = useState({});
+
+
+
+//FOR SEARCHING
+const [input, setInput] = useState('');
+
+//Load more
+const [queryset, setQueryset] = useState([]);
+const [current_page, setcurrent_page] = useState(1);
+const [isLoading, setIsLoading] = useState(false);
+const [loading, setLoading] = useState(false);
+const [endReached, setEndReached] = useState(false)
+const [isPending, setPending] = useState(true);
 
 
 
 
-useEffect(() => {
-
-   
-    checkLoggedIn();
-    // Fetch cart items only if the user is authenticated
-    if (userToken) {
-     setLoading(true)
-     getItems();;
-    }
-
-  }, [userToken]);
-
-
-const checkLoggedIn = async () => {
-  const token = await AsyncStorage.getItem('userToken');
-  setUserToken(token);
-  
-  
- 
-};
-
-
-
-
-
-  const getItems = () => {
-   if (endReached) {
+const getItems = () => {
+  if (endReached) {
     setLoading(false);
     setIsLoading(false);
-    setIsPending(false);
+    setPending(false);
     return;
   } else {
-
-
-    //setIsPending(true);
     setIsLoading(true);
-    const url = `${EndPoint}/GetAllDukaLakoPostedByUserItselfView/?page=${current_page}&page_size=2`;
-    fetch(url, {
-      method: 'GET',
-      headers: { 'Authorization': `Token ${userToken}` },
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.queryset.length > 0) {
-        setQueryset([...queryset, ...data.queryset]);
-        setCurrentPage(current_page + 1);
-        setIsLoading(false);
-        setLoading(false);
-        setIsPending(false);
-      } else {
-        setEndReached(true);
-        // setIsLoading(false);
-        setIsLoading(false);
-        setLoading(false);
-        setIsPending(false);
-          
-      }
-      // setIsLoading(false);
-      //   setLoading(false);
-       // setIsPending(false);
+    //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
+   const url = EndPoint + `/GetAllDukaLakoView/?page=${current_page}&page_size=2`
+    // console.log(url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.queryset.length > 0) {
+          setQueryset([...queryset, ...data.queryset]);
+          setIsLoading(false);
+          setLoading(false);
+          setcurrent_page(current_page + 1);
+          setPending(false);
 
-    })
-    // .catch(() => {
-    //   setIsPending(false);
-    // });
+          // console.log("NEW CRRRENT", current_page);
+          // console.log(queryset);
 
+        } else {
+          setIsLoading(false);
+          setEndReached(true);
+          setLoading(false);
+          setPending(false);
+        }
+      });
   }
-  };
-
+};
 
 
 
@@ -280,10 +248,31 @@ const checkLoggedIn = async () => {
   //   setcurrent_page(current_page + 1);
   // };
 
-  // useEffect(() => {
-  //   setLoading(true)
-  //   getItems();
-  // }, []);
+  useEffect(() => {
+    setLoading(true)
+    getItems();
+  }, []);
+
+
+
+
+useEffect(() => {
+
+   
+    checkLoggedIn();
+    // Fetch cart items only if the user is authenticated
+    // if (userToken) {
+    //   fetchCartItems();
+    // }
+
+  }, [userToken]);
+
+const checkLoggedIn = async () => {
+const token = await AsyncStorage.getItem('userToken');
+setUserToken(token);
+ 
+};
+
 
 
 //const [likes, setLikes] = useState(0);
@@ -317,20 +306,9 @@ const checkLoggedIn = async () => {
 
 
 
-  const formatDate = (dateString) => {
-    if (!dateString) return null;
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
- 
-
-
   const transportItem = ({item}) => {
 
-      const carouselItems = [
+     const carouselItems = [
       item.PichaYaPost,
       item.PichaYaPost2,
       item.PichaYaPost3,
@@ -408,36 +386,43 @@ const checkLoggedIn = async () => {
                 }}>
                   <Text 
 
-                  style={globalStyles.AppItemNameHomeScreen}
+                  style={[globalStyles.AppItemNameHomeScreen,
+                    {
+                      marginBottom:15,
+                    }
+
+                    ]}
 
                  >{item.Title}</Text>
 
 
-                 <Carousel images={carouselItems} />
-{/*
+ 
 
-               <View 
-                style={globalStyles.AppItemImageContainerHomeScreen}
-              >
-              {item.PichaYaPost ? ( 
-                  <Image
 
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={{
-                      uri: EndPoint + '/' + item.PichaYaPost
-                    }}
-                      
-                      >
-                  </Image>
-                  ):(
-                  <Image
+<Carousel images={carouselItems} />
 
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={require('../assets/500.png')} 
-                  >
-                  </Image>
-                )}
-               </View>*/}
+
+    
+    {/* <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 0,
+        }}
+      >
+        {renderDotIndicators()}
+      </View>*/}
+
+
+
+
+
+
+
+
+
+
+
 
            {item.Maelezo && (
                <TouchableOpacity style={{
@@ -477,12 +462,13 @@ const checkLoggedIn = async () => {
             {/*mwanzo wa view ya left*/}
               <TouchableOpacity 
 
-               
-        >
+             onPress={() => {
+           navigation.navigate('View Duka Lako', item);    
+        }} >
            <View style={globalStyles.LeftBtnContainer}>
             <Text 
           style={globalStyles.AppItemButtonTextHomeScreen}
-        >{formatDate(item.Created)}</Text>
+        >Wasiliana naye</Text>
          </View>
          </TouchableOpacity>
           {/*mwisho wa view ya left*/}
@@ -499,7 +485,7 @@ const checkLoggedIn = async () => {
           fontFamily:'Bold',
           color:'red',
           marginTop:5,
-         }}>{item.Likes} 
+         }}> {item.Likes}
          </Text>
          </View>
         
@@ -534,7 +520,7 @@ const checkLoggedIn = async () => {
      // hili bano la chini ni la if ya juu kama mtu akitype   
 }
 
- if(item.Title.toLowerCase().includes(input.toLowerCase())){
+ if(item.Title.toLowerCase().includes(input.toLowerCase()) || item.username.toLowerCase().includes(input.toLowerCase()) || item.phone.toLowerCase().includes(input.toLowerCase()) || item.Location.toLowerCase().includes(input.toLowerCase())){
 
     return (
 
@@ -601,9 +587,6 @@ const checkLoggedIn = async () => {
                  >{item.Title}</Text>
 
 
-                 <Carousel images={carouselItems} />
-{/*
-
                <View 
                 style={globalStyles.AppItemImageContainerHomeScreen}
               >
@@ -625,7 +608,7 @@ const checkLoggedIn = async () => {
                   >
                   </Image>
                 )}
-               </View>*/}
+               </View>
 
            {item.Maelezo && (
                <TouchableOpacity style={{
@@ -665,12 +648,13 @@ const checkLoggedIn = async () => {
             {/*mwanzo wa view ya left*/}
               <TouchableOpacity 
 
-               
-        >
+             onPress={() => {
+           navigation.navigate('View Duka Lako', item);    
+        }} >
            <View style={globalStyles.LeftBtnContainer}>
             <Text 
           style={globalStyles.AppItemButtonTextHomeScreen}
-        >{formatDate(item.Created)}</Text>
+        >Wasiliana naye</Text>
          </View>
          </TouchableOpacity>
           {/*mwisho wa view ya left*/}
@@ -678,7 +662,7 @@ const checkLoggedIn = async () => {
 
        {/*mwanzo wa view ya right*/}
          <TouchableOpacity 
-          onPress={() => handleLikeToggle(item.id)}
+
           >
          <View style={globalStyles.RightBtnContainer}>
          <View>
@@ -687,14 +671,14 @@ const checkLoggedIn = async () => {
           fontFamily:'Bold',
           color:'red',
           marginTop:5,
-         }}>{item.Likes} 
+         }}>2 
          </Text>
          </View>
         
         <View>
-           <FontAwesome name='heart' 
+           <FontAwesome name='thumbs-o-up' 
       size={20}
-      color='red'  
+      color='blue'  
       
        />
         </View>
@@ -715,6 +699,7 @@ const checkLoggedIn = async () => {
 
 
            )
+
 
 
 
@@ -758,7 +743,7 @@ const checkLoggedIn = async () => {
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Tafuta " 
+                    placeholder="Ingiza jina / mahali " 
                      placeholderTextColor='black'
                     style={globalStyles.AppInputHomeScreenOtherPages}
                     
@@ -779,10 +764,10 @@ const checkLoggedIn = async () => {
              <View style={globalStyles.ItselfLeftMinorContainer}>
              <TouchableOpacity 
                onPress={() => {
-            navigation.navigate('Get All Duka Lako Items');    
+            navigation.navigate('Your Posts');    
         }}
              >
-              <Text style={globalStyles.ItselfLeftMinorText}>Duka Lako</Text>
+              <Text style={globalStyles.ItselfLeftMinorText}>Duka Langu</Text>
               </TouchableOpacity>
               </View>
              
@@ -809,7 +794,7 @@ const checkLoggedIn = async () => {
                 <Text
                 style={globalStyles.AppChaguaHudumaTextHomeScreen}  
                 
-                >Huduma zako mwenyewe</Text>
+                >Huduma mbalimbali za watu</Text>
 
 
             {/*mwanzo wa Item View*/}
@@ -850,7 +835,7 @@ const checkLoggedIn = async () => {
        
 
  <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
-  <Text style={globalStyles.noitemText}>Huna huduma yoyote uliyowahi kuweka!! !
+  <Text style={globalStyles.noitemText}>Hakuna huduma yoyote iliyopo kwasasa!! !
   </Text>
 
 
@@ -902,5 +887,42 @@ const checkLoggedIn = async () => {
 }
 
 const styles = StyleSheet.create({
+
+   slideContainer: {
+    width:width-20,
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+  slideImage: {
+    width,
+    height: height/4, // Adjust the height to fit your design
+    resizeMode: 'cover',
+  },
+  carouselContainer: {
+    marginVertical: 10,
+    overflow: 'hidden',
+
+  },
+  carouselContent: {
+    alignItems: 'center',
+  },
+  descriptionContainer: {
+    marginTop: 5,
+  },
+  descriptionText: {
+    fontSize: 14,
+    color: COLORS.gray,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  likeCount: {
+    fontSize: 14,
+    marginRight: 5,
+    color: 'red',
+  },
  
 });

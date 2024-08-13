@@ -481,7 +481,7 @@ const CartCard = ({ item }) => {
             //justifyContent:'space-between',
             alignItems:'center',
            // backgroundColor:'red',
-            width:'60%'
+            width:'50%'
           }
 
 
@@ -572,7 +572,7 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
             //justifyContent:'space-between',
             alignItems:'center',
            // backgroundColor:'red',
-            width:'60%'
+            width:'50%'
           }
 
 
@@ -771,7 +771,7 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
 
 
 <View style={{
-  marginBottom:50,
+  marginBottom:15,
 }}>
   
 </View>
@@ -1112,7 +1112,10 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
         styles.pressableButton1,
         { 
           opacity: pressed ? 0.5 : 1,
-         // width:'100%' 
+          flex: currentQueryset === 1 ? 1 : 0.45, // Cover full width if only one button
+          // height: currentQueryset === 1 && 200,
+          // textAlign: currentQueryset === 1 && 'center',
+          // justifyContent: currentQueryset === 1 && 'center',
         }
       ]}
       onPress={() => handleQuerysetChange(currentQueryset - 1)}
@@ -1126,7 +1129,11 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
     <Pressable 
       style={({ pressed }) => [
         styles.pressableButton2,
-        { opacity: pressed ? 0.5 : 1 }
+        { 
+          opacity: pressed ? 0.5 : 1,
+         // flex: currentQueryset === 4 ? 1 : 0.45, // Cover full width if only one button
+           flex: currentQueryset === 4 ? 0.45 : 0.45, // Cover full width if only one button
+        }
       ]}
       onPress={() => handleQuerysetChange(currentQueryset + 1)}
     >
@@ -1135,6 +1142,55 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
       </Text>
     </Pressable>
   )}
+
+
+ {currentQueryset === 4 && (
+          <Pressable
+          style={({ pressed }) => [
+        styles.pressableButton2,
+        { 
+          opacity: pressed ? 0.5 : 1,
+          paddingVertical:30,
+          backgroundColor:'black',
+          flexDirection:'row',
+          justifyContent:'space-between',
+         // flex: currentQueryset === 4 ? 1 : 0.45, // Cover full width if only one button
+           flex: currentQueryset === 4 ? 0.45 : 0.45, // Cover full width if only one button
+              }
+            ]}
+            onPress={() => {
+           navigation.navigate('All Cart Items', 
+          { KukuId,UnaKiasiGaniChaChakula,
+            selectedProductIds, 
+            setSelectedProductIds,
+             UmriwaKukuId,
+
+             AinaYaKuku,  
+             StaterFeed,
+             GrowerFeed, 
+             LayerFeed, 
+             FinisherFeed,
+             UmriKwaWiki,
+             UmriKwaSiku
+           })
+       
+            }}
+            
+          >
+            <Text style={styles.buttonText}>
+            Endelea</Text>
+         <Ionicons name='arrow-forward-circle' 
+      size={28}
+      color='white'  
+      
+       />
+          </Pressable>
+        )}
+
+
+
+
+
 </View>
 
 
@@ -1150,38 +1206,46 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
 export default VyakulaVyote;
 
 const styles = StyleSheet.create({
-
-   buttonsContainer: {
+ buttonsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems:'center',
-    padding: 10,
-    width:'95%',
-    marginHorizontal:10,
-    backgroundColor:'wheat',
+    justifyContent: 'center',
+    alignItems: 'center',
+    //marginVertical: 20,
+    backgroundColor:'white',
   },
-  pressableButton1:{
-   // backgroundColor:'black',
-  // width:'50%',
-
+  pressableButton1: {
+    backgroundColor: 'black',
+    borderRadius: 10,
+    //paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginHorizontal: 5, // Adds space between buttons
+    flex: 1, // Ensures buttons cover full width if only one is present
+    alignItems: 'center',
+    height:height/8,
+    textAlign:'center',
+    justifyContent:'center',
+    borderColor:'green',
+    borderWidth:1,
   },
-
-
-  pressableButton1:{
-      //backgroundColor:'green',
-     // width:'50%',
-
+  pressableButton2: {
+    backgroundColor: 'green',
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginHorizontal: 5, // Adds space between buttons
+    flex: 1, // Ensures buttons cover full width if only one is present
+    alignItems: 'center',
+    borderColor:'yellow',
+    borderWidth:1,
   },
-
-pressableButtonText:{
-  width:'50%',
-  textAlign:'center',
-  backgroundColor:'green',
-  color:'white',
-  fontFamily:'Medium',
-  borderRadius:10,
-
-},
-
+  pressableButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  buttonText:{
+    color:'white',
+    fontFamily:'Medium',
+  }
 
 });
