@@ -1,4 +1,8 @@
-import { StyleSheet,ScrollView,Image,Pressable,Linking, TextInput,ActivityIndicator, Text, View, ImageBackground } from "react-native";
+import { StyleSheet,ScrollView,Image,
+
+  Pressable,Linking, TextInput,ActivityIndicator,
+  TouchableOpacity,
+  Text, View, ImageBackground } from "react-native";
 import Top from "./Top";
 import Middle from "./Middle";
 import Bottom from "./Bottom";
@@ -148,6 +152,7 @@ const [isLoading, setIsLoading] = useState(false);
 const [loading, setLoading] = useState(false);
 const [endReached, setEndReached] = useState(false)
 const [isPending, setPending] = useState(true);
+const [isClicked, setisClicked] = useState(false);
 
 
 
@@ -223,6 +228,17 @@ const getItems = () => {
 
 
 
+ // Track the ID of the item that is currently expanded
+  const [expandedItemId, setExpandedItemId] = useState(null);
+
+  // Function to toggle the bottom component for a specific item
+  const toggleItemExpansion = (itemId) => {
+    if (expandedItemId === itemId) {
+      setExpandedItemId(null); // Close if already opened
+    } else {
+      setExpandedItemId(itemId); // Open the specific item
+    }
+  };
 
 
 
@@ -239,6 +255,8 @@ const WafugajiCard = ({item, index}) => {
   const propertySuffix = `phone`;
   const phoneValue = item[`${propertySuffix}`];
   //console.log("Gggggg",phoneValue);
+
+ const isItemExpanded = expandedItemId === item.id; // Check if this item is expanded
 
   
 //mwanzo wa search
@@ -258,16 +276,39 @@ const WafugajiCard = ({item, index}) => {
  {/*<Top item={item} userData={userData} setUserData={setUserData} isLoading={isLoading} setIsLoading={setIsLoading} />
  */}
 
-  <Middle item={item} userData={userData} setUserData={setUserData} isLoading={isLoading} setIsLoading={setIsLoading}/>
-  <Bottom phoneValue={phoneValue} item={item} userData={userData} setUserData={setUserData} isLoading={isLoading} setIsLoading={setIsLoading}/>
-      
+   <Middle
+          isClicked={isItemExpanded}
+          setisClicked={() => toggleItemExpansion(item.id)}
+          item={item}
+          userData={userData}
+          setUserData={setUserData}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
+
+
+ {isItemExpanded && (
+          <Bottom
+            isClicked={isItemExpanded}
+            setisClicked={() => toggleItemExpansion(item.id)}
+            phoneValue={phoneValue}
+            item={item}
+            userData={userData}
+            setUserData={setUserData}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+          />
+        )} 
 
 <View style={{
-  backgroundColor:'white',
+  backgroundColor:'black',
+  borderColor:'white',
+  borderWidth:1,
+  marginBottom:50,
 }}>
-  <Text>
+  {/*<Text>
     
-  </Text>
+  </Text>*/}
 </View>
     </Pressable>
 
@@ -282,13 +323,14 @@ const WafugajiCard = ({item, index}) => {
   // hili bano la chini ni la if ya juu kama mtu akitype   
 }
 
- if(item.username.toLowerCase().includes(input.toLowerCase())){
+ if(item.Location.toLowerCase().includes(input.toLowerCase())){
 
 
 
 
 
-return (
+
+ return (
 
 
 
@@ -302,8 +344,60 @@ return (
  */}
 
   <Middle item={item} userData={userData} setUserData={setUserData} isLoading={isLoading} setIsLoading={setIsLoading}/>
-  <Bottom phoneValue={phoneValue} item={item} userData={userData} setUserData={setUserData} isLoading={isLoading} setIsLoading={setIsLoading}/>
-      
+ 
+{!isClicked && (
+  <TouchableOpacity 
+       onPress={() => {
+
+        setisClicked(true);
+      }} 
+      >  
+
+      <Text style={{
+    color:'white',
+    marginTop:20,
+    marginBottom:20,
+    backgroundColor:'green',
+    textAlign:'center',
+    width:'50%',
+    paddingVertical:10,
+    borderRadius:8,
+   }}>Taarifa zaidi</Text>
+
+
+ </TouchableOpacity>
+ )}
+
+{isClicked && (
+  <TouchableOpacity 
+       onPress={() => {
+
+        setisClicked(false);
+      }} 
+      >  
+
+      <Text style={{
+    color:'black',
+    marginTop:20,
+    marginBottom:20,
+    backgroundColor:'yellow',
+    textAlign:'center',
+    width:'50%',
+    paddingVertical:10,
+    borderRadius:8,
+   }}>Taarifa zaidi</Text>
+
+
+ </TouchableOpacity>
+ )}
+
+
+
+
+ {isClicked && (
+
+  <Bottom isClicked={isClicked} setisClicked={setisClicked} phoneValue={phoneValue} item={item} userData={userData} setUserData={setUserData} isLoading={isLoading} setIsLoading={setIsLoading}/>
+  )}    
 
 <View style={{
   backgroundColor:'white',
@@ -316,7 +410,6 @@ return (
 
 
 )
-
 
 
 
@@ -347,7 +440,7 @@ return (
 
         <View style={globalStyles.container}>
 
-        <MinorHeader title="Soko Huru" />
+        <MinorHeader title="Jamii Huru" />
 
          <ImageBackground
         style={styles.backgroundImage}
@@ -390,7 +483,7 @@ keyboardShouldPersistTaps="handled"
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Jina la mfugaji" 
+                    placeholder="Ingiza wilaya" 
                      placeholderTextColor='black'
                     style={globalStyles.AppInputHomeScreenOtherPages}
                     
@@ -407,7 +500,9 @@ keyboardShouldPersistTaps="handled"
   style={[globalStyles.AppChaguaHudumaTextHomeScreen,
     {
       color:'white',
-      backgroundColor:'green',
+      backgroundColor:'black',
+      borderColor:'white',
+      borderWidth:1,
       width:'80%',
       textAlign:'center',
       paddingVertical:6,
@@ -416,7 +511,7 @@ keyboardShouldPersistTaps="handled"
 
     ]}  
   
-  >Wafuagaji</Text>
+  >Wafugaji Wote</Text>
 
       
 

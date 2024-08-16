@@ -304,7 +304,7 @@ const handleUpdate = async () => {
             },
         }).then(response => {
             setIsLoading(false);
-            showAlertFunction("Umefanikiwa Kuweka huduma yako mpya");
+            showAlertFunction("Umefanikiwa Kutuma posti");
             setdisplayContentsState(true);
             console.log("Well");
         }).catch(error => {
@@ -934,7 +934,7 @@ marginBottom:20,
 
                   {!isLoading && (
                     <TouchableOpacity onPress={handleUpdate} style={styles.ButtonContainerUpdate}>
-                      <Text style={styles.ButtonTextUpdate}>Ongeza Huduma</Text>
+                      <Text style={styles.ButtonTextUpdate}>Tuma Posti</Text>
                     </TouchableOpacity>
                   )}
 
@@ -959,10 +959,8 @@ marginBottom:20,
     color:'white',
     fontFamily:'Medium',
   }}>
-     Ahsante kwa kuweka huduma mpya kwenye programu yetu ya Mfugaji
-     Smart, huduma itaanza kuonekana kwa watu baada ya kuhakikiwa
-     kama inafaa kuwepo humu, uhakiki utakamilika muda mchache
-     baada ya kuweka huduma yako, endelea kutumia Mfugaji Smart.
+     Hongera! posti yako imepokelewa. Tafadhali subiri
+     ihakikiwe, itakuwa hewani hivi punde.
   </Text>
 
    <TouchableOpacity 
@@ -970,7 +968,7 @@ marginBottom:20,
    setdisplayContentsState(false);
   }}
      style={styles.ButtonContainerUpdate}>
-  <Text style={styles.ButtonTextUpdate}>Weka huduma pya</Text>
+  <Text style={styles.ButtonTextUpdate}>Weka posti mpya</Text>
 </TouchableOpacity>
 
 </View>

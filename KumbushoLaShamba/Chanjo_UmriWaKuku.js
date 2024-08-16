@@ -25,6 +25,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
 
+import LottieView from 'lottie-react-native';
+const {width, height} = Dimensions.get('window');
 
 
 const Chanjo_UmriWaKuku = ({navigation, route}) => {
@@ -192,121 +194,67 @@ const InventoryCard = ({item, index}) => {
  return (
 
 
+ 
+<>
+{input != '' && (
+
 
       <TouchableOpacity
-       onPress={() =>
-        navigation.navigate('Ratiba Ya Chanjo Form', {...item, JinaLaHuduma})}
+
+      //  onPress={() =>
+      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
+      // }
+
+       // onPress={() => {
+       // navigation.navigate('Vyakula Vyote', { ...item,UmriwaKukuId,UmriKwaWiki, UmriKwaSiku, KukuId, AinaYaKuku,  StaterFeed,GrowerFeed, LayerFeed, FinisherFeed });
+        // setIsModalVisible(false); // Update state when modal opens
+        // setModalVisible(false);
+      //}}
        
      
       
-      style={globalStyles.OverdoseCartItemsContainer} >
+      style={[
+        globalStyles.IdadiYaKukuFirstContainer,
+        {
+          //backgroundColor:'red',
+          width:'100%',
+          //flexDirection:'row',
+          justifyContent:'center',
+          alignItems:'center',
+        }
+      ]} >
 
 
         <View 
-        style={globalStyles.OverdoseLeftCartItemsContainer}
+        style={{
+          //backgroundColor:'red'
+        }}
         >
 
-        {item.UmriKwaWiki && (  
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Wiki  :
+      <Text style={{
+        backgroundColor:'green',
+        paddingVertical:30,
+        marginVertical:10,
+        color:'white',
+        borderRadius:8,
+        paddingHorizontal:30,
 
-          </Text>
-          )}
-
-         {item.Interval && (  
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Siku :
-          </Text>
-          )}
-
-
-      
-
-         
-        {/*  <Text
-           style={globalStyles.OverdoseIconCartItemsText}
-          >
-            
-        <FontAwesome
-        style={globalStyles.OverdoseIcon1CartItems}
-          
-          name="cart-arrow-down"
-          size={15}
-          color="black"
-        />
-           
-          </Text>*/}
-       
-
-           
-
-
-
-
-      
+      }}> Umri wa kuku wako: {input}</Text>
             
           
         </View>
 
 
 
-        <Pressable 
-
-        style={globalStyles.OverdoseImageContainerCartItems}
-        >
-      
-
-
-
-
-        {item.UmriKwaWiki && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            {item.UmriKwaWiki}
-          </Text>
-          )}
-
-         {item.Interval && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            {item.Interval}
-          </Text>
-          )}
-
-
-
-
-
-
-
-
-        </Pressable>
-
-
-
-
-
-
-
-
-
       </TouchableOpacity>
+
+
+
+
+
+
+)}
+</>
 
 
 
@@ -502,7 +450,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza wiki / siku" 
+                    placeholder="Ingiza wiki" 
                      placeholderTextColor='black'
                      keyboardType="numeric"
                     style={globalStyles.AppInputHomeScreenOtherPages}
@@ -515,11 +463,69 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
 
 
+  {input != '' ? (
+  <Text
+      style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+      
+      >Tafdhali chagua umri wa kuku wako wa wiki {input} hapo chini kuendelea</Text>
+ 
 
-            <Text
-                style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-                
-                >Chagua Umri wa Kuku wako</Text>
+ ):(
+
+ <View>
+
+
+
+<View style={{
+          width:width,
+          //justifyContent:'center',
+          alignItems:'center',
+          //flex:1,
+          backgroundColor:'lightgreen',
+          height:height,
+        }}>
+
+        <Text
+    style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+    
+    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako)</Text>
+
+     {/* <Image
+        source={item?.RouteImage}
+        style={{
+          height: height/2 - 70,
+         width:'80%',
+         borderRadius:5,
+       }}
+      />*/}
+       <LottieView
+        style={{
+        height: height/2,
+         width:'80%',
+         borderRadius:5,
+         // backgroundColor:'red',
+         // justifyContent:'center',
+         // alignItems:'center',
+         zIndex:1,
+
+        // flex:1,
+
+        }}
+        source={require('../assets/Loading/l2.json')} // Replace with your animation JSON file
+        autoPlay
+        loop
+      />
+
+      </View>
+
+
+
+
+
+</View>
+
+ )}
+
 
 
 

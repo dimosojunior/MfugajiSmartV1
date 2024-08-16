@@ -746,6 +746,9 @@ const ReportCard = ({item,calculatedItem , index}) => {
       <Pressable
       style={[
         globalStyles.VyakulaCartItemsContainer,
+        {
+          display:'none',
+        }
         
       ]} >
 
@@ -947,15 +950,15 @@ const ReportCard = ({item,calculatedItem , index}) => {
 
 
 
- <Text
+{/* <Text
 style={globalStyles.AppChaguaHudumaTextHomeScreen}  
 
 >Mchanganuo wa vyakula vyako ulivyovichagua na kiasi 
 unachotakiwa kuweka</Text>
 
+*/}
 
-
-
+{/*
 
         <Pressable
           style={[{
@@ -1004,7 +1007,7 @@ unachotakiwa kuweka</Text>
         </Pressable>
    
  
-
+*/}
 
 
   

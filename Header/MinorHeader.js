@@ -76,7 +76,15 @@ export default function MinorHeader(  {title} ) {
       <Ionicons name='arrow-back' 
       size={28} onPress={goBackPage} style={globalStyles.iconHeaderFile} />
 
-        <Text style={globalStyles.headerTextHeaderFile1}>{title}</Text>
+        <Text style={[
+          globalStyles.headerTextHeaderFile1,
+          {
+            width:'50%',
+            marginLeft:10,
+          }
+
+          ]}>
+          {title}</Text>
 <Image source={require('../assets/i2.jpg')} 
   style={globalStyles.headerImageHeaderFile} />
 

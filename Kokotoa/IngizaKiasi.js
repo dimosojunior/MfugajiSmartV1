@@ -212,11 +212,11 @@ return (
       //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
       // }
 
-        onPress={() => {
-        navigation.navigate('Vyakula Vyote', { ...item,UmriwaKukuId,UmriKwaWiki, UmriKwaSiku, KukuId, AinaYaKuku,  StaterFeed,GrowerFeed, LayerFeed, FinisherFeed });
+       // onPress={() => {
+       // navigation.navigate('Vyakula Vyote', { ...item,UmriwaKukuId,UmriKwaWiki, UmriKwaSiku, KukuId, AinaYaKuku,  StaterFeed,GrowerFeed, LayerFeed, FinisherFeed });
         // setIsModalVisible(false); // Update state when modal opens
         // setModalVisible(false);
-      }}
+      //}}
        
      
       

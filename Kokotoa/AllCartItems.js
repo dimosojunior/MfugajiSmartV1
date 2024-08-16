@@ -219,9 +219,12 @@ const removeCartItem = async (cartId) => {
      
 
 
-
+      
       setPending(false);
       showAlertFunction("Umefanikiwa kuondoa chakula kimoja");
+
+      goBackPage();
+
     } else {
       setPending(false);
       showAlertFunction("Imeshindikana kuondoa chakula");
@@ -815,7 +818,7 @@ style={globalStyles.AppChaguaHudumaTextHomeScreen}
              paddingVertical:10,
 
            }}>
-              Angalia Vya Mwanzo
+              Tazama matokeo
             </Text>
           </TouchableOpacity>
 

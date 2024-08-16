@@ -478,6 +478,16 @@ const InventoryCard = ({item, index}) => {
 </Text>
 
  {item.phone && (
+         <TouchableOpacity onPress={() => {   Linking.openURL(`tel:${item.phone}`)}}>
+          <View style={[globalStyles.menuItem, {}]}>
+            <Icon name="phone" color="green" size={25}/>
+            <Text 
+            style={[globalStyles.menuItemText, {color:'black'}]}>
+            Tupigie simu - {item.phone}</Text>
+          </View>
+        </TouchableOpacity>)}
+
+ {item.phone && (
         <TouchableOpacity onPress={() => { Linking.openURL(`whatsapp://send?phone=${item.phone}&text=${message}`)}}>
           <View style={[globalStyles.menuItem, {
 
@@ -485,7 +495,7 @@ const InventoryCard = ({item, index}) => {
             <FontAwesome name="whatsapp" color="green" size={25}/>
             <Text 
             style={[globalStyles.menuItemText, {color:'black'}]}>
-            Chati naye whatsapp</Text>
+            Chati nasi whatsapp</Text>
           </View>
         </TouchableOpacity>)}
 
@@ -497,19 +507,11 @@ const InventoryCard = ({item, index}) => {
             <Icon name="email" color="black" size={25}/>
             <Text 
             style={[globalStyles.menuItemText, {color:'black'}]}>
-            Mtumie email - {item.email}</Text>
+            Tutumie email - {item.email}</Text>
           </View>
         </TouchableOpacity>)}
 
-         {item.phone && (
-         <TouchableOpacity onPress={() => {   Linking.openURL(`tel:${item.phone}`)}}>
-          <View style={[globalStyles.menuItem, {}]}>
-            <Icon name="phone" color="green" size={25}/>
-            <Text 
-            style={[globalStyles.menuItemText, {color:'black'}]}>
-            Piga Simu - {item.phone}</Text>
-          </View>
-        </TouchableOpacity>)}
+        
 
 
 

@@ -29,53 +29,48 @@ const { width, height } = Dimensions.get('window');
 
 
 
+
 const Carousel = ({ images }) => {
   const flatlistRef = useRef();
   const screenWidth = Dimensions.get("window").width;
   const [activeIndex, setActiveIndex] = useState(0);
 
+  useEffect(() => {
+    if (flatlistRef.current && images.length > 0) {
+      const interval = setInterval(() => {
+        if (flatlistRef.current) {
+          const newIndex = (activeIndex + 1) % images.length;
+          flatlistRef.current.scrollToIndex({
+            index: newIndex,
+            animated: true,
+          });
+          setActiveIndex(newIndex);
+        }
+      }, 2000);
 
-
-
-
- useEffect(() => {
-  if (flatlistRef.current && images.length > 0) {
-    const interval = setInterval(() => {
-      const newIndex = (activeIndex + 1) % images.length;
-      flatlistRef.current.scrollToIndex({
-        index: newIndex,
-        animated: true,
-      });
-      setActiveIndex(newIndex);
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }
-}, [activeIndex, images.length]);
+      return () => clearInterval(interval);
+    }
+  }, [activeIndex, images.length]);
 
   const getItemLayout = (data, index) => ({
     length: screenWidth,
-    offset: screenWidth * index, // for first image - 300 * 0 = 0pixels, 300 * 1 = 300, 300*2 = 600
+    offset: screenWidth * index,
     index: index,
   });
-  // Data for carousel
 
 
 
 
 
-
-
-  const Slide = ({ item }) => (
+ const Slide = ({ item }) => (
     <View>
       <TouchableOpacity activeOpacity={1}>
-      <Image
-         source={{ uri: `${EndPoint}/${item}` }}
+        <Image
+          source={{ uri: `${EndPoint}/${item}` }}
           style={{
-           // height: 180,
-           height:height/4 + 10,
+            height: height / 4 + 10,
             width: screenWidth,
-            borderRadius:10, 
+            borderRadius: 10,
           }}
         />
       </TouchableOpacity>
@@ -84,7 +79,7 @@ const Carousel = ({ images }) => {
 
   const handleScroll = (event) => {
     const scrollPosition = event.nativeEvent.contentOffset.x;
-    const index = scrollPosition / screenWidth;
+    const index = Math.round(scrollPosition / screenWidth);
     setActiveIndex(index);
   };
 
@@ -103,9 +98,10 @@ const Carousel = ({ images }) => {
     ))
   );
 
+
   return (
     <View>
-      <FlatList
+       <FlatList
         data={images}
         ref={flatlistRef}
         getItemLayout={getItemLayout}
@@ -114,11 +110,6 @@ const Carousel = ({ images }) => {
         horizontal
         pagingEnabled
         onScroll={handleScroll}
-        // getItemLayout={(data, index) => ({
-        //   length: width,
-        //   offset: width * index,
-        //   index,
-        // })}
       />
       <View style={{ 
         flexDirection: "row",
@@ -481,7 +472,15 @@ const checkLoggedIn = async () => {
         >
            <View style={globalStyles.LeftBtnContainer}>
             <Text 
-          style={globalStyles.AppItemButtonTextHomeScreen}
+          style={[
+      globalStyles.AppItemButtonTextHomeScreen,
+
+      {
+        backgroundColor:'rgba(0,0,0,0)',
+        color:'green',
+      }
+
+      ]}
         >{formatDate(item.Created)}</Text>
          </View>
          </TouchableOpacity>
@@ -536,6 +535,7 @@ const checkLoggedIn = async () => {
 
  if(item.Title.toLowerCase().includes(input.toLowerCase())){
 
+  
     return (
 
       <CustomCard >
@@ -669,7 +669,15 @@ const checkLoggedIn = async () => {
         >
            <View style={globalStyles.LeftBtnContainer}>
             <Text 
-          style={globalStyles.AppItemButtonTextHomeScreen}
+          style={[
+      globalStyles.AppItemButtonTextHomeScreen,
+
+      {
+        backgroundColor:'rgba(0,0,0,0)',
+        color:'green',
+      }
+
+      ]}
         >{formatDate(item.Created)}</Text>
          </View>
          </TouchableOpacity>
@@ -715,7 +723,6 @@ const checkLoggedIn = async () => {
 
 
            )
-
 
 
 // hili bano la chini ni la if ya pili mwisho
@@ -774,7 +781,13 @@ const checkLoggedIn = async () => {
 
 
           {/*  mwanzo wa Itself container*/}
-              <View style={globalStyles.ItselfMajorContainer}>
+              <View style={[
+                globalStyles.ItselfMajorContainer,
+                {
+                  backgroundColor:'green',
+                }
+
+                ]}>
              
              <View style={globalStyles.ItselfLeftMinorContainer}>
              <TouchableOpacity 
@@ -782,7 +795,15 @@ const checkLoggedIn = async () => {
             navigation.navigate('Get All Duka Lako Items');    
         }}
              >
-              <Text style={globalStyles.ItselfLeftMinorText}>Duka Lako</Text>
+              <Text 
+              style={[
+                globalStyles.ItselfLeftMinorText,
+                {
+                  backgroundColor:'yellow',
+                  color:'black'
+                }
+
+                ]}>Duka Langu</Text>
               </TouchableOpacity>
               </View>
              
@@ -794,7 +815,7 @@ const checkLoggedIn = async () => {
               <View >
                   <FontAwesome name='plus-square-o' 
                   size={30}
-                  color='brown'  
+                  color='red'  
                   
                    />
               </View>

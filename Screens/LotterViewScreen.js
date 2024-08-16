@@ -71,6 +71,15 @@ style={[{
           height:150,
           width:150,
 
+          // position: 'absolute',
+          // top: 0,
+          // left: 0,
+          // right: 0,
+          // bottom: 0,
+          // backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+          // justifyContent: 'center',
+          // alignItems: 'center',
+
         }}
         source={require('../assets/Loading/loading4.json')} // Replace with your animation JSON file
         autoPlay

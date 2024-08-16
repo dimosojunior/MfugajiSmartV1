@@ -136,8 +136,8 @@ function MyTab( {navigation}){
       //     })}
       />
 
-{/*
 
+{/*
 <Tab.Screen
       name="Test Tab"
       component={Test}
@@ -165,8 +165,8 @@ function MyTab( {navigation}){
       //     })}
       />
 
-*/}
 
+*/}
 
      
 

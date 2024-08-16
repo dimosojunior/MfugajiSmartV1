@@ -360,19 +360,15 @@ const getItems = () => {
                    //  navigation.navigate('Mgawanyo Wa Huduma', item)}
                   // onPress={() => 
                    //  navigation.navigate('Angalia Huduma', item)}
-                        onPress={() => {
-          
-          if (item.JinaLaHuduma === 'Jamii Ya Wafugaji') {
-            navigation.navigate('Jamii Ya Mfugaji HomeScreen', item);
-          } 
-          else{
-            navigation.navigate('Mgawanyo Wa Huduma', item)
-
-          }
-
-          
-          
-        }}
+               onPress={() => {
+              if (item.JinaLaHuduma === 'Jamii Ya Wafugaji') {
+                navigation.navigate('Jamii Ya Mfugaji HomeScreen', item);
+              } else if (item.JinaLaHuduma === 'Duka Lako') {
+                navigation.navigate('Get All Duka Lako Items', item);
+              } else {
+                navigation.navigate('Mgawanyo Wa Huduma', item);
+              }
+            }}
 
 
                    >
@@ -447,18 +443,15 @@ return (
                    // onPress={() => 
                    //  navigation.navigate('Mgawanyo Wa Huduma', item)}
                   
-                                  onPress={() => {
-          
-          if (item.JinaLaHuduma === 'Jamii Ya Wafugaji') {
-            navigation.navigate('Jamii Ya Mfugaji HomeScreen', item);
-          } 
-          else{
-            navigation.navigate('Mgawanyo Wa Huduma', item)
-
-          }
-
-        }}
-
+                      onPress={() => {
+              if (item.JinaLaHuduma === 'Jamii Ya Wafugaji') {
+                navigation.navigate('Jamii Ya Mfugaji HomeScreen', item);
+              } else if (item.JinaLaHuduma === 'Duka Lako') {
+                navigation.navigate('Get All Duka Lako Items', item);
+              } else {
+                navigation.navigate('Mgawanyo Wa Huduma', item);
+              }
+            }}
                    >
                     <Text 
                     style={globalStyles.AppItemButtonTextHomeScreen}
@@ -593,9 +586,16 @@ return (
                    
                     >Huduma kwa wateja</Text>
                     <Text
-                    style={globalStyles.AppCustomSimuTextValueHomeScreen} 
+                    style={[globalStyles.AppCustomSimuTextValueHomeScreen,
+
+                      {
+                        color:'green',
+                        fontFamily:'Medium',
+                      }
+
+                      ]} 
                     >
-                    {phone}
+                  uza/nunua kuku  hapa
                     
                     </Text>
                   </View>

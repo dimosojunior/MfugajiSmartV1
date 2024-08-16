@@ -423,7 +423,7 @@ useEffect(() => {
                   </View>
 
                   <Text style={styles.dataContainerFormTitle}>
-                  Karibu {username}, Tafadhali jaza sehemu zote hapo chini ili kuweza kuweka kumbusho la Ratiba ya chanjo </Text>
+    Tafadhali jaza sehemu zote hapo chini. </Text>
 
 
 {/*
@@ -608,6 +608,7 @@ style={{
             flexDirection: 'row', 
             alignItems: 'center',
              marginHorizontal: 20,
+             width:'90%',
               marginVertical: 15 }}>
             <Checkbox
               value={selectedAinaYaChanjo.includes(x.id)}
@@ -622,9 +623,10 @@ style={{
              color: 'white',
              marginLeft:20, 
              fontFamily:'Bold',
+             width:'85%',
            }}>{x.JinaLaChanjo}, <Text style={{
             color:'green',
-           }}> Hutolewa siku:  {x.Kutolewa}</Text></Text>
+           }}>  Siku:  {x.Kutolewa}</Text></Text>
           </View>
         ))}
       </View>
@@ -780,7 +782,7 @@ style={{
           <View style={[
             globalStyles.ModalViewViewProduct,
             {
-              backgroundColor:'green',
+              backgroundColor:'wheat',
               justifyContent: 'center', 
              alignItems: 'center',
              //height:height/4,
@@ -802,10 +804,9 @@ style={{
               ]}>
               
             
-              Chanjo aina ya kidele hutolewa siku ya kwanza 
-              kutoka kwa mnunuzi wa kuku, sasa unaweza kuchagua 
-              chanjo nyingine zilizobaki ili tuweze kukumbusha 
-              siku husika ikifika.
+              Chanjo ya siku ya kwanza (Marek's), hutolewa 
+              mara tu vifaranga wakianguliwa. Mara nyingi hutolewa 
+              na wazalishaji wa vifaranga
             
             
             </Text>
@@ -828,7 +829,7 @@ style={{
                     <TouchableOpacity 
                     style={[globalStyles.ButtonAddViewProduct,
                       {
-                            backgroundColor:'black'
+                            backgroundColor:'green'
                           }
                       ]}  
                     //onPress={addCartItem}

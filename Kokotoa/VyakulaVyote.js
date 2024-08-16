@@ -255,10 +255,12 @@ setUserToken(token);
 };
 
 
+ const [isPending2, setPending2] = useState(false);
+
 
 const addCartItem = async () => {
   if (!selectedProduct) {
-    setPending(false);
+    setPending2(false);
     
     //Alert.alert('Error', 'Please enter a quantity of product(s) you want to order');
     showAlertFunction("Tafadhali, chagua aina ya chakula ulichonacho");
@@ -273,7 +275,7 @@ const addCartItem = async () => {
   //   return;
   // }
 
-  //setPending(true);
+  setPending2(true);
 //navigation.replace('View Products', { id }); 
   // Find the selected product's price
   const productPrice = selectedProduct.price;
@@ -305,7 +307,7 @@ const addCartItem = async () => {
     );
     
 
-    setPending(false);
+    setPending2(false);
      
     // showAlertFunction("Umefanikiwa kuchagua chakula");
 
@@ -343,7 +345,7 @@ const addCartItem = async () => {
 
    
   } catch (error) {
-     setPending(false);
+     setPending2(false);
     //Alert.alert('Error', 'Failed to add item to cart');
     showAlertFunction("Imeshindikana kuchagua chakula");
     
@@ -742,7 +744,19 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
   >{titles[currentQueryset - 1]}</Text>
 
 
- 
+   {isPending2 && (
+        <View style={styles.loaderContainer}>
+        {/*<Text style={{
+          color:'white',
+          fontFamily:'Bold',
+          textAlign:'center',
+        }}>Subiria inachakata .....</Text>*/}
+          <ActivityIndicator size="large" 
+          color="green" 
+          size = {100}
+          />
+        </View>
+      )}
 
 
        <FlatList
@@ -1246,6 +1260,28 @@ const styles = StyleSheet.create({
   buttonText:{
     color:'white',
     fontFamily:'Medium',
-  }
+  },
+
+
+
+
+
+
+  //---------SPINING---------
+   contentText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  loaderContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex:2,
+  },
 
 });

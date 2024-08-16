@@ -423,7 +423,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
                 color:'wheat',
               }
               ]}>
-                 Chagua aina ya ngege
+                 Chagua aina ya ndege
             </Text>
             </View>
         
@@ -651,7 +651,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
                 
               }
               ]}>
-              Ingiza jina la ulipoyanunua mayai, au alama ya mayai yako, mfano: Alama X 
+              Ingiza jina la mteja (ikiwa ni biashara), au alama ya mayai yako, mfano: Alama X 
             </Text>
             </View>
 
@@ -688,7 +688,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
                 color:'wheat',
               }
               ]}>
-              Ingiza namba yake ya simu huyo mnunuzi 
+              Ingiza namba ya simu ya mteja (ikiwa ni biashara) 
             </Text>
             </View>
 

@@ -1,4 +1,4 @@
-import { StyleSheet,Dimensions, Text, View, Image } from "react-native";
+import { StyleSheet,Dimensions,TouchableOpacity, Text, View, Image } from "react-native";
 import React, {useState,useRef, useEffect, useContext} from 'react';
 
 import { AntDesign } from "@expo/vector-icons";
@@ -15,7 +15,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import {useFonts} from 'expo-font';
 
 const {height, width} = Dimensions.get('window');
-export default function Middle({item, userData,setUserData, isLoading,setIsLoading}) {
+export default function Middle({item,isClicked,setisClicked, userData,setUserData, isLoading,setIsLoading}) {
 
 let [fontsLoaded] = useFonts({
     
@@ -58,6 +58,9 @@ const navigation = useNavigation();
 
   return (
     <View style={styles.main}>
+
+
+
       <View style={styles.imageContainer}>
        {item && item.profile_image ? (
         <Image style={styles.image} 
@@ -108,6 +111,22 @@ const navigation = useNavigation();
 
 
 
+ <TouchableOpacity 
+        onPress={() => setisClicked(item.id)} 
+      >
+        <Text style={{
+          color: isClicked ? 'white' : 'white',
+          marginTop: 20,
+          marginBottom: 20,
+          backgroundColor: isClicked ? 'brown' : 'green',
+          textAlign: 'center',
+          width: '50%',
+          paddingVertical: 10,
+          borderRadius: 8,
+        }}>
+          {isClicked ? 'Taarifa Taarifa' : 'Taarifa zaidi'}
+        </Text>
+      </TouchableOpacity>
 
 
 

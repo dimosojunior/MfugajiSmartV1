@@ -228,7 +228,7 @@ const getItems = () => {
                    //  navigation.navigate('Angalia Huduma', item)}
                   onPress={() => {
           
-          if (item.CategoryName === 'Soko Huru') {
+          if (item.CategoryName === 'Mfugaji Wa Karibu Yako') {
             navigation.navigate('Soko Huru HomeScreen', {...item, JinaLaHuduma });
           } 
 
@@ -236,7 +236,7 @@ const getItems = () => {
             navigation.navigate('Duka Lako HomeScreen', {...item, JinaLaHuduma });
           } 
 
-           if (item.CategoryName === 'Youtube Channel') {
+           if (item.CategoryName === 'Youtube Channel Ya Wafugaji') {
             navigation.navigate('Youtube Channel', {...item, JinaLaHuduma });
           } 
 
@@ -317,9 +317,9 @@ const getItems = () => {
 
                    // onPress={() => 
                    //  navigation.navigate('Angalia Huduma', item)}
-                  onPress={() => {
+                          onPress={() => {
           
-          if (item.CategoryName === 'Soko Huru') {
+          if (item.CategoryName === 'Mfugaji Wa Karibu Yako') {
             navigation.navigate('Soko Huru HomeScreen', {...item, JinaLaHuduma });
           } 
 
@@ -327,7 +327,7 @@ const getItems = () => {
             navigation.navigate('Duka Lako HomeScreen', {...item, JinaLaHuduma });
           } 
 
-           if (item.CategoryName === 'Youtube Channel') {
+           if (item.CategoryName === 'Youtube Channel Ya Wafugaji') {
             navigation.navigate('Youtube Channel', {...item, JinaLaHuduma });
           } 
 

@@ -339,7 +339,7 @@ return (
 
 
 
-<MinorHeader title={JinaLaHuduma} />
+<MinorHeader title="Kokotoa" />
 
 
 

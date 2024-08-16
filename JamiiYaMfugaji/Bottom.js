@@ -107,7 +107,7 @@ const navigation = useNavigation();
             color={Colors.secondary} />
           }
           cardTextOne= {item && item.AinaYaKuku && item.AinaYaKuku.AinaYaKuku ? item.AinaYaKuku.AinaYaKuku : 'Broila'}
-          cardText="Aina Ya kuku Wako"
+          cardText="Aina Ya kuku Wake"
           style={{ backgroundColor: Colors.secondary }}
         />
       </View>

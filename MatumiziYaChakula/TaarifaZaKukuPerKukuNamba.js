@@ -1302,15 +1302,26 @@ const InventoryCard = ({item, index}) => {
      <View style={
             globalStyles.TaarifaZaKukuMaelezoLeft
           }>
-        <Text style={
-            globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsMshale
-          }>
+        <Text style={[
+            globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsMshale,
+
+            {
+              //width:'10%',
+
+            }
+          ]}>
             =></Text>
           <Text 
-           style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
+           style={[globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText,
+
+              {
+              width:'80%',
+
+            }
+            ]}
          >
            
-            Wiki ya 1 anatumia wastani
+            Wiki ya 1 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1383,7 +1394,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 2 anatumia wastani
+            Wiki ya 2 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1446,7 +1457,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 3 anatumia wastani
+            Wiki ya 3 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1508,7 +1519,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 4 anatumia wastani
+            Wiki ya 4 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1570,7 +1581,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 5 anatumia wastani
+            Wiki ya 5 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1635,7 +1646,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 6 anatumia wastani
+            Wiki ya 6 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1704,7 +1715,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 7 anatumia wastani
+            Wiki ya 7 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1769,7 +1780,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 8 anatumia wastani
+            Wiki ya 8 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1832,7 +1843,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 9 anatumia wastani
+            Wiki ya 9 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1895,7 +1906,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 10 anatumia wastani
+            Wiki ya 10 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1958,7 +1969,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 11 anatumia wastani
+            Wiki ya 11 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -2024,7 +2035,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 12 anatumia wastani
+            Wiki ya 12 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -2088,7 +2099,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 13 anatumia wastani
+            Wiki ya 13 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -2151,7 +2162,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 14 anatumia wastani
+            Wiki ya 14 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -2220,7 +2231,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 15 anatumia wastani
+            Wiki ya 15 tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -2283,7 +2294,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 16 anatumia wastani
+            Wiki ya 16 tumia wastani wa kilo 
           </Text>
           
           </View>

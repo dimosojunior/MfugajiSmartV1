@@ -302,7 +302,7 @@ const pickPdf = async () => {
                   </View>
 
                   <Text style={styles.dataContainerFormTitle}>
-                  Karibu {username}, Malizia  kujaza taarifa zingine ili kuweka kumbusho </Text>
+                  jaza taarifa zako ili kuweka kumbusho </Text>
 
 
 {/*

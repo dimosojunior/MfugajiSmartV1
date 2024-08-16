@@ -24,7 +24,8 @@ import COLORS  from '../Constant/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
-
+import LottieView from 'lottie-react-native';
+const {width, height} = Dimensions.get('window');
 
 
 const Kokotoa_UmriWaKuku = ({navigation, route}) => {
@@ -197,366 +198,67 @@ const InventoryCard = ({item, index}) => {
 
 
 
+   
+<>
+{input != '' && (
+
+
       <TouchableOpacity
-       onPress={() =>
-        navigation.navigate('Ingiza Kiasi', { ...item, KukuId, AinaYaKuku, StaterFeed,GrowerFeed, LayerFeed, FinisherFeed })}
+
+      //  onPress={() =>
+      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
+      // }
+
+       // onPress={() => {
+       // navigation.navigate('Vyakula Vyote', { ...item,UmriwaKukuId,UmriKwaWiki, UmriKwaSiku, KukuId, AinaYaKuku,  StaterFeed,GrowerFeed, LayerFeed, FinisherFeed });
+        // setIsModalVisible(false); // Update state when modal opens
+        // setModalVisible(false);
+      //}}
        
      
       
-      style={globalStyles.OverdoseCartItemsContainer} >
+      style={[
+        globalStyles.IdadiYaKukuFirstContainer,
+        {
+          //backgroundColor:'red',
+          width:'100%',
+          //flexDirection:'row',
+          justifyContent:'center',
+          alignItems:'center',
+        }
+      ]} >
 
 
         <View 
-        style={globalStyles.OverdoseLeftCartItemsContainer}
+        style={{
+          //backgroundColor:'red'
+        }}
         >
 
-        {item.UmriKwaWiki && (  
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Wiki  :
+      <Text style={{
+        backgroundColor:'green',
+        paddingVertical:30,
+        marginVertical:10,
+        color:'white',
+        borderRadius:8,
+        paddingHorizontal:30,
 
-          </Text>
-          )}
-
-         {item.Interval && (  
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Siku :
-          </Text>
-          )}
-
-
-         {item.Interval && ( 
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Aina Ya Chakula :
-          </Text>
-          )}
-
-
-         
-        {/*  <Text
-           style={globalStyles.OverdoseIconCartItemsText}
-          >
-            
-        <FontAwesome
-        style={globalStyles.OverdoseIcon1CartItems}
-          
-          name="cart-arrow-down"
-          size={15}
-          color="black"
-        />
-           
-          </Text>*/}
-       
-
-           
-
-
-
-
-      
+      }}> Umri wa kuku wako: {input}</Text>
             
           
         </View>
 
 
 
-        <Pressable 
-
-        style={globalStyles.OverdoseImageContainerCartItems}
-        >
-      
-
-
-
-
-        {item.UmriKwaWiki && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            {item.UmriKwaWiki}
-          </Text>
-          )}
-
-         {item.Interval && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            {item.Interval}
-          </Text>
-          )}
-
-
-{/*mwanzo wa Vipindi Kuku aina ya Kroila*/}
-
-      {/*mwanzo wa check ya 01*/}
-          {AinaYaKuku == 'Kuku aina ya Kroila' && StaterFeed == "1 - 4" && item.UmriKwaSiku >= 0 && item.UmriKwaSiku <= 28 && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-           Starter Feed
-          </Text>
-          )}
-
-      {/*mwisho wa check ya 01*/}
-
-
-       
-
-
- {/*mwanzo wa check ya 02*/}
-          {AinaYaKuku == 'Kuku aina ya Kroila' && GrowerFeed == "5 - 17"  && item.UmriKwaSiku >= 29 && item.UmriKwaSiku <= 119 && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            Grower Feed
-          </Text>
-          )}
-
-      {/*mwisho wa check ya 02*/}
-
-
-
-
-       {/*mwanzo wa check ya 03*/}
-         {/* {AinaYaKuku == 'Kuku aina ya Kroila' && FinisherFeed == "10 - 12"  && item.UmriKwaSiku >= 70 && item.UmriKwaSiku <= 84 && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            Finisher Feed
-          </Text>
-          )}*/}
-
-      {/*mwisho wa check ya 03*/}
-
-
-
-
-
-       {/*mwanzo wa check ya 04*/}
-          {AinaYaKuku == 'Kuku aina ya Kroila' && LayerFeed == "18" && item.UmriKwaSiku >= 120  && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            Layer Feed
-          </Text>
-          )}
-
-      {/*mwisho wa check ya 04*/}
-
-
-
-
-
-{/*mwisho wa vipindi Kuku aina ya Kroila*/}
-
-
-
-
-
-
-
-
-{/*mwanzo wa Vipindi Kuku wa Mayai (Layers)*/}
-
-      {/*mwanzo wa check ya 01*/}
-          {AinaYaKuku == 'Kuku wa Mayai (Layers)' && StaterFeed == "1 - 4" && item.UmriKwaSiku >= 0 && item.UmriKwaSiku <= 28 &&(  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            Starter Feed
-          </Text>
-          )}
-
-      {/*mwisho wa check ya 01*/}
-
-
-       
-
-
- {/*mwanzo wa check ya 02*/}
-          {AinaYaKuku == 'Kuku wa Mayai (Layers)' && GrowerFeed == "5 - 17" && item.UmriKwaSiku >= 29 && item.UmriKwaSiku <= 119 && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            Grower Feed
-          </Text>
-          )}
-
-      {/*mwisho wa check ya 02*/}
-
-
-
-
-
-
-
-       {/*mwanzo wa check ya 04*/}
-          {AinaYaKuku == 'Kuku wa Mayai (Layers)' && LayerFeed == "18" && item.UmriKwaSiku >= 120 &&(  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            Layer Feed
-          </Text>
-          )}
-
-      {/*mwisho wa check ya 04*/}
-
-
-
-
-
-{/*mwisho wa vipindi kuku wa Kuku wa Mayai (Layers)*/}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/*mwanzo wa Vipindi Kuku aina ya Broila (kuku wa nyama)*/}
-
-      {/*mwanzo wa check ya 01*/}
-          {AinaYaKuku == 'Kuku aina ya Broila (kuku wa nyama)' && StaterFeed == "1 - 2" && item.UmriKwaSiku >= 0 && item.UmriKwaSiku <= 14 &&(  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            Starter Feed
-          </Text>
-          )}
-
-      {/*mwisho wa check ya 01*/}
-
-
-       
-
-
- {/*mwanzo wa check ya 02*/}
-          {AinaYaKuku == 'Kuku aina ya Broila (kuku wa nyama)' && GrowerFeed == "3 - 4" && item.UmriKwaSiku >= 15 && item.UmriKwaSiku <= 28 &&(  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            Grower Feed
-          </Text>
-          )}
-
-      {/*mwisho wa check ya 02*/}
-
-
-
-
-
-
-
-       {/*mwanzo wa check ya 04*/}
-          {AinaYaKuku == 'Kuku aina ya Broila (kuku wa nyama)' && FinisherFeed == "5" && item.UmriKwaSiku >= 29  &&(  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            Finisher Feed
-          </Text>
-          )}
-
-      {/*mwisho wa check ya 04*/}
-
-
-
-
-
-{/*mwisho wa vipindi kuku wa Kuku aina ya Broila (kuku wa nyama)*/}
-
-
-
-
-
-
-
-        </Pressable>
-
-
-
-
-
-
-
-
-
       </TouchableOpacity>
 
 
+
+
+
+
+)}
+</>
 
 
 
@@ -568,17 +270,17 @@ const InventoryCard = ({item, index}) => {
   // hili bano la chini ni la if ya juu kama mtu akitype   
 }
 
-if (item.UmriKwaSiku.toString().toLowerCase().includes(input.toLowerCase())) {
+if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
  
  return (
 
 
 
       <TouchableOpacity
-       onPress={() =>
-        navigation.navigate('Ingiza Kiasi', { ...item, KukuId, AinaYaKuku, StaterFeed,GrowerFeed, LayerFeed, FinisherFeed  })}
+      onPress={() =>
+        navigation.navigate('Ingiza Kiasi', { ...item, KukuId, AinaYaKuku, StaterFeed,GrowerFeed, LayerFeed, FinisherFeed })}
        
-     
+            
       
       style={globalStyles.OverdoseCartItemsContainer} >
 
@@ -991,7 +693,7 @@ if (item.UmriKwaSiku.toString().toLowerCase().includes(input.toLowerCase())) {
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza wiki / siku" 
+                    placeholder="Ingiza wiki" 
                      placeholderTextColor='black'
                      keyboardType="numeric"
                     style={globalStyles.AppInputHomeScreenOtherPages}
@@ -1004,11 +706,70 @@ if (item.UmriKwaSiku.toString().toLowerCase().includes(input.toLowerCase())) {
 
 
 
+  {input != '' ? (
+  <Text
+      style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+      
+      >Tafdhali chagua umri wa kuku wako wa wiki {input} hapo chini kuendelea</Text>
+ 
 
-            <Text
-                style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-                
-                >Chagua Umri wa Kuku wako</Text>
+ ):(
+
+ <View>
+
+
+
+<View style={{
+          width:width,
+          //justifyContent:'center',
+          alignItems:'center',
+          //flex:1,
+          backgroundColor:'lightgreen',
+          height:height,
+        }}>
+
+        <Text
+    style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+    
+    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako)</Text>
+
+     {/* <Image
+        source={item?.RouteImage}
+        style={{
+          height: height/2 - 70,
+         width:'80%',
+         borderRadius:5,
+       }}
+      />*/}
+       <LottieView
+        style={{
+        height: height/2,
+         width:'80%',
+         borderRadius:5,
+         // backgroundColor:'red',
+         // justifyContent:'center',
+         // alignItems:'center',
+         zIndex:1,
+
+        // flex:1,
+
+        }}
+        source={require('../assets/Loading/l2.json')} // Replace with your animation JSON file
+        autoPlay
+        loop
+      />
+
+      </View>
+
+
+
+
+
+</View>
+
+ )}
+
+
 
 
 

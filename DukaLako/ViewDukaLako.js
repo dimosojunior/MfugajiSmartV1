@@ -43,48 +43,42 @@ const Carousel = ({ images }) => {
   const screenWidth = Dimensions.get("window").width;
   const [activeIndex, setActiveIndex] = useState(0);
 
+  useEffect(() => {
+    if (flatlistRef.current && images.length > 0) {
+      const interval = setInterval(() => {
+        if (flatlistRef.current) {
+          const newIndex = (activeIndex + 1) % images.length;
+          flatlistRef.current.scrollToIndex({
+            index: newIndex,
+            animated: true,
+          });
+          setActiveIndex(newIndex);
+        }
+      }, 2000);
 
-
-
-
- useEffect(() => {
-  if (flatlistRef.current && images.length > 0) {
-    const interval = setInterval(() => {
-      const newIndex = (activeIndex + 1) % images.length;
-      flatlistRef.current.scrollToIndex({
-        index: newIndex,
-        animated: true,
-      });
-      setActiveIndex(newIndex);
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }
-}, [activeIndex, images.length]);
+      return () => clearInterval(interval);
+    }
+  }, [activeIndex, images.length]);
 
   const getItemLayout = (data, index) => ({
     length: screenWidth,
-    offset: screenWidth * index, // for first image - 300 * 0 = 0pixels, 300 * 1 = 300, 300*2 = 600
+    offset: screenWidth * index,
     index: index,
   });
-  // Data for carousel
 
 
 
 
 
-
-
-  const Slide = ({ item }) => (
+ const Slide = ({ item }) => (
     <View>
       <TouchableOpacity activeOpacity={1}>
-      <Image
-         source={{ uri: `${EndPoint}/${item}` }}
+        <Image
+          source={{ uri: `${EndPoint}/${item}` }}
           style={{
-           // height: 180,
-           height:height/4 + 10,
+            height: height / 4 + 10,
             width: screenWidth,
-            borderRadius:10, 
+            borderRadius: 10,
           }}
         />
       </TouchableOpacity>
@@ -93,7 +87,7 @@ const Carousel = ({ images }) => {
 
   const handleScroll = (event) => {
     const scrollPosition = event.nativeEvent.contentOffset.x;
-    const index = scrollPosition / screenWidth;
+    const index = Math.round(scrollPosition / screenWidth);
     setActiveIndex(index);
   };
 
@@ -123,11 +117,6 @@ const Carousel = ({ images }) => {
         horizontal
         pagingEnabled
         onScroll={handleScroll}
-        // getItemLayout={(data, index) => ({
-        //   length: width,
-        //   offset: width * index,
-        //   index,
-        // })}
       />
       <View style={{ 
         flexDirection: "row",
@@ -547,6 +536,33 @@ const InventoryCard = ({item, index}) => {
 
 
                <Carousel images={carouselItems} />
+
+
+
+         {/*      <View 
+                style={globalStyles.AppItemImageContainerHomeScreen}
+              >
+              {item.PichaYaPost ? ( 
+                  <Image
+
+                  style={globalStyles.AppItemImageHomeScreen}
+                   source={{
+                      uri: EndPoint + '/' + item.PichaYaPost
+                    }}
+                      
+                      >
+                  </Image>
+                  ):(
+                  <Image
+
+                  style={globalStyles.AppItemImageHomeScreen}
+                   source={require('../assets/500.png')} 
+                  >
+                  </Image>
+                )}
+               </View>*/}
+
+
 
 
            {item.Maelezo && (
@@ -1053,6 +1069,24 @@ keyboardShouldPersistTaps="handled"
 </Text>
 
  {phone && (
+         <TouchableOpacity onPress={() => {   Linking.openURL(`tel:${phone}`)}}>
+          <View style={[globalStyles.menuItem, {}]}>
+            <Icon name="phone" color="green" size={25}/>
+            <Text style={[globalStyles.menuItemText, {color:'black'}]}>Piga Simu</Text>
+          </View>
+        </TouchableOpacity>)}
+
+{phone && (
+        <TouchableOpacity  onPress={() => sendTextMessage(phone, message)}>
+          <View style={[globalStyles.menuItem, {}]}>
+            <Icon name="message" color="red" size={25}/>
+            <Text style={[globalStyles.menuItemText, {color:'black'}]}>Mtumie ujumbe kawaida</Text>
+          </View>
+        </TouchableOpacity>)}
+
+
+
+ {phone && (
         <TouchableOpacity onPress={() => { Linking.openURL(`whatsapp://send?phone=${phone}&text=${message}`)}}>
           <View style={[globalStyles.menuItem, {
 
@@ -1062,13 +1096,7 @@ keyboardShouldPersistTaps="handled"
           </View>
         </TouchableOpacity>)}
 
-        {phone && (
-        <TouchableOpacity  onPress={() => sendTextMessage(phone, message)}>
-          <View style={[globalStyles.menuItem, {}]}>
-            <Icon name="message" color="red" size={25}/>
-            <Text style={[globalStyles.menuItemText, {color:'black'}]}>Mtumie ujumbe kawaida</Text>
-          </View>
-        </TouchableOpacity>)}
+
 
           {email && (
          <TouchableOpacity onPress={() => {  Linking.openURL(`mailto:${email}?subject=Hello ${username}&body=${message}`)}}>
@@ -1078,13 +1106,7 @@ keyboardShouldPersistTaps="handled"
           </View>
         </TouchableOpacity>)}
 
-         {phone && (
-         <TouchableOpacity onPress={() => {   Linking.openURL(`tel:${phone}`)}}>
-          <View style={[globalStyles.menuItem, {}]}>
-            <Icon name="phone" color="green" size={25}/>
-            <Text style={[globalStyles.menuItemText, {color:'black'}]}>Piga Simu</Text>
-          </View>
-        </TouchableOpacity>)}
+        
 
 
 

@@ -25,6 +25,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
 
+import LottieView from 'lottie-react-native';
+const {width, height} = Dimensions.get('window');
 
 
 const KusafishaBandaHomeScreen = ({navigation, route}) => {
@@ -192,160 +194,67 @@ const InventoryCard = ({item, index}) => {
 
 
 
+ 
+<>
+{input != '' && (
+
+
       <TouchableOpacity
-       onPress={() =>
-        navigation.navigate('Kusafisha Banda Form', { ...item, JinaLaHuduma })}
+
+      //  onPress={() =>
+      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
+      // }
+
+       // onPress={() => {
+       // navigation.navigate('Vyakula Vyote', { ...item,UmriwaKukuId,UmriKwaWiki, UmriKwaSiku, KukuId, AinaYaKuku,  StaterFeed,GrowerFeed, LayerFeed, FinisherFeed });
+        // setIsModalVisible(false); // Update state when modal opens
+        // setModalVisible(false);
+      //}}
        
      
       
-      style={globalStyles.OverdoseCartItemsContainer} >
+      style={[
+        globalStyles.IdadiYaKukuFirstContainer,
+        {
+          //backgroundColor:'red',
+          width:'100%',
+          //flexDirection:'row',
+          justifyContent:'center',
+          alignItems:'center',
+        }
+      ]} >
 
 
         <View 
-        style={globalStyles.OverdoseLeftCartItemsContainer}
+        style={{
+          //backgroundColor:'red'
+        }}
         >
 
-            
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Siku :
-          </Text>
-          
+      <Text style={{
+        backgroundColor:'green',
+        paddingVertical:30,
+        marginVertical:10,
+        color:'white',
+        borderRadius:8,
+        paddingHorizontal:30,
 
-
-        
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Wiki  :
-
-          </Text>
-          
-
-      
-
-
-          
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Mwezi
-          </Text>
-          
-
-
-       
-
-           
-
-
-
-
-      
+      }}> Unataka kukukmbushwa baada ya siku: {input}</Text>
             
           
         </View>
 
 
 
-        <Pressable 
-
-        style={globalStyles.OverdoseImageContainerCartItems}
-        >
-      
-
-
-
-
-        {item.Siku && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            {item.Siku}
-          </Text>
-          )}
-
-         {item.Wiki > 0 ? (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            {item.Wiki}
-          </Text>
-          ):(
-
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            0
-          </Text>
-
-
-          )}
-
-
-
-
-
-
-
- {item.Mwezi > 0 ? (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            {item.Mwezi}
-          </Text>
-          ):(
-
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            0
-          </Text>
-
-
-          )}
-
-
-
-
-        </Pressable>
-
-
-
-
-
-
-
-
-
       </TouchableOpacity>
 
+
+
+
+
+
+)}
+</>
 
 
 
@@ -555,12 +464,12 @@ return (
       
 
 
-<Text
+{/*<Text
   style={globalStyles.AppChaguaHudumaTextHomeScreen}  
   
   >Chagua Unataka Kukumbushwa baada ya muda gani ?</Text>
 
-
+*/}
 
 
     <View style={globalStyles.searchbarOtherPages}>
@@ -593,15 +502,70 @@ return (
 
             
 
+ 
+  {input != '' ? (
   <Text
-  style={[globalStyles.AppChaguaHudumaTextHomeScreen,
-    {
-      color:"green",
-    }
+      style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+      
+      >Tafdhali chagua siku {input} hapo chini ambazo unahitaji kukumbushwa ili kuendelea</Text>
+ 
 
-    ]}  
-  
-  >Chagua Siku, Wiki au Mwezi </Text>
+ ):(
+
+ <View>
+
+
+
+<View style={{
+          width:width,
+          //justifyContent:'center',
+          alignItems:'center',
+          //flex:1,
+          backgroundColor:'lightgreen',
+          height:height,
+        }}>
+
+        <Text
+    style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+    
+    >Tafadhali, tuambie unahitaji kukumbushwa baada ya muda gani ? (ingiza wastani wa  siku unazohitaji kukumbushwa)</Text>
+
+     {/* <Image
+        source={item?.RouteImage}
+        style={{
+          height: height/2 - 70,
+         width:'80%',
+         borderRadius:5,
+       }}
+      />*/}
+       <LottieView
+        style={{
+        height: height/2,
+         width:'80%',
+         borderRadius:5,
+         // backgroundColor:'red',
+         // justifyContent:'center',
+         // alignItems:'center',
+         zIndex:1,
+
+        // flex:1,
+
+        }}
+        source={require('../assets/Loading/l2.json')} // Replace with your animation JSON file
+        autoPlay
+        loop
+      />
+
+      </View>
+
+
+
+
+
+</View>
+
+ )}
+
 
 
        

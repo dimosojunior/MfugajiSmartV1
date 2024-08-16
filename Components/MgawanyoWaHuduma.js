@@ -371,7 +371,7 @@ const getItems = () => {
             navigation.navigate('Aina Za Kuku', item);
           } 
 
-          if (item.JinaLaHuduma === 'Kokotoa Uwiano Wa Virutubisho') {
+          if (item.JinaLaHuduma === 'Kokotoa Mchanganyiko Wa Chakula') {
             navigation.navigate('Kokotoa Aina Za Kuku', item);
           }
 
@@ -517,7 +517,7 @@ const getItems = () => {
             navigation.navigate('Aina Za Kuku', item);
           } 
 
-          if (item.JinaLaHuduma === 'Kokotoa Uwiano Wa Virutubisho') {
+          if (item.JinaLaHuduma === 'Kokotoa Mchanganyiko Wa Chakula') {
             navigation.navigate('Kokotoa Aina Za Kuku', item);
           }
 
