@@ -56,7 +56,11 @@ const KukokotoaRipoti = ({navigation, route}) => {
     total_Kilos,
 
     TotalFoodMixerPercentage,
-    UnaKiasiGaniChaChakula
+    TotalFoodAmount,
+    UnaKiasiGaniChaChakula,
+   TotalCPPercentageRequired,
+ TotalWangaPercentageRequired,
+ TotalMafutaPercentageRequired
 
    } = route.params
 
@@ -218,8 +222,8 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
 
  useEffect(() => {
     // Make a GET request to fetch queryset and main total price
-   axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
-  //axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
+   axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
+  //axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&TotalFoodAmount=${TotalFoodAmount}`)
 
 
 
@@ -999,7 +1003,7 @@ unachotakiwa kuweka</Text>
               fontFamily:'Medium',
               color:'green',
             }}>
-             {UnaKiasiGaniChaChakula} Kg
+             {TotalFoodAmount} Kg
             </Text>
            
           </View>
@@ -1034,7 +1038,7 @@ unachotakiwa kuweka</Text>
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
     >Mchanganuo wa virutubisho na kiasi chake kinachoweza 
-    kupatikana kwenye mchanganyiko wa chakula cha kilo {UnaKiasiGaniChaChakula}.
+    kupatikana kwenye mchanganyiko wa chakula cha kilo {TotalFoodAmount}.
 
      </Text>
     

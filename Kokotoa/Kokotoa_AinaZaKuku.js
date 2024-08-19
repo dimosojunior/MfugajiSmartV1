@@ -405,6 +405,7 @@ return (
                     ListFooterComponent={renderLoader}
                     onEndReached={getItems}
                     onEndReachedThreshold={0.5}
+                    keyboardShouldPersistTaps="handled"
                   />
 
 

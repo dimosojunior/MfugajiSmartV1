@@ -24,12 +24,10 @@ import COLORS  from '../Constant/colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
-import LottieView from 'lottie-react-native';
-const {width, height} = Dimensions.get('window');
 
 
 
-const IngizaSiku = ({navigation, route}) => {
+const IngizaIdadiYaKuku = ({navigation, route}) => {
 
    const { 
     
@@ -37,14 +35,10 @@ const IngizaSiku = ({navigation, route}) => {
     KukuId ,
     UmriKwaWiki,
     AinaYaKuku,
-    StaterFeed,
-   FinisherFeed,
-   LayerFeed,
-   GrowerFeed,
-
     UmriKwaSiku,
     
-    Interval
+    Interval,
+    
    } = route.params
 
   const UmriWaKukuId = id;
@@ -112,7 +106,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllSikuView/?page=${current_page}&page_size=1000`
+   const url = EndPoint + `/GetAllSikuView/?page=${current_page}&page_size=2`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
@@ -203,66 +197,146 @@ const InventoryCard = ({item, index}) => {
  return (
 
 
-<>
-{input != '' && (
-
 
       <TouchableOpacity
-
-      //  onPress={() =>
-      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
-      // }
-
-       // onPress={() => {
-       // navigation.navigate('Vyakula Vyote', { ...item,UmriwaKukuId,UmriKwaWiki, UmriKwaSiku, KukuId, AinaYaKuku,  StaterFeed,GrowerFeed, LayerFeed, FinisherFeed });
-        // setIsModalVisible(false); // Update state when modal opens
-        // setModalVisible(false);
-      //}}
+       onPress={() =>
+        navigation.navigate('Ingiza Idadi Ya Kuku', { ...item,Interval, KukuId, AinaYaKuku, UmriKwaWiki,UmriWaKukuId, UmriKwaSiku })}
        
      
       
-      style={[
-        globalStyles.IdadiYaKukuFirstContainer,
-        {
-          //backgroundColor:'red',
-          width:'100%',
-          //flexDirection:'row',
-          justifyContent:'center',
-          alignItems:'center',
-        }
-      ]} >
+      style={globalStyles.OverdoseCartItemsContainer} >
 
-
-        <View 
-        style={{
-          //backgroundColor:'red'
-        }}
+         <View 
+        style={globalStyles.OverdoseLeftCartItemsContainer}
         >
 
-      <Text style={{
-        backgroundColor:'green',
-        paddingVertical:30,
-        marginVertical:10,
-        color:'white',
-        borderRadius:8,
-        paddingHorizontal:30,
+        {item.Siku && (  
+          <Text 
+           style={globalStyles.OverdoseItemNameCartItemsText}
+         >
+            Siku  :
 
-      }}> Chakula cha siku: {input}</Text>
-            
+          </Text>
+          )}
+
+         {item.Wiki > 0 ? (  
+          <Text 
+           style={globalStyles.OverdoseItemNameCartItemsText}
+         >
+            Wiki :
+          </Text>
+          ):(
+           <Text 
+           style={globalStyles.OverdoseItemNameCartItemsText}
+         >
+            Wiki :
+          </Text>
+
+          )}
+
+
+           {item.Mwezi > 0 ? (  
+          <Text 
+           style={globalStyles.OverdoseItemNameCartItemsText}
+         >
+            Mwezi :
+          </Text>
+          ):(
+           <Text 
+           style={globalStyles.OverdoseItemNameCartItemsText}
+         >
+            Mwezi :
+          </Text>
+
+          )}
+
+
+          
           
         </View>
 
 
 
+
+
+
+        <Pressable 
+
+        style={globalStyles.OverdoseImageContainerCartItems}
+        >
+      
+
+        {item.Siku && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            {item.Siku}
+          </Text>
+          )}
+
+
+          {item.Wiki > 0 ? (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            {item.Wiki}
+          </Text>
+          ):(
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            0
+          </Text>
+          )}
+
+
+
+           {item.Mwezi > 0 ? (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            {item.Mwezi}
+          </Text>
+          ):(
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            0
+          </Text>
+          )}
+
+
+ </Pressable>
+
       </TouchableOpacity>
 
 
 
-
-
-
-)}
-</>
 
 
 
@@ -282,7 +356,7 @@ if (item.Siku.toString().toLowerCase().includes(input.toLowerCase())) {
 
       <TouchableOpacity
        onPress={() =>
-        navigation.navigate('Ingiza Idadi Ya Kuku', { ...item, KukuId, AinaYaKuku,UmriKwaWiki,UmriWaKukuId, Interval,UmriKwaSiku, StaterFeed, GrowerFeed, LayerFeed, FinisherFeed })}
+        navigation.navigate('Ingiza Idadi Ya Kuku', { ...item, KukuId, AinaYaKuku,UmriKwaWiki,UmriWaKukuId, Interval,UmriKwaSiku })}
        
      
       
@@ -474,9 +548,8 @@ if (item.Siku.toString().toLowerCase().includes(input.toLowerCase())) {
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza Siku unazohitaji" 
+                    placeholder="Ingiza Siku / Wiki / Mwezi" 
                      placeholderTextColor='black'
-                     keyboardType="numeric"
                     style={globalStyles.AppInputHomeScreenOtherPages}
                     
                     ></TextInput>
@@ -487,69 +560,16 @@ if (item.Siku.toString().toLowerCase().includes(input.toLowerCase())) {
 
 
 
-  {input != '' ? (
-  <Text
-      style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-      
-      >Unakaribia kutengeneza chakula chakula cha siku {input}, bonyeza siku husika hapo chini kuendelea</Text>
- 
 
- ):(
-
- <View>
-
-
-
-<View style={{
-          width:width,
-          //justifyContent:'center',
-          alignItems:'center',
-          //flex:1,
-          backgroundColor:'lightgreen',
-          height:height,
-        }}>
-
-        <Text
-    style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-    
-    >Tafadhali, tuambie unahitaji kutengeneza chakula cha muda gani ? (ingiza siku unazotaka kutengeneza chakula)</Text>
-
-     {/* <Image
-        source={item?.RouteImage}
-        style={{
-          height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-       }}
-      />*/}
-       <LottieView
-        style={{
-        height: height/2,
-         width:'80%',
-         borderRadius:5,
-         // backgroundColor:'red',
-         // justifyContent:'center',
-         // alignItems:'center',
-         zIndex:1,
-
-        // flex:1,
-
-        }}
-        source={require('../assets/Loading/l2.json')} // Replace with your animation JSON file
-        autoPlay
-        loop
-      />
-
-      </View>
+            <Text
+                style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+                
+                >Unataka kutengeneza chakula cha muda gani (siku ngapi)</Text>
 
 
 
 
-
-</View>
-
- )}
-
+       
 
 
 
@@ -584,7 +604,6 @@ if (item.Siku.toString().toLowerCase().includes(input.toLowerCase())) {
           ListFooterComponent={renderLoader}
           onEndReached={getItems}
           onEndReachedThreshold={0.5}
-          keyboardShouldPersistTaps="handled"
         />
                 
  </>
@@ -688,6 +707,6 @@ if (item.Siku.toString().toLowerCase().includes(input.toLowerCase())) {
   );
 };
 
-export default IngizaSiku;
+export default IngizaIdadiYaKuku;
 
 const styles = StyleSheet.create({});

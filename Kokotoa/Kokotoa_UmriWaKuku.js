@@ -37,6 +37,24 @@ const Kokotoa_UmriWaKuku = ({navigation, route}) => {
    FinisherFeed,
    LayerFeed,
    GrowerFeed,
+
+   TotalCPPercentageRequired_Starter,
+   TotalWangaPercentageRequired_Starter,
+   TotalMafutaPercentageRequired_Starter,
+
+   TotalCPPercentageRequired_Grower,
+   TotalWangaPercentageRequired_Grower,
+   TotalMafutaPercentageRequired_Grower,
+
+   TotalCPPercentageRequired_Layer,
+   TotalWangaPercentageRequired_Layer,
+   TotalMafutaPercentageRequired_Layer,
+
+   TotalCPPercentageRequired_Finisher,
+   TotalWangaPercentageRequired_Finisher,
+   TotalMafutaPercentageRequired_Finisher,
+
+
     id 
    } = route.params
 
@@ -278,7 +296,30 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
       <TouchableOpacity
       onPress={() =>
-        navigation.navigate('Ingiza Kiasi', { ...item, KukuId, AinaYaKuku, StaterFeed,GrowerFeed, LayerFeed, FinisherFeed })}
+        navigation.navigate('Ingiza Kiasi', { ...item,
+         KukuId, 
+         AinaYaKuku, 
+         StaterFeed,
+         GrowerFeed, 
+         LayerFeed, 
+         FinisherFeed,
+
+    TotalCPPercentageRequired_Starter,
+   TotalWangaPercentageRequired_Starter,
+   TotalMafutaPercentageRequired_Starter,
+
+   TotalCPPercentageRequired_Grower,
+   TotalWangaPercentageRequired_Grower,
+   TotalMafutaPercentageRequired_Grower,
+
+   TotalCPPercentageRequired_Layer,
+   TotalWangaPercentageRequired_Layer,
+   TotalMafutaPercentageRequired_Layer,
+
+   TotalCPPercentageRequired_Finisher,
+   TotalWangaPercentageRequired_Finisher,
+   TotalMafutaPercentageRequired_Finisher
+          })}
        
             
       
@@ -810,6 +851,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
           ListFooterComponent={renderLoader}
           onEndReached={getItems}
           onEndReachedThreshold={0.5}
+          keyboardShouldPersistTaps="handled"
         />
                 
  </>

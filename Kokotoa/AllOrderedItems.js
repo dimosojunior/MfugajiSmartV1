@@ -56,7 +56,14 @@ const AllOrderedItems = ({navigation, route}) => {
     total_Kilos,
 
     TotalFoodMixerPercentage,
-    UnaKiasiGaniChaChakula
+    TotalFoodAmount,
+    UnaKiasiGaniChaChakula,
+
+    //hizi zintoka kwenye model ya VyakulaOrder
+    TotalCPPercentageRequired,
+     TotalWangaPercentageRequired,
+     TotalMafutaPercentageRequired
+    
 
    } = route.params
 
@@ -203,7 +210,10 @@ const checkLoggedIn = async () => {
  
 };
 
-
+//HIZI NI ZA MAONI
+const [Maoni_Ya_CPValue, setMaoni_Ya_CPValue] = useState(0);
+const [Maoni_Ya_WangaValue, setMaoni_Ya_WangaValue] = useState(0);
+const [Maoni_Ya_MafutaValue, setMaoni_Ya_MafutaValue] = useState(0);
 
 const [TotalCPValue, setTotalCPValue] = useState(0);
 const [TotalWangaValue, setTotalWangaValue] = useState(0);
@@ -218,7 +228,7 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
 
  useEffect(() => {
     // Make a GET request to fetch queryset and main total price
-   axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
+   axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
   //axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
 
 
@@ -238,7 +248,11 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
           TotalMETH,
           TotalTryptophan,
           TotalUngaWaMifupa,
-          TotalChumvi 
+          TotalChumvi,
+
+          Maoni_Ya_CP,
+          Maoni_Ya_Wanga,
+          Maoni_Ya_Mafuta 
         } = response.data;
         setQueryset(queryset);
         setCalculatedItems(calculated_items);
@@ -253,6 +267,10 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
         setTotalTryptophanValue(TotalTryptophan);
         setTotalUngaWaMifupaValue(TotalUngaWaMifupa);
         setTotalChumviValue(TotalChumvi);
+
+        setMaoni_Ya_CPValue(Maoni_Ya_CP);
+        setMaoni_Ya_WangaValue(Maoni_Ya_Wanga);
+        setMaoni_Ya_MafutaValue(Maoni_Ya_Mafuta);
 
         setisPending(true);
          setisRange(false);
@@ -270,7 +288,7 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
 
 
 
-
+//console.log("Maoni", Maoni_Ya_CPValue);
 
 
   // Utility function to format the date as "YYYY-MM-DD"
@@ -511,7 +529,7 @@ unachotakiwa kuweka</Text>
 <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Maelekezo jinsi ya kuchanganya chakula cha kilo {UnaKiasiGaniChaChakula} kulingana
+    >Maelekezo jinsi ya kuchanganya chakula cha kilo {TotalFoodAmount} kulingana
     na vyakula ulivyovichagua
 
      </Text>
@@ -588,7 +606,7 @@ unachotakiwa kuweka</Text>
 
 
 
-{UnaKiasiGaniChaChakula > 0 && (
+{TotalFoodAmount > 0 && (
 
         <Pressable
           style={[{
@@ -627,7 +645,7 @@ unachotakiwa kuweka</Text>
               fontFamily:'Medium',
               color:'green',
             }}>
-              {UnaKiasiGaniChaChakula} Kg
+              {TotalFoodAmount} Kg
             </Text>
 
              
@@ -693,10 +711,14 @@ unachotakiwa kuweka</Text>
                 onPress={() =>
          navigation.navigate('Kukokotoa Ripoti', {
           TotalFoodMixerPercentage,id, 
+          TotalFoodAmount,
           total_price, total_Kilos, 
           KukuId,UnaKiasiGaniChaChakula, 
           UmriwaKukuId, totalCartKilos,
            totalCartPrice,
+          TotalCPPercentageRequired,
+      TotalWangaPercentageRequired,
+      TotalMafutaPercentageRequired,
            
              StaterFeed,
                FinisherFeed,
@@ -919,7 +941,8 @@ unachotakiwa kuweka</Text>
    
         <View style={{ 
          flex: 1,
-         marginTop:height/6,
+         //marginTop:height/6,
+         marginTop:15,
          //justifyContent: 'center', 
          alignItems: 'center',
           //backgroundColor: 'red' 
@@ -928,8 +951,8 @@ unachotakiwa kuweka</Text>
             globalStyles.ModalViewViewProduct,
             {
               backgroundColor:'green',
-              justifyContent: 'center', 
-             alignItems: 'center',
+              //justifyContent: 'center', 
+             //alignItems: 'center',
              //height:height/4,
              width:'90%',
 
@@ -939,6 +962,8 @@ unachotakiwa kuweka</Text>
 
 
             ]}>
+
+            {Maoni_Ya_CPValue  && (
           
             <Text style={[globalStyles.ModalTitleViewProduct,
               {
@@ -949,12 +974,68 @@ unachotakiwa kuweka</Text>
               }
               ]}>
               
-            Kwa vyakula ulivyovichagua inaonekana kuna baadhi ya virutubisho 
-            vimekosekana hivyo ili kupata mchanganyiko ambao ni sahihi zaidi
-            tungependa kukushauri uweze kuongeza vyakula.
+            {Maoni_Ya_CPValue}
             
             
             </Text>
+            )}
+
+            <View style={{
+            backgroundColor:'black',
+            borderColor:'white',
+            borderWidth:1,
+            marginBottom:20,
+          }}>
+            {/*<Text>
+              
+            </Text>*/}
+          </View>
+
+              {Maoni_Ya_WangaValue  && (
+          
+            <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                textAlign:'center',
+                fontFamily:'Medium',
+                color:'black',
+
+              }
+              ]}>
+              
+            {Maoni_Ya_WangaValue}
+            
+            
+            </Text>
+            )}
+
+              <View style={{
+            backgroundColor:'black',
+            borderColor:'white',
+            borderWidth:1,
+            marginBottom:20,
+          }}>
+            {/*<Text>
+              
+            </Text>*/}
+          </View>
+
+
+                {Maoni_Ya_MafutaValue  && (
+          
+            <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                textAlign:'center',
+                fontFamily:'Medium',
+                color:'yellow',
+
+              }
+              ]}>
+              
+            {Maoni_Ya_MafutaValue}
+            
+            
+            </Text>
+            )}
    
 
 

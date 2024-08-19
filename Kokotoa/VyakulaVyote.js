@@ -41,6 +41,22 @@ const VyakulaVyote = ({navigation, route}) => {
     AinaYaKuku,
     UmriKwaWiki,
    UmriKwaSiku,
+  
+  TotalCPPercentageRequired_Starter,
+   TotalWangaPercentageRequired_Starter,
+   TotalMafutaPercentageRequired_Starter,
+
+   TotalCPPercentageRequired_Grower,
+   TotalWangaPercentageRequired_Grower,
+   TotalMafutaPercentageRequired_Grower,
+
+   TotalCPPercentageRequired_Layer,
+   TotalWangaPercentageRequired_Layer,
+   TotalMafutaPercentageRequired_Layer,
+
+   TotalCPPercentageRequired_Finisher,
+   TotalWangaPercentageRequired_Finisher,
+   TotalMafutaPercentageRequired_Finisher,
 
 
     IdadiYaKilos,
@@ -307,7 +323,7 @@ const addCartItem = async () => {
     );
     
 
-    setPending2(false);
+    
      
     // showAlertFunction("Umefanikiwa kuchagua chakula");
 
@@ -335,6 +351,7 @@ const addCartItem = async () => {
       // Close the modal and reset the selected product and quantity
       // setModalVisible(false);
       setSelectedProduct(null);
+      setPending2(false);
       //setQuantity(InitialQuantityValue);
 
      // Increment the displayedItemsCount
@@ -346,6 +363,7 @@ const addCartItem = async () => {
    
   } catch (error) {
      setPending2(false);
+     console.log("ERROR", error);
     //Alert.alert('Error', 'Failed to add item to cart');
     showAlertFunction("Imeshindikana kuchagua chakula");
     
@@ -445,6 +463,7 @@ const CartCard = ({ item }) => {
             selectedProductIds, 
             setSelectedProductIds,
              UmriwaKukuId,
+            
 
              AinaYaKuku,  
              StaterFeed,
@@ -452,7 +471,23 @@ const CartCard = ({ item }) => {
              LayerFeed, 
              FinisherFeed,
              UmriKwaSiku,
-             UmriKwaWiki
+             UmriKwaWiki,
+
+             TotalCPPercentageRequired_Starter,
+         TotalWangaPercentageRequired_Starter,
+         TotalMafutaPercentageRequired_Starter,
+
+         TotalCPPercentageRequired_Grower,
+         TotalWangaPercentageRequired_Grower,
+         TotalMafutaPercentageRequired_Grower,
+
+         TotalCPPercentageRequired_Layer,
+         TotalWangaPercentageRequired_Layer,
+         TotalMafutaPercentageRequired_Layer,
+
+         TotalCPPercentageRequired_Finisher,
+         TotalWangaPercentageRequired_Finisher,
+         TotalMafutaPercentageRequired_Finisher
            })
 
     } else {
@@ -1178,6 +1213,7 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
             selectedProductIds, 
             setSelectedProductIds,
              UmriwaKukuId,
+            
 
              AinaYaKuku,  
              StaterFeed,
@@ -1185,7 +1221,23 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
              LayerFeed, 
              FinisherFeed,
              UmriKwaWiki,
-             UmriKwaSiku
+             UmriKwaSiku,
+
+             TotalCPPercentageRequired_Starter,
+         TotalWangaPercentageRequired_Starter,
+         TotalMafutaPercentageRequired_Starter,
+
+         TotalCPPercentageRequired_Grower,
+         TotalWangaPercentageRequired_Grower,
+         TotalMafutaPercentageRequired_Grower,
+
+         TotalCPPercentageRequired_Layer,
+         TotalWangaPercentageRequired_Layer,
+         TotalMafutaPercentageRequired_Layer,
+
+         TotalCPPercentageRequired_Finisher,
+         TotalWangaPercentageRequired_Finisher,
+         TotalMafutaPercentageRequired_Finisher
            })
        
             }}

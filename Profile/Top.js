@@ -107,7 +107,7 @@ const [modalVisible, setModalVisible] = useState(false);
         <AntDesign name="user" size={24} color="white" />
       </TouchableOpacity>
       <TouchableOpacity 
-      onPress={() => navigation.navigate('Update Stack')}
+      onPress={() => navigation.replace('Update Stack')}
       style={styles.setting}>
         <AntDesign name="setting" size={35} color="white" />
       </TouchableOpacity>

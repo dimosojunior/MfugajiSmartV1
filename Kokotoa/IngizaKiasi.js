@@ -34,6 +34,21 @@ const IngizaKiasi = ({navigation, route}) => {
    FinisherFeed,
    LayerFeed,
    GrowerFeed,
+   TotalCPPercentageRequired_Starter,
+   TotalWangaPercentageRequired_Starter,
+   TotalMafutaPercentageRequired_Starter,
+
+   TotalCPPercentageRequired_Grower,
+   TotalWangaPercentageRequired_Grower,
+   TotalMafutaPercentageRequired_Grower,
+
+   TotalCPPercentageRequired_Layer,
+   TotalWangaPercentageRequired_Layer,
+   TotalMafutaPercentageRequired_Layer,
+
+   TotalCPPercentageRequired_Finisher,
+   TotalWangaPercentageRequired_Finisher,
+   TotalMafutaPercentageRequired_Finisher,
 
     AinaYaKuku,
    KukuId,
@@ -286,7 +301,33 @@ return (
       // }
 
         onPress={() => {
-        navigation.navigate('Vyakula Vyote', { ...item,UmriwaKukuId,UmriKwaWiki, UmriKwaSiku, KukuId, AinaYaKuku,  StaterFeed,GrowerFeed, LayerFeed, FinisherFeed });
+        navigation.navigate('Vyakula Vyote', { ...item,
+          UmriwaKukuId,
+          UmriKwaWiki, 
+          UmriKwaSiku, 
+          KukuId, 
+          AinaYaKuku,  
+          StaterFeed,
+          GrowerFeed, 
+          LayerFeed, 
+          FinisherFeed,
+
+    TotalCPPercentageRequired_Starter,
+   TotalWangaPercentageRequired_Starter,
+   TotalMafutaPercentageRequired_Starter,
+
+   TotalCPPercentageRequired_Grower,
+   TotalWangaPercentageRequired_Grower,
+   TotalMafutaPercentageRequired_Grower,
+
+   TotalCPPercentageRequired_Layer,
+   TotalWangaPercentageRequired_Layer,
+   TotalMafutaPercentageRequired_Layer,
+
+   TotalCPPercentageRequired_Finisher,
+   TotalWangaPercentageRequired_Finisher,
+   TotalMafutaPercentageRequired_Finisher
+        });
         // setIsModalVisible(false); // Update state when modal opens
         // setModalVisible(false);
       }}
@@ -446,7 +487,7 @@ return (
   <Text
       style={globalStyles.AppChaguaHudumaTextHomeScreen}  
       
-      >Untaka kutengeneza chakula cha Kg {input} ?</Text>
+      >Unataka kutengeneza chakula cha Kg {input} ?</Text>
  
 
  ):(

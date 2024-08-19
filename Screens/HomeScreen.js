@@ -1,9 +1,11 @@
-import React, { useState,useCallback, useEffect } from 'react';
+import React, { useState,useCallback,useRef, useEffect } from 'react';
 import  {
   View,StyleSheet,Image,
   ActivityIndicator,
   ImageBackground,
   Linking,
+  Animated,
+  Alert,
   Platform,Text,TouchableOpacity,TextInput,FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -74,6 +76,37 @@ const message = "Mfugaji Smart!!"
 
 
 
+ const fadeAnimSmart = useRef(new Animated.Value(0)).current;
+const fadeAnimKidijitali = useRef(new Animated.Value(0)).current;
+
+useEffect(() => {
+    // Uhuishaji wa fade-in na fade-out wa maandishi kwa mfuatano
+    Animated.loop(
+        Animated.sequence([
+            Animated.timing(fadeAnimSmart, {
+                toValue: 1,
+                duration: 2000, // muda wa kuongezeka uwazi (2 sekunde)
+                useNativeDriver: true,
+            }),
+            Animated.timing(fadeAnimSmart, {
+                toValue: 0,
+                duration: 2000, // muda wa kupungua uwazi (2 sekunde)
+                useNativeDriver: true,
+            }),
+            // Kisha, uhuishaji wa 'Fuga Kidijitali'
+            Animated.timing(fadeAnimKidijitali, {
+                toValue: 1,
+                duration: 2000, // muda wa kuongezeka uwazi (2 sekunde)
+                useNativeDriver: true,
+            }),
+            Animated.timing(fadeAnimKidijitali, {
+                toValue: 0,
+                duration: 2000, // muda wa kupungua uwazi (2 sekunde)
+                useNativeDriver: true,
+            }),
+        ])
+    ).start();
+}, [fadeAnimSmart, fadeAnimKidijitali]);
   // const nav = useNavigation();
   // const DATA = [
   //   {
@@ -491,7 +524,7 @@ return (
 
            <ImageBackground
 
-                source={require('../assets/bc1.png')}
+                source={require('../assets/im2.jpg')}
                 style={{
                     flex: 1,
                     opacity:1,
@@ -506,31 +539,33 @@ return (
                       style={globalStyles.AppWelcomeMsgContainerHomeScreen} 
                      
                      >
-                        <Text 
-                         
-                     
-                        style={[
-                          styles.welcomemessage,
-                          
-                          globalStyles.AppWelcomeHeaderTextHomeScreen  
+                     <Animated.Text
+                style={[
+                    styles.welcomemessage,
+                    {
+                        opacity: fadeAnimSmart, // Tumia animation ya opacity
+                        color: 'white',
+                        fontSize: 25,
+                        fontFamily: 'Medium',
+                    },
+                ]}
+            >
+                MFUGAJI SMART
+            </Animated.Text>
 
-                          
-                        ]}
-                        >
-                      MFUGAJI SMART</Text>
-
-                       <Text 
-                         style={[
-                          styles.welcomemessage,
-                          
-                          globalStyles.AppWelcomeHeaderText2HomeScreen  
-
-                          
-                        ]} 
-                     
-                       >
-                      Fuga Kidijitali
-                      </Text>
+            <Animated.Text
+                style={[
+                    styles.welcomemessage,
+                    {
+                        opacity: fadeAnimKidijitali, // Tumia animation ya opacity
+                        color: 'yellow',
+                        fontSize: 20,
+                        fontFamily: 'Regular',
+                    },
+                ]}
+            >
+                Fuga Kidijitali
+            </Animated.Text>
                      </View>
                      
                       <View style={globalStyles.circle}>
@@ -548,7 +583,7 @@ return (
                   Where will you go</Text>*/}
                   
 
-                  <View style={globalStyles.searchbar}>
+                 {/* <View style={globalStyles.searchbar}>
                     <Ionicons name="search-outline" 
                     size={25} 
                     color={COLORS.black} 
@@ -563,7 +598,7 @@ return (
                     style={globalStyles.AppInputHomeScreen}
                     
                     ></TextInput>
-                  </View>
+                  </View>*/}
 
 
 
@@ -581,10 +616,10 @@ return (
                   style={globalStyles.AppCustomSimuContainerHomeScreen}
                   
                   >
-                    <Text 
+                  {/*  <Text 
                     style={globalStyles.AppCustomSimuTextHomeScreen}
                    
-                    >Huduma kwa wateja</Text>
+                    >Huduma kwa wateja</Text>*/}
                     <Text
                     style={[globalStyles.AppCustomSimuTextValueHomeScreen,
 
@@ -595,7 +630,7 @@ return (
 
                       ]} 
                     >
-                  uza/nunua kuku  hapa
+                  uza kuku/mayai hapa kwa haraka zaidi
                     
                     </Text>
                   </View>

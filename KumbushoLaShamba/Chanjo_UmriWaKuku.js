@@ -566,6 +566,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
           ListFooterComponent={renderLoader}
           onEndReached={getItems}
           onEndReachedThreshold={0.5}
+          keyboardShouldPersistTaps="handled"
         />
                 
  </>

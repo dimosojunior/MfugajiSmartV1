@@ -404,7 +404,7 @@ const checkLoggedIn = async () => {
                  >{item.Title}</Text>
 
 
-                 <Carousel images={carouselItems} />
+       <Carousel images={carouselItems} />
 {/*
 
                <View 
@@ -601,7 +601,7 @@ const checkLoggedIn = async () => {
                  >{item.Title}</Text>
 
 
-                 <Carousel images={carouselItems} />
+      <Carousel images={carouselItems} />
 {/*
 
                <View 
@@ -784,7 +784,7 @@ const checkLoggedIn = async () => {
               <View style={[
                 globalStyles.ItselfMajorContainer,
                 {
-                  backgroundColor:'green',
+                  backgroundColor:'lightgreen',
                 }
 
                 ]}>
@@ -799,8 +799,8 @@ const checkLoggedIn = async () => {
               style={[
                 globalStyles.ItselfLeftMinorText,
                 {
-                  backgroundColor:'yellow',
-                  color:'black'
+                  backgroundColor:'green',
+                  color:'white'
                 }
 
                 ]}>Duka Langu</Text>

@@ -79,8 +79,8 @@ export default function MinorHeader(  {title} ) {
         <Text style={[
           globalStyles.headerTextHeaderFile1,
           {
-            width:'50%',
-            marginLeft:10,
+            // width:'50%',
+            // marginLeft:10,
           }
 
           ]}>

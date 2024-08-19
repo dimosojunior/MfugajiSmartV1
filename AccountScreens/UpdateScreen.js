@@ -53,22 +53,41 @@ const UpdateScreen = ({ navigation }) => {
 
     const [profile_image, setprofile_image] = useState(null);
   const [extractedText, setExtractedText] = useState('');
+  const [IsPicked, setIsPicked] = useState(false);
 
 
 
 //MWANZO WA PICK IMAGE FROM THE PHONE
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+  // const pickImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1,
+  //   });
  
-      setprofile_image(result.assets[0].uri); // Use assets array
-      console.log("PROJECT IMAGE", profile_image)
-      processImage(); // Use assets array
-  };
+  //     setprofile_image(result.assets[0].uri); // Use assets array
+  //     console.log("PROJECT IMAGE", profile_image)
+  //     processImage(); // Use assets array
+  // };
+
+const pickImage = async () => {
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
+
+  if (!result.canceled) {
+    setprofile_image(result.assets[0].uri);
+    setIsPicked(true);
+    //console.log(result);
+  }
+};
+
+
+
 
  const  processImage = ()=>{
     console.log('Converted')
@@ -250,13 +269,22 @@ const pickPdf = async () => {
         setcompany_name(userData.company_name);
          setMaelezo(userData.Maelezo);
           setLocation(userData.Location);
+
+          // Set selectedMkoa moja kwa moja kwa kutumia ID
+        setSelectedMkoa(userData.Mkoa.id);
+
+        setSelectedAinaYaKuku(userData.AinaYaKuku.id);
+         setSelectedRole(userData.Role.id);
+
+         setprofile_image(userData.profile_image);
+         setIsPicked(false);
         
          // Set selectedMkoa and selectedAinaYaKuku based on user data
-         const mkoa = Mkoa.find(m => m.id === userData.Mkoa.id);
-        const ainaYaKuku = AinaYaKuku.find(a => a.id === userData.AinaYaKuku.id);
+        //  const mkoa = Mkoa.find(m => m.id === userData.Mkoa.id);
+        // const ainaYaKuku = AinaYaKuku.find(a => a.id === userData.AinaYaKuku.id);
 
-        setSelectedMkoa(mkoa ? mkoa.id : null);
-        setSelectedAinaYaKuku(ainaYaKuku ? ainaYaKuku.id : null);
+        // setSelectedMkoa(mkoa ? mkoa.id : null);
+        // setSelectedAinaYaKuku(ainaYaKuku ? ainaYaKuku.id : null);
 
 
       } catch (error) {
@@ -336,28 +364,52 @@ const pickPdf = async () => {
         }
 
          // Hakikisha kuwa selectedMkoa na selectedAinaYaKuku sio null
-        if (selectedMkoa && selectedMkoa.id) {
-            formData.append('Mkoa', selectedMkoa.id);
+        // if (selectedMkoa && selectedMkoa.id) {
+        //     formData.append('Mkoa', selectedMkoa.id);
+        // } else {
+        //     showAlertFunction('Tafadhali chagua Mkoa.');
+        //     setIsLoading(false);
+        //     return;
+        // }
+
+        if (selectedMkoa) {
+          formData.append('Mkoa', selectedMkoa);
         } else {
-            showAlertFunction('Tafadhali chagua Mkoa.');
-            setIsLoading(false);
-            return;
+          showAlertFunction('Tafadhali chagua Mkoa.');
+          setIsLoading(false);
+          return;
         }
 
-         if (selectedRole && selectedRole.id) {
-            formData.append('Role', selectedMkoa.id);
+        //  if (selectedRole && selectedRole.id) {
+        //     formData.append('Role', selectedMkoa.id);
+        // } else {
+        //     showAlertFunction('Tafadhali chagua aina ya mtumiaji.');
+        //     setIsLoading(false);
+        //     return;
+        // }
+
+        if (selectedRole) {
+          formData.append('Role', selectedRole);
         } else {
-            showAlertFunction('Tafadhali chagua aina ya mtumiaji.');
-            setIsLoading(false);
-            return;
+          showAlertFunction('Tafadhali chagua aina ya mtumiaji.');
+          setIsLoading(false);
+          return;
         }
 
-        if (selectedAinaYaKuku && selectedAinaYaKuku.id) {
-            formData.append('AinaYaKuku', selectedAinaYaKuku.id);
+        // if (selectedAinaYaKuku && selectedAinaYaKuku.id) {
+        //     formData.append('AinaYaKuku', selectedAinaYaKuku.id);
+        // } else {
+        //     showAlertFunction('Tafadhali chagua Aina ya Kuku.');
+        //     setIsLoading(false);
+        //     return;
+        // }
+
+          if (selectedAinaYaKuku) {
+          formData.append('AinaYaKuku', selectedAinaYaKuku);
         } else {
-            showAlertFunction('Tafadhali chagua Aina ya Kuku.');
-            setIsLoading(false);
-            return;
+          showAlertFunction('Tafadhali chagua aina ya kuku.');
+          setIsLoading(false);
+          return;
         }
 
 
@@ -365,13 +417,38 @@ const pickPdf = async () => {
       // //formData.append('Level', selectedLevel.id);
       // formData.append('AinaYaKuku', selectedAinaYaKuku.id);
 
+     // if (profile_image) {
+     //        formData.append('profile_image', {
+     //            uri: profile_image,
+     //            name: 'profile_image.jpg',
+     //            type: 'image/jpeg',
+     //        });
+        
+     //     } else {
+     //      showAlertFunction('Tafadhali chagua picha yako.');
+     //      setIsLoading(false);
+     //      return;
+     //    }
+
+     if (profile_image && IsPicked) {
+  console.log("Image URI:", profile_image.uri || profile_image);
+  formData.append('profile_image', {
+    uri: profile_image.uri || profile_image,
+    name: 'profile_image.jpg',
+    type: 'image/jpeg',
+  });
+} else {
+  console.log("No image selected or uri not found");
+}
+
+
 
        // Append the image file
-    formData.append('profile_image', {
-      uri: profile_image,
-      name: 'profile_image.jpg',
-      type: 'image/jpeg',
-    });
+    // formData.append('profile_image', {
+    //   uri: profile_image,
+    //   name: 'profile_image.jpg',
+    //   type: 'image/jpeg',
+    // });
 
     // formData.append('pdf', {
     //   uri: pdf,
@@ -416,13 +493,7 @@ const pickPdf = async () => {
 
                   <Text style={styles.dataContainerFormTitle}>Badilisha taarifa zako </Text>
 
-                  <TextInput
-                    placeholder='Email yako'
-                    value={email}
-                    onChangeText={setEmail}
-                    placeholderTextColor={COLORS.white}
-                    style={styles.MyTextInput}
-                  />
+                
                   <TextInput
                     placeholder='Jina lako kamili'
                     value={username}
@@ -447,9 +518,17 @@ const pickPdf = async () => {
 
 
                    <TextInput
-                    placeholder='Kata uliyopo'
+                    placeholder='Wilaya uliyopo'
                     value={Location}
                     onChangeText={setLocation}
+                    placeholderTextColor={COLORS.white}
+                    style={styles.MyTextInput}
+                  />
+
+                    <TextInput
+                    placeholder='Email yako'
+                    value={email}
+                    onChangeText={setEmail}
                     placeholderTextColor={COLORS.white}
                     style={styles.MyTextInput}
                   />
@@ -471,8 +550,21 @@ const pickPdf = async () => {
 
      <View style={globalStyles.picker}>
 
+       <Picker
+    selectedValue={selectedRole}
+    onValueChange={(itemValue) => setSelectedRole(itemValue)}
+    >
+        {Role.map((role) => (
+            <Picker.Item 
+            key={role.id} 
+            label={role.Role} 
+            value={role.id}
+             />
+        ))}
+    </Picker>
+
             
-          <Picker
+      {/*    <Picker
            style={globalStyles.pickerInputAddNewProject}
             selectedValue={selectedRole}
             onValueChange={(itemValue) => setSelectedRole(itemValue)}
@@ -485,7 +577,7 @@ const pickPdf = async () => {
                 value={x}
               />
             ))}
-          </Picker>
+          </Picker>*/}
 
          </View>
           
@@ -517,7 +609,7 @@ const pickPdf = async () => {
      <View style={globalStyles.picker}>
 
             
-          <Picker
+       {/*   <Picker
            style={globalStyles.pickerInputAddNewProject}
             selectedValue={selectedMkoa}
             onValueChange={(itemValue) => setSelectedMkoa(itemValue)}
@@ -526,11 +618,23 @@ const pickPdf = async () => {
             {Mkoa.map((x) => (
               <Picker.Item
                 key={x.id}
-                label={x.JinaLaMkoa}
+                label={selectedMkoa ? selectedMkoa : x.JinaLaMkoa}
                 value={x}
               />
             ))}
-          </Picker>
+          </Picker>*/}
+          <Picker
+    selectedValue={selectedMkoa}
+    onValueChange={(itemValue) => setSelectedMkoa(itemValue)}
+    >
+        {Mkoa.map((mkoa) => (
+            <Picker.Item 
+            key={mkoa.id} 
+            label={mkoa.JinaLaMkoa} 
+            value={mkoa.id} 
+            />
+        ))}
+    </Picker>
 
          </View>
           
@@ -557,8 +661,21 @@ const pickPdf = async () => {
 
      <View style={globalStyles.picker}>
 
+       <Picker
+    selectedValue={selectedAinaYaKuku}
+    onValueChange={(itemValue) => setSelectedAinaYaKuku(itemValue)}
+    >
+        {AinaYaKuku.map((ainayakuku) => (
+            <Picker.Item 
+            key={ainayakuku.id} 
+            label={ainayakuku.AinaYaKuku} 
+            value={ainayakuku.id} 
+            />
+        ))}
+    </Picker>
+
             
-          <Picker
+        {/*  <Picker
            style={globalStyles.pickerInputAddNewProject}
             selectedValue={selectedAinaYaKuku}
             onValueChange={(itemValue) => setSelectedAinaYaKuku(itemValue)}
@@ -571,7 +688,7 @@ const pickPdf = async () => {
                 value={x}
               />
             ))}
-          </Picker>
+          </Picker>*/}
 
          </View>
           
@@ -626,16 +743,49 @@ const pickPdf = async () => {
   justifyContent:'center',
   alignItems:'center',
 }}>
-    {profile_image && (
-<Image source={{ uri: profile_image }} style={{ 
+
+
+ {!IsPicked && profile_image && (
+<Image 
+ source={{
+uri: EndPoint + '/' + profile_image
+}}
+//source={{ uri: profile_image }} 
+//source={profile_image ? { uri: profile_image } : require('../assets/profile.jpg')}
+
+style={{ 
 width: width/2 -30,
 height: 150,
 borderRadius:100,
 marginTop:10,
 marginBottom:20,
 
-}} />
+}} 
+/>
 )}
+
+
+  {IsPicked && profile_image && (
+<Image 
+//  source={{
+// uri: EndPoint + '/' + profile_image
+// }}
+source={{ uri: profile_image }} 
+//source={profile_image ? { uri: profile_image } : require('../assets/profile.jpg')}
+
+style={{ 
+width: width/2 -30,
+height: 150,
+borderRadius:100,
+marginTop:10,
+marginBottom:20,
+
+}} 
+/>
+)}
+
+
+
 </View>
 
 

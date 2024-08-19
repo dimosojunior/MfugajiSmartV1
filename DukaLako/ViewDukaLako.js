@@ -535,7 +535,7 @@ const InventoryCard = ({item, index}) => {
                  >{item.Title}</Text>
 
 
-               <Carousel images={carouselItems} />
+     <Carousel images={carouselItems} />
 
 
 
@@ -722,6 +722,7 @@ keyboardShouldPersistTaps="handled"
                 justifyContent:'space-between',
                 width:'90%',
                 marginHorizontal:20,
+                paddingVertical:10,
 
                     
                   },
@@ -996,8 +997,7 @@ keyboardShouldPersistTaps="handled"
 
 
 
-            {/* <Carousel images={carouselItems} />
-*/}
+  
 
            <View 
                 style={[globalStyles.AppItemImageContainerHomeScreen,

@@ -39,6 +39,22 @@ const AllCartItems = ({navigation, route}) => {
    UmriwaKukuId,
    UnaKiasiGaniChaChakula,
 
+   TotalCPPercentageRequired_Starter,
+   TotalWangaPercentageRequired_Starter,
+   TotalMafutaPercentageRequired_Starter,
+
+   TotalCPPercentageRequired_Grower,
+   TotalWangaPercentageRequired_Grower,
+   TotalMafutaPercentageRequired_Grower,
+
+   TotalCPPercentageRequired_Layer,
+   TotalWangaPercentageRequired_Layer,
+   TotalMafutaPercentageRequired_Layer,
+
+   TotalCPPercentageRequired_Finisher,
+   TotalWangaPercentageRequired_Finisher,
+   TotalMafutaPercentageRequired_Finisher,
+
 
 
      StaterFeed,
@@ -315,7 +331,7 @@ const makeOrder = async () => {
   //setIsOrderButtonVisible(false);
   try {
     const response = await axios.post(
-      EndPoint + `/VyakulaOrder/?AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}`,
+      EndPoint + `/VyakulaOrder/?TotalCPPercentageRequired_Finisher=${TotalCPPercentageRequired_Finisher}&TotalWangaPercentageRequired_Finisher=${TotalWangaPercentageRequired_Finisher}&TotalMafutaPercentageRequired_Finisher=${TotalMafutaPercentageRequired_Finisher}&TotalCPPercentageRequired_Layer=${TotalCPPercentageRequired_Layer}&TotalWangaPercentageRequired_Layer=${TotalWangaPercentageRequired_Layer}&TotalMafutaPercentageRequired_Layer=${TotalMafutaPercentageRequired_Layer}&TotalCPPercentageRequired_Grower=${TotalCPPercentageRequired_Grower}&TotalWangaPercentageRequired_Grower=${TotalWangaPercentageRequired_Grower}&TotalMafutaPercentageRequired_Grower=${TotalMafutaPercentageRequired_Grower}&TotalCPPercentageRequired_Starter=${TotalCPPercentageRequired_Starter}&TotalWangaPercentageRequired_Starter=${TotalWangaPercentageRequired_Starter}&TotalMafutaPercentageRequired_Starter=${TotalMafutaPercentageRequired_Starter}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}`,
       { 
         total_price: totalCartPrice,
         total_Kilos: totalCartKilos,
@@ -361,6 +377,7 @@ const makeOrder = async () => {
 
   } catch (error) {
     setPending(false);
+    console.log("ERROR", error);
     if (error.response && error.response.data && error.response.data.error) {
       showAlertFunction(error.response.data.error);
     } else {
@@ -787,7 +804,8 @@ style={globalStyles.AppChaguaHudumaTextHomeScreen}
            LayerFeed, 
            FinisherFeed,
            UmriKwaWiki,
-           UmriKwaSiku
+           UmriKwaSiku,
+           UnaKiasiGaniChaChakula
         })}
        
            

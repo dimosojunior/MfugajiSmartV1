@@ -356,7 +356,7 @@ useEffect(() => {
     //   type: 'application/pdf',
     // });
 
-      axios.post(EndPoint + `/AddKumbushoLaChanjoView/`, formData, {
+      axios.post(EndPoint + `/AddKumbushoLaChanjoView/?UmriKwaWiki=${UmriKwaWiki}&UmriKwaSiku=${UmriKwaSiku}`, formData, {
         headers: {
           Authorization: `Token ${userToken}`,
           'Content-Type': 'multipart/form-data',

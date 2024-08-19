@@ -49,12 +49,12 @@ const AllOrders = ({navigation, route}) => {
     AinaYaKuku,
     UmriKwaWiki,
    UmriKwaSiku,
-   //UnaKiasiGaniChaChakula
+   UnaKiasiGaniChaChakula
     //id //id ya Chakula
    } = route.params
 
   //const ChakulaId = id;
-const UnaKiasiGaniChaChakula = 100;
+//const UnaKiasiGaniChaChakula = 100;
 
 
     // To change color
@@ -313,7 +313,7 @@ const ReportCard = ({item, index}) => {
               color:'green',
               fontFamily:'Bold'
             }}>
-             {UnaKiasiGaniChaChakula} Kg
+             {item.TotalFoodAmount} Kg
             </Text> 
           </Text>
           
@@ -458,7 +458,7 @@ const ReportCard = ({item, index}) => {
               color:'green',
               fontFamily:'Bold'
             }}>
-             {UnaKiasiGaniChaChakula} Kg
+             {item.TotalFoodAmount} Kg
             </Text> 
           </Text>
           

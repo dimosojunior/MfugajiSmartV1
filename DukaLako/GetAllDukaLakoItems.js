@@ -388,7 +388,6 @@ setUserToken(token);
 
  
 
-
 <Carousel images={carouselItems} />
 
 
@@ -782,7 +781,13 @@ setUserToken(token);
 
 
           {/*  mwanzo wa Itself container*/}
-              <View style={globalStyles.ItselfMajorContainer}>
+              <View style={[globalStyles.ItselfMajorContainer,
+
+                  {
+                  backgroundColor:'green',
+                }
+
+                ]}>
              
              <View style={globalStyles.ItselfLeftMinorContainer}>
              <TouchableOpacity 
@@ -790,7 +795,13 @@ setUserToken(token);
             navigation.navigate('Your Posts');    
         }}
              >
-              <Text style={globalStyles.ItselfLeftMinorText}>Duka Langu</Text>
+              <Text style={[globalStyles.ItselfLeftMinorText,
+                 {
+                  backgroundColor:'yellow',
+                  color:'black'
+                }
+
+                ]}>Duka Langu</Text>
               </TouchableOpacity>
               </View>
              

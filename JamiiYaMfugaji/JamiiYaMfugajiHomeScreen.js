@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useCallback, useEffect } from 'react';
 import  {
   View,StyleSheet,Image,
   ActivityIndicator,
   ImageBackground,
+  Linking,
+  Alert,
   Platform,Text,TouchableOpacity,TextInput,FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { Ionicons } from '@expo/vector-icons';
+
 
 import COLORS  from '../Constant/colors';
 
@@ -22,6 +24,7 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
+import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
 
 export default function JamiiYaMfugajiHomeScreen ({navigation, route}) {
 
@@ -59,6 +62,26 @@ export default function JamiiYaMfugajiHomeScreen ({navigation, route}) {
   };
 
 
+
+
+  const openUrl = async (url) => {
+        const isSupported = await Linking.canOpenURL(url);
+        if (isSupported) {
+            await Linking.openURL(url);
+        } else {
+            Alert.alert(`Programu imeshindwa kufungua hii linki: ${url}`);
+        }
+    }
+
+const sendTextMessage = useCallback(async (phNumber, message) => {
+        const separator = Platform.OS === 'ios' ? '&' : '?'
+        const url = `sms:${phNumber}${separator}body=${message}`
+        await Linking.openURL(url)
+    }, [])
+
+const message = "Mfugaji Smart!!"
+
+const HudumaKwaWatejaNumber = "0628431507";
 
   // const nav = useNavigation();
   // const DATA = [
@@ -382,7 +405,7 @@ const getItems = () => {
 
 
 
-    <View style={globalStyles.searchbarOtherPages}>
+    {/*<View style={globalStyles.searchbarOtherPages}>
 
                  <View style={globalStyles.searchbarIconContainerOtherPages}>
                     <Ionicons name="search-outline" 
@@ -405,6 +428,62 @@ const getItems = () => {
                     </View>
 
                   </View>
+*/}
+
+
+
+
+
+
+
+          {/*  mwanzo wa Itself container*/}
+              <View style={[globalStyles.ItselfMajorContainer,
+
+                  {
+                  backgroundColor:'green',
+                  marginHorizontal:10,
+                  width:'95%'
+                }
+
+                ]}>
+             
+             <View style={globalStyles.ItselfLeftMinorContainer}>
+             <TouchableOpacity 
+           onPress={() => {   Linking.openURL(`tel:${HudumaKwaWatejaNumber}`)}}
+            
+             >
+              <Text style={[globalStyles.ItselfLeftMinorText,
+                 {
+                  backgroundColor:'yellow',
+                  color:'black'
+                }
+
+                ]}>Huduma kwa wateja</Text>
+              </TouchableOpacity>
+              </View>
+             
+              
+            <TouchableOpacity 
+           onPress={() => {   Linking.openURL(`tel:${HudumaKwaWatejaNumber}`)}}
+            
+              style={globalStyles.ItselfRightMinorContainer}>
+              <View >
+                  <FontAwesome name='phone' 
+                  size={30}
+                  color='white'  
+                  
+                   />
+              </View>
+              </TouchableOpacity>
+                
+              </View>
+             {/*  mwisho wa Itself container*/}
+            
+
+
+
+
+
 
 
 
