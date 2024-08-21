@@ -568,11 +568,11 @@ return (
             </Animated.Text>
                      </View>
                      
-                      <View style={globalStyles.circle}>
+                     {/* <View style={globalStyles.circle}>
                       <Image source={require('../assets/icon.png')} 
                   style={globalStyles.RightHeaderImage} />
 
-                      </View>
+                      </View>*/}
 
 
 

@@ -112,7 +112,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetIdadiYaKukuView/?page=${current_page}&page_size=50`
+   const url = EndPoint + `/GetIdadiYaKukuView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
@@ -208,15 +208,7 @@ return (
 
       <TouchableOpacity
 
-      //  onPress={() =>
-      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
-      // }
-
-        onPress={() => {
-        navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId, AinaYaKuku,UmriKwaWiki,UmriWaKukuId, Interval,UmriKwaSiku, Siku, StaterFeed, GrowerFeed, LayerFeed, FinisherFeed });
-        // setIsModalVisible(false); // Update state when modal opens
-        // setModalVisible(false);
-      }}
+     
        
      
       
@@ -320,7 +312,7 @@ return (
         borderRadius:8,
         paddingHorizontal:30,
 
-      }}>Bonyeza kuendelea kutengeneza chakula cha kuku: {input}</Text>
+      }}>Bonyeza kuendelea kutengeneza chakula cha kuku: {item.IdadiYaKuku}</Text>
             
           
         </View>

@@ -23,7 +23,6 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
-import { Audio } from 'expo-av'; // Ongeza hili
 //import Carousel from 'react-native-snap-carousel';
 const { width, height } = Dimensions.get('screen');
 
@@ -214,7 +213,7 @@ const getItems = () => {
     return Promise.resolve();  // Return a resolved promise to maintain the chain
   } else {
     setIsLoading(true);
-    const url = EndPoint + `/GetAllDukaLakoView/?page=${current_page}&page_size=50`;
+    const url = EndPoint + `/GetAllDukaLakoView/?page=${current_page}&page_size=2`;
     return fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -251,10 +250,10 @@ const getItems = () => {
   //   setcurrent_page(current_page + 1);
   // };
 
-  // useEffect(() => {
-  //   setLoading(true)
-  //   getItems();
-  // }, []);
+  useEffect(() => {
+    setLoading(true)
+    getItems();
+  }, []);
 
 
 
@@ -299,9 +298,6 @@ const handleLikeToggle = async (itemId) => {
     );
     setQueryset(updatedQueryset);
 
-    // Cheza sauti baada ya kubonyeza kitufe
-      await soundRef.current.replayAsync();
-
     // Update the liked status
     const newLikeStatus = message === "Liked";
     setUserLikes((prevLikes) => ({
@@ -316,28 +312,6 @@ const handleLikeToggle = async (itemId) => {
   }
 };
 
-
-
-  // Ongeza soundRef kwa ajili ya sauti
-  const soundRef = useRef(new Audio.Sound());
-
-  // Pakia sauti unapofungua skrini
-  useEffect(() => {
-    const loadSound = async () => {
-      try {
-        await soundRef.current.loadAsync(require('../assets/audio1.mp3')); // Badilisha na njia ya faili ya sauti
-      } catch (error) {
-        console.error('Error loading sound:', error);
-      }
-    };
-
-    loadSound();
-
-    // Safisha sauti baada ya skrini kufungwa
-    return () => {
-      soundRef.current.unloadAsync();
-    };
-  }, []);
 
 
 
@@ -875,7 +849,7 @@ const handleLikeToggle = async (itemId) => {
                 <Text
                 style={globalStyles.AppChaguaHudumaTextHomeScreen}  
                 
-                >Posti mbalimbali za watu</Text>
+                >Huduma mbalimbali za watu</Text>
 
 
             {/*mwanzo wa Item View*/}

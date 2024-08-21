@@ -306,7 +306,17 @@ const handleUpdate = async () => {
             setIsLoading(false);
             showAlertFunction("Umefanikiwa Kutuma posti");
             setdisplayContentsState(true);
-            console.log("Well");
+            //console.log("Well");
+            setTitle('');
+            setMaelezo('');
+            setPichaYaPost('');
+            setPichaYaPost2('');
+            setPichaYaPost3('');
+            setPichaYaPost4('');
+            setPichaYaPost5('');
+
+
+
         }).catch(error => {
             setIsLoading(false);
             setdisplayContentsState(false);

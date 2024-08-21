@@ -325,6 +325,8 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
          setModalVisible(false);
         setIsModalVisible(false); // Reset state when modal closes
        setdisplayContentsState(true);
+
+       
       }).catch(error => {
         setIsLoading(false);
         console.log(error);

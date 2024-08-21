@@ -458,7 +458,7 @@ const getItems = () => {
                   color:'black'
                 }
 
-                ]}>Huduma kwa wateja</Text>
+                ]}>Msaada kwa wateja</Text>
               </TouchableOpacity>
               </View>
              

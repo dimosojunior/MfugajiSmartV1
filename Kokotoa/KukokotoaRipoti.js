@@ -222,8 +222,10 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
 
  useEffect(() => {
     // Make a GET request to fetch queryset and main total price
-   axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
-  //axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&TotalFoodAmount=${TotalFoodAmount}`)
+   
+ axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
+ 
+    //axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&TotalFoodAmount=${TotalFoodAmount}`)
 
 
 

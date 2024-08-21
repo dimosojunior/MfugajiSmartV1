@@ -151,6 +151,7 @@ export default function ViewDukaLako ({navigation, route}) {
     PichaYaPost5,
     profile_image,
     Likes,
+    UserRole,
     email
    } = route.params
 
@@ -187,6 +188,24 @@ const [userData, setUserData] = useState({});
  const [MtoaMaoniUsername, setMtoaMaoniUsername] = useState('');
  const [MtoaMaoniPhone, setMtoaMaoniPhone] = useState('');
  const [isLoading2, setIsLoading2] = useState(false);
+//TO cHeck if user is already like or not
+const [userLikes, setUserLikes] = useState({}); // New state to track liked items
+
+useEffect(() => {
+  const initializeLikes = async (data) => {
+    const likes = {};
+    for (const item of data.queryset) {
+      const storedLikeStatus = await AsyncStorage.getItem(`like_${item.id}`);
+      likes[item.id] = storedLikeStatus ? JSON.parse(storedLikeStatus) : item.liked_by.includes(userData.id);
+    }
+    setUserLikes(likes);
+  };
+
+  setLoading(true);
+  getItems().then((data) => {
+    initializeLikes(data);
+  });
+}, []);
 
 
  useEffect(() => {
@@ -330,35 +349,6 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
 
 
 
-//const [likes, setLikes] = useState(0);
- const handleLikeToggle = async (itemId) => {
-  try {
-    const response = await axios.post(
-      `${EndPoint}/ToggleLikeView/${itemId}/`,
-      {},
-      {
-        headers: {
-          Authorization: `Token ${userToken}`,
-        },
-      }
-    );
-    
-    // Pata item iliyosasishwa
-    const updatedLikes = response.data.Likes;
-
-    // Sasisha queryset
-    const updatedQueryset = queryset.map((item) =>
-      item.id === itemId ? { ...item, Likes: updatedLikes } : item
-    );
-    setQueryset(updatedQueryset);
-    console.log("Umeweka like");
-  } catch (error) {
-    console.error('Error toggling like:', error);
-  }
-};
-
-
-
 
 
 
@@ -414,7 +404,6 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
 
 
 
-
 //FOR SEARCHING
 const [input, setInput] = useState('');
 
@@ -427,42 +416,40 @@ const [endReached, setEndReached] = useState(false)
 const [isPending, setPending] = useState(true);
 
 
-
-
-const getItems = () => {
+const getItems = async () => {
   if (endReached) {
     setLoading(false);
     setIsLoading(false);
     setPending(false);
-    return;
-  } else {
-    setIsLoading(true);
-    //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=2`
-    // console.log(url);
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.queryset.length > 0) {
-          setQueryset([...queryset, ...data.queryset]);
-          setIsLoading(false);
-          setLoading(false);
-          setcurrent_page(current_page + 1);
-          setPending(false);
+    return Promise.resolve();  // Ensure it returns a promise
+  }
 
-          // console.log("NEW CRRRENT", current_page);
-          // console.log(queryset);
+  setIsLoading(true);
+  try {
+    const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=50`;
+    const response = await fetch(url);
+    const data = await response.json();
 
-        } else {
-          setIsLoading(false);
-          setEndReached(true);
-          setLoading(false);
-          setPending(false);
-        }
-      });
+    if (data.queryset.length > 0) {
+      setQueryset([...queryset, ...data.queryset]);
+      setIsLoading(false);
+      setLoading(false);
+      setcurrent_page(current_page + 1);
+      setPending(false);
+    } else {
+      setIsLoading(false);
+      setEndReached(true);
+      setLoading(false);
+      setPending(false);
+    }
+    
+    return data;  // Ensure data is returned properly
+  } catch (error) {
+    setIsLoading(false);
+    setLoading(false);
+    console.error('Error fetching items:', error);
   }
 };
-
 
 
 
@@ -480,10 +467,10 @@ const getItems = () => {
   //   setcurrent_page(current_page + 1);
   // };
 
-  useEffect(() => {
-    setLoading(true)
-    getItems();
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true)
+  //   getItems();
+  // }, []);
 
  const handleScroll = (event) =>{
     const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
@@ -494,6 +481,58 @@ const getItems = () => {
       getItems()
     }
   }
+
+
+
+
+//const [likes, setLikes] = useState(0);
+ 
+//const [likes, setLikes] = useState(0);
+const handleLikeToggle = async (itemId) => {
+  try {
+    const response = await axios.post(
+      `${EndPoint}/ToggleLikeView/${itemId}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
+      }
+    );
+
+    const updatedLikes = response.data.Likes;
+    const message = response.data.message;
+
+    const updatedQueryset = queryset.map((item) =>
+      item.id === itemId ? { ...item, Likes: updatedLikes } : item
+    );
+    setQueryset(updatedQueryset);
+
+    // Update the liked status
+    const newLikeStatus = message === "Liked";
+    setUserLikes((prevLikes) => ({
+      ...prevLikes,
+      [itemId]: newLikeStatus,
+    }));
+
+    // Save the like status in AsyncStorage
+    await AsyncStorage.setItem(`like_${itemId}`, JSON.stringify(newLikeStatus));
+  } catch (error) {
+    console.error('Error toggling like:', error);
+  }
+};
+
+
+
+ const formatDate = (dateString) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+ 
 
 
 
@@ -513,6 +552,7 @@ const InventoryCard = ({item, index}) => {
 
     //console.log("Carousel Items:", carouselItems);
 
+ const isLiked = userLikes[item.id]; // Check if the item is liked
 
 
 
@@ -604,13 +644,14 @@ const InventoryCard = ({item, index}) => {
             {/*mwanzo wa view ya left*/}
               <TouchableOpacity 
 
-             onPress={() => {
-           navigation.navigate('View Duka Lako', item);    
-        }} >
+        //      onPress={() => {
+        //    navigation.navigate('View Duka Lako', item);    
+        // }} 
+        >
            <View style={globalStyles.LeftBtnContainer}>
-            {/*<Text 
+            <Text 
           style={globalStyles.AppItemButtonTextHomeScreen}
-        >Wasiliana naye</Text>*/}
+        >{formatDate(item.Created)}</Text>
          </View>
          </TouchableOpacity>
           {/*mwisho wa view ya left*/}
@@ -634,7 +675,7 @@ const InventoryCard = ({item, index}) => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-      color='red'  
+     color={isLiked ? "red" : "green"} 
       
        />
         </View>
@@ -738,12 +779,13 @@ keyboardShouldPersistTaps="handled"
                    <View style={{
                  width:'70%',
                   }}>
+                  {UserRole === "Mfugaji"  ? (
                    <Text style={{
                     color:'brown',
                     fontFamily:'Bold',
                    }}>
                         
-                  Level Ya Uaminifu  <FontAwesome 
+               Hadhi Ya Mfugaji   <FontAwesome 
                   name='arrow-circle-right' 
                     size={20}
                     color='white'  
@@ -754,6 +796,26 @@ keyboardShouldPersistTaps="handled"
                      />
                     
                    </Text>
+                   ):(
+
+                    <Text style={{
+                    color:'brown',
+                    fontFamily:'Bold',
+                   }}>
+                        
+               Hadhi Ya Mfanya biashara   <FontAwesome 
+                  name='arrow-circle-right' 
+                    size={20}
+                    color='white'  
+                    style={{
+                      //marginLeft:15,
+
+                    }}
+                     />
+                    
+                   </Text>
+
+                   )}
                   </View>
 
                   <View style={{
@@ -795,8 +857,10 @@ keyboardShouldPersistTaps="handled"
               
 
                opacity: isModalVisible ? 
-              0.1 : 1
-               }
+              0.1 : 1,
+             // backgroundColor:'red',
+               },
+
 
                 ]}>
 
@@ -833,28 +897,7 @@ keyboardShouldPersistTaps="handled"
                         fontFamily:'Light',
                       }}>Jina Kamili:</Text> {username}</Text>
 
-                       <Text 
-                         style={[
-                          styles.welcomemessage,
-                          
-                          globalStyles.AppWelcomeHeaderText2HomeScreen,
-                          {
-                            fontSize:16,
-                            fontFamily:'Light',
-                            color:'white',
-
-                          }  
-
-                          
-                        ]} 
                      
-                       >
-                     <Text style={{
-                        fontSize:16,
-                        color:"green",
-                        fontFamily:'Light',
-                      }}>Simu:</Text>  {phone}
-                      </Text>
 
                         {Location && (
                            <Text 
@@ -1044,6 +1087,26 @@ keyboardShouldPersistTaps="handled"
                  
                </TouchableOpacity>
                )}
+
+            <TouchableOpacity 
+
+        //      onPress={() => {
+        //    navigation.navigate('View Duka Lako', item);    
+        // }} 
+        >
+           <View style={globalStyles.LeftBtnContainer}>
+            <Text 
+          style={[globalStyles.AppItemButtonTextHomeScreen,
+            {
+              width:'50%',
+              marginTop:30,
+            }
+
+            ]}
+        >{formatDate(Created)}</Text>
+         </View>
+         </TouchableOpacity>
+
 
 
                 </View>

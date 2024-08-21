@@ -10,6 +10,8 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { EndPoint } from "../Constant/links";
 import AwesomeAlert from 'react-native-awesome-alerts';
+import {MaterialIcons,MaterialCommunityIcons, Ionicons, FontAwesome} from '@expo/vector-icons';
+
 
 const {height, width} = Dimensions.get('window');
 export default function Top({userData,userToken,setUserToken, setUserData, isLoading,setIsLoading}) {
@@ -104,7 +106,7 @@ const [modalVisible, setModalVisible] = useState(false);
       }}
       style={styles.back}
       >
-        <AntDesign name="user" size={24} color="white" />
+        <FontAwesome name="user-times" size={24} color="white" />
       </TouchableOpacity>
       <TouchableOpacity 
       onPress={() => navigation.replace('Update Stack')}
