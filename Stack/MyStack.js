@@ -13,6 +13,11 @@ import SignupScreen from '../AccountScreens/SignupScreen';
 import UpdateScreen from '../AccountScreens/UpdateScreen';
 import PreLoaderScreen from '../Screens/PreLoaderScreen';
 import AccountSelection from '../Screens/AccountSelection';
+
+import SendOTPScreen from '../AccountScreens/SendOTPScreen';
+import VerifyOTPScreen from '../AccountScreens/VerifyOTPScreen';
+
+
 import WelcomeScreen from '../Screens/WelcomeScreen';
 
 import HomeScreen from '../Screens/HomeScreen';
@@ -192,6 +197,27 @@ function MyStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+
+
+     <Stack.Screen
+      name="Send OTP Screen"
+      component={SendOTPScreen}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+           <Stack.Screen
+      name="Verify OTP Screen"
+      component={VerifyOTPScreen}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+
+
+
 
        <Stack.Screen
       name="Home Stack"

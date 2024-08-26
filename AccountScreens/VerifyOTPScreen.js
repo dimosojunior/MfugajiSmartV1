@@ -15,10 +15,32 @@ import { Ionicons, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons
 import {useFonts} from 'expo-font';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { COLORS, SIZES } from '../Screens/src/Constant';
-const {width,height} = Dimensions.get('window');
-const SignupScreen = ({ navigation }) => {
+import LotterViewScreen from '../Screens/LotterViewScreen';
 
-  let [fontsLoaded] = useFonts({
+
+const { width, height } = Dimensions.get('window');
+const VerifyOTPScreen = ({ navigation, route }) => {
+
+    const { email } = route.params;
+
+
+
+     const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+ const showAlertFunction = (message) => {
+    setAlertMessage(message);
+    setShowAlert(true);
+  };
+
+  const hideAlert = () => {
+    setShowAlert(false);
+  };
+
+
+
+    //const [isPending, setIsPending] = useState(false);
+let [fontsLoaded] = useFonts({
     
     'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
     'Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -32,167 +54,101 @@ const SignupScreen = ({ navigation }) => {
 });
 
 
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
 
-   const showAlertFunction = (message) => {
-    setAlertMessage(message);
-    setShowAlert(true);
-  };
-
-  const hideAlert = () => {
-    setShowAlert(false);
-  };
+  const [error, setError] = useState('');
+  //TO MAKE A LOADING MESSAGE ON A BUTTON
+  const [isPending, setPending] = useState(false);
 
 
-
-  //const {width,height} = Dimensions.get('window');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [password2, setPassword2] = useState('');
-
-  const [phone, setPhone] = useState('');
-  //const [profile_image, setProfile_image] = useState('');
-  
-
-  const [error, setError] = useState(null); // State to hold the error message
-const [isPending, setPending] =useState(false);
-const emailRegex = /\S+@\S+\.\S+/;
-
+// const [error, setError] = useState(null);
 const [errorMessage, setErrorMessage] = useState('');
+const emailRegex = /\S+@\S+\.\S+/;
 
 const handleErrorMessage = (error) => {
     if (error.response) {
       // The request was made and the server responded with an error status code
       // if (error.response.status === 401) {
-      //   showAlertFunction('Registration error. Please try again later.');
-      // } else if (error.response.status === 404) {
+      //   showAlertFunction('Authentication Error: You are not authorized.');
+      // } 
+      // else if (error.response.status === 404) {
       //   showAlertFunction('Not Found: The requested resource was not found.');
 
       // } 
-      // else {
+      //else if{
       //   showAlertFunction('An error occurred while processing your request.');
       // }
     }  if (error.message === 'Network Error') {
       showAlertFunction('Tatizo la mtandao, washa data na ujaribu tena.');
     } else {
-      showAlertFunction('Taarifa zako sio sahihi');
+      showAlertFunction('kuna tatizo kwenye taarifa zako, tafadhali ingiza taarifa zako kwa usahihi', error.response.data.error);
     }
   };
 
-  const handleRegistration = async () => {
-    // Reset the error message
-    setError(null);
 
-    // Validation checks
-    if (!email && !password && !username && !phone) {
-      //setError('All fields are required');
-      showAlertFunction("Tafadhali jaza taarifa zote kwa usahihi");
-      return;
-    }
 
-    if (!email) {
+  const [otp, setOTP] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [password2, setPassword2] = useState('');
+    const [isPasswordVisible, setPasswordVisible] = useState(false);
+
+  const verifyOTP = () => {
+    setPending(true);
+
+     if (!otp) {
       //setError('please enter your valid email');
-       showAlertFunction("Tafadhali ingiza email yako kwa usahihi");
+       showAlertFunction("Tafadhali ingiza codes zilizotumwa kwenye email yako kwa usahihi");
+       setPending(false);
       return;
     }
 
-    if (!password) {
-      //setError('please enter your password');
-       showAlertFunction("Tafadhali ingiza password yako kwa usahihi");
-      return;
-    }
-
-
-     if (password !== password2) {
-      showAlertFunction("Nywira ulizoingiza hazifanani");
-      return;
-    }
-
-    // Validate email format
-  
-  if (!emailRegex.test(email)) {
-    showAlertFunction("Tafadhali fuata kanuni za kuandika email, @");
+      if (otp.length > 6) {
+    showAlertFunction("tafadhali codes zimezidi, codes lazima ziwe 6");
     return;
   }
 
-  // Validate password length
-  if (password.length < 4) {
+  if (otp.length < 6) {
+    showAlertFunction("tafadhali codes ziko pungufu, codes lazima ziwe 6");
+    return;
+  }
+
+
+
+     if (!newPassword) {
+      //setError('please enter your valid email');
+       showAlertFunction("Tafadhali ingiza neno siri jipya");
+       setPending(false);
+      return;
+    }
+
+     if (newPassword.length < 4) {
     showAlertFunction("tafadhali neno siri linapaswa kuwa na tarakimu zaidi ya 4");
     return;
   }
 
-    if (!username) {
-     // setError('please enter your username');
-      showAlertFunction("Tafadhali ingiza jina lako kwa usahihi");
+  if (newPassword !== password2) {
+      showAlertFunction("Nywira ulizoingiza hazifanani");
       return;
     }
 
-    if (!phone) {
-      //setError('please enter your phone number');
-       showAlertFunction("Tafadhali ingiza namba yako ya simu kwa usahihi");
-      return;
-    }
-
-      // Validate phone number
-  if (!phone.startsWith("+255")) {
-    showAlertFunction("Namba ya simu lazima ianze na +255");
-    return;
-  }
-
-  if (phone.length !== 13) {
-    showAlertFunction("Namba ya simu lazima iwe na tarakimu 13");
-    return;
-  }
-
-
-
-    setPending(true);
-
-    try {
-      const response = await axios.post(
-        EndPoint + '/Account/register_user/', {
-        email: email,
-        password: password,
-        username: username,
-        phone: phone,
-      });
-      //Alert.alert("You have registered Successfully");
-       showAlertFunction("Umefanikiwa kujisajili");
-      navigation.replace('Signin Stack');
-
-      const token = response.data.token; // Extract the token from the response
-      // You can now save the token to your app's state, AsyncStorage, or Redux store
-    } catch (error) {
-      if (error.response) {
-        if (error.response.data.email) {
-         // setError('Email already exists');
-          showAlertFunction("Email uliyotumia kujisajili teyari ipo");
-          setPending(false);
-        } else if (error.response.data.username) {
-          //setError('Username already exists');
-          showAlertFunction("Jina ulilotumia kujisajili teyari lipo");
-          setPending(false);
-        }else if (error.response.data.phone) {
-          //setError('Phone number already exists');
-          showAlertFunction("Namba ya simu uliyotumia kujisajili teyari ipo");
-          setPending(false);
-        }
-
-
-      } else {
-        //setError('Registration error. Please try again later.');
-        //showAlertFunction("Registration error. Please try again later.");
-        handleErrorMessage(error);
+    axios.post(EndPoint + '/Account/verify-otp/', { email, otp, new_password: newPassword })
+      .then(response => {
+         setPending(false);
+        showAlertFunction('Umefanikiwa kubadilisha neno siri lako la mwanzo, sasa unaweza kuingia kutumia neno siri jipya.');
+        navigation.navigate('Signin Stack');
+      })
+      .catch(error => {
         setPending(false);
-      }
-    }
+         handleErrorMessage(error);
+        
+      });
   };
+
 
     return(
 
         <>{!fontsLoaded ? (<View/>):(
+
+        
 
         <View style={styles.container}>
             <ImageBackground
@@ -201,6 +157,8 @@ const handleErrorMessage = (error) => {
                 style={{
                     flex: 1,
                     opacity:1,
+                    //justifyContent:'center'
+
                 }}
                 resizeMode= "cover"
             >
@@ -208,85 +166,152 @@ const handleErrorMessage = (error) => {
                 keyboardShouldPersistTaps="handled"
                 >
                     <View style={styles.topContainer}>
-                        <Text style={styles.title}>MFUGAJI SMART</Text>
+                  
+                 {/*mwanzo Image container*/}
+                    <View style={styles.ImageAccountContainer}>
+                     <Text style={styles.title}>MFUGAJI SMART</Text>
                         <Text style={styles.subtitle}>Fuga Kidijitali</Text>
+
+                      {/* <Image
+                        source={require('../assets/i3.jpg')}
+                        style={styles.ImageAccount}
+                            
+                          />*/}
+                    </View>
+
+                  {/*mwisho Image container*/}
+
+                       
                     </View>
                     <View style={styles.dataContainer}>
-                     <Text 
+                    <Text 
                     style={styles.dataContainerFormTitle}
-                    >Kujisajili tafadhali jaza taarifa zako kwa usahihi</Text>
+                    >Tafadhali jaza taarifa kwa usahihi</Text>
+                       
 
                         <TextInput 
-                        placeholder='Email yako' 
+                        placeholder='Ingiza codes ulizotumiwa' 
                         style={[styles.textinput,{
                             width:width-100
                         }]} 
                         placeholderTextColor={COLORS.white}
-                        keyboardType={'email-address'}
-                        value={email}
-                        onChangeText={text => setEmail(text)} 
+                        value={otp}
+                      onChangeText={setOTP}
+                      
+                      keyboardType="numeric"
+
                         />
 
-                         <TextInput 
-                        placeholder='Jina lako kamili' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                         value={username}
-                          onChangeText={setUsername}
-                        />
+          {/*  mwanzo wa neno siri*/}
+            <View 
+            style={styles.dataContainerForPassword}
+          >
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'white',
+          width:'75%'}]}
+          placeholder="Neno siri jipya"
+          secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
+          value={newPassword}
+        onChangeText={setNewPassword}
+        placeholderTextColor={COLORS.white}
+        />
 
-                         <TextInput 
-                        placeholder='Namba yako ya simu' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                         value={phone}
-                          onChangeText={setPhone}
-                         // keyboardType="numeric"
-                        />
+        <View style={{
+          width:'20%',
+          justifyContent:"center",
+        }}>
 
-                         <TextInput 
-                        placeholder='Neno siri' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                        secureTextEntry={true} 
-                          value={password}
-                        onChangeText={setPassword}
-                        />
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          onPress={() => setPasswordVisible(!isPasswordVisible)}
+          style={{ alignSelf: 'flex-end', marginRight: 0,color:'white' }}>
+          <Text style={{ color: 'white', fontSize: 16,fontWeight:'bold' }}>
+            {/*{isPasswordVisible ? 'Hide' : 'Show'} Password*/}
+            {isPasswordVisible ? (
+              <FontAwesome size={25} color="white" name="eye-slash" />
+            ):(
+              <FontAwesome size={25} color="white" name="eye" />
+            )}
+          </Text>
+        </TouchableOpacity>
+
+        </View>
+        </View>
+      {/*  mwisho wa neno siri*/}
 
 
-                         <TextInput 
+
+       {/*  mwanzo wa neno siri*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-100,
+                marginTop:height/11,
+              }
+
+              ]}
+          >
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'white',width:'75%',
+            //paddingVertical:20,
+          }]}
+          placeholder=" Thibitisha neno siri"
+          secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
+          value={password2}
+          onChangeText={setPassword2}
+        placeholderTextColor={COLORS.white}
+        />
+
+        <View style={{
+          width:'20%',
+          //justifyContent:"center",
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          onPress={() => setPasswordVisible(!isPasswordVisible)}
+          style={{ alignSelf: 'flex-end', marginRight: 0,color:'white' }}>
+          <Text style={{ color: 'white', fontSize: 16,fontWeight:'bold' }}>
+            {/*{isPasswordVisible ? 'Hide' : 'Show'} Password*/}
+            {isPasswordVisible ? (
+              <FontAwesome size={25} color="white" name="eye-slash" />
+            ):(
+              <FontAwesome size={25} color="white" name="eye" />
+            )}
+          </Text>
+        </TouchableOpacity>
+
+        </View>
+        </View>
+      {/*  mwisho wa neno siri*/}
+
+
+                      {/*     <TextInput 
                         placeholder='Thibitisha neno siri' 
                         style={[styles.textinput,{
-                            width:width-100
+                            width:width-100,
+                            marginTop:height/10,
                         }]} 
                         placeholderTextColor={COLORS.white}
                         secureTextEntry={true} 
                           value={password2}
                          onChangeText={setPassword2}
                         />
-
-
-
-
-
-
+*/}
+        
 
                     </View>
 
-                    {!isPending &&
+                   {!isPending &&
                 <TouchableOpacity 
-                        onPress={handleRegistration}
-                        >
+                  onPress={verifyOTP}
+                  >
                     <View style={styles.btnContainer}>
                         
                             <View style={styles.button1}>
-                                <Text style={styles.btnText}>Jisajili</Text>
+                                <Text style={styles.btnText}>Tuma Ombi</Text>
                             </View>
                         
                         </View>
@@ -299,22 +324,51 @@ const handleErrorMessage = (error) => {
                         >
                             <View style={styles.button1}>
                                
-                             <ActivityIndicator size="large" color="red" /> 
+                             <ActivityIndicator size="large" color="green" /> 
                             </View>
                         </TouchableOpacity>
                      
                     </View>}
-                    <View style={styles.bottomContainer}>
+
+
+                      <View style={styles.bottomContainer}>
                         <TouchableOpacity 
-                         onPress={() => navigation.navigate("Signin Stack")}
+                         onPress={() => navigation.navigate("Send OTP Screen")}
+                         style={{
+                          // backgroundColor:'green',
+                          // padding:10,
+                          width:'100%',
+                          justifyContent:'center',
+                          alignItems:'center',
+                          marginBottom:20,
+                         }}
                         >
-                            <Text style={styles.text}>Teyari umeshajisajili ? | Ingia </Text>
+                            <Text style={[
+                              styles.text,
+                              {
+                             backgroundColor:'green',
+                             padding:10,
+                             width:'50%',
+                             textAlign:'center',
+                             borderRadius:8,
+                             fontFamily:'Medium',
+
+                              }
+
+
+                           ] }>Omba tena codes ?</Text>
                         </TouchableOpacity>
                     </View>
+
+
+
+                  
+
+
                 </ScrollView>
             </ImageBackground>
 
-     
+           
                <AwesomeAlert
                 show={showAlert}
                 showProgress={false}
@@ -337,17 +391,24 @@ const handleErrorMessage = (error) => {
                 }
               />
 
+
         </View>
+
+
+
+
+ 
 
          )}</>
     )
 }
 
-export default SignupScreen;
+export default VerifyOTPScreen;
+
 
 
 const styles = StyleSheet.create({
- container: {
+    container: {
         flex: 1,
         justifyContent:'center',
     },
@@ -375,11 +436,14 @@ const styles = StyleSheet.create({
     dataContainer: {
         marginTop: 10,
         alignItems: 'center',
+        justifyContent:'center',
+        flex:1,
          
     },
     dataContainerFormTitle:{
       color:'white',
       marginBottom:20,
+      marginTop:height/20,
 
     },
 

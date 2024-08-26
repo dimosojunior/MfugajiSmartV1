@@ -15,10 +15,28 @@ import { Ionicons, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons
 import {useFonts} from 'expo-font';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { COLORS, SIZES } from '../Screens/src/Constant';
-const {width,height} = Dimensions.get('window');
-const SignupScreen = ({ navigation }) => {
+import LotterViewScreen from '../Screens/LotterViewScreen';
 
-  let [fontsLoaded] = useFonts({
+
+const { width, height } = Dimensions.get('window');
+const SendOTPScreen = ({ navigation }) => {
+
+     const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+ const showAlertFunction = (message) => {
+    setAlertMessage(message);
+    setShowAlert(true);
+  };
+
+  const hideAlert = () => {
+    setShowAlert(false);
+  };
+
+
+
+   // const [isPending, setPending] = useState(false);
+let [fontsLoaded] = useFonts({
     
     'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
     'Medium': require('../assets/fonts/Poppins-Medium.ttf'),
@@ -32,167 +50,75 @@ const SignupScreen = ({ navigation }) => {
 });
 
 
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
 
-   const showAlertFunction = (message) => {
-    setAlertMessage(message);
-    setShowAlert(true);
-  };
-
-  const hideAlert = () => {
-    setShowAlert(false);
-  };
+  const [error, setError] = useState('');
+  //TO MAKE A LOADING MESSAGE ON A BUTTON
+  const [isPending, setPending] = useState(false);
 
 
-
-  //const {width,height} = Dimensions.get('window');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [password2, setPassword2] = useState('');
-
-  const [phone, setPhone] = useState('');
-  //const [profile_image, setProfile_image] = useState('');
-  
-
-  const [error, setError] = useState(null); // State to hold the error message
-const [isPending, setPending] =useState(false);
-const emailRegex = /\S+@\S+\.\S+/;
-
+// const [error, setError] = useState(null);
 const [errorMessage, setErrorMessage] = useState('');
+const emailRegex = /\S+@\S+\.\S+/;
 
 const handleErrorMessage = (error) => {
     if (error.response) {
       // The request was made and the server responded with an error status code
       // if (error.response.status === 401) {
-      //   showAlertFunction('Registration error. Please try again later.');
-      // } else if (error.response.status === 404) {
+      //   showAlertFunction('Authentication Error: You are not authorized.');
+      // } 
+      // else if (error.response.status === 404) {
       //   showAlertFunction('Not Found: The requested resource was not found.');
 
       // } 
-      // else {
+      //else if{
       //   showAlertFunction('An error occurred while processing your request.');
       // }
     }  if (error.message === 'Network Error') {
       showAlertFunction('Tatizo la mtandao, washa data na ujaribu tena.');
     } else {
-      showAlertFunction('Taarifa zako sio sahihi');
+      showAlertFunction('kuna tatizo kwenye taarifa zako, tafadhali ingiza email uliyojisajilia', error.response.data.error);
     }
   };
 
-  const handleRegistration = async () => {
-    // Reset the error message
-    setError(null);
 
-    // Validation checks
-    if (!email && !password && !username && !phone) {
-      //setError('All fields are required');
-      showAlertFunction("Tafadhali jaza taarifa zote kwa usahihi");
-      return;
-    }
 
-    if (!email) {
+   const [email, setEmail] = useState('');
+
+  const sendOTP = () => {
+   setPending(true);
+     if (!email) {
       //setError('please enter your valid email');
        showAlertFunction("Tafadhali ingiza email yako kwa usahihi");
+       setPending(false);
       return;
     }
 
-    if (!password) {
-      //setError('please enter your password');
-       showAlertFunction("Tafadhali ingiza password yako kwa usahihi");
-      return;
-    }
-
-
-     if (password !== password2) {
-      showAlertFunction("Nywira ulizoingiza hazifanani");
-      return;
-    }
-
-    // Validate email format
-  
-  if (!emailRegex.test(email)) {
+    if (!emailRegex.test(email)) {
     showAlertFunction("Tafadhali fuata kanuni za kuandika email, @");
+    setPending(false);
     return;
   }
 
-  // Validate password length
-  if (password.length < 4) {
-    showAlertFunction("tafadhali neno siri linapaswa kuwa na tarakimu zaidi ya 4");
-    return;
-  }
-
-    if (!username) {
-     // setError('please enter your username');
-      showAlertFunction("Tafadhali ingiza jina lako kwa usahihi");
-      return;
-    }
-
-    if (!phone) {
-      //setError('please enter your phone number');
-       showAlertFunction("Tafadhali ingiza namba yako ya simu kwa usahihi");
-      return;
-    }
-
-      // Validate phone number
-  if (!phone.startsWith("+255")) {
-    showAlertFunction("Namba ya simu lazima ianze na +255");
-    return;
-  }
-
-  if (phone.length !== 13) {
-    showAlertFunction("Namba ya simu lazima iwe na tarakimu 13");
-    return;
-  }
-
-
-
-    setPending(true);
-
-    try {
-      const response = await axios.post(
-        EndPoint + '/Account/register_user/', {
-        email: email,
-        password: password,
-        username: username,
-        phone: phone,
-      });
-      //Alert.alert("You have registered Successfully");
-       showAlertFunction("Umefanikiwa kujisajili");
-      navigation.replace('Signin Stack');
-
-      const token = response.data.token; // Extract the token from the response
-      // You can now save the token to your app's state, AsyncStorage, or Redux store
-    } catch (error) {
-      if (error.response) {
-        if (error.response.data.email) {
-         // setError('Email already exists');
-          showAlertFunction("Email uliyotumia kujisajili teyari ipo");
-          setPending(false);
-        } else if (error.response.data.username) {
-          //setError('Username already exists');
-          showAlertFunction("Jina ulilotumia kujisajili teyari lipo");
-          setPending(false);
-        }else if (error.response.data.phone) {
-          //setError('Phone number already exists');
-          showAlertFunction("Namba ya simu uliyotumia kujisajili teyari ipo");
-          setPending(false);
-        }
-
-
-      } else {
-        //setError('Registration error. Please try again later.');
-        //showAlertFunction("Registration error. Please try again later.");
-        handleErrorMessage(error);
+    axios.post(EndPoint + '/Account/send-otp/', { email })
+      .then(response => {
         setPending(false);
-      }
-    }
+        showAlertFunction('Angalia OTP codes zimetumwa kwenye email yako.');
+        navigation.navigate('Verify OTP Screen', { email });
+      })
+      .catch(error => {
+        setPending(false);
+        handleErrorMessage(error);
+        //showAlertFunction('Error', error.response.data.error || 'An error occurred.');
+      });
   };
+
+
 
     return(
 
         <>{!fontsLoaded ? (<View/>):(
+
+        
 
         <View style={styles.container}>
             <ImageBackground
@@ -201,6 +127,8 @@ const handleErrorMessage = (error) => {
                 style={{
                     flex: 1,
                     opacity:1,
+                    //justifyContent:'center'
+
                 }}
                 resizeMode= "cover"
             >
@@ -208,85 +136,53 @@ const handleErrorMessage = (error) => {
                 keyboardShouldPersistTaps="handled"
                 >
                     <View style={styles.topContainer}>
-                        <Text style={styles.title}>MFUGAJI SMART</Text>
+                  
+                 {/*mwanzo Image container*/}
+                    <View style={styles.ImageAccountContainer}>
+                     <Text style={styles.title}>MFUGAJI SMART</Text>
                         <Text style={styles.subtitle}>Fuga Kidijitali</Text>
+
+                      {/* <Image
+                        source={require('../assets/i3.jpg')}
+                        style={styles.ImageAccount}
+                            
+                          />*/}
+                    </View>
+
+                  {/*mwisho Image container*/}
+
+                       
                     </View>
                     <View style={styles.dataContainer}>
-                     <Text 
+                    <Text 
                     style={styles.dataContainerFormTitle}
-                    >Kujisajili tafadhali jaza taarifa zako kwa usahihi</Text>
+                    >Tafadhali ingiza email yako kuendelea</Text>
+                       
 
                         <TextInput 
-                        placeholder='Email yako' 
+                        placeholder='Ingiza email yako' 
                         style={[styles.textinput,{
                             width:width-100
                         }]} 
                         placeholderTextColor={COLORS.white}
-                        keyboardType={'email-address'}
                         value={email}
-                        onChangeText={text => setEmail(text)} 
+                        onChangeText={setEmail}
+                        
+                        keyboardType="email-address"
                         />
 
-                         <TextInput 
-                        placeholder='Jina lako kamili' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                         value={username}
-                          onChangeText={setUsername}
-                        />
-
-                         <TextInput 
-                        placeholder='Namba yako ya simu' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                         value={phone}
-                          onChangeText={setPhone}
-                         // keyboardType="numeric"
-                        />
-
-                         <TextInput 
-                        placeholder='Neno siri' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                        secureTextEntry={true} 
-                          value={password}
-                        onChangeText={setPassword}
-                        />
-
-
-                         <TextInput 
-                        placeholder='Thibitisha neno siri' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                        secureTextEntry={true} 
-                          value={password2}
-                         onChangeText={setPassword2}
-                        />
-
-
-
-
-
-
+        
 
                     </View>
 
-                    {!isPending &&
+                 {!isPending &&  
                 <TouchableOpacity 
-                        onPress={handleRegistration}
-                        >
+                  onPress={sendOTP}
+                  >
                     <View style={styles.btnContainer}>
                         
                             <View style={styles.button1}>
-                                <Text style={styles.btnText}>Jisajili</Text>
+                                <Text style={styles.btnText}>Omba Codes</Text>
                             </View>
                         
                         </View>
@@ -299,22 +195,20 @@ const handleErrorMessage = (error) => {
                         >
                             <View style={styles.button1}>
                                
-                             <ActivityIndicator size="large" color="red" /> 
+                             <ActivityIndicator size="large" color="green" /> 
                             </View>
                         </TouchableOpacity>
                      
                     </View>}
-                    <View style={styles.bottomContainer}>
-                        <TouchableOpacity 
-                         onPress={() => navigation.navigate("Signin Stack")}
-                        >
-                            <Text style={styles.text}>Teyari umeshajisajili ? | Ingia </Text>
-                        </TouchableOpacity>
-                    </View>
+
+
+                  
+
+
                 </ScrollView>
             </ImageBackground>
 
-     
+           
                <AwesomeAlert
                 show={showAlert}
                 showProgress={false}
@@ -337,17 +231,24 @@ const handleErrorMessage = (error) => {
                 }
               />
 
+
         </View>
+
+
+
+
+ 
 
          )}</>
     )
 }
 
-export default SignupScreen;
+export default SendOTPScreen;
+
 
 
 const styles = StyleSheet.create({
- container: {
+    container: {
         flex: 1,
         justifyContent:'center',
     },
@@ -375,11 +276,14 @@ const styles = StyleSheet.create({
     dataContainer: {
         marginTop: 10,
         alignItems: 'center',
+        justifyContent:'center',
+        flex:1,
          
     },
     dataContainerFormTitle:{
       color:'white',
       marginBottom:20,
+      marginTop:height/10,
 
     },
 

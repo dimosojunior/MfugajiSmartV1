@@ -265,7 +265,7 @@ const handleErrorMessage = (error) => {
             style={styles.dataContainerForPassword}
           >
           <TextInput
-          style= {[styles.textinputi,{ color: 'white',width:'60%'}]}
+          style= {[styles.textinputi,{ color: 'white',width:'75%'}]}
           placeholder="Neno siri"
           secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
           value={password}
@@ -274,14 +274,14 @@ const handleErrorMessage = (error) => {
         />
 
         <View style={{
-          width:'40%',
+          width:'20%',
           justifyContent:"center",
         }}>
 
          {/* Add a button to toggle password visibility */}
         <TouchableOpacity
           onPress={() => setPasswordVisible(!isPasswordVisible)}
-          style={{ alignSelf: 'flex-end', marginRight: 50,color:'white' }}>
+          style={{ alignSelf: 'flex-end', marginRight: 0,color:'white' }}>
           <Text style={{ color: 'white', fontSize: 16,fontWeight:'bold' }}>
             {/*{isPasswordVisible ? 'Hide' : 'Show'} Password*/}
             {isPasswordVisible ? (
@@ -331,6 +331,37 @@ const handleErrorMessage = (error) => {
                             <Text style={styles.text}>Bado hujajisajili? | Jisajili hapa</Text>
                         </TouchableOpacity>
                     </View>
+
+
+                      <View style={styles.bottomContainer}>
+                        <TouchableOpacity 
+                         onPress={() => navigation.navigate("Send OTP Screen")}
+                         style={{
+                          // backgroundColor:'green',
+                          // padding:10,
+                          width:'100%',
+                          justifyContent:'center',
+                          alignItems:'center',
+                         }}
+                        >
+                            <Text style={[
+                              styles.text,
+                              {
+                             backgroundColor:'green',
+                             padding:10,
+                             width:'50%',
+                             textAlign:'center',
+                             borderRadius:8,
+                             fontFamily:'Medium',
+
+                              }
+
+
+                           ] }>Umesahau neno siri ?</Text>
+                        </TouchableOpacity>
+                    </View>
+
+
                 </ScrollView>
             </ImageBackground>
 
