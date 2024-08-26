@@ -33,6 +33,7 @@ import Html from 'react-native-render-html';
 import { FontAwesome} from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { Audio } from 'expo-av'; // Ongeza hili
 
 const {width, height} = Dimensions.get('window');
 
@@ -188,24 +189,56 @@ const [userData, setUserData] = useState({});
  const [MtoaMaoniUsername, setMtoaMaoniUsername] = useState('');
  const [MtoaMaoniPhone, setMtoaMaoniPhone] = useState('');
  const [isLoading2, setIsLoading2] = useState(false);
-//TO cHeck if user is already like or not
-const [userLikes, setUserLikes] = useState({}); // New state to track liked items
 
-useEffect(() => {
-  const initializeLikes = async (data) => {
-    const likes = {};
-    for (const item of data.queryset) {
-      const storedLikeStatus = await AsyncStorage.getItem(`like_${item.id}`);
-      likes[item.id] = storedLikeStatus ? JSON.parse(storedLikeStatus) : item.liked_by.includes(userData.id);
-    }
-    setUserLikes(likes);
-  };
 
-  setLoading(true);
-  getItems().then((data) => {
-    initializeLikes(data);
-  });
-}, []);
+//FOR SEARCHING
+const [input, setInput] = useState('');
+
+
+const [likedItems, setLikedItems] = useState(new Set()); // Store liked items in a set
+
+
+//Load more
+const [queryset, setQueryset] = useState([]);
+const [current_page, setcurrent_page] = useState(1);
+const [isLoading, setIsLoading] = useState(false);
+const [loading, setLoading] = useState(false);
+const [endReached, setEndReached] = useState(false)
+const [isPending, setPending] = useState(true);
+
+
+
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Step 1: Fetch user token
+        const token = await AsyncStorage.getItem('userToken');
+        if (!token) {
+          console.log("No user Token");
+          return;
+        }
+        setUserToken(token);
+        console.log("My Token", token);
+
+        // Step 2: Fetch items
+        const itemsFetched = await getItems(token);
+        if (itemsFetched) {
+          // Step 3: Load liked status after fetching items
+          await loadLikedStatus(token, itemsFetched);
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
+        setPending(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+
 
 
  useEffect(() => {
@@ -404,52 +437,38 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
 
 
 
-//FOR SEARCHING
-const [input, setInput] = useState('');
-
-//Load more
-const [queryset, setQueryset] = useState([]);
-const [current_page, setcurrent_page] = useState(1);
-const [isLoading, setIsLoading] = useState(false);
-const [loading, setLoading] = useState(false);
-const [endReached, setEndReached] = useState(false)
-const [isPending, setPending] = useState(true);
 
 
-const getItems = async () => {
-  if (endReached) {
-    setLoading(false);
-    setIsLoading(false);
-    setPending(false);
-    return Promise.resolve();  // Ensure it returns a promise
-  }
-
-  setIsLoading(true);
-  try {
-    const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=50`;
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (data.queryset.length > 0) {
-      setQueryset([...queryset, ...data.queryset]);
-      setIsLoading(false);
+  const getItems = async (token) => {
+    if (endReached) {
       setLoading(false);
-      setcurrent_page(current_page + 1);
+      setIsLoading(false);
       setPending(false);
+      return null;
     } else {
-      setIsLoading(false);
-      setEndReached(true);
-      setLoading(false);
-      setPending(false);
+      setIsLoading(true);
+      const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=50`;
+      return fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.queryset.length > 0) {
+            setQueryset([...queryset, ...data.queryset]);
+            setIsLoading(false);
+            setLoading(false);
+            setcurrent_page(current_page + 1);
+            setPending(false);
+            return data.queryset;
+          } else {
+            setIsLoading(false);
+            setEndReached(true);
+            setLoading(false);
+            setPending(false);
+            return null;
+          }
+        });
     }
-    
-    return data;  // Ensure data is returned properly
-  } catch (error) {
-    setIsLoading(false);
-    setLoading(false);
-    console.error('Error fetching items:', error);
-  }
-};
+  };
+
 
 
 
@@ -485,42 +504,104 @@ const getItems = async () => {
 
 
 
-//const [likes, setLikes] = useState(0);
- 
-//const [likes, setLikes] = useState(0);
-const handleLikeToggle = async (itemId) => {
-  try {
-    const response = await axios.post(
-      `${EndPoint}/ToggleLikeView/${itemId}/`,
-      {},
-      {
-        headers: {
-          Authorization: `Token ${userToken}`,
-        },
+//hii function kazi yake ni kushow tu ni products zip huyu user aliyelogin
+//amezilike na zipi hajazilike basi
+ const loadLikedStatus = async (token, items) => {
+    try {
+      if (!token) {
+        console.log('loadLikedStatus: userToken or queryset not ready.');
+        return;
       }
-    );
 
-    const updatedLikes = response.data.Likes;
-    const message = response.data.message;
+      console.log('loadLikedStatus: userToken and queryset are ready.');
 
-    const updatedQueryset = queryset.map((item) =>
-      item.id === itemId ? { ...item, Likes: updatedLikes } : item
-    );
-    setQueryset(updatedQueryset);
+      const likedItemsSet = new Set();
+      for (const item of items) {
+        const response = await fetch(`${EndPoint}/CheckLikeStatus/${item.id}/`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
 
-    // Update the liked status
-    const newLikeStatus = message === "Liked";
-    setUserLikes((prevLikes) => ({
-      ...prevLikes,
-      [itemId]: newLikeStatus,
-    }));
+        const data = await response.json();
+        if (data.isLiked) {
+          likedItemsSet.add(item.id);
+        }
+      }
+      setLikedItems(likedItemsSet);
 
-    // Save the like status in AsyncStorage
-    await AsyncStorage.setItem(`like_${itemId}`, JSON.stringify(newLikeStatus));
-  } catch (error) {
-    console.error('Error toggling like:', error);
-  }
-};
+      console.log('likedItems', likedItemsSet);
+      console.log('userToken', token);
+
+    } catch (error) {
+      console.error('Error loading liked status:', error);
+    }
+  };
+
+ 
+ 
+
+
+const handleLikeToggle = async (itemId) => {
+    try {
+      const response = await axios.post(
+        `${EndPoint}/ToggleLikeView/${itemId}/`,
+        {},
+        {
+          headers: {
+            Authorization: `Token ${userToken}`,
+          },
+        }
+      );
+
+
+
+      const updatedLikes = response.data.Likes;
+      const isLiked = response.data.isLiked;  // Get the updated like status
+       const message = response.data.message;
+       
+       console.log("IS LIKED",isLiked );
+      // Update queryset with new likes count
+      const updatedQueryset = queryset.map((item) =>
+        item.id === itemId ? { ...item, Likes: updatedLikes } : item
+      );
+      setQueryset(updatedQueryset);
+
+      // Update liked items
+      //hii ni kwaajili ya kuchange color ya like button
+      // if (isLiked) {
+      //   likedItems.add(itemId);
+      // } else {
+      //   likedItems.delete(itemId);
+      // }
+      // setLikedItems(new Set(likedItems)); // Update state
+
+        // Update liked items to immediately reflect the change
+        if (!isLiked) {
+            setLikedItems(prevLikedItems => new Set(prevLikedItems).add(itemId));
+        } else {
+            setLikedItems(prevLikedItems => {
+                const updatedSet = new Set(prevLikedItems);
+                updatedSet.delete(itemId);
+                return updatedSet;
+            });
+        }
+
+
+       // Cheza sauti baada ya kubonyeza kitufe
+      await soundRef.current.replayAsync();
+
+
+
+
+    } catch (error) {
+      console.error('Error toggling like:', error);
+    }
+  };
+
+
+
+
 
 
 
@@ -533,6 +614,31 @@ const handleLikeToggle = async (itemId) => {
     return `${day}/${month}/${year}`;
   };
  
+
+
+
+
+
+  // Ongeza soundRef kwa ajili ya sauti
+  const soundRef = useRef(new Audio.Sound());
+
+  // Pakia sauti unapofungua skrini
+  useEffect(() => {
+    const loadSound = async () => {
+      try {
+        await soundRef.current.loadAsync(require('../assets/like.mp3')); // Badilisha na njia ya faili ya sauti
+      } catch (error) {
+        console.error('Error loading sound:', error);
+      }
+    };
+
+    loadSound();
+
+    // Safisha sauti baada ya skrini kufungwa
+    return () => {
+      soundRef.current.unloadAsync();
+    };
+  }, []);
 
 
 
@@ -552,7 +658,8 @@ const InventoryCard = ({item, index}) => {
 
     //console.log("Carousel Items:", carouselItems);
 
- const isLiked = userLikes[item.id]; // Check if the item is liked
+ //console.log("Carousel Items:", carouselItems);
+    const isLiked = likedItems.has(item.id);
 
 
 
@@ -650,7 +757,15 @@ const InventoryCard = ({item, index}) => {
         >
            <View style={globalStyles.LeftBtnContainer}>
             <Text 
-          style={globalStyles.AppItemButtonTextHomeScreen}
+          style={[globalStyles.AppItemButtonTextHomeScreen,
+
+            {
+              backgroundColor:'black',
+              borderColor:'white',
+              borderWidth:1,
+            }
+
+            ]}
         >{formatDate(item.Created)}</Text>
          </View>
          </TouchableOpacity>
@@ -675,7 +790,7 @@ const InventoryCard = ({item, index}) => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-     color={isLiked ? "red" : "green"} 
+     color={isLiked ? 'red' : 'black'} 
       
        />
         </View>
@@ -1100,6 +1215,11 @@ keyboardShouldPersistTaps="handled"
             {
               width:'50%',
               marginTop:30,
+               
+              backgroundColor:'black',
+              borderColor:'white',
+              borderWidth:1,
+            
             }
 
             ]}
@@ -1206,7 +1326,7 @@ keyboardShouldPersistTaps="handled"
   <Text
   style={globalStyles.AppChaguaHudumaTextHomeScreen}  
   
-  >Huduma zingine za {username}</Text>
+  >Posti zingine za {username}</Text>
 
 
 
@@ -1371,7 +1491,7 @@ keyboardShouldPersistTaps="handled"
               }
               ]}>
               
-            Unakaribishwa kutoa maoini yako kuhusiana na {username}, pamoja
+           Hello {MtoaMaoniUsername}, Unakaribishwa kutoa maoini yako kuhusiana na {username}, pamoja
             na huduma zake
             
             

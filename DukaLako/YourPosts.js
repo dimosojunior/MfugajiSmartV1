@@ -4,6 +4,7 @@ import  {
   ActivityIndicator,
   ImageBackground,
   Dimensions,
+  Pressable,
   Platform,Text,TouchableOpacity,TextInput,FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -488,8 +489,8 @@ const checkLoggedIn = async () => {
 
 
        {/*mwanzo wa view ya right*/}
-         <TouchableOpacity 
-          onPress={() => handleLikeToggle(item.id)}
+         <Pressable 
+          // onPress={() => handleLikeToggle(item.id)}
           >
          <View style={globalStyles.RightBtnContainer}>
          <View>
@@ -512,7 +513,7 @@ const checkLoggedIn = async () => {
         
 
          </View>
-         </TouchableOpacity>
+         </Pressable>
           {/*mwisho wa view ya right*/}
 
 
@@ -685,8 +686,8 @@ const checkLoggedIn = async () => {
 
 
        {/*mwanzo wa view ya right*/}
-         <TouchableOpacity 
-          onPress={() => handleLikeToggle(item.id)}
+         <Pressable 
+          // onPress={() => handleLikeToggle(item.id)}
           >
          <View style={globalStyles.RightBtnContainer}>
          <View>
@@ -709,7 +710,7 @@ const checkLoggedIn = async () => {
         
 
          </View>
-         </TouchableOpacity>
+         </Pressable>
           {/*mwisho wa view ya right*/}
 
 
@@ -792,7 +793,7 @@ const checkLoggedIn = async () => {
              <View style={globalStyles.ItselfLeftMinorContainer}>
              <TouchableOpacity 
                onPress={() => {
-            navigation.navigate('Get All Duka Lako Items');    
+            navigation.navigate('See Notifications');    
         }}
              >
               <Text 
@@ -803,7 +804,7 @@ const checkLoggedIn = async () => {
                   color:'white'
                 }
 
-                ]}>Duka Langu</Text>
+                ]}>Notifications</Text>
               </TouchableOpacity>
               </View>
              

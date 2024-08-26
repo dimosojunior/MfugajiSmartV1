@@ -1,4 +1,4 @@
-import React, { useState,useContext,useRef, useEffect } from 'react';
+import React, { useState,useContext,useRef,useCallback,memo, useEffect } from 'react';
 import  {
   View,StyleSheet,Image,
   ActivityIndicator,
@@ -23,6 +23,7 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
+import { Audio } from 'expo-av'; // Ongeza hili
 //import Carousel from 'react-native-snap-carousel';
 const { width, height } = Dimensions.get('screen');
 
@@ -30,50 +31,49 @@ const { width, height } = Dimensions.get('screen');
 
 
 
+// Function to prefetch images
+const prefetchImages = async (images) => {
+  const prefetchPromises = images.map((image) => {
+    if (image) {
+      return Image.prefetch(`${EndPoint}/${image}`);
+    }
+  });
+  await Promise.all(prefetchPromises);
+};
 
-
-const Carousel = ({ images }) => {
+// Carousel component with memoization
+const Carousel = memo(({ images }) => {
   const flatlistRef = useRef();
-  const screenWidth = Dimensions.get("window").width;
+  const screenWidth = Dimensions.get('window').width;
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     if (flatlistRef.current && images.length > 0) {
       const interval = setInterval(() => {
-        if (flatlistRef.current) {
-          const newIndex = (activeIndex + 1) % images.length;
-          flatlistRef.current.scrollToIndex({
-            index: newIndex,
-            animated: true,
-          });
-          setActiveIndex(newIndex);
-        }
+        const newIndex = (activeIndex + 1) % images.length;
+        flatlistRef.current.scrollToIndex({ index: newIndex, animated: true });
+        setActiveIndex(newIndex);
       }, 2000);
 
       return () => clearInterval(interval);
     }
   }, [activeIndex, images.length]);
 
-  const getItemLayout = (data, index) => ({
-    length: screenWidth,
-    offset: screenWidth * index,
-    index: index,
-  });
+  const getItemLayout = useCallback(
+    (_, index) => ({
+      length: screenWidth,
+      offset: screenWidth * index,
+      index,
+    }),
+    [screenWidth]
+  );
 
-
-
-
-
- const Slide = ({ item }) => (
+  const Slide = ({ item }) => (
     <View>
       <TouchableOpacity activeOpacity={1}>
         <Image
           source={{ uri: `${EndPoint}/${item}` }}
-          style={{
-            height: height / 4 + 10,
-            width: screenWidth,
-            borderRadius: 10,
-          }}
+          style={{ height: height / 4 + 10, width: screenWidth, borderRadius: 10 }}
         />
       </TouchableOpacity>
     </View>
@@ -103,7 +103,7 @@ const Carousel = ({ images }) => {
 
   return (
     <View>
-     <FlatList
+      <FlatList
         data={images}
         ref={flatlistRef}
         getItemLayout={getItemLayout}
@@ -113,17 +113,12 @@ const Carousel = ({ images }) => {
         pagingEnabled
         onScroll={handleScroll}
       />
-      <View style={{ 
-        flexDirection: "row",
-         justifyContent: "center",
-          marginTop: 15,
-          marginBottom:15,
-        }}>
+      <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 15, marginBottom: 15 }}>
         {renderDotIndicators()}
       </View>
     </View>
   );
-};
+});
 
 
 
@@ -132,6 +127,14 @@ const Carousel = ({ images }) => {
 
 export default function GetAllDukaLakoItems ({navigation}) {
 
+
+ //  NOTE: kwnye hii page kuna Warnings;
+ //  1.INayosababisha can read queryset length of undefined ni zile conditions za
+ //  kuchange color when like button is clicked, ukitoa zile error inaondoka.
+
+ //  2. Inayosababisha hii error,
+ //  VirtualizedList: You have a large list that is slow to update - make sure your renderItem function renders components that follow React performance best practices like PureComponent, shouldComponentUpdate, etc. {"contentLength": 1800, "dt": 1322, "prevDt": 3032}
+ // Ni hizo sliding images zinazoslide ko ukitoa hiyo error inaondoka.
    //  const { 
     
    //  id,
@@ -213,7 +216,7 @@ const getItems = () => {
     return Promise.resolve();  // Return a resolved promise to maintain the chain
   } else {
     setIsLoading(true);
-    const url = EndPoint + `/GetAllDukaLakoView/?page=${current_page}&page_size=2`;
+    const url = EndPoint + `/GetAllDukaLakoView/?page=${current_page}&page_size=50`;
     return fetch(url)
       .then((res) => res.json())
       .then((data) => {
@@ -250,10 +253,10 @@ const getItems = () => {
   //   setcurrent_page(current_page + 1);
   // };
 
-  useEffect(() => {
-    setLoading(true)
-    getItems();
-  }, []);
+  // useEffect(() => {
+  //   setLoading(true)
+  //   getItems();
+  // }, []);
 
 
 
@@ -298,6 +301,9 @@ const handleLikeToggle = async (itemId) => {
     );
     setQueryset(updatedQueryset);
 
+    // Cheza sauti baada ya kubonyeza kitufe
+      await soundRef.current.replayAsync();
+
     // Update the liked status
     const newLikeStatus = message === "Liked";
     setUserLikes((prevLikes) => ({
@@ -312,6 +318,28 @@ const handleLikeToggle = async (itemId) => {
   }
 };
 
+
+
+  // Ongeza soundRef kwa ajili ya sauti
+  const soundRef = useRef(new Audio.Sound());
+
+  // Pakia sauti unapofungua skrini
+  useEffect(() => {
+    const loadSound = async () => {
+      try {
+        await soundRef.current.loadAsync(require('../assets/like.mp3')); // Badilisha na njia ya faili ya sauti
+      } catch (error) {
+        console.error('Error loading sound:', error);
+      }
+    };
+
+    loadSound();
+
+    // Safisha sauti baada ya skrini kufungwa
+    return () => {
+      soundRef.current.unloadAsync();
+    };
+  }, []);
 
 
 
@@ -515,7 +543,7 @@ const handleLikeToggle = async (itemId) => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-      color={isLiked ? "red" : "green"}  
+      color={isLiked ? "red" : "black"}  
       
        />
         </View>
@@ -721,7 +749,7 @@ const handleLikeToggle = async (itemId) => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-      color={isLiked ? "red" : "green"}  
+      color={isLiked ? "red" : "black"}  
       
        />
         </View>
@@ -849,7 +877,7 @@ const handleLikeToggle = async (itemId) => {
                 <Text
                 style={globalStyles.AppChaguaHudumaTextHomeScreen}  
                 
-                >Huduma mbalimbali za watu</Text>
+                >Posti mbalimbali za watu</Text>
 
 
             {/*mwanzo wa Item View*/}

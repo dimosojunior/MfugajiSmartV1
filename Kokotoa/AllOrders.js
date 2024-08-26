@@ -33,25 +33,25 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
-const AllOrders = ({navigation, route}) => {
+const AllOrders = ({navigation}) => {
 
-  const { 
+  // const { 
     
-   KukuId,
-   UmriwaKukuId,
-   totalCartKilos,
-   totalCartPrice,
+  //  // KukuId,
+  //  // UmriwaKukuId,
+  //  // totalCartKilos,
+  //  // totalCartPrice,
 
-   StaterFeed,
-   FinisherFeed,
-   LayerFeed,
-   GrowerFeed,
-    AinaYaKuku,
-    UmriKwaWiki,
-   UmriKwaSiku,
-   UnaKiasiGaniChaChakula
-    //id //id ya Chakula
-   } = route.params
+  //  // StaterFeed,
+  //  // FinisherFeed,
+  //  // LayerFeed,
+  //  // GrowerFeed,
+  //  //  AinaYaKuku,
+  //  //  UmriKwaWiki,
+  //  // UmriKwaSiku,
+  //  // UnaKiasiGaniChaChakula
+    
+  //  } = route.params
 
   //const ChakulaId = id;
 //const UnaKiasiGaniChaChakula = 100;
@@ -326,21 +326,24 @@ const ReportCard = ({item, index}) => {
 
        {/*mwanzo wa button*/}
           <TouchableOpacity
-               onPress={() =>
-        navigation.navigate('All Ordered Items', {...item, 
-          KukuId,UnaKiasiGaniChaChakula,
-           UmriwaKukuId, 
-           totalCartKilos, 
-           totalCartPrice ,
+                  onPress={() =>
+        navigation.navigate('All Ordered Items', item)}
 
-           AinaYaKuku,  
-           StaterFeed,
-           GrowerFeed, 
-           LayerFeed, 
-           FinisherFeed,
-           UmriKwaWiki,
-           UmriKwaSiku
-         })}
+        //        onPress={() =>
+        // navigation.navigate('All Ordered Items', {...item, 
+        //   KukuId,UnaKiasiGaniChaChakula,
+        //    UmriwaKukuId, 
+        //    totalCartKilos, 
+        //    totalCartPrice ,
+
+        //    AinaYaKuku,  
+        //    StaterFeed,
+        //    GrowerFeed, 
+        //    LayerFeed, 
+        //    FinisherFeed,
+        //    UmriKwaWiki,
+        //    UmriKwaSiku
+        //  })}
        
            style={globalStyles.VyakulaAddButtonContainerCartItems}
                  >
@@ -471,21 +474,24 @@ const ReportCard = ({item, index}) => {
 
        {/*mwanzo wa button*/}
           <TouchableOpacity
-               onPress={() =>
-        navigation.navigate('All Ordered Items', {...item,
-         KukuId,UnaKiasiGaniChaChakula, 
-         UmriwaKukuId, 
-         totalCartKilos,
-          totalCartPrice,
 
-          AinaYaKuku,  
-           StaterFeed,
-           GrowerFeed, 
-           LayerFeed, 
-           FinisherFeed,
-           UmriKwaWiki,
-           UmriKwaSiku 
-        })}
+           onPress={() =>
+        navigation.navigate('All Ordered Items', item)}
+        //        onPress={() =>
+        // navigation.navigate('All Ordered Items', {...item,
+        //  KukuId,UnaKiasiGaniChaChakula, 
+        //  UmriwaKukuId, 
+        //  totalCartKilos,
+        //   totalCartPrice,
+
+        //   AinaYaKuku,  
+        //    StaterFeed,
+        //    GrowerFeed, 
+        //    LayerFeed, 
+        //    FinisherFeed,
+        //    UmriKwaWiki,
+        //    UmriKwaSiku 
+        // })}
        
            style={globalStyles.VyakulaAddButtonContainerCartItems}
                  >

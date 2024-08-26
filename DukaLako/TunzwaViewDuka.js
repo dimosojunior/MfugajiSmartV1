@@ -33,6 +33,7 @@ import Html from 'react-native-render-html';
 import { FontAwesome} from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { Audio } from 'expo-av'; // Ongeza hili
 
 const {width, height} = Dimensions.get('window');
 
@@ -190,6 +191,10 @@ const [userData, setUserData] = useState({});
  const [isLoading2, setIsLoading2] = useState(false);
 
 
+
+
+
+
  useEffect(() => {
     AsyncStorage.getItem("userToken").then(token => {
       setUserToken(token)
@@ -331,35 +336,6 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
 
 
 
-//const [likes, setLikes] = useState(0);
- const handleLikeToggle = async (itemId) => {
-  try {
-    const response = await axios.post(
-      `${EndPoint}/ToggleLikeView/${itemId}/`,
-      {},
-      {
-        headers: {
-          Authorization: `Token ${userToken}`,
-        },
-      }
-    );
-    
-    // Pata item iliyosasishwa
-    const updatedLikes = response.data.Likes;
-
-    // Sasisha queryset
-    const updatedQueryset = queryset.map((item) =>
-      item.id === itemId ? { ...item, Likes: updatedLikes } : item
-    );
-    setQueryset(updatedQueryset);
-    console.log("Umeweka like");
-  } catch (error) {
-    console.error('Error toggling like:', error);
-  }
-};
-
-
-
 
 
 
@@ -413,7 +389,7 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
 
   // ];
 
-
+const [likedItems, setLikedItems] = useState(new Set()); // Store liked items in a set
 
 
 //FOR SEARCHING
@@ -428,42 +404,54 @@ const [endReached, setEndReached] = useState(false)
 const [isPending, setPending] = useState(true);
 
 
-
-
-const getItems = () => {
+const getItems = async () => {
   if (endReached) {
     setLoading(false);
     setIsLoading(false);
     setPending(false);
     return;
-  } else {
-    setIsLoading(true);
-    //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=2`
-    // console.log(url);
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.queryset.length > 0) {
-          setQueryset([...queryset, ...data.queryset]);
-          setIsLoading(false);
-          setLoading(false);
-          setcurrent_page(current_page + 1);
-          setPending(false);
+  }
 
-          // console.log("NEW CRRRENT", current_page);
-          // console.log(queryset);
+  setIsLoading(true);
+  try {
+    const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=50`;
+    const response = await fetch(url);
+    const data = await response.json();
 
-        } else {
-          setIsLoading(false);
-          setEndReached(true);
-          setLoading(false);
-          setPending(false);
-        }
-      });
+    if (data.queryset.length > 0) {
+      setQueryset([...queryset, ...data.queryset]);
+      setIsLoading(false);
+      setLoading(false);
+      setcurrent_page(current_page + 1);
+      setPending(false);
+
+          // Fetch liked status for each item
+        // Fetch liked status for each item
+        loadLikedStatus(); // Ensure liked status is loaded after fetching items
+            // const likedItemsSet = new Set();
+            // data.queryset.forEach((item) => {
+            //     if (item.liked_by.includes(userToken)) {
+            //         likedItemsSet.add(item.id);
+            //     }
+            // });
+            // setLikedItems(likedItemsSet);
+
+
+
+    } else {
+      setIsLoading(false);
+      setEndReached(true);
+      setLoading(false);
+      setPending(false);
+    }
+    
+    
+  } catch (error) {
+    setIsLoading(false);
+    setLoading(false);
+    console.error('Error fetching items:', error);
   }
 };
-
 
 
 
@@ -498,6 +486,120 @@ const getItems = () => {
 
 
 
+
+//const [likes, setLikes] = useState(0);
+ 
+//const [likes, setLikes] = useState(0);
+const handleLikeToggle = async (itemId) => {
+  try {
+    const response = await axios.post(
+      `${EndPoint}/ToggleLikeView/${itemId}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
+      }
+    );
+
+    const updatedLikes = response.data.Likes;
+    const message = response.data.message;
+
+    const updatedQueryset = queryset.map((item) =>
+      item.id === itemId ? { ...item, Likes: updatedLikes } : item
+    );
+    setQueryset(updatedQueryset);
+
+    //kwa ajili ya kuchange like button color
+    if (likedItems.has(itemId)) {
+      likedItems.delete(itemId);
+      await AsyncStorage.removeItem(`like_${itemId}`);
+    } else {
+      likedItems.add(itemId);
+      await AsyncStorage.setItem(`like_${itemId}`, 'liked');
+    }
+    setLikedItems(new Set(likedItems)); // Update state with new liked items set
+
+
+
+
+    // Cheza sauti baada ya kubonyeza kitufe
+      await soundRef.current.replayAsync();
+
+   
+   
+  } catch (error) {
+    console.error('Error toggling like:', error);
+  }
+};
+
+
+
+
+
+
+const loadLikedStatus = async () => {
+  try {
+    const likedItemsSet = new Set();
+    for (const item of queryset) {
+      const likedStatus = await AsyncStorage.getItem(`like_${item.id}`);
+      if (likedStatus === 'liked') {
+        likedItemsSet.add(item.id);
+      }
+    }
+    setLikedItems(likedItemsSet);
+  } catch (error) {
+    console.error('Error loading liked status:', error);
+  }
+};
+
+useEffect(() => {
+  loadLikedStatus(); // Load liked status when component mounts
+}, [queryset]);
+
+
+
+
+
+
+
+ const formatDate = (dateString) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+ 
+
+
+
+
+
+  // Ongeza soundRef kwa ajili ya sauti
+  const soundRef = useRef(new Audio.Sound());
+
+  // Pakia sauti unapofungua skrini
+  useEffect(() => {
+    const loadSound = async () => {
+      try {
+        await soundRef.current.loadAsync(require('../assets/like.mp3')); // Badilisha na njia ya faili ya sauti
+      } catch (error) {
+        console.error('Error loading sound:', error);
+      }
+    };
+
+    loadSound();
+
+    // Safisha sauti baada ya skrini kufungwa
+    return () => {
+      soundRef.current.unloadAsync();
+    };
+  }, []);
+
+
+
 const InventoryCard = ({item, index}) => {
    const carouselItems = [
       item.PichaYaPost,
@@ -514,6 +616,8 @@ const InventoryCard = ({item, index}) => {
 
     //console.log("Carousel Items:", carouselItems);
 
+ //console.log("Carousel Items:", carouselItems);
+    const isLiked = likedItems.has(item.id);
 
 
 
@@ -605,13 +709,22 @@ const InventoryCard = ({item, index}) => {
             {/*mwanzo wa view ya left*/}
               <TouchableOpacity 
 
-             onPress={() => {
-           navigation.navigate('View Duka Lako', item);    
-        }} >
+        //      onPress={() => {
+        //    navigation.navigate('View Duka Lako', item);    
+        // }} 
+        >
            <View style={globalStyles.LeftBtnContainer}>
-            {/*<Text 
-          style={globalStyles.AppItemButtonTextHomeScreen}
-        >Wasiliana naye</Text>*/}
+            <Text 
+          style={[globalStyles.AppItemButtonTextHomeScreen,
+
+            {
+              backgroundColor:'black',
+              borderColor:'white',
+              borderWidth:1,
+            }
+
+            ]}
+        >{formatDate(item.Created)}</Text>
          </View>
          </TouchableOpacity>
           {/*mwisho wa view ya left*/}
@@ -635,7 +748,7 @@ const InventoryCard = ({item, index}) => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-      color='red'  
+     color={isLiked ? 'red' : 'black'} 
       
        />
         </View>
@@ -817,8 +930,10 @@ keyboardShouldPersistTaps="handled"
               
 
                opacity: isModalVisible ? 
-              0.1 : 1
-               }
+              0.1 : 1,
+             // backgroundColor:'red',
+               },
+
 
                 ]}>
 
@@ -855,28 +970,7 @@ keyboardShouldPersistTaps="handled"
                         fontFamily:'Light',
                       }}>Jina Kamili:</Text> {username}</Text>
 
-                       <Text 
-                         style={[
-                          styles.welcomemessage,
-                          
-                          globalStyles.AppWelcomeHeaderText2HomeScreen,
-                          {
-                            fontSize:16,
-                            fontFamily:'Light',
-                            color:'white',
-
-                          }  
-
-                          
-                        ]} 
                      
-                       >
-                     <Text style={{
-                        fontSize:16,
-                        color:"green",
-                        fontFamily:'Light',
-                      }}>Simu:</Text>  {phone}
-                      </Text>
 
                         {Location && (
                            <Text 
@@ -1067,6 +1161,31 @@ keyboardShouldPersistTaps="handled"
                </TouchableOpacity>
                )}
 
+            <TouchableOpacity 
+
+        //      onPress={() => {
+        //    navigation.navigate('View Duka Lako', item);    
+        // }} 
+        >
+           <View style={globalStyles.LeftBtnContainer}>
+            <Text 
+          style={[globalStyles.AppItemButtonTextHomeScreen,
+            {
+              width:'50%',
+              marginTop:30,
+               
+              backgroundColor:'black',
+              borderColor:'white',
+              borderWidth:1,
+            
+            }
+
+            ]}
+        >{formatDate(Created)}</Text>
+         </View>
+         </TouchableOpacity>
+
+
 
                 </View>
                 <View>
@@ -1165,7 +1284,7 @@ keyboardShouldPersistTaps="handled"
   <Text
   style={globalStyles.AppChaguaHudumaTextHomeScreen}  
   
-  >Huduma zingine za {username}</Text>
+  >Posti zingine za {username}</Text>
 
 
 

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Mfugaji-App",
-    "slug": "Mfugaji-App",
-    "version": "1.0.0",
+    "name": "Mfugaji-Smart",
+    "slug": "Mfugaji-Smart",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,18 +15,19 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 1,
+      "package": "ttpc.MfugajiSmart",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.dimoso.MfugajiSmart"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "49bc14d2-526a-4184-b651-d84b21ef4605"
+        "projectId": "d2f572a0-7bf4-4d7d-8afc-c4d8936683db"
       }
     }
   }

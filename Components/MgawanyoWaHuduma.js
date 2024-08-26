@@ -416,7 +416,7 @@ const getItems = () => {
           }
 
           if (item.JinaLaHuduma === 'Kumbusho La Uatamiaji Wa Mayai') {
-            navigation.navigate('Kumbusho La Uatamiaji Form', item);
+            navigation.navigate('Kumbusho La Uatamiaji AinaZaNdege', item);
           }
 
 
@@ -561,7 +561,7 @@ const getItems = () => {
 
 
           if (item.JinaLaHuduma === 'Kumbusho La Uatamiaji Wa Mayai') {
-            navigation.navigate('Kumbusho La Uatamiaji Form', item);
+            navigation.navigate('Kumbusho La Uatamiaji AinaZaNdege', item);
           }
 
      }else{
@@ -750,6 +750,105 @@ const getItems = () => {
 
 
 
+
+
+
+{JinaLaHuduma === "Bajeti Ya Chakula" && (
+<View style={{
+  marginBottom:100,
+}}>
+  {/*<Text style={{
+    color:'white',
+  }}>Vuta juu</Text>*/}
+</View>
+)}
+
+{/*mwanzo kwaajili ya kupress order*/}
+{JinaLaHuduma === "Bajeti Ya Chakula" && (
+
+  <Pressable
+          style={[{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 20,
+            justifyContent: "space-between",
+            backgroundColor: "white",
+            position:'absolute',
+            bottom:0,
+            width:'100%',
+
+          },
+           
+          ]}
+        >
+          <View style={{
+            width:'50%',
+          }}>
+            <Text style={{ 
+              fontFamily:'Medium'
+            }}>
+            Tazama michanganyo ya mwanzo
+            </Text>
+           
+          </View>
+
+          <TouchableOpacity
+
+        onPress={() =>
+        navigation.navigate('All Orders')}
+
+        //  onPress={() =>
+        // navigation.navigate('All Orders', 
+        //   { KukuId,UnaKiasiGaniChaChakula,
+        //     selectedProductIds, 
+        //     setSelectedProductIds,
+        //      UmriwaKukuId,
+        //      totalCartPrice,
+        //       totalCartKilos,
+
+        //      AinaYaKuku,  
+        //      StaterFeed,
+        //      GrowerFeed, 
+        //      LayerFeed, 
+        //      FinisherFeed,
+        //      UmriKwaWiki,
+        //      UmriKwaSiku
+        //    })}
+       
+
+           
+            style={{
+              
+              padding: 10,
+              width:'50%',
+              borderRadius: 6,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+            }}
+          >
+            
+            <Text style={{
+             //fontSize: 16, 
+             //fontWeight: "500", 
+             color: "white" ,
+            // padding:13,
+             backgroundColor: "green",
+             borderColor:'white',
+             borderWidth:1,
+             textAlign:'center',
+             borderRadius:8,
+             width:'100%',
+             fontFamily:'Light',
+             paddingVertical:10,
+
+           }}>
+              Tazama
+            </Text>
+          </TouchableOpacity>
+        </Pressable>
+)}
 
 
 

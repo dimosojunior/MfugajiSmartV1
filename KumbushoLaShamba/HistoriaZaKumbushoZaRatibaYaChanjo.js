@@ -270,7 +270,7 @@ const CartCard = ({item, index}) => {
 
 
 
-{item && item.UmriWaKuku && item.UmriWaKuku.UmriKwaWiki && (
+{/*{item && item.UmriWaKuku && item.UmriWaKuku.UmriKwaWiki && (
            <Text 
           style={globalStyles.VyakulaPriceCartItemsText}
         >
@@ -283,7 +283,7 @@ const CartCard = ({item, index}) => {
             </Text> 
           </Text>
       )}
-        
+        */}
           
           
 

@@ -285,16 +285,16 @@ const CartCard = ({item, index}) => {
           </Text>)}
 
 
-         {item && item.AinaYaKuku && item.AinaYaKuku.AinaYaKuku && (
+         {item && item.AinaYaNdege  && (
            <Text 
           style={globalStyles.VyakulaPriceCartItemsText}
         >
           
-            Aina ya kuku:  <Text style={{
+            Aina ya Ndege:  <Text style={{
               color:'green',
               fontFamily:'Bold'
             }}>
-               {item.AinaYaKuku.AinaYaKuku} 
+               {item.AinaYaNdege} 
             </Text> 
           </Text>
       )}

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text,SafeAreaView, View } from 'react-native';
 import HomeScreen from './Screens/HomeScreen';
 import Test from './Screens/Test';
 
@@ -23,7 +23,7 @@ export default function App({navigation}) {
 
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
     
       
      <NavigationContainer>
@@ -33,7 +33,7 @@ export default function App({navigation}) {
 
       
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -482,7 +482,8 @@ AppItemImageContainerHomeScreen:{
 AppItemImageHomeScreen:{
    //position:"absolute",
   width:'100%',
-  height:150,
+  //height:150,
+  height:height/5,
   borderRadius:10,
 },
 
@@ -2809,7 +2810,8 @@ UserInfoLeftContainer:{
 
 UserInfoLeftImage:{
   width:'95%',
-  height:60,
+  // height:60,
+  height:height/11 - 5,
   borderRadius:50,
 
 

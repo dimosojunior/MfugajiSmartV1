@@ -129,7 +129,7 @@ export default function PreLoaderScreen({ navigation }) {
   return (
      <ImageBackground
 
-                source={require('../assets/bc1.png')}
+                source={require('../assets/im3.png')}
                 style={{
                     flex: 1,
                     opacity:1,
@@ -142,7 +142,7 @@ export default function PreLoaderScreen({ navigation }) {
 
   
 
-      <PreloaderLotterView />
+      {/*<PreloaderLotterView />*/}
         
 
 

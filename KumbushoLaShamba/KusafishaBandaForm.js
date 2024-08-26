@@ -289,7 +289,7 @@ const pickPdf = async () => {
         <>
           {!isLoading ? (
             <View style={{ flex: 1 }}>
-              <MinorHeader title={JinaLaHuduma} />
+              <MinorHeader title="Kusafisha Banda" />
               <ImageBackground
                 source={require('../assets/bc1.png')}
                 style={{ flex: 1, opacity: 1 }}

@@ -28,12 +28,15 @@ const KumbushoLaUatamiajiForm = ({ navigation, route }) => {
 
   const { 
     
-    id,
-    JinaLaHuduma 
+    //id,
+    JinaLaHuduma,
+    AinaYaNdege,
+    SikuKamiliZaKuatamia
    } = route.params
 
 
-
+// console.log("AinaYaNdege", AinaYaNdege);
+// console.log("SikuKamiliZaKuatamia", SikuKamiliZaKuatamia);
 
 
 
@@ -120,27 +123,27 @@ const [Kifaa, setKifaa] = useState('');
 const [KiasiChaMayai, setKiasiChaMayai] = useState('0');
 const [SikuYaNgapiTokaKuatamiwa, setSikuYaNgapiTokaKuatamiwa] = useState('0');
 const [JinaLaUlipoYatoaMayai, setJinaLaUlipoYatoaMayai] = useState('');
-const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
+const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('');
 
 
- const [AinaYaNdege, setAinaYaNdege] = useState([]);
- const [selectedAinaYaNdege, setSelectedAinaYaNdege] = useState(null);
+ // const [AinaYaNdege, setAinaYaNdege] = useState([]);
+ // const [selectedAinaYaNdege, setSelectedAinaYaNdege] = useState(null);
  
-  // Fetch Universities
-  useEffect(() => {
-    fetch(`${EndPoint}/Add/AinaZaNdegeViewSet/`)
-      .then((response) => response.json())
-      .then((data) => {
-        setAinaYaNdege(data);
+ //  // Fetch Universities
+ //  useEffect(() => {
+ //    fetch(`${EndPoint}/Add/AinaZaNdegeViewSet/`)
+ //      .then((response) => response.json())
+ //      .then((data) => {
+ //        setAinaYaNdege(data);
         
-        // Set the default selectedRoomClass if needed
-        //setSelectedRoomClass(data[0]); // For example, set the first RoomClass as default
-      })
-      .catch((error) => {
-        //console.error('Error fetching Product categories:', error);
-        //showAlertFunction("Error fetching Universities");
-      });
-  }, []);
+ //        // Set the default selectedRoomClass if needed
+ //        //setSelectedRoomClass(data[0]); // For example, set the first RoomClass as default
+ //      })
+ //      .catch((error) => {
+ //        //console.error('Error fetching Product categories:', error);
+ //        //showAlertFunction("Error fetching Universities");
+ //      });
+ //  }, []);
 
 
 
@@ -282,21 +285,25 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
 
     // }
 
+
+ if (NambaYakeYaSimu) {
+            formData.append('NambaYakeYaSimu', NambaYakeYaSimu);
+        } 
+
     
 
- formData.append('NambaYakeYaSimu', NambaYakeYaSimu);
-
+ 
    
 
      
          // Hakikisha kuwa selectedMkoa na selectedAinaYaNdege sio null
-        if (selectedAinaYaNdege && selectedAinaYaNdege.id) {
-            formData.append('AinaYaNdege', selectedAinaYaNdege.id);
-        } else {
-            showAlertFunction('Tafadhali chagua Aina Ya Kuku.');
-            setIsLoading(false);
-            return;
-        }
+        // if (selectedAinaYaNdege && selectedAinaYaNdege.id) {
+        //     formData.append('AinaYaNdege', selectedAinaYaNdege.id);
+        // } else {
+        //     showAlertFunction('Tafadhali chagua Aina Ya Kuku.');
+        //     setIsLoading(false);
+        //     return;
+        // }
 
 
 
@@ -313,7 +320,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
     //   type: 'application/pdf',
     // });
 
-      axios.post(EndPoint + `/AddKumbushoLaUatamiajiWaMayaiView/`, formData, {
+      axios.post(EndPoint + `/AddKumbushoLaUatamiajiWaMayaiView/?AinaYaNdege=${AinaYaNdege}&SikuKamiliZaKuatamia=${SikuKamiliZaKuatamia}`, formData, {
         headers: {
           Authorization: `Token ${userToken}`,
           'Content-Type': 'multipart/form-data',
@@ -325,6 +332,12 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
          setModalVisible(false);
         setIsModalVisible(false); // Reset state when modal closes
        setdisplayContentsState(true);
+
+       setSikuYaNgapiTokaKuatamiwa('');
+       //setKifaa('');
+       setKiasiChaMayai('');
+       setJinaLaUlipoYatoaMayai('');
+       setNambaYakeYaSimu('');
 
        
       }).catch(error => {
@@ -362,7 +375,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
             }}
 
               >
-              <MinorHeader title={JinaLaHuduma} />
+              <MinorHeader title="Mayai" />
               <ImageBackground
                 source={require('../assets/bc1.png')}
                 style={[{ 
@@ -410,6 +423,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
 
 
 {/*  mwanzo wa picker*/}
+{/*
  <View style={{ marginTop: 20 }}>
 
  <View style={{
@@ -478,7 +492,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
         </View>    
           
         
-    </View>
+    </View>*/}
 
   {/*  mwisho wa picker*/}
 
@@ -509,6 +523,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
   value={KiasiChaMayai}
   onChangeText={setKiasiChaMayai}
   placeholderTextColor={COLORS.white}
+  keyboardType="numeric"
   style={styles.MyTextInput}
 />
 
@@ -540,6 +555,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
   value={SikuYaNgapiTokaKuatamiwa}
   onChangeText={setSikuYaNgapiTokaKuatamiwa}
   placeholderTextColor={COLORS.white}
+  keyboardType="numeric"
   style={styles.MyTextInput}
 />
 
@@ -699,6 +715,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('+255');
   value={NambaYakeYaSimu}
   onChangeText={setNambaYakeYaSimu}
   placeholderTextColor={COLORS.white}
+  keyboardType="numeric"
   style={styles.MyTextInput}
 />
 
@@ -777,7 +794,7 @@ style={{
   }}>
      Ahsante kwa kuweka kumbusho la uatamiaji wa mayai ya ndege,
      utakumbushwa taarifa za uatamiaji wa mayai ya
-      ndege aina ya  {selectedAinaYaNdege.AinaYaNdege} yenye siku {SikuYaNgapiTokaKuatamiwa} tangu kuanza 
+      ndege aina ya  {AinaYaNdege} yenye siku {SikuYaNgapiTokaKuatamiwa} tangu kuanza 
      kuatamiwa tarehe husika ikifika.
   </Text>
 

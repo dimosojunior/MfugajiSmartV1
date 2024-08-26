@@ -236,38 +236,15 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
 const [TotalMEValue, setTotalMEValue] = useState(0);
 
 
-
-
-
-
-//----------------------FOR CONSTANT QUERYSET------------------
-//----------------------FOR CONSTANT QUERYSET------------------
-
-
-
-const [constantCalculatedItems, setconstantCalculatedItems] = useState([]);
-const [constant_queryset, setconstant_queryset] = useState([]);
-
-
-
-
-
-
-
 useEffect(() => {
-    const fetchAllData = async () => {
+    const fetchData = async () => {
         try {
-            const response1 = axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`);
-            
-            const response2 = axios.get(`${EndPoint}/GetConstantFoodKilosForEachItemView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`);
+            const response = await axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`, {
+               
+            });
 
-            const [result1, result2] = await Promise.all([response1, response2]);
+            const { queryset, calculated_items, main_total_price, ...totals } = response.data;
 
-            // Extract data from responses
-            const { queryset, calculated_items, main_total_price, ...totals } = result1.data;
-            const { constant_queryset, constant_calculated_items } = result2.data;
-
-            // Set data for the first API call
             setQueryset(queryset);
             setCalculatedItems(calculated_items);
             setMainTotalPrice(main_total_price);
@@ -289,7 +266,47 @@ useEffect(() => {
             setMaoni_Ya_WangaValue(totals.Maoni_Ya_Wanga);
             setMaoni_Ya_MafutaValue(totals.Maoni_Ya_Mafuta);
 
-            // Set data for the second API call
+            setisPending(true);
+            setisRange(false);
+        } catch (error) {
+            console.error(error);
+            setisPending(true);
+        }
+    };
+
+    fetchData();
+}, []);
+
+
+
+
+
+
+
+
+
+
+
+
+//----------------------FOR CONSTANT QUERYSET------------------
+//----------------------FOR CONSTANT QUERYSET------------------
+
+
+
+const [constantCalculatedItems, setconstantCalculatedItems] = useState([]);
+const [constant_queryset, setconstant_queryset] = useState([]);
+
+
+
+useEffect(() => {
+    const fetchConstantData = async () => {
+        try {
+            const response = await axios.get(`${EndPoint}/GetConstantFoodKilosForEachItemView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`, {
+                
+            });
+
+            const { constant_queryset, constant_calculated_items } = response.data;
+
             setconstant_queryset(constant_queryset);
             setconstantCalculatedItems(constant_calculated_items);
 
@@ -301,8 +318,14 @@ useEffect(() => {
         }
     };
 
-    fetchAllData();
+    fetchConstantData();
 }, []);
+
+
+
+
+
+
 
 
 

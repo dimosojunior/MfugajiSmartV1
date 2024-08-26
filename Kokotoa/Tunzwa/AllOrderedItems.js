@@ -29,35 +29,47 @@ import COLORS  from '../Constant/colors';
 import { useFocusEffect } from '@react-navigation/native';
 // import { getFormatedDate } from "react-native-modern-datepicker";
 // import DatePicker from "react-native-modern-datepicker";
-
+import LottieView from 'lottie-react-native';
 
 const { width, height } = Dimensions.get('window');
 
-const KukokotoaRipoti = ({navigation, route}) => {
+const AllOrderedItems = ({navigation, route}) => {
 
   const { 
 
+   
+   //  UmriKwaWiki,
+   // 
+   // total_price,
+   //  total_Kilos,
+
+    
+   // KukuId,
+   // UmriwaKukuId,
+   // totalCartKilos,
+   // totalCartPrice,
+   id,//id ya order
     
     StaterFeed,
    FinisherFeed,
    LayerFeed,
    GrowerFeed,
     AinaYaKuku,
-    UmriKwaWiki,
-   UmriKwaSiku,
-
+    UmriKwaSiku,
     
-   KukuId,
-   UmriwaKukuId,
-   totalCartKilos,
-   totalCartPrice,
-   id,//id ya order
-    //id //id ya Chakula
-    total_price,
-    total_Kilos,
 
     TotalFoodMixerPercentage,
-    UnaKiasiGaniChaChakula
+    TotalFoodAmount,
+    UnaKiasiGaniChaChakula,
+
+    //hizi zintoka kwenye model ya VyakulaOrder
+    TotalCPPercentageRequired,
+     TotalWangaPercentageRequired,
+     TotalMafutaPercentageRequired,
+
+     TotalConstantFoodMixerPercentage,
+     TotalMixerKios_ForConstantFoodGroups
+    
 
    } = route.params
 
@@ -204,7 +216,10 @@ const checkLoggedIn = async () => {
  
 };
 
-
+//HIZI NI ZA MAONI
+const [Maoni_Ya_CPValue, setMaoni_Ya_CPValue] = useState(0);
+const [Maoni_Ya_WangaValue, setMaoni_Ya_WangaValue] = useState(0);
+const [Maoni_Ya_MafutaValue, setMaoni_Ya_MafutaValue] = useState(0);
 
 const [TotalCPValue, setTotalCPValue] = useState(0);
 const [TotalWangaValue, setTotalWangaValue] = useState(0);
@@ -216,10 +231,12 @@ const [TotalMETHValue, setTotalMETHValue] = useState(0);
 const [TotalTryptophanValue, setTotalTryptophanValue] = useState(0);
 const [TotalUngaWaMifupaValue, setTotalUngaWaMifupaValue] = useState(0);
 const [TotalChumviValue, setTotalChumviValue] = useState(0);
+const [TotalMEValue, setTotalMEValue] = useState(0);
 
  useEffect(() => {
     // Make a GET request to fetch queryset and main total price
-    axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
+   axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
+  //axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
 
 
 
@@ -238,7 +255,12 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
           TotalMETH,
           TotalTryptophan,
           TotalUngaWaMifupa,
-          TotalChumvi 
+          TotalChumvi,
+          TotalME,
+
+          Maoni_Ya_CP,
+          Maoni_Ya_Wanga,
+          Maoni_Ya_Mafuta 
         } = response.data;
         setQueryset(queryset);
         setCalculatedItems(calculated_items);
@@ -253,6 +275,11 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
         setTotalTryptophanValue(TotalTryptophan);
         setTotalUngaWaMifupaValue(TotalUngaWaMifupa);
         setTotalChumviValue(TotalChumvi);
+        setTotalMEValue(TotalME);
+
+        setMaoni_Ya_CPValue(Maoni_Ya_CP);
+        setMaoni_Ya_WangaValue(Maoni_Ya_Wanga);
+        setMaoni_Ya_MafutaValue(Maoni_Ya_Mafuta);
 
         setisPending(true);
          setisRange(false);
@@ -270,7 +297,7 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
 
 
 
-
+//console.log("Maoni", Maoni_Ya_CPValue);
 
 
   // Utility function to format the date as "YYYY-MM-DD"
@@ -299,10 +326,9 @@ const formatToThreeDigits = (number) => {
 
 
 
-const TotalVyakulaCard = () => {
+
+const ReportCard = ({item,calculatedItem , index}) => {
   
-
-
 
 
  return (
@@ -317,63 +343,21 @@ const TotalVyakulaCard = () => {
        
      
       
-      style={globalStyles.TaarifaOverdoseCartItemsContainer} >
-
-
-   {/* mwanzo wa flow ya 0*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalCPValue > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha protini kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalCPValue && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalCPValue} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 0*/}
+      style={globalStyles.TaarifaOverdoseCartItemsContainerr} >
 
 
 
 
 
 {/* mwanzo wa flow ya 1*/}
+
+{item && item.product && item.product.product_name && ( 
         <View 
         style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
         >
       
      
-     {TotalWangaValue > 0 && ( 
+     
      <View style={
             globalStyles.TaarifaLeft
           }>
@@ -385,13 +369,13 @@ const TotalVyakulaCard = () => {
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
          >
            
-           Kiasi cha wanga kinachoweza kupatikana
+           Weka kiasi cha {item.product.product_name}
           </Text>
           
           </View>
-          )}
+          
 
-         {TotalWangaValue && ( 
+         
          <View style={
             globalStyles.TaarifaRight
           }>
@@ -399,397 +383,22 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalWangaValue} Kg 
+         {calculatedItem.Amount_For_Each_Product.toFixed(2)} Kg 
           </Text>
           
      </View>
-     )}
+     
 
       
        
         </View>
+        )}
+
       {/*mwisho wa flow ya 1*/}
 
 
 
 
-
-
-{/* mwanzo wa flow ya 2*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalMafutaValue > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha mafuta kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalMafutaValue && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalMafutaValue} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 2*/}
-
-
-
-
-{/* mwanzo wa flow ya 3*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalDCPValue > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha DCP kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalDCPValue && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalDCPValue} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 3*/}
-
-
-
-
-
-
-{/* mwanzo wa flow ya 4*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalPREMIXValue > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha Premix kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalPREMIXValue && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalPREMIXValue} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 4*/}
-
-
-
-
-
-{/* mwanzo wa flow ya 5*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalLysinValue > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha Lysin kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalLysinValue && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalLysinValue} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 5*/}
-
-
-
-
-{/* mwanzo wa flow ya 6*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalMETHValue > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha Meth kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalMETHValue && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalMETHValue} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 6*/}
-
-
-
-
-
-{/* mwanzo wa flow ya 7*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalTryptophanValue > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha Tryptophan kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalTryptophanValue && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalTryptophanValue} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 7*/}
-
-
-
-
-
-
-
-
-
-{/* mwanzo wa flow ya 8*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalUngaWaMifupaValue > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha unga wa mifupa kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalUngaWaMifupaValue && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalUngaWaMifupaValue} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 8*/}
-
-
-
-
-
-
-{/* mwanzo wa flow ya 9*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalChumviValue > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha chumvi kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalChumviValue && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalChumviValue} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 9*/}
 
 
 
@@ -802,166 +411,6 @@ const TotalVyakulaCard = () => {
 
 
 )
-}
-
-
-
-
-const ReportCard = ({item,calculatedItem , index}) => {
-  
-
-
- return (
-
-
-
-
-      <Pressable
-      style={[
-        globalStyles.VyakulaCartItemsContainer,
-        
-      ]} >
-
-{/*OverdoseCartItemsContainer*/}
-        <View 
-        style={globalStyles.VyakulaLeftCartItemsContainer}
-        >
-
-         {item.product.product_name && (
-          <Text 
-           style={globalStyles.VyakulaItemNameCartItemsText}
-         >
-            {item.product.product_name}
-          </Text>)}
-
-         
-
-
-          <Text 
-          style={[globalStyles.VyakulaPriceCartItemsText,
-            {
-              fontFamily:'Bold',
-            }
-
-            ]}
-        >
-          
-            Kiasi cha chakula unachotakiwa kuchanganya: <Text style={{
-              color:'green',
-              fontFamily:'Bold'
-            }}>
-             {calculatedItem.Amount_For_Each_Product.toFixed(0)} Kg
-            </Text>  
-            
-          </Text>
-
-
-      {/*     <Text 
-          style={globalStyles.VyakulaPriceCartItemsText}
-        >
-          
-            Asilimia za chakula kwenye mchanganyiko wa chakula: <Text style={{
-              color:'green',
-              fontFamily:'Bold'
-            }}>
-             {calculatedItem.NewPercentage.toFixed(0)}%
-            </Text>  
-            
-          </Text>*/}
-          
-
-
-     {/* <Text 
-          style={globalStyles.VyakulaPriceCartItemsText}
-        >
-          
-            CP: {TotalCPValue.toFixed(2)}
-            
-          </Text>*/}
-          
-         
-          
-          
-        
-
-       {/*mwanzo wa button*/}
-         {/* <TouchableOpacity
-               onPress={() =>
-        navigation.navigate('All Ordered Items', { KukuId, UmriwaKukuId, totalCartKilos, totalCartPrice })}
-       
-           style={globalStyles.VyakulaAddButtonContainerCartItems}
-                 >
-              <Text
-               style={[
-                globalStyles.VyakulaAddButtonTextCartItems,
-                {
-                  backgroundColor:'brown',
-                }
-              ]}
-            
-              >
-                Matokeo
-              </Text>
-            </TouchableOpacity>*/}
-             {/*mwisho wa button*/}
-          
-        </View>
-
-
-
-        <Pressable 
-
-        style={globalStyles.VyakulaImageContainerCartItems}
-        >
-       {/*  <Text 
-          style={globalStyles.VyakulaPriceCartItemsText}
-        >
-          
-            Bei Ya Jumla:  Tsh. <Text style={{
-              color:'green',
-              fontFamily:'Bold'
-            }}>
-             {formatToThreeDigits(item.price)}/=
-            </Text> 
-          </Text>*/}
-
-        {item && item.product && item.product.ProductImage ?  
-          <Image
-           style={globalStyles.VyakulaImageCartItems}
-        source={{
-          uri: EndPoint + '/' + item.product.ProductImage
-        }}
-          />:
-
-           <Image
-           style={globalStyles.VyakulaImageCartItems}
-        
-            source={require('../assets/500.png')} 
-          />}
-
-
-
- {item && item.product && item.product.FoodGroup && item.product.FoodGroup.Jina && (
-          <Text 
-           style={globalStyles.VyakulaItemNameCartItemsText}
-         >
-           Kundi la chakula : <Text style={{
-              color:'green',
-              fontFamily:'Bold'
-            }}>
-             {item.product.FoodGroup.Jina}
-            </Text>  
-          </Text>)}
-
-
-
-        </Pressable>
-      </Pressable>
-
-)
-
-
-
 
 
 
@@ -1006,7 +455,7 @@ const ReportCard = ({item,calculatedItem , index}) => {
 
 
 
-  <MinorHeader title="Ripoti"/>
+  <MinorHeader title="Matokeo"/>
 
       
 
@@ -1020,15 +469,15 @@ const ReportCard = ({item,calculatedItem , index}) => {
 
 
 
- <Text
+{/* <Text
 style={globalStyles.AppChaguaHudumaTextHomeScreen}  
 
 >Mchanganuo wa vyakula vyako ulivyovichagua na kiasi 
 unachotakiwa kuweka</Text>
+*/}
 
 
-
-
+{/*
 
         <Pressable
           style={[{
@@ -1046,28 +495,35 @@ unachotakiwa kuweka</Text>
           ]}
         >
           <View style={{
-            width:'60%',
+            width:'50%',
           }}>
             <Text style={{ 
               fontFamily:'Medium'
             }}>
-            Jumla ya kiasi cha chakula
+              Bei ya jumla
             </Text>
 
-           
+             <Text style={{ 
+              fontFamily:'Medium'
+            }}>
+              Tsh. {formatToThreeDigits(total_price)}/=
+            </Text>
            
           </View>
 
          
 
           <View style={{
-            width:'30%',
+            width:'50%',
           }}>
-          
+            <Text style={{ 
+              fontFamily:'Medium'
+            }}>
+              Jumla ya kiasi cha chakula
+            </Text>
 
              <Text style={{ 
-              fontFamily:'Medium',
-              color:'green',
+              fontFamily:'Medium'
             }}>
              {UnaKiasiGaniChaChakula} Kg
             </Text>
@@ -1077,12 +533,22 @@ unachotakiwa kuweka</Text>
         </Pressable>
    
  
+*/}
 
+<Text
+    style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+    
+    >Maelekezo jinsi ya kuchanganya chakula cha kilo {TotalFoodAmount} kulingana
+    na vyakula ulivyovichagua
 
+     </Text>
 
   
      {queryset && queryset.length > 0 ? (
-
+    
+    <View style={
+      globalStyles.TaarifaOverdoseCartItemsContainer
+    }>
 
       <>
                 {queryset.map((item, index) => {
@@ -1100,18 +566,6 @@ unachotakiwa kuweka</Text>
 
 
 
-<Text
-    style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-    
-    >Mchanganuo wa virutubisho na kiasi chake kinachoweza 
-    kupatikana kwenye mchanganyiko wa chakula cha kilo {UnaKiasiGaniChaChakula}.
-
-     </Text>
-    
-
-
-<TotalVyakulaCard />
-
 
 
 
@@ -1119,7 +573,7 @@ unachotakiwa kuweka</Text>
 
               </>       
 
-
+</View>
 
 
 
@@ -1159,19 +613,194 @@ unachotakiwa kuweka</Text>
 
 
 
-{/*<Text
-style={globalStyles.AppChaguaHudumaTextHomeScreen}  
 
->Maoni</Text>
-*/}
+
+{TotalFoodAmount > 0 && (
+
+        <Pressable
+          style={[{
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 20,
+            justifyContent: "space-between",
+            backgroundColor: "white",
+            // position:'absolute',
+            // bottom:0,
+            width:'100%',
+
+          },
+           
+          ]}
+        >
+          <View style={{
+            width:'60%',
+          }}>
+            <Text style={{ 
+              fontFamily:'Medium'
+            }}>
+              Jumla ya kiasi cha chakula
+            </Text>
+
+           
+           
+          </View>
+
+         
+
+          <View style={{
+            width:'30%',
+          }}>
+            <Text style={{ 
+              fontFamily:'Medium',
+              color:'green',
+            }}>
+              {TotalFoodAmount} Kg
+            </Text>
+
+             
+           
+          </View>
+
+        </Pressable>
+   
+ )}
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/*mwanzo wa Button*/}
+
+
+
+
+
+
+
+                <View style={{
+                  flexDirection:'row',
+                  width:'90%',
+                  alignItems:'center',
+                  justifyContent:'space-between',
+                  marginHorizontal:20,
+                  marginTop:50,
+                }}>
+
+                 <TouchableOpacity 
+                onPress={() => {
+                  setModalVisible(true);
+                  setIsModalVisible(true); // Reset state when modal closes
+                 
+                }}
+               style={{
+                width:'40%',
+               }}>
+                <Text style={{
+                  
+                  backgroundColor:'green',
+                  paddingHorizontal:5,
+                  textAlign:'center',
+                  borderRadius:6,
+                  paddingVertical:7,
+                  color:'white',
+                  fontFamily:'Bold',
+                }}>Ushauri</Text>
+                </TouchableOpacity>
+              
+               
+               <TouchableOpacity 
+                onPress={() =>
+         navigation.navigate('Kukokotoa Ripoti', {
+          TotalFoodMixerPercentage,id, 
+          TotalFoodAmount,
+          
+          UnaKiasiGaniChaChakula, 
+           
+          TotalCPPercentageRequired,
+      TotalWangaPercentageRequired,
+      TotalMafutaPercentageRequired,
+           
+             StaterFeed,
+               FinisherFeed,
+               LayerFeed,
+               GrowerFeed,
+                AinaYaKuku,
+                
+               UmriKwaSiku,
+               TotalConstantFoodMixerPercentage,
+               TotalMixerKios_ForConstantFoodGroups
+
+            })}
+       
+               style={{
+                width:'40%',
+               }}>
+                <Text style={{
+                  
+                  backgroundColor:'wheat',
+                  paddingHorizontal:5,
+                  textAlign:'center',
+                  borderRadius:6,
+                  paddingVertical:7,
+                  color:'black',
+                  fontFamily:'Bold',
+                }}>Ripoti</Text>
+                </TouchableOpacity>
+
+                </View>
+
+
+
+{/*mwisho wa Button*/}
+
+
+
+
+
+
+       <LottieView
+        style={{
+        height: height/4,
+         width:'100%',
+         borderRadius:5,
+         //backgroundColor:'red',
+         // justifyContent:'center',
+         // alignItems:'center',
+         zIndex:1,
+
+        // flex:1,
+
+        }}
+        source={require('../assets/Loading/l2.json')} // Replace with your animation JSON file
+        autoPlay
+        loop
+      />
+
+      
+
+
+
+
+
+
+
+
 
 
 <View style={{
   marginBottom:100,
 }}>
-  <Text style={{
+  {/*<Text style={{
     color:'white',
-  }}>Vuta juu</Text>
+  }}>Vuta juu</Text>*/}
 </View>
 
 
@@ -1304,6 +933,7 @@ style={globalStyles.AppChaguaHudumaTextHomeScreen}
 
 
 
+
 {/*MODAL FOR MAKING ORDER*/}
 
       <Modal
@@ -1315,60 +945,158 @@ style={globalStyles.AppChaguaHudumaTextHomeScreen}
           setIsModalVisible(false); // Reset state when modal closes
         }}
       >
-    
-    <ScrollView keyboardShouldPersistTaps="handled">
-        <View style={{ flex: 1,marginTop:height/4,
-         justifyContent: 'center', alignItems: 'center',
+    <ScrollView 
+    keyboardShouldPersistTaps="handled"
+    >
+   
+        <View style={{ 
+         flex: 1,
+         //marginTop:height/6,
+         marginTop:15,
+         //justifyContent: 'center', 
+         alignItems: 'center',
           //backgroundColor: 'red' 
         }}>
-          <View style={globalStyles.ModalViewViewProduct}>
-            <Text style={globalStyles.ModalTitleViewProduct}>
-            Ingiza kiasi cha chakula ulichonacho</Text>
+          <View style={[
+            globalStyles.ModalViewViewProduct,
+            {
+              backgroundColor:'green',
+              //justifyContent: 'center', 
+             //alignItems: 'center',
+             //height:height/4,
+             width:'90%',
 
-                    <Text 
-                    style={globalStyles.EnterQuntityTextViewProduct}
-                    > Kiasi (Kwa Kilo)</Text>
-                    < View style={globalStyles.inputViewProduct}>
-                        <FontAwesome style={globalStyles.InputIconViewProduct} name='pencil'/>
-                        <TextInput 
-                        style={globalStyles.textInputViewProduct}  
-                        placeholder=' Kiasi' 
-                  //       value={quantity}
-                  // onChangeText={text => setQuantity(text)}
-                  keyboardType="numeric"
-                  placeholderTextColor="black"
-                        />
-                    </View>
-                
+
+            }
 
 
 
+            ]}>
+
+            {Maoni_Ya_CPValue  && (
           
+            <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                textAlign:'center',
+                fontFamily:'Medium',
+                color:'white',
+
+              }
+              ]}>
+              
+            {Maoni_Ya_CPValue}
+            
+            
+            </Text>
+            )}
+
+            <View style={{
+            backgroundColor:'black',
+            borderColor:'white',
+            borderWidth:1,
+            marginBottom:20,
+          }}>
+            {/*<Text>
+              
+            </Text>*/}
+          </View>
+
+              {Maoni_Ya_WangaValue  && (
+          
+            <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                textAlign:'center',
+                fontFamily:'Medium',
+                color:'black',
+
+              }
+              ]}>
+              
+            {Maoni_Ya_WangaValue}
+            
+            
+            </Text>
+            )}
+
+              <View style={{
+            backgroundColor:'black',
+            borderColor:'white',
+            borderWidth:1,
+            marginBottom:20,
+          }}>
+            {/*<Text>
+              
+            </Text>*/}
+          </View>
+
+
+                {Maoni_Ya_MafutaValue  && (
+          
+            <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                textAlign:'center',
+                fontFamily:'Medium',
+                color:'yellow',
+
+              }
+              ]}>
+              
+            {Maoni_Ya_MafutaValue}
+            
+            
+            </Text>
+            )}
+   
+
+
+ 
             
 
-            <View style={globalStyles.ButtonConatinerViewProduct}>
-                    <TouchableOpacity 
-                    style={globalStyles.ButtonCloseViewProduct} 
-                      onPress={() => {
-    
-                        setIsModalVisible(false); // Update state when modal opens
-                        setModalVisible(false);
-                      }}
-                     >
-                        <Text style={globalStyles.ConfirmCancelButtonTextViewProduct}>Funga</Text>
+            <View style={[globalStyles.ButtonConatinerViewProduct,
+
+              {
+                'marginTop':50,
+              }
+
+              ]}>
+
+              <TouchableOpacity 
+                    style={[globalStyles.ButtonAddViewProduct,
+                      {
+                            backgroundColor:'green',
+                            marginRight:10,
+                            borderWidth:1,
+                            borderColor:'white',
+                            justifyContent:'center',
+                            alignItems:'center',
+                            flex:1
+                          }
+                      ]}  
+                    //onPress={addCartItem}
+                    onPress={() => {
+                      setModalVisible(false);
+                      setIsModalVisible(false); // Reset state when modal closes
+                     
+                    }}
+                                 >
+                        <Text 
+                        style={[
+                          globalStyles.ConfirmCancelButtonTextViewProduct,
+                          {
+                            //backgroundColor:'black'
+                          }
+                          ]}>Sawa</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity 
-                    style={globalStyles.ButtonAddViewProduct}  
-                   // onPress={addCartItem}
-                     >
-                        <Text style={globalStyles.ConfirmCancelButtonTextViewProduct}>Kubali</Text>
-                    </TouchableOpacity>
+                    
+                   
             </View>
           </View>
         </View>
-        </ScrollView>
         
+        </ScrollView>
       </Modal>
+
+
 
 
 
@@ -1402,6 +1130,6 @@ style={globalStyles.AppChaguaHudumaTextHomeScreen}
   );
 };
 
-export default KukokotoaRipoti;
+export default AllOrderedItems;
 
 const styles = StyleSheet.create({});

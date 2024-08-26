@@ -42,6 +42,9 @@ export default function HomeScreen ({navigation}) {
 });
 
 
+
+
+
     const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -107,6 +110,28 @@ useEffect(() => {
         ])
     ).start();
 }, [fadeAnimSmart, fadeAnimKidijitali]);
+
+
+
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial opacity value is 0
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000, // Fade in duration
+          useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000, // Fade out duration
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [fadeAnim]);
+
   // const nav = useNavigation();
   // const DATA = [
   //   {
@@ -242,7 +267,34 @@ const [userData, setUserData] = useState({});
 
 
 
+const [unseenCount, setUnseenCount] = useState(0);
 
+   useEffect(() => {
+    if (userToken) {
+        // Fetch unseen notifications count
+        axios.get(`${EndPoint}/CountUnseenNotificationsView/`, {
+            headers: { 'Authorization': `Token ${userToken}` }
+        })
+        .then(response => {
+            setUnseenCount(response.data.unseen_count);
+            //console.log("UNSEEN", unseenCount);
+        })
+        .catch(error => {
+            //console.error(error);
+        });
+
+        // Mark notifications as seen when the screen is loaded
+        // axios.post(`${EndPoint}/MarkNotificationsAsSeenView/`, {}, {
+        //     headers: { 'Authorization': `Token ${userToken}` }
+        // })
+        // .then(response => {
+        //     console.log(response.data.message);
+        // })
+        // .catch(error => {
+        //     console.error(error);
+        // });
+    }
+}, [userToken]);
 
 
 
@@ -547,6 +599,7 @@ return (
                         color: 'white',
                         fontSize: 25,
                         fontFamily: 'Medium',
+                        marginTop:15,
                     },
                 ]}
             >
@@ -568,11 +621,52 @@ return (
             </Animated.Text>
                      </View>
                      
-                     {/* <View style={globalStyles.circle}>
-                      <Image source={require('../assets/icon.png')} 
-                  style={globalStyles.RightHeaderImage} />
+                
+                 <TouchableOpacity 
+                   onPress={() => {
+                navigation.replace('See Notifications');    
+                  }}
+                  style={[globalStyles.circle,
+                    {
+                      backgroundColor:'wheat',
+                      justifyContent:'space-around',
+                      alignItems:'center',
+                      flexDirection:'row',
+                    }
 
-                      </View>*/}
+                    ]}
+                       >
+                    <Animated.View style={{
+                     opacity: fadeAnim
+                      }}>
+                     <FontAwesome name='bell-o' 
+                      size={20}
+                      color='black'
+                      style={[globalStyles.RightHeaderImageu,
+                        {
+                          fontFamily:'Bold',
+                        }
+                        ]}  
+                      
+                       />
+                       </Animated.View>
+
+                      {unseenCount > 0 ? (
+                      <Text style={{
+                        color:'red',
+                        fontFamily:'Bold',
+                       }}>{unseenCount}</Text>
+                       ):(
+
+                       <Text style={{
+                        color:'black',
+                        fontFamily:'Bold',
+                       }}>{unseenCount}</Text>
+                       )}
+                   {/*   <Image source={require('../assets/icon.png')} 
+                  style={globalStyles.RightHeaderImage} />*/}
+
+                      </TouchableOpacity>
 
 
 

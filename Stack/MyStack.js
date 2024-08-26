@@ -68,6 +68,7 @@ import HistoriaZaKumbushoZaRatibaYaChanjo from '../KumbushoLaShamba/HistoriaZaKu
 import KumbushoLaUatamiajiForm from '../KumbushoLaShamba/KumbushoLaUatamiajiForm';
 import HistoriaZaKumbushoZaUatamiajiWaMayai from '../KumbushoLaShamba/HistoriaZaKumbushoZaUatamiajiWaMayai';
 import Chanjo_UmriWaKuku from '../KumbushoLaShamba/Chanjo_UmriWaKuku';
+import KumbushoLaUatamiaji_AinaZaNdege from '../KumbushoLaShamba/KumbushoLaUatamiaji_AinaZaNdege';
 
 
 import DukaLakoForm from '../DukaLako/DukaLakoForm';
@@ -76,6 +77,8 @@ import GetAllDukaLakoItems from '../DukaLako/GetAllDukaLakoItems';
 import ViewDukaLako from '../DukaLako/ViewDukaLako';
 import YourPosts from '../DukaLako/YourPosts';
 import UzaAuNunuaKukuKwaHaraka from '../DukaLako/UzaAuNunuaKukuKwaHaraka';
+import SeeNotifications from '../DukaLako/SeeNotifications';
+
 
 import MyTab from '../Tab/MyTab';
 
@@ -512,6 +515,14 @@ function MyStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+
+           <Stack.Screen
+      name="Kumbusho La Uatamiaji AinaZaNdege"
+      component={KumbushoLaUatamiaji_AinaZaNdege}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
     
        <Stack.Screen
       name="Duka Lako Form"
@@ -564,6 +575,15 @@ function MyStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+
+               <Stack.Screen
+      name="See Notifications"
+      component={SeeNotifications}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
  
  
 

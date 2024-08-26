@@ -155,11 +155,6 @@ export default function GetAllDukaLakoItems ({navigation}) {
   
 });
 
-  const [userToken, setUserToken] = useState('');
-const [shouldReload, setShouldReload] = useState(false);
-const [userData, setUserData] = useState({});
-
-
 
     const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -175,14 +170,15 @@ const [userData, setUserData] = useState({});
 
 
 
+const [userToken, setUserToken] = useState('');
+const [shouldReload, setShouldReload] = useState(false);
+const [userData, setUserData] = useState({});
 
 
 
 //FOR SEARCHING
 const [input, setInput] = useState('');
 
-
-const [likedItems, setLikedItems] = useState(new Set()); // Store liked items in a set
 
 
 //Load more
@@ -194,94 +190,36 @@ const [endReached, setEndReached] = useState(false)
 const [isPending, setPending] = useState(true);
 
 
-
-
-//    useEffect(() => {
-//     setLoading(true)
-//     getItems();
-//     loadLikedStatus();
-//   }, []);
-
-
-
-
-
-
-// useEffect(() => {
-//     checkLoggedIn();
-// }, [userToken]);
-
-
-// Fetch the user token first
-  // useEffect(() => {
-  //   const checkLoggedIn = async () => {
-  //     const token = await AsyncStorage.getItem('userToken');
-  //     setUserToken(token);
-  //     console.log("SEE USERTOKENI",userToken);
-  //   };
-
-  //   checkLoggedIn();
-  // }, [userToken]);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        // Step 1: Fetch user token
-        const token = await AsyncStorage.getItem('userToken');
-        if (!token) {
-          console.log("No user Token");
-          return;
+const getItems = () => {
+  if (endReached) {
+    setLoading(false);
+    setIsLoading(false);
+    setPending(false);
+    return;
+  } else {
+    setIsLoading(true);
+    const url = EndPoint + `/GetAllDukaLakoView/?page=${current_page}&page_size=50`;
+    return fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.queryset.length > 0) {
+          setQueryset([...queryset, ...data.queryset]);
+          setIsLoading(false);
+          setLoading(false);
+          setcurrent_page(current_page + 1);
+          setPending(false);
+          //initializeLikes(data); // Initialize likes after fetching items
+        } else {
+          setIsLoading(false);
+          setEndReached(true);
+          setLoading(false);
+          setPending(false);
         }
-        setUserToken(token);
-        console.log("My Token", token);
+    
+      });
+  }
+};
 
-        // Step 2: Fetch items
-        const itemsFetched = await getItems(token);
-        if (itemsFetched) {
-          // Step 3: Load liked status after fetching items
-          await loadLikedStatus(token, itemsFetched);
-        }
-      } catch (error) {
-        console.error('Error loading data:', error);
-      } finally {
-        setLoading(false);
-        setPending(false);
-      }
-    };
-
-    loadData();
-  }, []);
-
-
-  const getItems = async (token) => {
-    if (endReached) {
-      setLoading(false);
-      setIsLoading(false);
-      setPending(false);
-      return null;
-    } else {
-      setIsLoading(true);
-      const url = EndPoint + `/GetAllDukaLakoView/?page=${current_page}&page_size=50`;
-      return fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.queryset.length > 0) {
-            setQueryset([...queryset, ...data.queryset]);
-            setIsLoading(false);
-            setLoading(false);
-            setcurrent_page(current_page + 1);
-            setPending(false);
-            return data.queryset;
-          } else {
-            setIsLoading(false);
-            setEndReached(true);
-            setLoading(false);
-            setPending(false);
-            return null;
-          }
-        });
-    }
-  };
 
 
  const renderLoader = () => {
@@ -297,113 +235,76 @@ const [isPending, setPending] = useState(true);
   //   setcurrent_page(current_page + 1);
   // };
 
+  useEffect(() => {
+    setLoading(true)
+    getItems();
+  }, []);
 
-//hii function kazi yake ni kushow tu ni products zip huyu user aliyelogin
-//amezilike na zipi hajazilike basi
- const loadLikedStatus = async (token, items) => {
-    try {
-      if (!token) {
-        console.log('loadLikedStatus: userToken or queryset not ready.');
-        return;
-      }
 
-      console.log('loadLikedStatus: userToken and queryset are ready.');
 
-      const likedItemsSet = new Set();
-      for (const item of items) {
-        const response = await fetch(`${EndPoint}/CheckLikeStatus/${item.id}/`, {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        });
 
-        const data = await response.json();
-        if (data.isLiked) {
-          likedItemsSet.add(item.id);
-        }
-      }
-      setLikedItems(likedItemsSet);
+useEffect(() => {
 
-      console.log('likedItems', likedItemsSet);
-      console.log('userToken', token);
+   
+    checkLoggedIn();
+    // Fetch cart items only if the user is authenticated
+    // if (userToken) {
+    //   fetchCartItems();
+    // }
 
-    } catch (error) {
-      console.error('Error loading liked status:', error);
-    }
-  };
+  }, [userToken]);
 
+const checkLoggedIn = async () => {
+const token = await AsyncStorage.getItem('userToken');
+setUserToken(token);
  
- 
+};
 
 
+
+//const [likes, setLikes] = useState(0);
 const handleLikeToggle = async (itemId) => {
-    try {
-      const response = await axios.post(
-        `${EndPoint}/ToggleLikeView/${itemId}/`,
-        {},
-        {
-          headers: {
-            Authorization: `Token ${userToken}`,
-          },
-        }
-      );
+  try {
+    const response = await axios.post(
+      `${EndPoint}/ToggleLikeView/${itemId}/`,
+      {},
+      {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
+      }
+    );
 
+    const updatedLikes = response.data.Likes;
+    const message = response.data.message;
+    
+    //kuongeza idadi ya like kwa post
+    const updatedQueryset = queryset.map((item) =>
+      item.id === itemId ? { ...item, Likes: updatedLikes } : item
+    );
+    setQueryset(updatedQueryset);
 
-
-      const updatedLikes = response.data.Likes;
-      const isLiked = response.data.isLiked;  // Get the updated like status
-       const message = response.data.message;
-       
-       console.log("IS LIKED",isLiked );
-      // Update queryset with new likes count
-      const updatedQueryset = queryset.map((item) =>
-        item.id === itemId ? { ...item, Likes: updatedLikes } : item
-      );
-      setQueryset(updatedQueryset);
-
-      // Update liked items
-      //hii ni kwaajili ya kuchange color ya like button
-      // if (isLiked) {
-      //   likedItems.add(itemId);
-      // } else {
-      //   likedItems.delete(itemId);
-      // }
-      // setLikedItems(new Set(likedItems)); // Update state
-
-        // Update liked items to immediately reflect the change
-        if (!isLiked) {
-            setLikedItems(prevLikedItems => new Set(prevLikedItems).add(itemId));
-        } else {
-            setLikedItems(prevLikedItems => {
-                const updatedSet = new Set(prevLikedItems);
-                updatedSet.delete(itemId);
-                return updatedSet;
-            });
-        }
-
-
-       // Cheza sauti baada ya kubonyeza kitufe
+    // Cheza sauti baada ya kubonyeza kitufe
       await soundRef.current.replayAsync();
 
+    // Update the liked status
+    // const newLikeStatus = message === "Liked";
+    // setUserLikes((prevLikes) => ({
+    //   ...prevLikes,
+    //   [itemId]: newLikeStatus,
+    // }));
+
+    // Save the like status in AsyncStorage
+   // await AsyncStorage.setItem(`like_${itemId}`, JSON.stringify(newLikeStatus));
+  
+  } catch (error) {
+    console.error('Error toggling like:', error);
+  }
+};
 
 
 
-    } catch (error) {
-      console.error('Error toggling like:', error);
-    }
-  };
-
-
-
-
-
-
-
-
-
-
-
-
+//TO cHeck if user is already like or not
 
 
 
@@ -432,11 +333,6 @@ const handleLikeToggle = async (itemId) => {
 
 
 
-
-
- 
-
-
   const transportItem = ({item}) => {
 
      const carouselItems = [
@@ -453,7 +349,7 @@ const handleLikeToggle = async (itemId) => {
     ].filter(Boolean); // Filter out any null or undefined values
 
     //console.log("Carousel Items:", carouselItems);
-    const isLiked = likedItems.has(item.id);
+    
 
 
 
@@ -635,8 +531,7 @@ const handleLikeToggle = async (itemId) => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-      //color="black" 
-      color={isLiked ? 'red' : 'black'} 
+      color="black"  
       
        />
         </View>
@@ -842,8 +737,7 @@ const handleLikeToggle = async (itemId) => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-      //color="black"
-      color={isLiked ? 'red' : 'black'}   
+      color="black"  
       
        />
         </View>

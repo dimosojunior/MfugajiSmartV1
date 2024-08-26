@@ -37,30 +37,38 @@ const KukokotoaRipoti = ({navigation, route}) => {
 
   const { 
 
+   
+   //  UmriKwaWiki,
+   // 
+   // total_price,
+   //  total_Kilos,
+
+    
+   // KukuId,
+   // UmriwaKukuId,
+   // totalCartKilos,
+   // totalCartPrice,
+   id,//id ya order
+    
     StaterFeed,
    FinisherFeed,
    LayerFeed,
    GrowerFeed,
     AinaYaKuku,
-    UmriKwaWiki,
-   UmriKwaSiku,
-
+    UmriKwaSiku,
     
-   KukuId,
-   UmriwaKukuId,
-   totalCartKilos,
-   totalCartPrice,
-   id,//id ya order
-    //id //id ya Chakula
-    total_price,
-    total_Kilos,
 
     TotalFoodMixerPercentage,
     TotalFoodAmount,
     UnaKiasiGaniChaChakula,
-   TotalCPPercentageRequired,
- TotalWangaPercentageRequired,
- TotalMafutaPercentageRequired
+
+    //hizi zintoka kwenye model ya VyakulaOrder
+    TotalCPPercentageRequired,
+     TotalWangaPercentageRequired,
+     TotalMafutaPercentageRequired,
+
+     TotalConstantFoodMixerPercentage,
+     TotalMixerKios_ForConstantFoodGroups
 
    } = route.params
 
@@ -219,11 +227,12 @@ const [TotalMETHValue, setTotalMETHValue] = useState(0);
 const [TotalTryptophanValue, setTotalTryptophanValue] = useState(0);
 const [TotalUngaWaMifupaValue, setTotalUngaWaMifupaValue] = useState(0);
 const [TotalChumviValue, setTotalChumviValue] = useState(0);
+const [TotalMEValue, setTotalMEValue] = useState(0);
 
  useEffect(() => {
     // Make a GET request to fetch queryset and main total price
    
- axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
+ axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`)
  
     //axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&TotalFoodAmount=${TotalFoodAmount}`)
 
@@ -244,7 +253,8 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
           TotalMETH,
           TotalTryptophan,
           TotalUngaWaMifupa,
-          TotalChumvi 
+          TotalChumvi,
+           TotalME, 
         } = response.data;
         setQueryset(queryset);
         setCalculatedItems(calculated_items);
@@ -259,6 +269,7 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
         setTotalTryptophanValue(TotalTryptophan);
         setTotalUngaWaMifupaValue(TotalUngaWaMifupa);
         setTotalChumviValue(TotalChumvi);
+        setTotalMEValue(TotalME);
 
         setisPending(true);
          setisRange(false);
@@ -471,19 +482,13 @@ const TotalVyakulaCard = () => {
 
 
 
-
-
-
-
-
-
-{/* mwanzo wa flow ya 3*/}
+      {/* mwanzo wa flow ya 22*/}
         <View 
         style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
         >
       
-     
-     {TotalDCPValue >= 1 && ( 
+
+      {TotalMEValue >= 1 && ( 
      <View style={
             globalStyles.TaarifaLeft
           }>
@@ -495,13 +500,13 @@ const TotalVyakulaCard = () => {
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
          >
            
-           Kiasi cha DCP kinachoweza kupatikana
+           Kiasi cha Energy kinachoweza kupatikana
           </Text>
           
           </View>
           )}
 
-         {TotalDCPValue >= 1 && ( 
+         {TotalMEValue >= 1 && ( 
          <View style={
             globalStyles.TaarifaRight
           }>
@@ -509,7 +514,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalDCPValue.toFixed(2)} Kg 
+            {TotalMEValue.toFixed(2)} Kca/Kg 
           </Text>
           
      </View>
@@ -518,206 +523,12 @@ const TotalVyakulaCard = () => {
       
        
         </View>
-      {/*mwisho wa flow ya 3*/}
+      {/*mwisho wa flow ya 22*/}
 
 
 
 
 
-
-
-
-
-{/* mwanzo wa flow ya 4*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalPREMIXValue >= 1 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha Premix kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalPREMIXValue >= 1 && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalPREMIXValue.toFixed(2)} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 4*/}
-
-
-
-
-
-
-
-{/* mwanzo wa flow ya 5*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalLysinValue >= 1 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha Lysin kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalLysinValue >= 1 && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalLysinValue.toFixed(2)} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 5*/}
-
-
-
-
-
-
-
-
-
-{/* mwanzo wa flow ya 6*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalMETHValue >= 1 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha Meth kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalMETHValue >= 1 && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalMETHValue.toFixed(2)} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 6*/}
-
-
-
-
-
-
-{/* mwanzo wa flow ya 7*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {TotalTryptophanValue >= 1 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-           Kiasi cha Tryptophan kinachoweza kupatikana
-          </Text>
-          
-          </View>
-          )}
-
-         {TotalTryptophanValue >= 1 && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {TotalTryptophanValue.toFixed(2)} Kg 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 7*/}
 
 
 

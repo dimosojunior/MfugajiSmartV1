@@ -141,7 +141,8 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '28%',
-    height: 90,
+    //height: 90,
+    height: height/7 - 6,
     borderRadius: 50,
     marginBottom: 5,
   },
