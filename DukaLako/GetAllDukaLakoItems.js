@@ -24,8 +24,18 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
 import { Audio } from 'expo-av'; // Ongeza hili
+
+import { PinchGestureHandler, State } from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming 
+} from 'react-native-reanimated';
 //import Carousel from 'react-native-snap-carousel';
 const { width, height } = Dimensions.get('screen');
+
 
 
 
@@ -126,6 +136,33 @@ const Carousel = memo(({ images }) => {
 
 
 export default function GetAllDukaLakoItems ({navigation}) {
+
+  //kwa ajili ya kuzoom in/out
+  // Shared value for scaling
+  //---BUT ukionana unakutana na error ya React-native-reanimated mismatch
+  //basi hii na hizo import zake hapo juu ndo inasababisha ko utazitoa maana
+  //hizi kwa sasa zinahitaji react native 3.10.1 or 3.10.0 na utainstall kama
+  //hivi npx expo install react-native-reanimated
+  const scale = useSharedValue(1);
+
+  // Gesture handler for pinch-to-zoom
+  const pinchHandler = useAnimatedGestureHandler({
+    onActive: (event) => {
+      scale.value = event.scale;
+    },
+    onEnd: () => {
+      scale.value = withSpring(1);  // Reset to original size when gesture ends
+    },
+  });
+
+  // Animated style to apply the scaling
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+
 
 
  //  NOTE: kwnye hii page kuna Warnings;
@@ -529,11 +566,13 @@ const handleLikeToggle = async (itemId) => {
                  >{item.Title}</Text>
 
 
- 
+ <PinchGestureHandler onGestureEvent={pinchHandler}>
+   <Animated.View style={[styles.imageContainer, animatedStyle]}>
 
 <Carousel images={carouselItems} />
 
-
+ </Animated.View>
+  </PinchGestureHandler>
     
       
            {/*    <View 
@@ -664,8 +703,9 @@ const handleLikeToggle = async (itemId) => {
      // hili bano la chini ni la if ya juu kama mtu akitype   
 }
 
- if(item.Title.toLowerCase().includes(input.toLowerCase()) || item.username.toLowerCase().includes(input.toLowerCase()) || item.phone.toLowerCase().includes(input.toLowerCase()) || item.Location.toLowerCase().includes(input.toLowerCase())){
+ if(item.Title.toLowerCase().includes(input.toLowerCase())){
   
+   
     return (
 
       <CustomCard >
@@ -736,11 +776,13 @@ const handleLikeToggle = async (itemId) => {
                  >{item.Title}</Text>
 
 
- 
+ <PinchGestureHandler onGestureEvent={pinchHandler}>
+   <Animated.View style={[styles.imageContainer, animatedStyle]}>
 
 <Carousel images={carouselItems} />
 
-
+ </Animated.View>
+  </PinchGestureHandler>
     
       
            {/*    <View 
@@ -842,8 +884,8 @@ const handleLikeToggle = async (itemId) => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-      //color="black"
-      color={isLiked ? 'red' : 'black'}   
+      //color="black" 
+      color={isLiked ? 'red' : 'black'} 
       
        />
         </View>
@@ -864,6 +906,7 @@ const handleLikeToggle = async (itemId) => {
 
 
            )
+
 
 
 
@@ -908,7 +951,7 @@ const handleLikeToggle = async (itemId) => {
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza jina / mahali " 
+                    placeholder="Ingiza huduma unayohitaji" 
                      placeholderTextColor='black'
                     style={globalStyles.AppInputHomeScreenOtherPages}
                     

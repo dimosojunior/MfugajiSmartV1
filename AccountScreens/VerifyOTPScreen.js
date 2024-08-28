@@ -1,7 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 
-import { View,SafeAreaView,ImageBackground, TextInput, Alert, Image, StyleSheet, ActivityIndicator, Text, Dimensions, ScrollView, Touchable, TouchableOpacity } from 'react-native';
+import { View,SafeAreaView,ImageBackground,KeyboardAvoidingView,Pressable,
+ TextInput, Alert, Image, StyleSheet, ActivityIndicator, Text,ScrollView, Dimensions, Touchable, TouchableOpacity } from 'react-native';
 
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,14 +17,16 @@ import {useFonts} from 'expo-font';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { COLORS, SIZES } from '../Screens/src/Constant';
 import LotterViewScreen from '../Screens/LotterViewScreen';
+//import SvgIcon from '../assets/SvgIcon';
+//import OTPInputView from '@twotalltotems/react-native-otp-input';
+//import OTPInputView from 'react-native-otp-input';
+
 
 
 const { width, height } = Dimensions.get('window');
 const VerifyOTPScreen = ({ navigation, route }) => {
 
-    const { email } = route.params;
-
-
+  const { email } = route.params;
 
      const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -39,7 +42,7 @@ const VerifyOTPScreen = ({ navigation, route }) => {
 
 
 
-    //const [isPending, setIsPending] = useState(false);
+   // const [isPending, setPending] = useState(false);
 let [fontsLoaded] = useFonts({
     
     'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
@@ -80,9 +83,10 @@ const handleErrorMessage = (error) => {
     }  if (error.message === 'Network Error') {
       showAlertFunction('Tatizo la mtandao, washa data na ujaribu tena.');
     } else {
-      showAlertFunction('kuna tatizo kwenye taarifa zako, tafadhali ingiza taarifa zako kwa usahihi', error.response.data.error);
+      showAlertFunction('kuna tatizo kwenye taarifa zako, tafadhali ingiza email uliyojisajilia', error.response.data.error);
     }
   };
+
 
 
 
@@ -144,77 +148,135 @@ const handleErrorMessage = (error) => {
   };
 
 
+
+// Create an array of refs for each TextInput
+  const otpRefs = Array.from({ length: 6 }, () => useRef(null));
+
+  const handleOTPChange = (text, index) => {
+    let newOTP = otp.split('');
+    newOTP[index] = text;
+    setOTP(newOTP.join(''));
+
+   // Move to the next input field if it exists and if a digit was entered
+if (text && index < otpRefs.length - 1) {
+  otpRefs[index + 1].current.focus();
+}
+};
+
+
+
     return(
 
         <>{!fontsLoaded ? (<View/>):(
 
         
 
-        <View style={styles.container}>
-            <ImageBackground
+      
+       <KeyboardAvoidingView behavior="position" style={styles.mainCon}>
+        <ScrollView 
+        keyboardShouldPersistTaps="handled"
+        >
 
-                source={require('../assets/bc1.png')}
-                style={{
-                    flex: 1,
-                    opacity:1,
-                    //justifyContent:'center'
+        <View style={{padding: 20}}>
+          <Pressable style={{
+            //backgroundColor:'green',
+          }}>
+           {/* <SvgIcon icon={'back'} width={30} height={30} />*/}
+             <LottieView
+        style={{
+        height: height/4,
+         width:'100%',
+         borderRadius:5,
+        // backgroundColor:'red',
+         // justifyContent:'center',
+         // alignItems:'center',
+         zIndex:1,
+         marginTop:0,
 
-                }}
-                resizeMode= "cover"
-            >
-                <ScrollView 
-                keyboardShouldPersistTaps="handled"
-                >
-                    <View style={styles.topContainer}>
-                  
-                 {/*mwanzo Image container*/}
-                    <View style={styles.ImageAccountContainer}>
-                     <Text style={styles.title}>MFUGAJI SMART</Text>
-                        <Text style={styles.subtitle}>Fuga Kidijitali</Text>
+        // flex:1,
 
-                      {/* <Image
-                        source={require('../assets/i3.jpg')}
-                        style={styles.ImageAccount}
-                            
-                          />*/}
-                    </View>
+        }}
+        source={require('../assets/Loading/l1.json')} // Replace with your animation JSON file
+        autoPlay
+        loop
+      />
+       
+          </Pressable>
+        </View>
+        <View style={{position: 'relative', bottom: 30}}>
+          <View style={styles.loginIcon}>
+            {/*<SvgIcon icon={'enterOtp'} width={280} height={280} />*/}
+       
+          </View>
+          <View style={styles.container}>
+            <View style={styles.loginLblCon}>
+              <Text style={styles.loginLbl}>Mfugaji Smart</Text>
+            </View>
+            <View style={styles.forgotDes}>
+              <Text style={styles.forgotDesLbl}>
+                Ingiza taarifa kwa usahihi
+              </Text>
+           {/*   <Text style={styles.forgotDesLbl}>+91 1234567890</Text>*/}
+            </View>
+            <View style={styles.formCon}>
 
-                  {/*mwisho Image container*/}
+             
+     <Text style={{
+      marginBottom:15,
+     }}>Ingiza tarakimu 6 zilizotumwa kwenye email yako</Text>
+              <View style={styles.otpContainer}>
 
-                       
-                    </View>
-                    <View style={styles.dataContainer}>
-                    <Text 
-                    style={styles.dataContainerFormTitle}
-                    >Tafadhali jaza taarifa kwa usahihi</Text>
-                       
+               {Array(6).fill(0).map((_, index) => (
+            <TextInput
+              key={index}
+              ref={otpRefs[index]} // Assign ref to each TextInput
+              style={styles.otpInput}
+              keyboardType="numeric"
+              maxLength={1}
+              value={otp[index] || ''}
+              onChangeText={(text) => handleOTPChange(text, index)}
+            />
+          ))}
+          </View>
 
-                        <TextInput 
-                        placeholder='Ingiza codes ulizotumiwa' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                        value={otp}
-                      onChangeText={setOTP}
-                      
-                      keyboardType="numeric"
+             {/*   <TextInput 
+                placeholder='Ingiza codes ulizotumiwa' 
+                style={[styles.textinput,{
+                  width:width-20,
+                  //height:70,
+                  color:'black',
+              }]} 
 
-                        />
+              placeholderTextColor="black"
+              value={otp}
+            onChangeText={setOTP}
+            
+            keyboardType="numeric"
 
+              />*/}
+
+
+           
           {/*  mwanzo wa neno siri*/}
             <View 
-            style={styles.dataContainerForPassword}
+               style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:20,
+              }
+
+              ]}
           >
           <TextInput
           style= {[styles.textinputi,{ 
-            color: 'white',
-          width:'75%'}]}
+            color: 'black',
+          width:'75%'
+        }]}
           placeholder="Neno siri jipya"
           secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
           value={newPassword}
         onChangeText={setNewPassword}
-        placeholderTextColor={COLORS.white}
+        placeholderTextColor="black"
         />
 
         <View style={{
@@ -225,13 +287,13 @@ const handleErrorMessage = (error) => {
          {/* Add a button to toggle password visibility */}
         <TouchableOpacity
           onPress={() => setPasswordVisible(!isPasswordVisible)}
-          style={{ alignSelf: 'flex-end', marginRight: 0,color:'white' }}>
-          <Text style={{ color: 'white', fontSize: 16,fontWeight:'bold' }}>
+          style={{ alignSelf: 'flex-end', marginRight: 0,color:'black' }}>
+          <Text style={{ color: 'black', fontSize: 16,fontWeight:'bold' }}>
             {/*{isPasswordVisible ? 'Hide' : 'Show'} Password*/}
             {isPasswordVisible ? (
-              <FontAwesome size={25} color="white" name="eye-slash" />
+              <FontAwesome size={25} color="black" name="eye-slash" />
             ):(
-              <FontAwesome size={25} color="white" name="eye" />
+              <FontAwesome size={25} color="black" name="eye" />
             )}
           </Text>
         </TouchableOpacity>
@@ -246,22 +308,22 @@ const handleErrorMessage = (error) => {
             <View 
             style={[styles.dataContainerForPassword, 
               {
-                 width:width-100,
-                marginTop:height/11,
+                 width:width-20,
+                marginTop:20,
               }
 
               ]}
           >
           <TextInput
           style= {[styles.textinputi,{ 
-            color: 'white',width:'75%',
+            color: 'black',width:'75%',
             //paddingVertical:20,
           }]}
           placeholder=" Thibitisha neno siri"
           secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
           value={password2}
           onChangeText={setPassword2}
-        placeholderTextColor={COLORS.white}
+        placeholderTextColor="black"
         />
 
         <View style={{
@@ -272,13 +334,13 @@ const handleErrorMessage = (error) => {
          {/* Add a button to toggle password visibility */}
         <TouchableOpacity
           onPress={() => setPasswordVisible(!isPasswordVisible)}
-          style={{ alignSelf: 'flex-end', marginRight: 0,color:'white' }}>
-          <Text style={{ color: 'white', fontSize: 16,fontWeight:'bold' }}>
+          style={{ alignSelf: 'flex-end', marginRight: 0,color:'black' }}>
+          <Text style={{ color: 'black', fontSize: 16,fontWeight:'bold' }}>
             {/*{isPasswordVisible ? 'Hide' : 'Show'} Password*/}
             {isPasswordVisible ? (
-              <FontAwesome size={25} color="white" name="eye-slash" />
+              <FontAwesome size={25} color="black" name="eye-slash" />
             ):(
-              <FontAwesome size={25} color="white" name="eye" />
+              <FontAwesome size={25} color="black" name="eye" />
             )}
           </Text>
         </TouchableOpacity>
@@ -288,36 +350,43 @@ const handleErrorMessage = (error) => {
       {/*  mwisho wa neno siri*/}
 
 
-                      {/*     <TextInput 
-                        placeholder='Thibitisha neno siri' 
-                        style={[styles.textinput,{
-                            width:width-100,
-                            marginTop:height/10,
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                        secureTextEntry={true} 
-                          value={password2}
-                         onChangeText={setPassword2}
-                        />
-*/}
-        
 
-                    </View>
 
-                   {!isPending &&
-                <TouchableOpacity 
-                  onPress={verifyOTP}
-                  >
-                    <View style={styles.btnContainer}>
-                        
-                            <View style={styles.button1}>
-                                <Text style={styles.btnText}>Tuma Ombi</Text>
-                            </View>
-                        
-                        </View>
-                    </TouchableOpacity>}
 
-                      {isPending &&
+
+            {!isPending && (
+              <Pressable 
+              style={{
+                flexDirection:'row',
+                justifyContent:'space-between',
+                alignItems:'center',
+                  backgroundColor:'green',
+                  marginTop:50,
+                  paddingVertical:10,
+                  paddingHorizontal:40,
+                  borderRadius:8,
+                  color:'white',
+                  borderColor:'white',
+                  borderWidth:1,
+               // backgroundColor:'black'
+              }}
+              onPress={verifyOTP}>
+                <Text style={styles.registerLbl}>Tuma Ombi</Text>
+                 <Ionicons name='arrow-forward-circle' 
+                size={28}
+                color='white' 
+                style={{
+                 // marginTop:70,
+                }} 
+                
+                 />
+              </Pressable>
+              )}
+
+
+
+
+           {isPending &&
                          <View style={styles.btnContainer}>
                         <TouchableOpacity 
                         
@@ -331,44 +400,54 @@ const handleErrorMessage = (error) => {
                     </View>}
 
 
-                      <View style={styles.bottomContainer}>
-                        <TouchableOpacity 
-                         onPress={() => navigation.navigate("Send OTP Screen")}
-                         style={{
-                          // backgroundColor:'green',
-                          // padding:10,
-                          width:'100%',
-                          justifyContent:'center',
-                          alignItems:'center',
-                          marginBottom:20,
-                         }}
-                        >
-                            <Text style={[
-                              styles.text,
-                              {
-                             backgroundColor:'green',
-                             padding:10,
-                             width:'50%',
-                             textAlign:'center',
-                             borderRadius:8,
-                             fontFamily:'Medium',
-
-                              }
-
-
-                           ] }>Omba tena codes ?</Text>
-                        </TouchableOpacity>
-                    </View>
 
 
 
-                  
+               <Pressable 
+              style={{
+                flexDirection:'row',
+                justifyContent:'space-between',
+                alignItems:'center',
+                  //backgroundColor:'green',
+                  marginTop:50,
+                  paddingVertical:10,
+                  paddingHorizontal:40,
+                  borderRadius:8,
+                  color:'white',
+                  borderColor:'green',
+                  borderWidth:1,
+               // backgroundColor:'black'
+              }}
+             onPress={() => navigation.navigate("Send OTP Screen")}
+              >
+               <Ionicons name='arrow-back-circle' 
+                size={28}
+                color='green' 
+                style={{
+                 // marginTop:70,
+                }} 
+                
+                 />
+                <Text style={[styles.registerLbl,
+
+                  {
+                    color:'black',
+                    marginLeft:20,
+                  }
+
+                  ]}>Hujapata codes ? | Omba tena</Text>
+                
+              </Pressable>
 
 
-                </ScrollView>
-            </ImageBackground>
+            </View>
+          </View>
+        </View>
 
-           
+
+
+
+
                <AwesomeAlert
                 show={showAlert}
                 showProgress={false}
@@ -391,8 +470,12 @@ const handleErrorMessage = (error) => {
                 }
               />
 
+</ScrollView>
+      </KeyboardAvoidingView>
 
-        </View>
+        
+
+        
 
 
 
@@ -406,55 +489,100 @@ const handleErrorMessage = (error) => {
 export default VerifyOTPScreen;
 
 
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent:'center',
-    },
-    topContainer: {
-        marginTop: 50,
-        alignItems: 'center',
-        justifyContent:'center',
 
-    },
-    title: {
+   otpContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    width:'100%'
+  },
+  otpInput: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 5,
+    width: 40,
+    height: 50,
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  mainCon: {
+    backgroundColor: 'lightgreen',
+    flex: 1,
+  },
+  loginIcon: {
+    alignSelf: 'center',
+  },
+  formCon: {
+    alignItems: 'center',
+  },
+  container: {
+    paddingHorizontal: 20,
+    marginTop: 50,
+  },
+  loginLblCon: {
+    position: 'relative',
+    bottom: 40,
+  },
+  loginLbl: {
+    color: '#000',
+    fontSize: 40,
+    marginBottom:10,
+    //fontFamily: Fonts.type.NotoSansExtraBold,
+  },
+  forgotDes: {
+    position: 'relative',
+    bottom: 35,
+  },
+  forgotDesLbl: {
+    color: '#000',
+   // fontFamily: Fonts.type.NotoSansRegular,
+  },
+  //registerLbl: {color: '#0057ff', fontFamily: Fonts.type.NotoSansSemiBold},
+
+
+registerLbl:{
+  // backgroundColor:'black',
+  // marginTop:70,
+  // paddingVertical:10,
+  // paddingHorizontal:40,
+  // borderRadius:8,
+   color:'white',
+  // borderColor:'green',
+  // borderWidth:1,
+  marginRight:20,
+
+
+},
+
+
+
+
+   textinput: {
         color: COLORS.white,
-        // fontWeight: 'bold',
-        // fontSize: SIZES.h1 * 1.5,
-        fontFamily:'Regular',
-        fontSize:25
+        //fontSize: SIZES.h3,
+        // borderBottomColor: COLORS.lightGrey,
+        borderColor: COLORS.green,
+        borderWidth: 1,
+        paddingVertical: 10,
+        marginHorizontal: 15,
+        marginVertical: 5,
+        padding:10,
+        borderRadius:8,
+        fontFamily:'Light',
     },
-    subtitle: {
-        color: 'green',
-        // fontSize: SIZES.h4,
-        paddingTop: 3,
-        textAlign:'center',
-        marginBottom:15,
-        fontFamily:'Medium',
-    },
-    dataContainer: {
-        marginTop: 10,
-        alignItems: 'center',
-        justifyContent:'center',
-        flex:1,
-         
-    },
-    dataContainerFormTitle:{
-      color:'white',
-      marginBottom:20,
-      marginTop:height/20,
 
-    },
+
 
     dataContainerForPassword: {
       color: COLORS.white,
         fontSize: SIZES.h3,
         // borderBottomColor: COLORS.lightGrey,
-        borderColor: COLORS.lightGrey,
+        borderColor: COLORS.green,
         borderWidth: 1,
         paddingVertical: 10,
         marginHorizontal: 15,
+        marginVertical: 5,
         marginTop: 50,
         padding:10,
         borderRadius:8,
@@ -466,20 +594,7 @@ const styles = StyleSheet.create({
          
     },
 
-    textinput: {
-        color: COLORS.white,
-        //fontSize: SIZES.h3,
-        // borderBottomColor: COLORS.lightGrey,
-        borderColor: COLORS.lightGrey,
-        borderWidth: 1,
-        paddingVertical: 10,
-        marginHorizontal: 15,
-        marginVertical: 5,
-        padding:10,
-        borderRadius:8,
-        fontFamily:'Light',
-    },
-
+  
     textinputi: {
         color: COLORS.white,
         //fontSize: SIZES.h3,
@@ -492,79 +607,6 @@ const styles = StyleSheet.create({
         
     },
 
-    btnContainer: {
-        marginTop: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        //width:'100%',
-
-    },
-    button1: {
-        backgroundColor: '#1f1f1f',
-        padding: 20,
-        marginHorizontal: 30,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 10,
-        width:'50%',
-        borderWidth:1,
-        borderColor:'white',
-    },
-    btnText: {
-        color: COLORS.white,
-        fontWeight: 'bold',
-        fontSize: SIZES.h4,
-    },
-    button2: {
-        flexDirection: 'row',
-        backgroundColor: COLORS.blue,
-        padding: 15,
-        borderRadius: 10,
-        marginHorizontal: 30,
-        marginVertical: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    logo: {
-        marginRight: 10,
-    },
-    text: {
-        color: 'lightblue',
-        textAlign: 'center',
-        marginTop: 10,
-        //fontWeight: '600',
-        //fontSize: SIZES.h5,
-        // fontSize:18,
-        fontFamily:'Light'
-    },
-    bottomContainer: {
-        justifyContent: 'center',
-        marginTop: 20,
-    },
-
-
-ImageAccountContainer:{
-  alignItems:'center',
-
-
-},
-
-ImageAccount:{
-   // width: width/2 + 120,
-  //  width: width/2 - 130,
-  // height: height/10,
-   width: 80,
-  height: 80,
-  marginBottom: 10,
-  borderRadius: 100,
-  // borderWidth:1,
-  // borderColor:'white',
-  // opacity:1,
-  // borderTopRightRadius:200,
-  // borderBottomLeftRadius:50,
-
-},
 
 
 });

@@ -34,6 +34,14 @@ import { FontAwesome} from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { Audio } from 'expo-av'; // Ongeza hili
+import { PinchGestureHandler, State } from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming 
+} from 'react-native-reanimated';
 
 const {width, height} = Dimensions.get('window');
 

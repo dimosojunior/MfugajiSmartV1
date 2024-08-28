@@ -26,6 +26,15 @@ import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { PinchGestureHandler, State } from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming 
+} from 'react-native-reanimated';
+
 const { width, height } = Dimensions.get('window');
 
 
@@ -506,7 +515,7 @@ const checkLoggedIn = async () => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-      color='red'  
+      color='brown'  
       
        />
         </View>
@@ -703,7 +712,7 @@ const checkLoggedIn = async () => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-      color='red'  
+      color='brown'  
       
        />
         </View>

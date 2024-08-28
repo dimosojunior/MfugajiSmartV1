@@ -54,7 +54,7 @@ export default function PreLoaderScreen({ navigation }) {
   const checkLoggedIn = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (!token) {
-      navigation.replace('Welcome Screen');
+      navigation.replace('Signin Stack');
     } else if (token !== null) { //else if (token !== null) {
       try {
         const userResponse = await axios.get(

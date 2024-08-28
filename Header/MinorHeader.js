@@ -43,6 +43,13 @@ export default function MinorHeader(  {title} ) {
     navigation.goBack();
   }
 
+   const goHomePage = () => {
+    //navigation.navigate(screenName);
+    //navigation.goBack();
+    navigation.navigate("Home Stack");
+  }
+
+
 
 
   const [greeting, setGreeting] = useState('');
@@ -85,8 +92,22 @@ export default function MinorHeader(  {title} ) {
 
           ]}>
           {title}</Text>
-<Image source={require('../assets/i2.jpg')} 
-  style={globalStyles.headerImageHeaderFile} />
+{/*<Image source={require('../assets/i2.jpg')} 
+  style={globalStyles.headerImageHeaderFile} />*/}
+   <FontAwesome 
+   onPress={goHomePage}
+
+   name='home' 
+      size={28}  
+      style={[globalStyles.iconHeaderFile,
+        {
+          marginRight:10,
+          color:'green',
+        }
+
+        ]} 
+      />
+
 
         </View>  
     

@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { View,SafeAreaView,ImageBackground, TextInput, Alert, Image, StyleSheet, ActivityIndicator, Text, Dimensions, ScrollView, Touchable, TouchableOpacity } from 'react-native';
+import { View,SafeAreaView,ImageBackground,KeyboardAvoidingView,
+Pressable, TextInput, Alert, Image, StyleSheet, ActivityIndicator, Text, Dimensions, ScrollView, Touchable, TouchableOpacity } from 'react-native';
 
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -44,7 +45,7 @@ const SignupScreen = ({ navigation }) => {
     setShowAlert(false);
   };
 
-
+ const [isPasswordVisible, setPasswordVisible] = useState(false);
 
   //const {width,height} = Dimensions.get('window');
   const [email, setEmail] = useState('');
@@ -194,127 +195,340 @@ const handleErrorMessage = (error) => {
 
         <>{!fontsLoaded ? (<View/>):(
 
-        <View style={styles.container}>
-            <ImageBackground
+      
+       <KeyboardAvoidingView behavior="position" style={styles.mainCon}>
+        <ScrollView 
+        keyboardShouldPersistTaps="handled"
+        >
 
-                source={require('../assets/bc1.png')}
+        <View style={{padding: 20}}>
+          <Pressable style={{
+            //backgroundColor:'green',
+          }}>
+           {/* <SvgIcon icon={'back'} width={30} height={30} />*/}
+             <LottieView
+        style={{
+        height: height/4,
+         width:'100%',
+         borderRadius:5,
+        // backgroundColor:'red',
+         // justifyContent:'center',
+         // alignItems:'center',
+         zIndex:1,
+         marginTop:0,
+
+        // flex:1,
+
+        }}
+        source={require('../assets/Loading/l1.json')} // Replace with your animation JSON file
+        autoPlay
+        loop
+      />
+       
+          </Pressable>
+        </View>
+        <View style={{position: 'relative', bottom: 30}}>
+          <View style={styles.loginIcon}>
+            {/*<SvgIcon icon={'enterOtp'} width={280} height={280} />*/}
+       
+          </View>
+          <View style={styles.container}>
+            <View style={styles.loginLblCon}>
+              <Text style={styles.loginLbl}>Mfugaji Smart</Text>
+            </View>
+            <View style={styles.forgotDes}>
+              <Text style={styles.forgotDesLbl}>
+                Ingiza taarifa kwa usahihi kuweza kujisajili
+              </Text>
+           {/*   <Text style={styles.forgotDesLbl}>+91 1234567890</Text>*/}
+            </View>
+            <View style={styles.formCon}>
+
+            {/*  <OTPInputView
+               // pinCount={4}
+                autoFocusOnLoad
+                style={{width: '80%', height: 70}}
+                
+               
+              />*/}
+
+              <TextInput 
+              placeholder='Ingiza jina lako kamili' 
+              //style={{width: '80%', height: 100}}
+              style={[styles.textinput,{
+                  width:width-20,
+                  //height:70,
+                  color:'black',
+              }]} 
+              placeholderTextColor="black"
+             value={username}
+              onChangeText={text => setUsername(text)} 
+              
+             // keyboardType="email-address"
+              />
+
+               <TextInput 
+              placeholder='Ingiza namba yako ya simu, +255' 
+              //style={{width: '80%', height: 100}}
+              style={[styles.textinput,{
+                  width:width-20,
+                  //height:70,
+                  color:'black',
+                  marginTop:20,
+              }]} 
+              placeholderTextColor="black"
+             value={phone}
+              onChangeText={setPhone}
+              
+             // keyboardType="email-address"
+              />
+
+                <TextInput 
+              placeholder='Ingiza email yako' 
+              //style={{width: '80%', height: 100}}
+              style={[styles.textinput,{
+                  width:width-20,
+                  //height:70,
+                  color:'black',
+                  marginTop:20,
+              }]} 
+              placeholderTextColor="black"
+             keyboardType={'email-address'}
+            value={email}
+            onChangeText={text => setEmail(text)} 
+              
+             // keyboardType="email-address"
+              />
+
+
+           
+          {/*  mwanzo wa neno siri*/}
+            <View 
+               style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:20,
+              }
+
+              ]}
+          >
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',
+          width:'75%'
+        }]}
+          placeholder="Neno siri"
+          secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
+         value={password}
+          onChangeText={(text) => setPassword(text)}
+        placeholderTextColor="black"
+        />
+
+        <View style={{
+          width:'20%',
+          justifyContent:"center",
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          onPress={() => setPasswordVisible(!isPasswordVisible)}
+          style={{ alignSelf: 'flex-end', marginRight: 0,color:'black' }}>
+          <Text style={{ color: 'black', fontSize: 16,fontWeight:'bold' }}>
+            {/*{isPasswordVisible ? 'Hide' : 'Show'} Password*/}
+            {isPasswordVisible ? (
+              <FontAwesome size={25} color="black" name="eye-slash" />
+            ):(
+              <FontAwesome size={25} color="black" name="eye" />
+            )}
+          </Text>
+        </TouchableOpacity>
+
+        </View>
+        </View>
+      {/*  mwisho wa neno siri*/}
+
+
+
+
+
+
+        {/*  mwanzo wa neno siri*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:20,
+              }
+
+              ]}
+          >
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'75%',
+            //paddingVertical:20,
+          }]}
+          placeholder=" Thibitisha neno siri"
+          secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
+          value={password2}
+          onChangeText={setPassword2}
+        placeholderTextColor="black"
+        />
+
+        <View style={{
+          width:'20%',
+          //justifyContent:"center",
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          onPress={() => setPasswordVisible(!isPasswordVisible)}
+          style={{ alignSelf: 'flex-end', marginRight: 0,color:'black' }}>
+          <Text style={{ color: 'black', fontSize: 16,fontWeight:'bold' }}>
+            {/*{isPasswordVisible ? 'Hide' : 'Show'} Password*/}
+            {isPasswordVisible ? (
+              <FontAwesome size={25} color="black" name="eye-slash" />
+            ):(
+              <FontAwesome size={25} color="black" name="eye" />
+            )}
+          </Text>
+        </TouchableOpacity>
+
+        </View>
+        </View>
+      {/*  mwisho wa neno siri*/}
+
+
+
+
+{/*mwanzo wa forget password*/}
+      <TouchableOpacity
+      onPress={() => navigation.navigate("Send OTP Screen")} 
+      style={{
+        alignItems:'center',
+        justifyContent:'space-between',
+        flexDirection:'row'
+      }}>
+
+       <Text style={{
+        color:'green',
+        marginTop:15,
+        textAlign:'right',
+        fontFamily:'Medium',
+      }}>
+        Umesahau neno siri ?
+      </Text>
+
+
+      <Ionicons name='arrow-forward-circle' 
+                size={28}
+                color='black' 
                 style={{
-                    flex: 1,
-                    opacity:1,
-                }}
-                resizeMode= "cover"
-            >
-                <ScrollView 
-                keyboardShouldPersistTaps="handled"
-                >
-                    <View style={styles.topContainer}>
-                        <Text style={styles.title}>MFUGAJI SMART</Text>
-                        <Text style={styles.subtitle}>Fuga Kidijitali</Text>
-                    </View>
-                    <View style={styles.dataContainer}>
-                     <Text 
-                    style={styles.dataContainerFormTitle}
-                    >Kujisajili tafadhali jaza taarifa zako kwa usahihi</Text>
+                  marginTop:15,
+                  marginLeft:10,
+                }} 
+                
+                 />
+        
+      </TouchableOpacity>
 
-                        <TextInput 
-                        placeholder='Email yako' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                        keyboardType={'email-address'}
-                        value={email}
-                        onChangeText={text => setEmail(text)} 
-                        />
+{/*mwanzo wa forget password*/}
 
-                         <TextInput 
-                        placeholder='Jina lako kamili' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                         value={username}
-                          onChangeText={setUsername}
-                        />
-
-                         <TextInput 
-                        placeholder='Namba yako ya simu' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                         value={phone}
-                          onChangeText={setPhone}
-                         // keyboardType="numeric"
-                        />
-
-                         <TextInput 
-                        placeholder='Neno siri' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                        secureTextEntry={true} 
-                          value={password}
-                        onChangeText={setPassword}
-                        />
-
-
-                         <TextInput 
-                        placeholder='Thibitisha neno siri' 
-                        style={[styles.textinput,{
-                            width:width-100
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                        secureTextEntry={true} 
-                          value={password2}
-                         onChangeText={setPassword2}
-                        />
+            {!isPending && (
+              <Pressable 
+              style={{
+                flexDirection:'row',
+                justifyContent:'space-between',
+                alignItems:'center',
+                  backgroundColor:'green',
+                  marginTop:50,
+                  paddingVertical:10,
+                  paddingHorizontal:40,
+                  borderRadius:8,
+                  color:'white',
+                  borderColor:'white',
+                  borderWidth:1,
+               // backgroundColor:'black'
+              }}
+              onPress={handleRegistration}>
+                <Text style={styles.registerLbl}>Jisajili</Text>
+                 <Ionicons name='arrow-forward-circle' 
+                size={28}
+                color='white' 
+                style={{
+                 // marginTop:70,
+                }} 
+                
+                 />
+              </Pressable>
+              )}
 
 
 
 
-
-
-
-                    </View>
-
-                    {!isPending &&
-                <TouchableOpacity 
-                        onPress={handleRegistration}
-                        >
-                    <View style={styles.btnContainer}>
-                        
-                            <View style={styles.button1}>
-                                <Text style={styles.btnText}>Jisajili</Text>
-                            </View>
-                        
-                        </View>
-                    </TouchableOpacity>}
-
-                      {isPending &&
+           {isPending &&
                          <View style={styles.btnContainer}>
                         <TouchableOpacity 
                         
                         >
                             <View style={styles.button1}>
                                
-                             <ActivityIndicator size="large" color="red" /> 
+                             <ActivityIndicator size="large" color="green" /> 
                             </View>
                         </TouchableOpacity>
                      
                     </View>}
-                    <View style={styles.bottomContainer}>
-                        <TouchableOpacity 
-                         onPress={() => navigation.navigate("Signin Stack")}
-                        >
-                            <Text style={styles.text}>Teyari umeshajisajili ? | Ingia </Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-            </ImageBackground>
 
-     
+
+
+
+
+               <Pressable 
+              style={{
+                flexDirection:'row',
+                justifyContent:'space-between',
+                alignItems:'center',
+                  //backgroundColor:'green',
+                  marginTop:50,
+                  paddingVertical:10,
+                  paddingHorizontal:40,
+                  borderRadius:8,
+                  color:'white',
+                  borderColor:'green',
+                  borderWidth:1,
+               // backgroundColor:'black'
+              }}
+             onPress={() => navigation.navigate("Signin Stack")}
+              >
+              
+                <Text style={[styles.registerLbl,
+
+                  {
+                    color:'black',
+                    //marginLeft:20,
+                  }
+
+                  ]}>Teyari umeshajisajili ? | Ingia </Text>
+
+                   <Ionicons name='arrow-forward-circle' 
+                size={28}
+                color='green' 
+                style={{
+                 // marginTop:70,
+                }} 
+                
+                 />
+                
+              </Pressable>
+
+
+            </View>
+          </View>
+        </View>
+
+
+
+
+
                <AwesomeAlert
                 show={showAlert}
                 showProgress={false}
@@ -337,7 +551,9 @@ const handleErrorMessage = (error) => {
                 }
               />
 
-        </View>
+</ScrollView>
+      </KeyboardAvoidingView>
+
 
          )}</>
     )
@@ -346,51 +562,86 @@ const handleErrorMessage = (error) => {
 export default SignupScreen;
 
 
+
+
 const styles = StyleSheet.create({
- container: {
-        flex: 1,
-        justifyContent:'center',
-    },
-    topContainer: {
-        marginTop: 50,
-        alignItems: 'center',
-        justifyContent:'center',
+  mainCon: {
+    backgroundColor: 'lightgreen',
+    flex: 1,
+  },
+  loginIcon: {
+    alignSelf: 'center',
+  },
+  formCon: {
+    alignItems: 'center',
+  },
+  container: {
+    paddingHorizontal: 20,
+    marginTop: 50,
+  },
+  loginLblCon: {
+    position: 'relative',
+    bottom: 40,
+  },
+  loginLbl: {
+    color: '#000',
+    fontSize: 40,
+    marginBottom:10,
+    //fontFamily: Fonts.type.NotoSansExtraBold,
+  },
+  forgotDes: {
+    position: 'relative',
+    bottom: 35,
+  },
+  forgotDesLbl: {
+    color: '#000',
+   // fontFamily: Fonts.type.NotoSansRegular,
+  },
+  //registerLbl: {color: '#0057ff', fontFamily: Fonts.type.NotoSansSemiBold},
 
-    },
-    title: {
+
+registerLbl:{
+  // backgroundColor:'black',
+  // marginTop:70,
+  // paddingVertical:10,
+  // paddingHorizontal:40,
+  // borderRadius:8,
+   color:'white',
+  // borderColor:'green',
+  // borderWidth:1,
+  marginRight:20,
+
+
+},
+
+
+
+
+   textinput: {
         color: COLORS.white,
-        // fontWeight: 'bold',
-        // fontSize: SIZES.h1 * 1.5,
-        fontFamily:'Regular',
-        fontSize:25
+        //fontSize: SIZES.h3,
+        // borderBottomColor: COLORS.lightGrey,
+        borderColor: COLORS.green,
+        borderWidth: 1,
+        paddingVertical: 10,
+        marginHorizontal: 15,
+        marginVertical: 5,
+        padding:10,
+        borderRadius:8,
+        fontFamily:'Light',
     },
-    subtitle: {
-        color: 'green',
-        // fontSize: SIZES.h4,
-        paddingTop: 3,
-        textAlign:'center',
-        marginBottom:15,
-        fontFamily:'Medium',
-    },
-    dataContainer: {
-        marginTop: 10,
-        alignItems: 'center',
-         
-    },
-    dataContainerFormTitle:{
-      color:'white',
-      marginBottom:20,
 
-    },
+
 
     dataContainerForPassword: {
       color: COLORS.white,
         fontSize: SIZES.h3,
         // borderBottomColor: COLORS.lightGrey,
-        borderColor: COLORS.lightGrey,
+        borderColor: COLORS.green,
         borderWidth: 1,
         paddingVertical: 10,
         marginHorizontal: 15,
+        marginVertical: 5,
         marginTop: 50,
         padding:10,
         borderRadius:8,
@@ -402,20 +653,7 @@ const styles = StyleSheet.create({
          
     },
 
-    textinput: {
-        color: COLORS.white,
-        //fontSize: SIZES.h3,
-        // borderBottomColor: COLORS.lightGrey,
-        borderColor: COLORS.lightGrey,
-        borderWidth: 1,
-        paddingVertical: 10,
-        marginHorizontal: 15,
-        marginVertical: 5,
-        padding:10,
-        borderRadius:8,
-        fontFamily:'Light',
-    },
-
+  
     textinputi: {
         color: COLORS.white,
         //fontSize: SIZES.h3,
@@ -428,79 +666,6 @@ const styles = StyleSheet.create({
         
     },
 
-    btnContainer: {
-        marginTop: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        //width:'100%',
-
-    },
-    button1: {
-        backgroundColor: '#1f1f1f',
-        padding: 20,
-        marginHorizontal: 30,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginVertical: 10,
-        width:'50%',
-        borderWidth:1,
-        borderColor:'white',
-    },
-    btnText: {
-        color: COLORS.white,
-        fontWeight: 'bold',
-        fontSize: SIZES.h4,
-    },
-    button2: {
-        flexDirection: 'row',
-        backgroundColor: COLORS.blue,
-        padding: 15,
-        borderRadius: 10,
-        marginHorizontal: 30,
-        marginVertical: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    logo: {
-        marginRight: 10,
-    },
-    text: {
-        color: 'lightblue',
-        textAlign: 'center',
-        marginTop: 10,
-        //fontWeight: '600',
-        //fontSize: SIZES.h5,
-        // fontSize:18,
-        fontFamily:'Light'
-    },
-    bottomContainer: {
-        justifyContent: 'center',
-        marginTop: 20,
-    },
-
-
-ImageAccountContainer:{
-  alignItems:'center',
-
-
-},
-
-ImageAccount:{
-   // width: width/2 + 120,
-  //  width: width/2 - 130,
-  // height: height/10,
-   width: 80,
-  height: 80,
-  marginBottom: 10,
-  borderRadius: 100,
-  // borderWidth:1,
-  // borderColor:'white',
-  // opacity:1,
-  // borderTopRightRadius:200,
-  // borderBottomLeftRadius:50,
-
-},
 
 
 });

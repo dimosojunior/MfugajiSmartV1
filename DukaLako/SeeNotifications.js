@@ -244,7 +244,7 @@ const checkLoggedIn = async () => {
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
-    return `Tarehe: ${day}/${month}/${year}, Muda: ${hours}:${minutes}`;
+    return `Tarehe: ${day}/${month}/${year}, ${hours}:${minutes}`;
   };
 
  
@@ -257,7 +257,11 @@ const checkLoggedIn = async () => {
     return (
 
 
-      <Pressable>
+      <Pressable 
+          onPress={() => {
+            navigation.navigate('View Notification', item);    
+        }}
+      >
         
 
 
@@ -271,6 +275,10 @@ const checkLoggedIn = async () => {
                   width:'95%',
                   justifyContent:'space-between',
                   marginBottom:10,
+                  //elevation:3,
+                  elevation: 3,
+                shadowColor: Platform.OS === "android" ? 'black' : "black",
+                shadowOpacity: 1,
                 }
 
                 ]}>
@@ -397,6 +405,8 @@ const checkLoggedIn = async () => {
   return (
 
        <>{!fontsLoaded ? (<View/>):(
+
+
 
           <View style={globalStyles.container}>
 

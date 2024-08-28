@@ -19,6 +19,7 @@ import VerifyOTPScreen from '../AccountScreens/VerifyOTPScreen';
 
 
 import WelcomeScreen from '../Screens/WelcomeScreen';
+import SeraScreen from '../Screens/SeraScreen';
 
 import HomeScreen from '../Screens/HomeScreen';
 import MgawanyoWaHuduma from '../Components/MgawanyoWaHuduma';
@@ -83,6 +84,7 @@ import ViewDukaLako from '../DukaLako/ViewDukaLako';
 import YourPosts from '../DukaLako/YourPosts';
 import UzaAuNunuaKukuKwaHaraka from '../DukaLako/UzaAuNunuaKukuKwaHaraka';
 import SeeNotifications from '../DukaLako/SeeNotifications';
+import ViewNotification from '../DukaLako/ViewNotification';
 
 
 import MyTab from '../Tab/MyTab';
@@ -147,15 +149,9 @@ function MyStack( {navigation}){
 
 
 
-<Stack.Screen
-      name="PreLoader Stack"
-      component={PreLoaderScreen}
-      // options={ () => ({ 
-      //       headerLeft: () => <Header  title='About Page' />,
-      //     })}
-      />
 
-{/*{isAppFirstLaunched && (*/}
+
+{isAppFirstLaunched && (
 <Stack.Screen
       name="Welcome Screen"
       component={WelcomeScreen}
@@ -163,11 +159,29 @@ function MyStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
-{/*)}*/}
+)}
 
-<Stack.Screen
+{isAppFirstLaunched && (
+      <Stack.Screen
+      name="Sera Screen"
+      component={SeraScreen}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+      
+)}
+
+{/*<Stack.Screen
       name="Account Selection"
       component={AccountSelection}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />*/}
+<Stack.Screen
+      name="PreLoader Stack"
+      component={PreLoaderScreen}
       // options={ () => ({ 
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
@@ -609,6 +623,15 @@ function MyStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+
+                  <Stack.Screen
+      name="View Notification"
+      component={ViewNotification}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
 
  
  

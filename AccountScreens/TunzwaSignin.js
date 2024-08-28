@@ -19,11 +19,7 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 
 const { width, height } = Dimensions.get('window');
-const VerifyOTPScreen = ({ navigation, route }) => {
-
-    const { email } = route.params;
-
-
+const SigninScreen = ({ navigation }) => {
 
      const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
@@ -55,9 +51,57 @@ let [fontsLoaded] = useFonts({
 
 
 
+  
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   //TO MAKE A LOADING MESSAGE ON A BUTTON
   const [isPending, setPending] = useState(false);
+
+  //const navigation = useNavigation();
+
+  useEffect(() => {
+    checkLoggedIn();
+  }, []);
+
+  const checkLoggedIn = async () => {
+    const token = await AsyncStorage.getItem('userToken');
+    if (token) {
+      try {
+        const userResponse = await axios.get(
+          EndPoint + '/Account/user_data/',
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+
+        const userData = userResponse.data;
+        // Fetch and set cart data here
+        // const cartResponse = await axios.get(
+        //   'https://hotelappapisv1.pythonanywhere.com/Hotel/Cart/',
+        //   {
+        //     headers: {
+        //       Authorization: `Token ${token}`,
+        //     },
+        //   }
+        // );
+
+        // const cartData = cartResponse.data;
+        // // Update the cart state with the fetched data
+        // setCart(cartData);
+
+        // navigation.replace('Home Stack', { userData });
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Home Stack' }],
+        });
+      } catch (error) {
+        
+      }
+    }
+  };
 
 
 // const [error, setError] = useState(null);
@@ -80,75 +124,94 @@ const handleErrorMessage = (error) => {
     }  if (error.message === 'Network Error') {
       showAlertFunction('Tatizo la mtandao, washa data na ujaribu tena.');
     } else {
-      showAlertFunction('kuna tatizo kwenye taarifa zako, tafadhali ingiza taarifa zako kwa usahihi', error.response.data.error);
+      showAlertFunction('Taarifa zako sio sahihi');
     }
   };
 
+  const handleLogin = async () => {
+    
 
+    if (!username && !password) {
+      //setError('Please fill in all fields correctly');
+      showAlertFunction("Tafadhali jaza taarifa zote kwa usahihi");
+      return;
+    }
 
-  const [otp, setOTP] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [password2, setPassword2] = useState('');
-    const [isPasswordVisible, setPasswordVisible] = useState(false);
+    if (!username) {
+     // setError('Please enter your registration username correctly');
+      showAlertFunction("Tafadhali ingiza jina lako kwa usahihi");
+      return;
+    }
 
-  const verifyOTP = () => {
+      // Validate email format
+  
+  // if (!emailRegex.test(email)) {
+  //   showAlertFunction("Please enter a valid email address");
+  //   return;
+  // }
+
+    if (!password) {
+      //setError('Please enter your registration password correctly');
+      showAlertFunction("Tafadhali ingiza password yako kwa usahihi");
+      return;
+    }
     setPending(true);
 
-     if (!otp) {
-      //setError('please enter your valid email');
-       showAlertFunction("Tafadhali ingiza codes zilizotumwa kwenye email yako kwa usahihi");
-       setPending(false);
-      return;
-    }
-
-      if (otp.length > 6) {
-    showAlertFunction("tafadhali codes zimezidi, codes lazima ziwe 6");
-    return;
-  }
-
-  if (otp.length < 6) {
-    showAlertFunction("tafadhali codes ziko pungufu, codes lazima ziwe 6");
-    return;
-  }
-
-
-
-     if (!newPassword) {
-      //setError('please enter your valid email');
-       showAlertFunction("Tafadhali ingiza neno siri jipya");
-       setPending(false);
-      return;
-    }
-
-     if (newPassword.length < 4) {
-    showAlertFunction("tafadhali neno siri linapaswa kuwa na tarakimu zaidi ya 4");
-    return;
-  }
-
-  if (newPassword !== password2) {
-      showAlertFunction("Nywira ulizoingiza hazifanani");
-      return;
-    }
-
-    axios.post(EndPoint + '/Account/verify-otp/', { email, otp, new_password: newPassword })
-      .then(response => {
-         setPending(false);
-        showAlertFunction('Umefanikiwa kubadilisha neno siri lako la mwanzo, sasa unaweza kuingia kutumia neno siri jipya.');
-        navigation.navigate('Signin Stack');
-      })
-      .catch(error => {
-        setPending(false);
-         handleErrorMessage(error);
-        
+    try {
+      const response = await axios.post(EndPoint + '/Account/login_user/', {
+        username: username,
+        password: password,
       });
+
+      const token = response.data.token;
+      await AsyncStorage.setItem('userToken', token);
+      //navigation.emit('updateUserToken', token);
+
+      // Now, make another request to get user data
+      const userResponse = await axios.get(EndPoint + '/Account/user_data/', {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
+
+      const userData = userResponse.data;
+      // Save user data to AsyncStorage
+      await AsyncStorage.setItem('userData', JSON.stringify(userData));
+
+      // Emit the 'updateUserToken' event
+      // hii inasaidia kupata a login user token automatically without
+      // page refreshing
+      EventRegister.emit('updateUserToken', token);
+
+
+
+      // Pass the userData to Home Stack
+      // navigation.replace('MainScreen', { userData });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Home Stack' }],
+      });
+    } catch (error) {
+      //setError('Invalid credentials');
+      // showAlertFunction("Invalid credentials");
+      
+      handleErrorMessage(error);
+      setPending(false);
+    }
   };
+
+
+
+
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
 
 
     return(
 
         <>{!fontsLoaded ? (<View/>):(
 
-        
+          <>
+ {!isPending ? (
 
         <View style={styles.container}>
             <ImageBackground
@@ -186,34 +249,27 @@ const handleErrorMessage = (error) => {
                     <View style={styles.dataContainer}>
                     <Text 
                     style={styles.dataContainerFormTitle}
-                    >Tafadhali jaza taarifa kwa usahihi</Text>
-                       
-
+                    >Thibitisha taarifa zako kwa usahihi</Text>
                         <TextInput 
-                        placeholder='Ingiza codes ulizotumiwa' 
+                        placeholder='Jina Unalotumia' 
                         style={[styles.textinput,{
                             width:width-100
                         }]} 
                         placeholderTextColor={COLORS.white}
-                        value={otp}
-                      onChangeText={setOTP}
-                      
-                      keyboardType="numeric"
-
+                        // keyboardType={'email-address'}
+                        value={username}
+                        onChangeText={text => setUsername(text)} 
                         />
 
-          {/*  mwanzo wa neno siri*/}
-            <View 
+         <View 
             style={styles.dataContainerForPassword}
           >
           <TextInput
-          style= {[styles.textinputi,{ 
-            color: 'white',
-          width:'75%'}]}
-          placeholder="Neno siri jipya"
+          style= {[styles.textinputi,{ color: 'white',width:'75%'}]}
+          placeholder="Neno siri"
           secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
-          value={newPassword}
-        onChangeText={setNewPassword}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
         placeholderTextColor={COLORS.white}
         />
 
@@ -238,97 +294,43 @@ const handleErrorMessage = (error) => {
 
         </View>
         </View>
-      {/*  mwisho wa neno siri*/}
-
-
-
-       {/*  mwanzo wa neno siri*/}
-            <View 
-            style={[styles.dataContainerForPassword, 
-              {
-                 width:width-100,
-                marginTop:height/11,
-              }
-
-              ]}
-          >
-          <TextInput
-          style= {[styles.textinputi,{ 
-            color: 'white',width:'75%',
-            //paddingVertical:20,
-          }]}
-          placeholder=" Thibitisha neno siri"
-          secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
-          value={password2}
-          onChangeText={setPassword2}
-        placeholderTextColor={COLORS.white}
-        />
-
-        <View style={{
-          width:'20%',
-          //justifyContent:"center",
-        }}>
-
-         {/* Add a button to toggle password visibility */}
-        <TouchableOpacity
-          onPress={() => setPasswordVisible(!isPasswordVisible)}
-          style={{ alignSelf: 'flex-end', marginRight: 0,color:'white' }}>
-          <Text style={{ color: 'white', fontSize: 16,fontWeight:'bold' }}>
-            {/*{isPasswordVisible ? 'Hide' : 'Show'} Password*/}
-            {isPasswordVisible ? (
-              <FontAwesome size={25} color="white" name="eye-slash" />
-            ):(
-              <FontAwesome size={25} color="white" name="eye" />
-            )}
-          </Text>
-        </TouchableOpacity>
-
-        </View>
-        </View>
-      {/*  mwisho wa neno siri*/}
-
-
-                      {/*     <TextInput 
-                        placeholder='Thibitisha neno siri' 
-                        style={[styles.textinput,{
-                            width:width-100,
-                            marginTop:height/10,
-                        }]} 
-                        placeholderTextColor={COLORS.white}
-                        secureTextEntry={true} 
-                          value={password2}
-                         onChangeText={setPassword2}
-                        />
-*/}
-        
 
                     </View>
 
-                   {!isPending &&
+                    {!isPending &&
                 <TouchableOpacity 
-                  onPress={verifyOTP}
-                  >
+                        onPress={handleLogin}
+                        >
                     <View style={styles.btnContainer}>
                         
                             <View style={styles.button1}>
-                                <Text style={styles.btnText}>Tuma Ombi</Text>
+                                <Text style={styles.btnText}>Ingia</Text>
                             </View>
                         
                         </View>
                     </TouchableOpacity>}
 
-                      {isPending &&
+                      {/*{isPending &&
                          <View style={styles.btnContainer}>
                         <TouchableOpacity 
                         
                         >
                             <View style={styles.button1}>
                                
-                             <ActivityIndicator size="large" color="green" /> 
+                             <ActivityIndicator size="large" color="red" /> 
                             </View>
                         </TouchableOpacity>
                      
-                    </View>}
+                    </View>}*/}
+
+
+                    <View style={styles.bottomContainer}>
+                        <TouchableOpacity 
+                         onPress={() => navigation.navigate("Signup Stack")}
+                        >
+                            <Text style={styles.text}>Bado hujajisajili? | Jisajili hapa</Text>
+                        </TouchableOpacity>
+                    </View>
 
 
                       <View style={styles.bottomContainer}>
@@ -340,7 +342,6 @@ const handleErrorMessage = (error) => {
                           width:'100%',
                           justifyContent:'center',
                           alignItems:'center',
-                          marginBottom:20,
                          }}
                         >
                             <Text style={[
@@ -356,13 +357,9 @@ const handleErrorMessage = (error) => {
                               }
 
 
-                           ] }>Omba tena codes ?</Text>
+                           ] }>Umesahau neno siri ?</Text>
                         </TouchableOpacity>
                     </View>
-
-
-
-                  
 
 
                 </ScrollView>
@@ -397,13 +394,19 @@ const handleErrorMessage = (error) => {
 
 
 
- 
+        ):(
+
+<LotterViewScreen />
+
+)}
+
+    </>
 
          )}</>
     )
 }
 
-export default VerifyOTPScreen;
+export default SigninScreen;
 
 
 
@@ -436,14 +439,11 @@ const styles = StyleSheet.create({
     dataContainer: {
         marginTop: 10,
         alignItems: 'center',
-        justifyContent:'center',
-        flex:1,
          
     },
     dataContainerFormTitle:{
       color:'white',
       marginBottom:20,
-      marginTop:height/20,
 
     },
 

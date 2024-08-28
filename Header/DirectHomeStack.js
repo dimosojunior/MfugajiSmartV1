@@ -77,8 +77,23 @@ export default function DirectHomeStack(  {title} ) {
       size={28} onPress={goBackPage} style={globalStyles.iconHeaderFile} />
 
         <Text style={globalStyles.headerTextHeaderFile1}>{title}</Text>
-<Image source={require('../assets/i2.jpg')} 
-  style={globalStyles.headerImageHeaderFile} />
+{/*<Image source={require('../assets/i2.jpg')} 
+  style={globalStyles.headerImageHeaderFile} />*/}
+
+  <FontAwesome 
+   onPress={goBackPage}
+
+   name='home' 
+      size={28} 
+      style={[globalStyles.iconHeaderFile,
+        {
+          marginRight:10,
+          color:'green',
+        }
+
+        ]} 
+      />
+
 
         </View>  
     

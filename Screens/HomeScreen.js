@@ -25,8 +25,19 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import { useFocusEffect } from '@react-navigation/native';
+import { PinchGestureHandler, State } from 'react-native-gesture-handler';
+import  {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming 
+} from 'react-native-reanimated';
 
 export default function HomeScreen ({navigation}) {
+
+
+  
 
   let [fontsLoaded] = useFonts({
     

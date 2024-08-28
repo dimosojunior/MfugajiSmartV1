@@ -1,6 +1,6 @@
 
 import React, {useState, useEffect} from 'react';
-import { StyleSheet,ImageBackground, Text,ScrollView, View,Image, Button, FlatList,TouchableOpacity,Modal,TouchableWithoutFeedback, Keyboard  } from 'react-native';
+import { StyleSheet,ImageBackground, Text,ScrollView,SafeAreaView, View,Image, Button, FlatList,TouchableOpacity,Modal,TouchableWithoutFeedback, Keyboard  } from 'react-native';
 
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 
 import LottieView from 'lottie-react-native';
-const WelcomeScreen =({navigation}) => {
+const SeraScreen =({navigation}) => {
 
    let [fontsLoaded] = useFonts({
     
@@ -36,7 +36,8 @@ const WelcomeScreen =({navigation}) => {
   {
     RouteName:'Mfugaji Smart inakusaidia Kukokotoa uwiano sahihi wa viungo kwa kuchanganya vyakula mbalimbali vya kuku. Pia Mfugaji Smart inakusaidia kukokotoa hesabu za matumizi ya chakula kwa muda Fulani',
    RouteImage:require('../assets/Loading/l1.json'),
-   id:'1'
+   id:'1',
+
  },
 
   {
@@ -81,33 +82,7 @@ const WelcomeScreen =({navigation}) => {
             width:width,
           }}>
 
-        <View style={{
-          width:width,
-          //justifyContent:'center',
-          alignItems:'center'
-        }}>
-     {/* <Image
-        source={item?.RouteImage}
-        style={{
-          height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-       }}
-      />*/}
-       <LottieView
-        style={{
-        height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-
-        }}
-        source={item?.RouteImage} // Replace with your animation JSON file
-        autoPlay
-        loop
-      />
-
-      </View>
-
+       
 
 
       <View style={{
@@ -122,24 +97,116 @@ const WelcomeScreen =({navigation}) => {
 <Text style={{
   textAlign:'center',
   fontSize:18,
-  marginTop:10,
+  marginTop:height/15,
   //fontWeight:'bold',
   marginBottom:10,
   //lineHeight:24,
   color:'green',
   fontFamily:'Bold'
 
-}}>MFUGAJI SMART APP</Text>
-
+}}>VIGEZO NA MASHARTI</Text>
 
 </TouchableOpacity>
 
+<View style={{
+  width:'100%',
+  justifyContent:'center',
+  alignItems:'center',
+  //marginHorizontal:20,
+}}>
+    <Text style={[styles.title,
+          {
+            marginTop:10,
+            //width:'95%',
+            //textAlign:'center',
+            color:'wheat',
+            lineHeight:25,
+          }
 
-        <Text style={styles.title}>
-        {item?.RouteName}
+          ]}>
+        Karibu kwenye programu ya Mfugaji Smart. 
+        Kwa kutumia programu hii, unakubaliana na masharti na sera zifuatazo.
+         Sera hizi zimeundwa ili kulinda haki za watumiaji na
+          wamiliki wa programu, pamoja na kuhakikisha usalama na 
+          uaminifu katika soko hili.
+
         </Text>
-        {/*<Text style={styles.subtitle}>{item?.LongitudeArea}</Text>
-      */}
+</View>
+
+
+{/*Mwanzo kwa ajili ya ID namba 1*/}
+       <Text style={[styles.title,
+        {
+          fontFamily:'Medium',
+        }
+        ]}>
+      <Text>{item.id}. </Text>Masharti ya Malipo
+        </Text>
+
+        <View style={[styles.title,
+          {
+            marginTop:10,
+          }
+
+          ]}>
+        {/*{item?.RouteName}*/}
+
+
+ {/* mwanzo wa Text 1*/}
+<Text style={{
+  marginBottom:15,
+  color:'white',
+  fontFamily:'Light',
+}}>
+- Watumiaji wanatakiwa kufanya malipo ya ada ya kuunganishwa na wanunuzi kabla ya kupatiwa huduma. Malipo haya yatafanyika kupitia namba maalum ya LIPA kwa Mfugaji Smart Co LTD na sio vinginevyo.
+</Text>
+{/* mwisho wa Text 1*/}
+ 
+
+
+{/* mwanzo wa Text 2*/}
+<Text style={{
+  marginBottom:15,
+  color:'white',
+  fontFamily:'Light',
+}}>
+Ada ya kuunganishwa na wanunuzi ni kama ifuatavyo:
+</Text>
+    {/*mwanzo wa text ya ndani 1*/}
+    <View>
+        <Text style={{
+      marginBottom:10,
+      color:'wheat',
+      fontFamily:'Light',
+      marginLeft:10,
+      }}>
+      - Kwa kila *kuku au treyi la mayai* litakalouzwa chini ya TZS 10,000: *TZS 100*.
+      </Text>
+
+      <Text style={{
+      marginBottom:10,
+      color:'wheat',
+      fontFamily:'Light',
+      marginLeft:10,
+      }}>
+      - Kwa kila *kuku au treyi la mayai* litakalouzwa kati ya TZS 10,000 hadi TZS 15,000: *TZS 200*.
+      </Text>
+      
+    </View>
+    {/*mwisho wa text ya ndani 1*/}
+{/* mwisho wa Text 2*/}
+        </View>
+        
+
+
+
+{/*wmisho kwa ajili ya ID namba 1*/}
+
+
+
+
+
+
       </View>
     </View>
 
@@ -219,11 +286,7 @@ const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
             }}>
               <TouchableOpacity
                 style={styles.getstarted}
-                // onPress={() => navigation.navigate('PreLoader Stack')}
-                onPress={() => navigation.navigate('Sera Screen')}
-                >
-                
-                
+                onPress={() => navigation.navigate('PreLoader Stack')}>
                 <Text style={{
                   //fontWeight: 'bold', 
                   //fontSize: 20,
@@ -247,7 +310,7 @@ const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
             </View>
           ) : (
             <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity
+             {/* <TouchableOpacity
                 activeOpacity={0.8}
                 style={[
                   styles.btn,
@@ -266,9 +329,9 @@ const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
                   }}>
                   Ruka
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity>*/}
               <View style={{width: 15}} />
-              <TouchableOpacity
+             {/* <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={goToNextSlide}
                 style={styles.btn}>
@@ -279,7 +342,37 @@ const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
                   }}>
                   Mbele
                 </Text>
+              </TouchableOpacity>*/}
+
+              <TouchableOpacity
+                style={styles.getstarted}
+               activeOpacity={0.8}
+                onPress={goToNextSlide}
+                >
+                
+                
+                <Text style={{
+                  //fontWeight: 'bold', 
+                  //fontSize: 20,
+                  backgroundColor:'green',
+                  color:'white',
+                  padding:10,
+                  borderRadius:10,
+                  fontFamily:'Medium',
+                  //paddingHorizontal:20,
+                }}>
+                  Endelea
+                </Text>
+
+          <Ionicons name='arrow-forward-circle' 
+      size={28}
+      color='white'  
+      
+       />
+
               </TouchableOpacity>
+
+
             </View>
           )}
         </View>
@@ -299,7 +392,7 @@ const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
 
 
 // {mwanzo wa list za modules}
-<View style={{flex: 1, 
+<SafeAreaView style={{flex: 1, 
   //backgroundColor:'white',
 //width: '100%',
 flex:1,
@@ -367,7 +460,7 @@ renderItem = {({item}) => <Slide item={item}/>}
 </ImageBackground>
 
 
-</View>
+</SafeAreaView>
 
 )}</>
 
@@ -375,7 +468,7 @@ renderItem = {({item}) => <Slide item={item}/>}
      
   );
 }
-export default WelcomeScreen;
+export default SeraScreen;
 
 const styles = StyleSheet.create({
  // header:{
@@ -435,6 +528,9 @@ subtitle: {
     alignItems: 'center',
     flexDirection:'row',
     paddingHorizontal:20,
+    position:'absolute',
+    bottom:10,
+    right:10,
 
   },
 
