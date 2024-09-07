@@ -236,6 +236,11 @@ const [TotalChumviValue, setTotalChumviValue] = useState(0);
 const [TotalMEValue, setTotalMEValue] = useState(0);
 
 
+const [Mashudu_Ya_Alizeti_New_Value, setMashudu_Ya_Alizeti_New_Value] = useState(0);
+const [Pumba_Za_Mahindi_New_Value, setPumba_Za_Mahindi_New_Value] = useState(0);
+const [Dagaa_New_Value, setDagaa_New_Value] = useState(0);
+
+
 
 
 
@@ -285,6 +290,12 @@ useEffect(() => {
             setTotalChumviValue(totals.TotalChumvi);
             setTotalMEValue(totals.TotalME);
 
+             //----pata materials ya lazima
+         setMashudu_Ya_Alizeti_New_Value(totals.Mashudu_Ya_Alizeti_New_Value);
+         setPumba_Za_Mahindi_New_Value(totals.Pumba_Za_Mahindi_New_Value);
+         setDagaa_New_Value(totals.Dagaa_New_Value);
+
+
             setMaoni_Ya_CPValue(totals.Maoni_Ya_CP);
             setMaoni_Ya_WangaValue(totals.Maoni_Ya_Wanga);
             setMaoni_Ya_MafutaValue(totals.Maoni_Ya_Mafuta);
@@ -307,6 +318,10 @@ useEffect(() => {
 
 
 
+// console.log("-------------------------");
+// console.log("Mashudu_Ya_Alizeti_New_Value", Mashudu_Ya_Alizeti_New_Value);
+// console.log("Pumba_Za_Mahindi_New_Value", Pumba_Za_Mahindi_New_Value);
+// console.log("Dagaa_New_Value", Dagaa_New_Value);
 
 
 
@@ -1138,8 +1153,8 @@ userData={userData}
    
         <View style={{ 
          flex: 1,
-         //marginTop:height/6,
-         marginTop:15,
+         marginTop:height/6,
+         //marginTop:15,
          //justifyContent: 'center', 
          alignItems: 'center',
           //backgroundColor: 'red' 
@@ -1150,7 +1165,7 @@ userData={userData}
               backgroundColor:'green',
               //justifyContent: 'center', 
              //alignItems: 'center',
-             //height:height/4,
+             //height:height/5,
              width:'90%',
 
 
@@ -1160,80 +1175,164 @@ userData={userData}
 
             ]}>
 
-            {Maoni_Ya_CPValue  && (
           
-            <Text style={[globalStyles.ModalTitleViewProduct,
-              {
-                textAlign:'center',
-                fontFamily:'Medium',
-                color:'white',
-
-              }
-              ]}>
-              
-            {Maoni_Ya_CPValue}
-            
-            
-            </Text>
-            )}
-
-            <View style={{
-            backgroundColor:'black',
-            borderColor:'white',
-            borderWidth:1,
-            marginBottom:20,
-          }}>
-            {/*<Text>
-              
-            </Text>*/}
-          </View>
-
-              {Maoni_Ya_WangaValue  && (
-          
-            <Text style={[globalStyles.ModalTitleViewProduct,
-              {
-                textAlign:'center',
-                fontFamily:'Medium',
-                color:'black',
-
-              }
-              ]}>
-              
-            {Maoni_Ya_WangaValue}
-            
-            
-            </Text>
-            )}
-
+{/*
               <View style={{
             backgroundColor:'black',
             borderColor:'white',
             borderWidth:1,
             marginBottom:20,
           }}>
-            {/*<Text>
-              
-            </Text>*/}
-          </View>
+            
+          </View>*/}
 
-
-                {Maoni_Ya_MafutaValue  && (
-          
-            <Text style={[globalStyles.ModalTitleViewProduct,
+             <Text style={[globalStyles.ModalTitleViewProduct,
               {
                 textAlign:'center',
                 fontFamily:'Medium',
-                color:'yellow',
+                color:'white',
+                width:'100%',
+                marginBottom:20,
 
               }
               ]}>
               
-            {Maoni_Ya_MafutaValue}
+            Ili kupata mchanganyiko sahihi wa chakula unapaswa kuongeza, kiasi 
+            hiki kwenye chakula husika             
+            
+            </Text>
+
+
+                {Pumba_Za_Mahindi_New_Value > 0  && (
+
+              <View style={{
+                flexDirection:'row',
+                justifyContent:'space-between',
+                alignItems:'center',
+              }}>
+
+               <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                //textAlign:'center',
+                fontFamily:'Medium',
+                color:'yellow',
+                width:'45%',
+
+              }
+              ]}>
+              
+            Ongeza kiasi cha mahindi            
+            
+            </Text>
+          
+            <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                //textAlign:'center',
+                fontFamily:'Medium',
+                color:'yellow',
+                 width:'30%',
+
+              }
+              ]}>
+              
+            {Pumba_Za_Mahindi_New_Value.toFixed(2)} Kg
             
             
             </Text>
-            )}
+           
    
+            </View>
+
+             )}
+
+
+
+
+            {Mashudu_Ya_Alizeti_New_Value > 0  && (
+
+              <View style={{
+                flexDirection:'row',
+                justifyContent:'space-between',
+                alignItems:'center',
+              }}>
+
+               <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                //textAlign:'center',
+                fontFamily:'Medium',
+                color:'yellow',
+                width:'45%',
+
+              }
+              ]}>
+              
+            Ongeza kiasi cha mashudu ya alizeti            
+            
+            </Text>
+          
+            <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                //textAlign:'center',
+                fontFamily:'Medium',
+                color:'yellow',
+                 width:'30%',
+
+              }
+              ]}>
+              
+            {Mashudu_Ya_Alizeti_New_Value.toFixed(2)} Kg
+            
+            
+            </Text>
+           
+   
+            </View>
+
+             )}
+
+
+
+            {Dagaa_New_Value > 0  && (
+
+              <View style={{
+                flexDirection:'row',
+                justifyContent:'space-between',
+                alignItems:'center',
+              }}>
+
+               <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                //textAlign:'center',
+                fontFamily:'Medium',
+                color:'yellow',
+                width:'45%',
+
+              }
+              ]}>
+              
+            Ongeza kiasi cha dagaa            
+            
+            </Text>
+          
+            <Text style={[globalStyles.ModalTitleViewProduct,
+              {
+                //textAlign:'center',
+                fontFamily:'Medium',
+                color:'yellow',
+                 width:'30%',
+
+              }
+              ]}>
+              
+            {Dagaa_New_Value.toFixed(2)} Kg
+            
+            
+            </Text>
+           
+   
+            </View>
+
+             )}
 
 
  

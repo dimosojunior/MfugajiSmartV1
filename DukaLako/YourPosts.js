@@ -39,6 +39,16 @@ const { width, height } = Dimensions.get('window');
 
 
 
+// Function to prefetch images
+const prefetchImages = async (images) => {
+  const prefetchPromises = images.map((image) => {
+    if (image) {
+      return Image.prefetch(`${EndPoint}/${image}`);
+    }
+  });
+  await Promise.all(prefetchPromises);
+};
+
 
 const Carousel = ({ images }) => {
   const flatlistRef = useRef();
@@ -527,6 +537,114 @@ const checkLoggedIn = async () => {
 
 
                   </TouchableOpacity>
+
+
+
+
+
+{/*mwanzo wa action buttons*/}
+
+{/*mwanzo wa mstari*/}
+ <View style={{
+  borderBottomColor:'green',
+  borderBottomWidth:1,
+  marginTop:10,
+ }}>
+   <Text>
+     
+   </Text>
+ </View>
+{/*mwiso wa mstari*/}
+
+  <TouchableOpacity 
+
+                  style={[globalStyles.AppItemButtonHomeScreen,
+                    {
+                      width:'90%',
+                    //padding:5,
+                   // borderRadius:6,
+                    marginTop:20,
+                    flexDirection:'row',
+                    justifyContent:'space-between',
+                    }
+
+
+                    ]}
+
+                 
+                >
+            {/*mwanzo wa view ya left*/}
+              <TouchableOpacity 
+
+               
+        >
+        <Pressable 
+      onPress={() => navigation.navigate('Edit Post DukaLako', {...item, postId: item.id })}
+
+          >
+         <View style={globalStyles.RightBtnContainer}>
+         <View>
+           <Text style={{
+          marginRight:5,
+          fontFamily:'Bold',
+          color:'green',
+          marginTop:5,
+         }}>Badilisha
+         </Text>
+         </View>
+        
+        <View>
+           <FontAwesome name='pencil-square-o' 
+      size={20}
+      color='green'  
+      
+       />
+        </View>
+        
+
+         </View>
+         </Pressable>
+         </TouchableOpacity>
+          {/*mwisho wa view ya left*/}
+
+
+       {/*mwanzo wa view ya right*/}
+         <Pressable 
+        onPress={() => navigation.navigate('Delete Post DukaLako', {...item, postId: item.id })}
+
+          >
+         <View style={globalStyles.RightBtnContainer}>
+         <View>
+           <Text style={{
+          marginRight:5,
+          fontFamily:'Bold',
+          color:'red',
+          marginTop:5,
+         }}>Futa
+         </Text>
+         </View>
+        
+        <View>
+           <FontAwesome name='trash-o' 
+      size={20}
+      color='brown'  
+      
+       />
+        </View>
+        
+
+         </View>
+         </Pressable>
+          {/*mwisho wa view ya right*/}
+
+
+                  </TouchableOpacity>
+
+
+
+
+{/*mwisho wa action buttons*/}
+
                 </View>
                 <View>
                  

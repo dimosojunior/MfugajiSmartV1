@@ -105,7 +105,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetUmriWaKukuView/?page=${current_page}&page_size=2`
+   const url = EndPoint + `/GetUmriWaKukuView/?page=${current_page}&page_size=24`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
@@ -619,6 +619,457 @@ return (
 
 
 
+
+
+
+{/*mwanzo wa Vipindi Kuku aina ya Sasso*/}
+
+      {/*mwanzo wa check ya 01*/}
+          {AinaYaKuku == 'Kuku aina ya Sasso' && StaterFeed == "1 - 4" && item.UmriKwaSiku >= 0 && item.UmriKwaSiku <= 28 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+           Starter Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 01*/}
+
+
+       
+
+
+ {/*mwanzo wa check ya 02*/}
+          {AinaYaKuku == 'Kuku aina ya Sasso' && GrowerFeed == "5 - 17"  && item.UmriKwaSiku >= 29 && item.UmriKwaSiku <= 119 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Grower Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 02*/}
+
+
+
+
+       {/*mwanzo wa check ya 03*/}
+         {/* {AinaYaKuku == 'Kuku aina ya Sasso' && FinisherFeed == "10 - 12"  && item.UmriKwaSiku >= 70 && item.UmriKwaSiku <= 84 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Finisher Feed
+          </Text>
+          )}*/}
+
+      {/*mwisho wa check ya 03*/}
+
+
+
+
+
+       {/*mwanzo wa check ya 04*/}
+          {AinaYaKuku == 'Kuku aina ya Sasso' && LayerFeed == "18" && item.UmriKwaSiku >= 120  && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Layer Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 04*/}
+
+
+
+
+
+{/*mwisho wa vipindi Kuku aina ya Sasso*/}
+
+
+
+
+
+
+
+
+
+
+
+{/*mwanzo wa Vipindi Kuku aina ya Tanbro*/}
+
+      {/*mwanzo wa check ya 01*/}
+          {AinaYaKuku == 'Kuku aina ya Tanbro' && StaterFeed == "1 - 4" && item.UmriKwaSiku >= 0 && item.UmriKwaSiku <= 28 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+           Starter Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 01*/}
+
+
+       
+
+
+ {/*mwanzo wa check ya 02*/}
+          {AinaYaKuku == 'Kuku aina ya Tanbro' && GrowerFeed == "5 - 17"  && item.UmriKwaSiku >= 29 && item.UmriKwaSiku <= 119 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Grower Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 02*/}
+
+
+
+
+       {/*mwanzo wa check ya 03*/}
+         {/* {AinaYaKuku == 'Kuku aina ya Tanbro' && FinisherFeed == "10 - 12"  && item.UmriKwaSiku >= 70 && item.UmriKwaSiku <= 84 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Finisher Feed
+          </Text>
+          )}*/}
+
+      {/*mwisho wa check ya 03*/}
+
+
+
+
+
+       {/*mwanzo wa check ya 04*/}
+          {AinaYaKuku == 'Kuku aina ya Tanbro' && LayerFeed == "18" && item.UmriKwaSiku >= 120  && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Layer Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 04*/}
+
+
+
+
+
+{/*mwisho wa vipindi Kuku aina ya Tanbro*/}
+
+
+
+
+
+
+
+{/*mwanzo wa Vipindi Kuku aina ya Kenbro*/}
+
+      {/*mwanzo wa check ya 01*/}
+          {AinaYaKuku == 'Kuku aina ya Kenbro' && StaterFeed == "1 - 4" && item.UmriKwaSiku >= 0 && item.UmriKwaSiku <= 28 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+           Starter Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 01*/}
+
+
+       
+
+
+ {/*mwanzo wa check ya 02*/}
+          {AinaYaKuku == 'Kuku aina ya Kenbro' && GrowerFeed == "5 - 17"  && item.UmriKwaSiku >= 29 && item.UmriKwaSiku <= 119 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Grower Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 02*/}
+
+
+
+
+       {/*mwanzo wa check ya 03*/}
+         {/* {AinaYaKuku == 'Kuku aina ya Kenbro' && FinisherFeed == "10 - 12"  && item.UmriKwaSiku >= 70 && item.UmriKwaSiku <= 84 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Finisher Feed
+          </Text>
+          )}*/}
+
+      {/*mwisho wa check ya 03*/}
+
+
+
+
+
+       {/*mwanzo wa check ya 04*/}
+          {AinaYaKuku == 'Kuku aina ya Kenbro' && LayerFeed == "18" && item.UmriKwaSiku >= 120  && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Layer Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 04*/}
+
+
+
+
+
+{/*mwisho wa vipindi Kuku aina ya Kenbro*/}
+
+
+
+
+
+
+
+{/*mwanzo wa Vipindi Kuku aina ya Malawi*/}
+
+      {/*mwanzo wa check ya 01*/}
+          {AinaYaKuku == 'Kuku wa Malawi' && StaterFeed == "1 - 6" && item.UmriKwaSiku >= 0 && item.UmriKwaSiku <= 42 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+           Starter Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 01*/}
+
+
+       
+
+
+ {/*mwanzo wa check ya 02*/}
+          {AinaYaKuku == 'Kuku wa Malawi' && GrowerFeed == "7 - 21"  && item.UmriKwaSiku >= 43 && item.UmriKwaSiku <= 147 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Grower Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 02*/}
+
+
+
+
+       {/*mwanzo wa check ya 03*/}
+         {/* {AinaYaKuku == 'Kuku wa Malawi' && FinisherFeed == "10 - 12"  && item.UmriKwaSiku >= 70 && item.UmriKwaSiku <= 84 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Finisher Feed
+          </Text>
+          )}*/}
+
+      {/*mwisho wa check ya 03*/}
+
+
+
+
+
+       {/*mwanzo wa check ya 04*/}
+          {AinaYaKuku == 'Kuku wa Malawi' && LayerFeed == "22" && item.UmriKwaSiku >= 148  && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Layer Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 04*/}
+
+
+
+
+
+{/*mwisho wa vipindi Kuku aina ya Malawi*/}
+
+
+
+
+
+
+
+
+
+{/*mwanzo wa Vipindi Kuku aina ya Kienyeji*/}
+
+      {/*mwanzo wa check ya 01*/}
+          {AinaYaKuku == 'Kuku wa Kienyeji' && StaterFeed == "1 - 6" && item.UmriKwaSiku >= 0 && item.UmriKwaSiku <= 42 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+           Starter Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 01*/}
+
+
+       
+
+
+ {/*mwanzo wa check ya 02*/}
+          {AinaYaKuku == 'Kuku wa Kienyeji' && GrowerFeed == "7 - 21"  && item.UmriKwaSiku >= 43 && item.UmriKwaSiku <= 147 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Grower Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 02*/}
+
+
+
+
+       {/*mwanzo wa check ya 03*/}
+         {/* {AinaYaKuku == 'Kuku wa Kienyeji' && FinisherFeed == "10 - 12"  && item.UmriKwaSiku >= 70 && item.UmriKwaSiku <= 84 && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Finisher Feed
+          </Text>
+          )}*/}
+
+      {/*mwisho wa check ya 03*/}
+
+
+
+
+
+       {/*mwanzo wa check ya 04*/}
+          {AinaYaKuku == 'Kuku wa Kienyeji' && LayerFeed == "22" && item.UmriKwaSiku >= 148  && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            Layer Feed
+          </Text>
+          )}
+
+      {/*mwisho wa check ya 04*/}
+
+
+
+
+
+{/*mwisho wa vipindi Kuku aina ya Kienyeji*/}
+
+
+
+
         </Pressable>
 
 
@@ -791,7 +1242,7 @@ return (
 
 
       
-       {AinaYaKuku === "Kuku aina ya Kroila" || AinaYaKuku === "Kuku wa Mayai (Layers)" || AinaYaKuku === "Kuku aina ya Broila (kuku wa nyama)" ? ( 
+       {queryset && queryset.length > 0 ? ( 
 
         <>
 

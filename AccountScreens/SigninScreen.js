@@ -199,6 +199,7 @@ const handleErrorMessage = (error) => {
       
       handleErrorMessage(error);
       setPending(false);
+      console.log("Error", error);
     }
   };
 

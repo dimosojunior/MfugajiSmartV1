@@ -137,12 +137,12 @@ const handleErrorMessage = (error) => {
     }
 
       // Validate phone number
-  if (!phone.startsWith("+255")) {
-    showAlertFunction("Namba ya simu lazima ianze na +255");
+  if (!phone.startsWith("0")) {
+    showAlertFunction("Namba ya simu lazima ianze na 0");
     return;
   }
 
-  if (phone.length !== 13) {
+  if (phone.length !== 10) {
     showAlertFunction("Namba ya simu lazima iwe na tarakimu 13");
     return;
   }
@@ -253,7 +253,7 @@ const handleErrorMessage = (error) => {
               />*/}
 
               <TextInput 
-              placeholder='Ingiza jina lako kamili' 
+              placeholder='Ingiza jina unalotumia' 
               //style={{width: '80%', height: 100}}
               style={[styles.textinput,{
                   width:width-20,

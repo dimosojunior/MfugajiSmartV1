@@ -25,15 +25,15 @@ const { width, height } = Dimensions.get('window');
 const EditPostDukaLako = ({ navigation, route }) => {
 
   const { postId } = route.params;
-  const [postDetails, setPostDetails] = useState({
-    Title: '',
-    Maelezo: '',
-    // PichaYaPost: '',
-    // PichaYaPost2: '',
-    // PichaYaPost3: '',
-    // PichaYaPost4: '',
-    // PichaYaPost5: '',
-  });
+  // const [postDetails, setPostDetails] = useState({
+  //   Title: '',
+  //   Maelezo: '',
+  //   // PichaYaPost: '',
+  //   // PichaYaPost2: '',
+  //   // PichaYaPost3: '',
+  //   // PichaYaPost4: '',
+  //   // PichaYaPost5: '',
+  // });
 
   let [fontsLoaded] = useFonts({
     'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
@@ -75,7 +75,15 @@ const [PichaYaPost2, setPichaYaPost2] = useState(null);
 const [PichaYaPost3, setPichaYaPost3] = useState(null);
 const [PichaYaPost4, setPichaYaPost4] = useState(null);
 const [PichaYaPost5, setPichaYaPost5] = useState(null);
-    
+
+const [Maelezo, setMaelezo] = useState('');
+const [Title, setTitle] = useState('');
+const [IsPicked, setIsPicked] = useState(false);
+const [IsPicked2, setIsPicked2] = useState(false);
+const [IsPicked3, setIsPicked3] = useState(false);
+const [IsPicked4, setIsPicked4] = useState(false);
+const [IsPicked5, setIsPicked5] = useState(false);
+  
 
 
 //MWANZO WA PICK IMAGE FROM THE PHONE
@@ -88,6 +96,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     });
  
       setPichaYaPost(result.assets[0].uri); // Use assets array
+      setIsPicked(true);
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
     // console.log("RESULT 1" ,result);
@@ -103,6 +112,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     });
  
       setPichaYaPost2(result2.assets[0].uri); // Use assets array
+      setIsPicked2(true);
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
     // console.log("RESULT 2" ,result2);
@@ -118,6 +128,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     });
  
       setPichaYaPost3(result3.assets[0].uri); // Use assets array
+      setIsPicked3(true);
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
      //console.log("RESULT 3" ,result3);
@@ -135,6 +146,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     });
  
       setPichaYaPost4(result4.assets[0].uri); // Use assets array
+      setIsPicked4(true);
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
      //console.log("RESULT 4" ,result4);
@@ -152,6 +164,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     });
  
       setPichaYaPost5(result5.assets[0].uri); // Use assets array
+      setIsPicked5(true);
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
      //console.log("RESULT 5" ,result5);
@@ -252,7 +265,6 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
 
 
 
-
 useEffect(() => {
   const fetchPostDetails = async () => {
     const token = await AsyncStorage.getItem('userToken');
@@ -265,18 +277,23 @@ useEffect(() => {
           },
         });
         const data = response.data;
-        setPostDetails({
-          Title: data.Title,
-          Maelezo: data.Maelezo,
-          PichaYaPost: data.PichaYaPost,
-          PichaYaPost2: data.PichaYaPost2,
-          PichaYaPost3: data.PichaYaPost3,
-          PichaYaPost4: data.PichaYaPost4,
-          PichaYaPost5: data.PichaYaPost5,
-        });
-        console.log("Data fetched successfully");
+       setTitle(data.Title);
+       setMaelezo(data.Maelezo);
+       setPichaYaPost(data.PichaYaPost);
+       setPichaYaPost2(data.PichaYaPost2);
+       setPichaYaPost3(data.PichaYaPost3);
+       setPichaYaPost4(data.PichaYaPost4);
+       setPichaYaPost5(data.PichaYaPost5);
+         setIsPicked(false);
+         setIsPicked2(false);
+         setIsPicked3(false);
+         setIsPicked4(false);
+         setIsPicked5(false);
+
+        //console.log("Data fetched successfully");
       } catch (error) {
-        console.log("Error fetching post details:", error);
+        handleErrorMessage(error);
+        //console.log("Error fetching post details:", error);
       }
     }
   };
@@ -305,21 +322,136 @@ useEffect(() => {
 
 
 
-  
+
+
+  // const handleUpdatePost = async () => {
+  //   const token = await AsyncStorage.getItem('token');
+  //   try {
+  //     const response = await axios.put(EndPoint + `/UpdateDukaLakoPostView/${postId}/edit/`, postDetails, {
+  //       headers: {
+  //         Authorization: `Token ${userToken}`,
+  //       },
+  //     });
+  //     showAlertFunction('Success', 'Post updated successfully');
+  //     navigation.goBack();
+  //   } catch (error) {
+  //     showAlertFunction('Error', 'Failed to update post');
+  //     console.log(error);
+  //   }
+  // };
+
+
 
   const handleUpdatePost = async () => {
-    const token = await AsyncStorage.getItem('token');
-    try {
-      const response = await axios.put(EndPoint + `/UpdateDukaLakoPostView/${postId}/edit/`, postDetails, {
+    setIsLoading(true);
+    const token = await AsyncStorage.getItem('userToken');
+
+    if (userToken) {
+      const formData = new FormData();
+      formData.append('Title', Title);
+      formData.append('Maelezo', Maelezo);
+      
+      
+
+      if (Title) {
+            formData.append('Title', Title);
+        } else {
+            showAlertFunction('Tafadhali tuambie posti yako inahusiana na nini ?.');
+            setIsLoading(false);
+            return;
+        }
+
+
+        if (Maelezo) {
+            formData.append('Maelezo', Maelezo);
+        } else {
+            showAlertFunction('Tafadhali andika maelezo ya posti yako.');
+            setIsLoading(false);
+            return;
+        }
+
+
+
+     if (PichaYaPost && IsPicked) {
+  console.log("Image URI:", PichaYaPost.uri || PichaYaPost);
+  formData.append('PichaYaPost', {
+    uri: PichaYaPost.uri || PichaYaPost,
+    name: 'PichaYaPost.jpg',
+    type: 'image/jpeg',
+  });
+} else {
+  console.log("No image selected or uri not found");
+}
+
+
+  if (PichaYaPost2 && IsPicked) {
+  console.log("Image URI:", PichaYaPost2.uri || PichaYaPost2);
+  formData.append('PichaYaPost2', {
+    uri: PichaYaPost2.uri || PichaYaPost2,
+    name: 'PichaYaPost2.jpg',
+    type: 'image/jpeg',
+  });
+} else {
+  console.log("No image selected or uri not found");
+}
+
+if (PichaYaPost3 && IsPicked) {
+  console.log("Image URI:", PichaYaPost3.uri || PichaYaPost3);
+  formData.append('PichaYaPost3', {
+    uri: PichaYaPost3.uri || PichaYaPost3,
+    name: 'PichaYaPost3.jpg',
+    type: 'image/jpeg',
+  });
+} else {
+  console.log("No image selected or uri not found");
+}
+
+
+if (PichaYaPost4 && IsPicked) {
+  console.log("Image URI:", PichaYaPost4.uri || PichaYaPost4);
+  formData.append('PichaYaPost4', {
+    uri: PichaYaPost4.uri || PichaYaPost4,
+    name: 'PichaYaPost4.jpg',
+    type: 'image/jpeg',
+  });
+} else {
+  console.log("No image selected or uri not found");
+}
+
+
+if (PichaYaPost5 && IsPicked) {
+  console.log("Image URI:", PichaYaPost5.uri || PichaYaPost5);
+  formData.append('PichaYaPost5', {
+    uri: PichaYaPost5.uri || PichaYaPost5,
+    name: 'PichaYaPost5.jpg',
+    type: 'image/jpeg',
+  });
+} else {
+  console.log("No image selected or uri not found");
+}
+
+
+
+
+
+
+
+ 
+      axios.put(EndPoint + `/UpdateDukaLakoPostView/${postId}/edit/`, formData, {
         headers: {
           Authorization: `Token ${userToken}`,
+          'Content-Type': 'multipart/form-data',
         },
+      }).then(response => {
+        setIsLoading(false);
+        showAlertFunction("Umefanikiwa Kubadilisha taarifa zako");
+        navigation.replace('Your Posts');
+        //console.log("Well");
+      }).catch(error => {
+        setIsLoading(false);
+        console.log(error);
+        handleErrorMessage(error);
       });
-      showAlertFunction('Success', 'Post updated successfully');
-      navigation.goBack();
-    } catch (error) {
-      showAlertFunction('Error', 'Failed to update post');
-      console.log(error);
     }
   };
 
@@ -379,8 +511,8 @@ useEffect(() => {
 
  <TextInput
   //placeholder='Kiasi Cha Mayai'
- value={postDetails.Title}
-  onChangeText={(text) => setPostDetails({ ...postDetails, Title: text })}
+ value={Title}
+   onChangeText={setTitle}
   placeholderTextColor={COLORS.white}
   style={styles.MyTextInput}
 />
@@ -514,8 +646,13 @@ Funga
   justifyContent:'center',
   alignItems:'center',
 }}>
-    {postDetails.PichaYaPost && (
-<Image source={{ uri: postDetails.PichaYaPost }} style={{ 
+
+   {!IsPicked && PichaYaPost && (
+<Image 
+ source={{
+uri: EndPoint + '/' + PichaYaPost
+}}
+style={{ 
 width: width-50 ,
 height: 200,
 borderRadius:10,
@@ -524,6 +661,25 @@ marginBottom:20,
 
 }} />
 )}
+
+
+
+   {IsPicked && PichaYaPost && (
+<Image 
+source={{ uri: PichaYaPost }} 
+style={{ 
+width: width-50 ,
+height: 200,
+borderRadius:10,
+marginTop:10,
+marginBottom:20,
+
+}} />
+)}
+
+
+
+
 </View>
 
 
@@ -610,8 +766,14 @@ Weka picha ya pili
   justifyContent:'center',
   alignItems:'center',
 }}>
-    {PichaYaPost2 && (
-<Image source={{ uri: PichaYaPost2 }} style={{ 
+
+
+   {!IsPicked2 && PichaYaPost2 && (
+<Image 
+ source={{
+uri: EndPoint + '/' + PichaYaPost2
+}}
+style={{ 
 width: width-50 ,
 height: 200,
 borderRadius:10,
@@ -620,6 +782,23 @@ marginBottom:20,
 
 }} />
 )}
+
+
+
+   {IsPicked2 && PichaYaPost2 && (
+<Image 
+source={{ uri: PichaYaPost2 }}  
+style={{ 
+width: width-50 ,
+height: 200,
+borderRadius:10,
+marginTop:10,
+marginBottom:20,
+
+}} />
+)}
+
+
 </View>
 
 
@@ -699,8 +878,13 @@ Weka picha ya tatu
   justifyContent:'center',
   alignItems:'center',
 }}>
-    {PichaYaPost3 && (
-<Image source={{ uri: PichaYaPost3 }} style={{ 
+
+   {!IsPicked3 && PichaYaPost3 && (
+<Image 
+ source={{
+uri: EndPoint + '/' + PichaYaPost3
+}}
+style={{ 
 width: width-50 ,
 height: 200,
 borderRadius:10,
@@ -709,6 +893,23 @@ marginBottom:20,
 
 }} />
 )}
+
+
+
+   {IsPicked3 && PichaYaPost3 && (
+<Image 
+source={{ uri: PichaYaPost3 }}  
+style={{ 
+width: width-50 ,
+height: 200,
+borderRadius:10,
+marginTop:10,
+marginBottom:20,
+
+}} />
+)}
+
+
 </View>
 
 
@@ -791,8 +992,13 @@ Weka picha ya nne
   justifyContent:'center',
   alignItems:'center',
 }}>
-    {PichaYaPost4 && (
-<Image source={{ uri: PichaYaPost4 }} style={{ 
+
+   {!IsPicked4 && PichaYaPost4 && (
+<Image 
+ source={{
+uri: EndPoint + '/' + PichaYaPost4
+}}
+style={{ 
 width: width-50 ,
 height: 200,
 borderRadius:10,
@@ -801,6 +1007,23 @@ marginBottom:20,
 
 }} />
 )}
+
+
+
+   {IsPicked4 && PichaYaPost4 && (
+<Image 
+source={{ uri: PichaYaPost4 }} 
+style={{ 
+width: width-50 ,
+height: 200,
+borderRadius:10,
+marginTop:10,
+marginBottom:20,
+
+}} />
+)}
+
+
 </View>
 
 
@@ -883,8 +1106,13 @@ Weka picha ya tano
   justifyContent:'center',
   alignItems:'center',
 }}>
-    {PichaYaPost5 && (
-<Image source={{ uri: PichaYaPost5 }} style={{ 
+
+   {!IsPicked5 && PichaYaPost5 && (
+<Image 
+ source={{
+uri: EndPoint + '/' + PichaYaPost5
+}}
+style={{ 
 width: width-50 ,
 height: 200,
 borderRadius:10,
@@ -893,6 +1121,23 @@ marginBottom:20,
 
 }} />
 )}
+
+
+
+   {IsPicked5 && PichaYaPost5 && (
+<Image 
+source={{ uri: PichaYaPost5 }} 
+style={{ 
+width: width-50 ,
+height: 200,
+borderRadius:10,
+marginTop:10,
+marginBottom:20,
+
+}} />
+)}
+
+
 </View>
 
 
@@ -926,8 +1171,8 @@ marginBottom:20,
                         style={globalStyles.ProjectBodyInputIcon}  
                         placeholder='weka maelezo yako'
                         placeholderTextColor={COLORS.white}
-                      value={postDetails.Maelezo}
-                 onChangeText={(text) => setPostDetails({ ...postDetails, Maelezo: text })}
+                    value={Maelezo}
+   onChangeText={setMaelezo}
          multiline={true}  // Enable multiline
           numberOfLines={50}  // Set a maximum number of lines
                            />

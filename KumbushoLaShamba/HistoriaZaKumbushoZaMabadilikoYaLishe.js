@@ -33,7 +33,7 @@ const { width, height } = Dimensions.get('window');
 
 
 
-const HistoriaZaKumbushoZaKusafishaBanda = ({ navigation }) => {
+const HistoriaZaKumbushoZaMabadilikoYaLishe = ({ navigation }) => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [queryset, setQueryset] = useState([]);
@@ -120,7 +120,7 @@ const checkLoggedIn = async () => {
 
     //setIsPending(true);
     setIsLoading(true);
-    const url = `${EndPoint}/GetAllKumbushoUsafishajiBandaView/?page=${current_page}&page_size=2`;
+    const url = `${EndPoint}/GetAllKumbushoLaMabadilikoYaLisheView/?page=${current_page}&page_size=2`;
     fetch(url, {
       method: 'GET',
       headers: { 'Authorization': `Token ${userToken}` },
@@ -179,37 +179,72 @@ const checkLoggedIn = async () => {
 
 
 
+//console.log("USERTOKEN", userToken);
+
+const deleteKumbusho = async (KumbushoID) => {
+  console.log("KumbushoID", KumbushoID);
+  setIsPending(true);
+  
+  try {
+    const response = await axios.delete(`${EndPoint}/DeleteKumbushoLaMabadilikoYaLisheByUserItsSelfView/?KumbushoID=${KumbushoID}`, {
+      headers: {
+        Authorization: `Token ${userToken}`,
+      },
+    });
+
+    if (response.status === 204) {
+      // Immediately remove the item from the state after successful deletion
+      setQueryset(queryset.filter((item) => item.id !== KumbushoID));
+      showAlertFunction("Umefanikiwa kuondoa taarifa");
+    } 
+    else {
+      showAlertFunction("Imeshindikana kuondoa taarifa");
+    }
+  }
+   catch (error) {
+  if (error.response) {
+    console.log("Server responded with an error: ", error.response.data);
+  } else if (error.request) {
+    console.log("No response received: ", error.request);
+  } else {
+    console.log("Error setting up request: ", error.message);
+  }
+  showAlertFunction("Imeshindikana kuondoa taarifa");
+  setIsPending(false);
+}
+   finally {
+    setIsPending(false);
+  }
+};
 
 
-
-
-  const removeUserSubmittedData = (KumbushoID) => {
-    setIsPending(true);
-    const apiUrl = `${EndPoint}/DeleteKumbushoUsafishajiBandaByUserItsSelfView/?KumbushoID=${KumbushoID}`;
-    axios
-      .delete(apiUrl, {
-        headers: { 'Authorization': `Token ${userToken}`, 'Content-Type': 'application/json' },
-      })
-      .then((response) => {
-        if (response.status === 204) {
-          setQueryset(queryset.filter((item) => item.id !== KumbushoID));
-          setAlertMessage("Umefanikiwa kuondoa taarifa");
-          setShowAlert(true);
-          setIsPending(false);
-        } else {
-          setAlertMessage("Imeshindikana kuondoa taarifa");
-          setShowAlert(true);
-          setIsPending(false);
-        }
-        setIsPending(false);
-      })
-      .catch((error) => {
-        setAlertMessage("Imeshindikana kuondoa taarifa");
-        setShowAlert(true);
-        setIsPending(false);
-        //console.log("ERRRR", error);
-      });
-  };
+  // const removeUserSubmittedData = (KumbushoID) => {
+  //   setIsPending(true);
+  //   const apiUrl = `${EndPoint}/DeleteKumbushoLaMabadilikoYaLisheByUserItsSelfView/?KumbushoID=${KumbushoID}`;
+  //   axios
+  //     .delete(apiUrl, {
+  //       headers: { 'Authorization': `Token ${userToken}`, 'Content-Type': 'application/json' },
+  //     })
+  //     .then((response) => {
+  //       if (response.status === 204) {
+  //         setQueryset(queryset.filter((item) => item.id !== KumbushoID));
+  //         setAlertMessage("Umefanikiwa kuondoa taarifa");
+  //         setShowAlert(true);
+  //         setIsPending(false);
+  //       } else {
+  //         setAlertMessage("Imeshindikana kuondoa taarifa");
+  //         setShowAlert(true);
+  //         setIsPending(false);
+  //       }
+  //       setIsPending(false);
+  //     })
+  //     .catch((error) => {
+  //       setAlertMessage("Imeshindikana kuondoa taarifa");
+  //       setShowAlert(true);
+  //       setIsPending(false);
+  //       //console.log("ERRRR", error);
+  //     });
+  // };
 
   const formatDate = (dateString) => {
     if (!dateString) return null;
@@ -256,39 +291,39 @@ const CartCard = ({item, index}) => {
           style={globalStyles.VyakulaPriceCartItemsText}
         >
           
-            Siku Za Kumbusho:  <Text style={{
+            Aina ya kuku:  <Text style={{
               color:'green',
               fontFamily:'Bold'
             }}>
-               {item.SikuZaKukumbushwa}
+               {item.AinaYaKuku}
             </Text> 
           </Text>
 
-{item && item.Muda && item.Muda.Muda && (
-           <Text 
+
+            <Text 
           style={globalStyles.VyakulaPriceCartItemsText}
         >
           
-            Muda wa Kumbusho:  <Text style={{
+            Umri wa kuku:  <Text style={{
               color:'green',
               fontFamily:'Bold'
             }}>
-               {item.Muda.Muda} : {item.Muda.StartingTime} {item.Muda.EndingTime} 
+              Wiki {item.UmriWaKukuKwaWiki}
             </Text> 
           </Text>
-      )}
-          
+
+
           
 
   <Text 
     style={globalStyles.VyakulaPriceCartItemsText}
   >
     
-      Awamu:  <Text style={{
+      Lengo La Kufuga:  <Text style={{
         color:'green',
         fontFamily:'Bold'
       }}>
-         {item.Awamu}
+         {item.LengoLaKufuga}
       </Text> 
     </Text>
          
@@ -298,7 +333,7 @@ const CartCard = ({item, index}) => {
 
        {/*mwanzo wa button*/}
           <TouchableOpacity
-            onPress={() => removeUserSubmittedData(item.id)}
+            onPress={() => deleteKumbusho(item.id)}
            style={globalStyles.VyakulaAddButtonContainerCartItems}
                  >
               <Text
@@ -400,7 +435,7 @@ return (
  <Text
 style={globalStyles.AppChaguaHudumaTextHomeScreen}  
 
->Kumbusho zako za kusafisha banda ulizowahi kuweka</Text>
+>Kumbusho zako za mabadiliko ya lishe ulizowahi kuweka</Text>
 
 
   
@@ -620,6 +655,6 @@ style={globalStyles.AppChaguaHudumaTextHomeScreen}
   );
 };
 
-export default HistoriaZaKumbushoZaKusafishaBanda;
+export default HistoriaZaKumbushoZaMabadilikoYaLishe;
 
 const styles = StyleSheet.create({});

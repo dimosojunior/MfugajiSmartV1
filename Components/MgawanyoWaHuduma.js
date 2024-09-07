@@ -419,6 +419,10 @@ const getItems = () => {
             navigation.navigate('Kumbusho La Uatamiaji AinaZaNdege', item);
           }
 
+           if (item.JinaLaHuduma === 'Kumbusho La Mabadiliko Ya Lishe') {
+            navigation.navigate('Aina Ya Kuku MabadilikoYaLishe', item);
+          }
+
 
 
 
@@ -563,6 +567,11 @@ const getItems = () => {
           if (item.JinaLaHuduma === 'Kumbusho La Uatamiaji Wa Mayai') {
             navigation.navigate('Kumbusho La Uatamiaji AinaZaNdege', item);
           }
+
+            if (item.JinaLaHuduma === 'Kumbusho La Mabadiliko Ya Lishe') {
+            navigation.navigate('Aina Ya Kuku MabadilikoYaLishe', item);
+          }
+
 
      }else{
        setIsModalVisible(true); // Update state when modal opens

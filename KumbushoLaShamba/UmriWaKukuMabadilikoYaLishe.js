@@ -29,11 +29,12 @@ import LottieView from 'lottie-react-native';
 const {width, height} = Dimensions.get('window');
 
 
-const Chanjo_UmriWaKuku = ({navigation, route}) => {
+const UmriWaKukuMabadilikoYaLishe = ({navigation, route}) => {
 const { 
     
     id,
-    JinaLaHuduma 
+    JinaLaHuduma,
+    AinaYaKuku 
    } = route.params
 
 
@@ -275,7 +276,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
       <TouchableOpacity
        onPress={() =>
-        navigation.navigate('Ratiba Ya Chanjo Form', {...item, JinaLaHuduma})}
+        navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma})}
        
      
       
@@ -670,6 +671,6 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
   );
 };
 
-export default Chanjo_UmriWaKuku;
+export default UmriWaKukuMabadilikoYaLishe;
 
 const styles = StyleSheet.create({});

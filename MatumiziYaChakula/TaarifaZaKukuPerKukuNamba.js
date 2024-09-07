@@ -106,6 +106,8 @@ const TaarifaZaKukuPerKukuNamba = ({navigation, route}) => {
 });
 
 
+
+
 //HIZI NI BASED ON USER
 const [total_Kilos_neededBasedOnUserDays, settotal_Kilos_neededBasedOnUserDays] = useState(0);
 const [MudaWaChakulaKitakapoTumikaBasedOnUserDays, setMudaWaChakulaKitakapoTumikaBasedOnUserDays] = useState(0);
@@ -116,6 +118,14 @@ const [TotalStarterFeedBasedOnUser, setTotalStarterFeedBasedOnUser] = useState(0
 const [TotalGrowerFeedBasedOnUser, setTotalGrowerFeedBasedOnUser] = useState(0);
 const [TotalLayerFeedBasedOnUser, setTotalLayerFeedBasedOnUser] = useState(0);
 const [TotalFinisherFeedBasedOnUser, setTotalFinisherFeedBasedOnUser] = useState(0);
+
+
+//------------EXTRA INFORMATIONS--------------
+const [Starter_Kwa_Wiki, setStarter_Kwa_Wiki] = useState(0);
+const [Grower_Kwa_Wiki, setGrower_Kwa_Wiki] = useState(0);
+const [Layer_Kwa_Wiki, setLayer_Kwa_Wiki] = useState(0);
+const [Finisher_Kwa_Wiki, setFinisher_Kwa_Wiki] = useState(0);
+const [Remained_Days_For_Lasr_Week, setRemained_Days_For_Lasr_Week] = useState(0);
 
 
 const [MudaWaZiada, setMudaWaZiada] = useState(0);
@@ -249,6 +259,15 @@ const getItems = () => {
          setTotalGrowerFeedBasedOnUser(data.TotalGrowerFeed);
          setTotalLayerFeedBasedOnUser(data.TotalLayerFeed);
          setTotalFinisherFeedBasedOnUser(data.TotalFinisherFeed);
+
+
+         setStarter_Kwa_Wiki(data.Starter_Kwa_Wiki);
+         setGrower_Kwa_Wiki(data.Grower_Kwa_Wiki);
+         setLayer_Kwa_Wiki(data.Layer_Kwa_Wiki);
+         setFinisher_Kwa_Wiki(data.Finisher_Kwa_Wiki);
+         setRemained_Days_For_Lasr_Week(data.Remained_Days_For_Lasr_Week);
+
+        
 
                    
         
@@ -697,7 +716,6 @@ const KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_24_KwaSiku_IdadiYaKuku = Kia
 
 
 
-
 const TotalVyakulaCard = () => {
   
 
@@ -919,7 +937,7 @@ const TotalVyakulaCard = () => {
         >
       
      
-     {TotalStarterFeedBasedOnUser_IdadiYaKuku > 0 && ( 
+     {Starter_Kwa_Wiki > 0 && ( 
      <View style={
             globalStyles.TaarifaLeft
           }>
@@ -934,13 +952,13 @@ const TotalVyakulaCard = () => {
             Chakula cha Starter, <Text style={{
               color:'brown',
               fontFamily:'Bold',
-            }}> Wiki ({StaterFeed}) </Text> utatumia
+            }}>kwa wiki  ({Starter_Kwa_Wiki}) </Text> utatumia
           </Text>
           
           </View>
           )}
 
-         {TotalStarterFeedBasedOnUser_IdadiYaKuku > 0 && ( 
+         {Starter_Kwa_Wiki > 0 && ( 
          <View style={
             globalStyles.TaarifaRight
           }>
@@ -970,7 +988,7 @@ const TotalVyakulaCard = () => {
         >
       
      
-     {TotalGrowerFeedBasedOnUser_IdadiYaKuku > 0 && ( 
+     {Grower_Kwa_Wiki > 0 && ( 
      <View style={
             globalStyles.TaarifaLeft
           }>
@@ -985,13 +1003,13 @@ const TotalVyakulaCard = () => {
             Chakula cha Grower, <Text style={{
               color:'brown',
               fontFamily:'Bold',
-            }}> Wiki ({GrowerFeed}) </Text>  utatumia
+            }}> kwa Wiki ({Grower_Kwa_Wiki}) </Text>  utatumia
           </Text>
           
           </View>
           )}
 
-         {TotalGrowerFeedBasedOnUser_IdadiYaKuku > 0 && ( 
+         {Grower_Kwa_Wiki > 0 && ( 
          <View style={
             globalStyles.TaarifaRight
           }>
@@ -1021,7 +1039,7 @@ const TotalVyakulaCard = () => {
         >
       
      
-     {TotalLayerFeedBasedOnUser_IdadiYaKuku > 0 && ( 
+     {Layer_Kwa_Wiki > 0 && ( 
      <View style={
             globalStyles.TaarifaLeft
           }>
@@ -1036,13 +1054,13 @@ const TotalVyakulaCard = () => {
             Chakula cha Layers, <Text style={{
               color:'brown',
               fontFamily:'Bold',
-            }}> Wiki ({LayerFeed}) </Text>  utatumia
+            }}> kwa Wiki ({Layer_Kwa_Wiki}) </Text>  utatumia
           </Text>
           
           </View>
           )}
 
-         {TotalLayerFeedBasedOnUser_IdadiYaKuku > 0 && ( 
+         {Layer_Kwa_Wiki > 0 && ( 
          <View style={
             globalStyles.TaarifaRight
           }>
@@ -1074,7 +1092,7 @@ const TotalVyakulaCard = () => {
         >
       
      
-     {TotalFinisherFeedBasedOnUser_IdadiYaKuku > 0 && ( 
+     {Finisher_Kwa_Wiki > 0 && ( 
      <View style={
             globalStyles.TaarifaLeft
           }>
@@ -1089,13 +1107,13 @@ const TotalVyakulaCard = () => {
             Chakula cha Finisher, <Text style={{
               color:'brown',
               fontFamily:'Bold',
-            }}> Wiki ({FinisherFeed}) </Text>  utatumia
+            }}> kwa Wiki ({Finisher_Kwa_Wiki}) </Text>  utatumia
           </Text>
           
           </View>
           )}
 
-         {TotalFinisherFeedBasedOnUser_IdadiYaKuku > 0 && ( 
+         {Finisher_Kwa_Wiki > 0 && ( 
          <View style={
             globalStyles.TaarifaRight
           }>
@@ -1217,14 +1235,14 @@ const InventoryCard = ({item, index}) => {
 
 {/* mwanzo wa mchanganuo kulingana na siku ulizozichagua*/}
 
-<Text
+{/*<Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
     >Mchanganuo wa mahitaji ya kuku aina ya {AinaYaKuku},
     umri kuanzia siku {Interval}, kwa 
     siku {DisplayIdadiYaSiku} unazohitaji kutengeneza chakula.
      </Text>
-
+*/}
 
 
 
@@ -1324,7 +1342,10 @@ const InventoryCard = ({item, index}) => {
             ]}
          >
            
-            Wiki ya 1 tumia wastani wa kilo 
+            Wiki ya 1 {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_2_KwaWiki_IdadiYaKuku <= 0 && ( <Text>
+              ndani ya siku {Remained_Days_For_Lasr_Week} </Text>)} tumia 
+              wastani wa kilo 
+            
           </Text>
           
           </View>
@@ -1436,6 +1457,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 2 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_1_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_3_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 2*/}
 
 
@@ -1499,6 +1537,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 3 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_2_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_4_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 3*/}
 
 
@@ -1561,6 +1616,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 4 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_3_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_5_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 4*/}
 
 
@@ -1623,6 +1695,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 5 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_4_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_6_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 5*/}
 
 
@@ -1688,6 +1777,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 6 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_5_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_7_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 6*/}
 
 
@@ -1715,7 +1821,13 @@ const InventoryCard = ({item, index}) => {
           }>
             =></Text>
           <Text 
-           style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
+           style={[
+            globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText,
+            {
+              width:'70%'
+            }
+
+            ]}
          >
            
             Wiki ya 7 tumia wastani wa kilo 
@@ -1757,6 +1869,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 7 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_6_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_8_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 7*/}
 
 
@@ -1783,7 +1912,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 8 tumia wastani wa kilo 
+            Wiki ya 8  tumia wastani wa kilo 
           </Text>
           
           </View>
@@ -1822,6 +1951,24 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 8 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_7_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_9_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 8*/}
 
 
@@ -1885,6 +2032,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 9 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_8_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_10_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 9*/}
 
 
@@ -1948,6 +2112,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 10 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_9_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_11_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 10*/}
 
 
@@ -2011,6 +2192,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 11 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_10_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_12_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 11*/}
 
 
@@ -2077,6 +2275,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 12 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_11_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_13_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 12*/}
 
 
@@ -2141,6 +2356,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 13 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_12_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_14_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 13*/}
 
 
@@ -2204,6 +2436,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 14 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_13_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_15_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 14*/}
 
 
@@ -2273,6 +2522,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 15 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_14_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_16_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 15*/}
 
 
@@ -2336,6 +2602,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 16 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_15_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_17_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 16*/}
 
 
@@ -2360,7 +2643,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 17 anatumia wastani
+            Wiki ya 17 tumia wastani wa kilo
           </Text>
           
           </View>
@@ -2399,6 +2682,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 17 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_16_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_18_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 17*/}
 
 
@@ -2426,7 +2726,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 18 anatumia wastani
+            Wiki ya 18 tumia wastani wa kilo
           </Text>
           
           </View>
@@ -2465,6 +2765,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 18 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_17_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_19_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 18*/}
 
 
@@ -2490,7 +2807,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 19 anatumia wastani
+            Wiki ya 19 tumia wastani wa kilo
           </Text>
           
           </View>
@@ -2529,6 +2846,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 19 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_18_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_20_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 19*/}
 
 
@@ -2555,7 +2889,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 20 anatumia wastani
+            Wiki ya 20 tumia wastani wa kilo
           </Text>
           
           </View>
@@ -2594,6 +2928,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 20 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_19_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_21_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 20*/}
 
 
@@ -2625,7 +2976,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 21 anatumia wastani
+            Wiki ya 21 tumia wastani wa kilo
           </Text>
           
           </View>
@@ -2664,6 +3015,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 21 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_20_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_22_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 21*/}
 
 
@@ -2692,7 +3060,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 22 anatumia wastani
+            Wiki ya 22 tumia wastani wa kilo
           </Text>
           
           </View>
@@ -2731,6 +3099,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 22 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_21_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_23_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 22*/}
 
 
@@ -2756,7 +3141,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 23 anatumia wastani
+            Wiki ya 23 tumia wastani wa kilo
           </Text>
           
           </View>
@@ -2795,6 +3180,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {MudaWaZiada_IdadiYaKuku == 23 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_22_KwaWiki_IdadiYaKuku > 0 && KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_24_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 23*/}
 
 
@@ -2819,7 +3221,7 @@ const InventoryCard = ({item, index}) => {
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText}
          >
            
-            Wiki ya 24 na kuendelea anatumia wastani
+            Wiki ya 24 na kuendelea tumia wastani wa kilo
           </Text>
           
           </View>

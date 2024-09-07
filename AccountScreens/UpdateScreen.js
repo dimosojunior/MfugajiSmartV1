@@ -327,18 +327,27 @@ const pickPdf = async () => {
       if (Location) {
             formData.append('Location', Location);
         } else {
-            showAlertFunction('Tafadhali jaza kata au mtaa unaoishi.');
+            showAlertFunction('Tafadhali jaza wilaya unayoishi.');
             setIsLoading(false);
             return;
         }
 
 
+        //  if (company_name) {
+        //     formData.append('company_name', company_name);
+        // } else {
+        //     showAlertFunction('Tafadhali ingiza jina la kampuni au biashara yako, na kama huna andika (Sina).');
+        //     setIsLoading(false);
+        //     return;
+        // }
+
+
        
 
-        if (phone && !phone.startsWith("+255") && phone.length !== 13) {
+        if (phone && phone.length == 10) {
             formData.append('phone', phone);
         } else {
-            showAlertFunction('Namba ya simu lazima ianze na +255, na lazima iwe na tarakimu 13.');
+            showAlertFunction('Tafadhali ingiza namba ya simu yenye tarakimu 10, 0*********.');
             setIsLoading(false);
             return;
         }
@@ -495,7 +504,7 @@ const pickPdf = async () => {
 
                 
                   <TextInput
-                    placeholder='Jina lako kamili'
+                    placeholder='Jina unalotumia'
                     value={username}
                     onChangeText={setUsername}
                     placeholderTextColor={COLORS.white}
@@ -506,10 +515,11 @@ const pickPdf = async () => {
                     value={phone}
                     onChangeText={setPhone}
                     placeholderTextColor={COLORS.white}
+                    keyboardType="numeric"
                     style={styles.MyTextInput}
                   />
                   <TextInput
-                    placeholder='Kampuni yako'
+                    placeholder='Jina la kampuni au biashara yako'
                     value={company_name}
                     onChangeText={setcompany_name}
                     placeholderTextColor={COLORS.white}
@@ -806,7 +816,7 @@ marginBottom:20,
                       marginLeft:20,
                       color:'white',
                        }}>
-                     Weka Maelezo yako</Text>
+                     Tafadhali, tuambie wewe ni nani</Text>
                     < View style={globalStyles.ProjectBodyinput}>
                         {/*<FontAwesome style={globalStyles.InputIcon} name='pencil'/>*/}
                         <TextInput 

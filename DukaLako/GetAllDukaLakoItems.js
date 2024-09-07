@@ -198,6 +198,78 @@ const [userData, setUserData] = useState({});
 
 
 
+
+
+//--------------------GET USER LOGIN DATA------------------
+
+
+
+ const [Maoni, setMaoni] = useState('');
+  const [MtoaMaoniEmail, setMtoaMaoniEmail] = useState('');
+ const [MtoaMaoniUsername, setMtoaMaoniUsername] = useState('');
+ const [MtoaMaoniPhone, setMtoaMaoniPhone] = useState('');
+ const [MtoaMaoniLocation, setMtoaMaoniLocation] = useState('');
+ const [isLoading2, setIsLoading2] = useState(false);
+
+
+
+ useEffect(() => {
+    AsyncStorage.getItem("userToken").then(token => {
+      setUserToken(token)
+    })
+  }, [userData]);
+
+  useEffect(() => {
+    checkLoggedIn();
+  }, [userToken]);
+
+  const checkLoggedIn = async () => {
+    setIsLoading2(true);
+    const token = await AsyncStorage.getItem('userToken');
+    setUserToken(token);
+    if (userToken) {
+      try {
+        const userResponse = await axios.get(
+          EndPoint + '/Account/user_data/',
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+
+
+
+        const userData = userResponse.data;
+        setIsLoading2(false);
+        setMtoaMaoniEmail(userData.email);
+        setMtoaMaoniUsername(userData.username);
+        setMtoaMaoniPhone(userData.phone);
+        setMtoaMaoniLocation(userData.Location);
+        
+        
+       
+
+      } catch (error) {
+        //handleErrorMessage(error);
+        console.log("Malizia Usajili");
+
+      }
+    }
+  };
+
+
+
+
+
+
+
+
+
+//--------------------MWISHO GET USER LOGIN DATA------------------
+
+
+
     const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
@@ -532,9 +604,32 @@ const handleLikeToggle = async (itemId) => {
                
              </View>
            {/*mwisho wa left info*/}
+
+           {/*mwanzo wa middle info*/}
+           {item.TickStatus == "Ndio Anastahili" && (
+           <View style={globalStyles.UserInfoMiddleContainer}>
+           
+             <Text style={globalStyles.UserInfoUsername}>
+               <FontAwesome name='check-square-o' 
+              size={20}
+              //color="black" 
+              color="green" 
+              
+               />
+             </Text>
+              </View>
+              )}
+            {/*mwisho wa middle info*/}
+
              
              {/*mwanzo wa right info*/}
-           <View style={globalStyles.UserInfoRightContainer}>
+           <View style={[
+            globalStyles.UserInfoRightContainer,
+            {
+              width: item.TickStatus == "Ndio Anastahili" ? '60%' : '75%'
+            }
+            ]
+          }>
            {item.company_name ? (
              <Text style={globalStyles.UserInfoUsername}>
              {item.company_name}</Text>
@@ -964,9 +1059,10 @@ const handleLikeToggle = async (itemId) => {
 
               <View style={globalStyles.bottomview}>
 
-
+ 
 
           {/*  mwanzo wa Itself container*/}
+            {MtoaMaoniLocation ? (
               <View style={[globalStyles.ItselfMajorContainer,
 
                   {
@@ -991,6 +1087,8 @@ const handleLikeToggle = async (itemId) => {
               </TouchableOpacity>
               </View>
              
+
+           
               <TouchableOpacity 
             onPress={() => {
             navigation.navigate('Duka Lako Form');    
@@ -1004,8 +1102,55 @@ const handleLikeToggle = async (itemId) => {
                    />
               </View>
               </TouchableOpacity>
+             
                 
               </View>
+               ):(
+
+          <View style={[globalStyles.ItselfMajorContainer,
+
+                  {
+                  backgroundColor:'green',
+                }
+
+                ]}>
+             
+             <View style={globalStyles.ItselfLeftMinorContainer}>
+             <TouchableOpacity 
+               onPress={() => {
+            navigation.navigate('Update Stack');    
+        }}
+             >
+              <Text style={[globalStyles.ItselfLeftMinorText,
+                 {
+                  backgroundColor:'yellow',
+                  color:'black'
+                }
+
+                ]}>Malizia Usajili ili uweze kuweka posti mpya</Text>
+              </TouchableOpacity>
+              </View>
+             
+
+           
+              <TouchableOpacity 
+            onPress={() => {
+            navigation.navigate('Update Stack');    
+        }}
+              style={globalStyles.ItselfRightMinorContainer}>
+              <View >
+                  <FontAwesome name='user-circle' 
+                  size={30}
+                  color='white'  
+                  
+                   />
+              </View>
+              </TouchableOpacity>
+             
+                
+              </View>
+
+               )}
              {/*  mwisho wa Itself container*/}
             
 

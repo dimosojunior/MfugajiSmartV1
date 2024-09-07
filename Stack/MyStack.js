@@ -75,6 +75,10 @@ import KumbushoLaUatamiajiForm from '../KumbushoLaShamba/KumbushoLaUatamiajiForm
 import HistoriaZaKumbushoZaUatamiajiWaMayai from '../KumbushoLaShamba/HistoriaZaKumbushoZaUatamiajiWaMayai';
 import Chanjo_UmriWaKuku from '../KumbushoLaShamba/Chanjo_UmriWaKuku';
 import KumbushoLaUatamiaji_AinaZaNdege from '../KumbushoLaShamba/KumbushoLaUatamiaji_AinaZaNdege';
+import AinaYaKuku_MabadilikoYaLishe from '../KumbushoLaShamba/AinaYaKuku_MabadilikoYaLishe';
+import UmriWaKukuMabadilikoYaLishe from '../KumbushoLaShamba/UmriWaKukuMabadilikoYaLishe';
+import MabadilikoYaLisheForm from '../KumbushoLaShamba/MabadilikoYaLisheForm';
+import HistoriaZaKumbushoZaMabadilikoYaLishe from '../KumbushoLaShamba/HistoriaZaKumbushoZaMabadilikoYaLishe';
 
 
 import DukaLakoForm from '../DukaLako/DukaLakoForm';
@@ -85,6 +89,10 @@ import YourPosts from '../DukaLako/YourPosts';
 import UzaAuNunuaKukuKwaHaraka from '../DukaLako/UzaAuNunuaKukuKwaHaraka';
 import SeeNotifications from '../DukaLako/SeeNotifications';
 import ViewNotification from '../DukaLako/ViewNotification';
+import DeletePostDukaLako from '../DukaLako/DeletePostDukaLako';
+import EditPostDukaLako from '../DukaLako/EditPostDukaLako';
+
+
 
 
 import MyTab from '../Tab/MyTab';
@@ -563,6 +571,40 @@ function MyStack( {navigation}){
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}
       />
+
+            <Stack.Screen
+      name="Aina Ya Kuku MabadilikoYaLishe"
+      component={AinaYaKuku_MabadilikoYaLishe}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+              <Stack.Screen
+      name="Umri Wa Kuku MabadilikoYaLishe"
+      component={UmriWaKukuMabadilikoYaLishe}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+                <Stack.Screen
+      name="Mabadiliko Ya Lishe Form"
+      component={MabadilikoYaLisheForm}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+                <Stack.Screen
+      name="Historia Za Kumbusho Za Mabadiliko Ya Lishe"
+      component={HistoriaZaKumbushoZaMabadilikoYaLishe}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+      
+
     
        <Stack.Screen
       name="Duka Lako Form"
@@ -627,6 +669,22 @@ function MyStack( {navigation}){
                   <Stack.Screen
       name="View Notification"
       component={ViewNotification}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+                     <Stack.Screen
+      name="Edit Post DukaLako"
+      component={EditPostDukaLako}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+                     <Stack.Screen
+      name="Delete Post DukaLako"
+      component={DeletePostDukaLako}
       // options={ () => ({ 
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}

@@ -483,7 +483,7 @@ AppItemImageHomeScreen:{
    //position:"absolute",
   width:'100%',
   //height:150,
-  height:height/5,
+  height:height/4,
   borderRadius:10,
 },
 
@@ -1456,17 +1456,8 @@ fontFamily:'Light',
 
 
 
-
-
-
-
-
-//-----------------------VYAKULA VYOTE-------------------
-
-
-
- VyakulaCartItemsContainer:{
-      margin: 0,
+VyakulaCartItemsContainerHistoria:{
+     margin: 0,
     flexDirection: "row",
     justifyContent: "space-around",
     marginVertical: 4,
@@ -1484,6 +1475,55 @@ fontFamily:'Light',
   width:width - 19,
   flex:1,
   marginLeft:10,
+
+},
+
+
+
+
+//-----------------------VYAKULA VYOTE-------------------
+
+VyakulaCartItemsContainerKubwa:{
+     margin: 0,
+   // flexDirection: "row",
+    //justifyContent: "space-around",
+    marginVertical: 4,
+    borderColor:'black',
+    borderWidth:.2,
+     elevation: 2,
+     paddingHorizontal:10,
+     paddingVertical:10,
+  
+
+  shadowOffset: { width: 1, height: 1 },
+  shadowColor: Platform.OS === "android" ? 'black' : "black",
+  shadowOpacity: 0,
+  shadowRadius: 0,
+  width:width - 19,
+  flex:1,
+  marginLeft:10,
+
+},
+
+ VyakulaCartItemsContainer:{
+      margin: 0,
+    flexDirection: "row",
+    justifyContent: "space-around",
+  //   marginVertical: 4,
+  //   borderColor:'black',
+  //   borderWidth:.2,
+  //    elevation: 2,
+  //    paddingHorizontal:10,
+  //    paddingVertical:10,
+  
+
+  // shadowOffset: { width: 1, height: 1 },
+  // shadowColor: Platform.OS === "android" ? 'black' : "black",
+  // shadowOpacity: 0,
+  // shadowRadius: 0,
+  // width:width - 19,
+  // flex:1,
+  // marginLeft:10,
 
 
   },
@@ -2649,6 +2689,7 @@ MaelezoValue1TaarifaZaKuku:{
 TaarifaZaKukuMaelezoLeft:{
   width:'50%',
   flexDirection:'row',
+  //backgroundColor:'red',
 },
 
 TaarifaZaKukuMaelezoRight:{
@@ -2817,7 +2858,13 @@ UserInfoLeftImage:{
 
 },
 UserInfoRightContainer:{
-  width:'75%',
+  width:'60%',
+  //backgroundColor:'green',
+
+},
+
+UserInfoMiddleContainer:{
+  width:'10%',
   //backgroundColor:'green',
 
 },

@@ -879,102 +879,7 @@ keyboardShouldPersistTaps="handled"
                 resizeMode= "cover"
             >
 
-           {/*mwanzo wa nyota */}
-              <View style={[{
-                flexDirection:'row',
-                alignItems:'center',
-                justifyContent:'space-between',
-                width:'90%',
-                marginHorizontal:20,
-                paddingVertical:10,
-
-                    
-                  },
-                  { 
-              
-
-               opacity: isModalVisible ? 
-              0.1 : 1
-               }
-
-                  ]}>
-
-                   <View style={{
-                 width:'70%',
-                  }}>
-                  {UserRole === "Mfugaji"  ? (
-                   <Text style={{
-                    color:'brown',
-                    fontFamily:'Bold',
-                   }}>
-                        
-               Hadhi Ya Mfugaji   <FontAwesome 
-                  name='arrow-circle-right' 
-                    size={20}
-                    color='white'  
-                    style={{
-                      //marginLeft:15,
-
-                    }}
-                     />
-                    
-                   </Text>
-                   ):(
-
-                    <Text style={{
-                    color:'brown',
-                    fontFamily:'Bold',
-                   }}>
-                        
-               Hadhi Ya Mfanya biashara   <FontAwesome 
-                  name='arrow-circle-right' 
-                    size={20}
-                    color='white'  
-                    style={{
-                      //marginLeft:15,
-
-                    }}
-                     />
-                    
-                   </Text>
-
-                   )}
-                  </View>
-
-                  <View style={{
-                     width:'30%',
-                    
-                  }}>
-                  {LevelImage ? (
-                     <Image
-
-                  style={{
-                    width:'100%',
-                    height:30,
-                  }}
-                   source={{
-                      uri: EndPoint + '/' + LevelImage
-                    }} 
-                  >
-                  </Image>
-                  ):(
-                    <Image
-
-                  style={{
-                    width:'100%',
-                    height:30,
-                  }}
-                   source={require('../assets/s1.jpg')} 
-                  >
-                  </Image>
-                  )}
-                  </View>
-
-                 
-
-                  </View>
-                  {/*mwisho wa nyota */}
-
+        
               <View style={[globalStyles.topviewYoutubeChannel,
                 { 
               
@@ -1173,7 +1078,7 @@ keyboardShouldPersistTaps="handled"
 
                   ]}
               >
-              {PichaYaPost ? ( 
+              {PichaYaPost && ( 
                   <Image
 
                   style={globalStyles.AppItemImageHomeScreen}
@@ -1183,14 +1088,9 @@ keyboardShouldPersistTaps="handled"
                       
                       >
                   </Image>
-                  ):(
-                  <Image
-
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={require('../assets/500.png')} 
-                  >
-                  </Image>
-                )}
+                  )}
+                
+                
                </View>
 
 

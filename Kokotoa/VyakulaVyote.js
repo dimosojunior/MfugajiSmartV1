@@ -505,12 +505,36 @@ const CartCard = ({ item }) => {
   if (input === "") {
     return (
       <Pressable style={[
+        globalStyles.VyakulaCartItemsContainerKubwa,
+        {
+          //width:'90%',
+        }
+
+        ]}>
+        { (item.product_name === "Mashudu ya alizeti" || item.product_name === "Pumba za mahindi" || item.product_name === "Dagaa") && (
+           <Text style={[globalStyles.VyakulaItemNameCartItemsText,
+           
+         {
+          //width:'70%',
+          marginLeft:20,
+          color:'green',
+          fontSize:10,
+         }
+
+            ]}>
+            lazima uchague
+          </Text>
+          )}
+      
+      <Pressable style={[
         globalStyles.VyakulaCartItemsContainer,
         {
           //width:'90%',
         }
 
         ]}>
+
+
         <View style={[
           globalStyles.VyakulaLeftCartItemsContainer,
           {
@@ -557,7 +581,10 @@ const CartCard = ({ item }) => {
             ]}>
             {item.product_name}
           </Text>
+
+         
         </View>
+
         <Pressable style={[
           globalStyles.VyakulaImageContainerCartItems,
           {
@@ -578,6 +605,9 @@ const CartCard = ({ item }) => {
             />
           )}
         </Pressable>
+      </Pressable>
+
+
       </Pressable>
     );
   }
