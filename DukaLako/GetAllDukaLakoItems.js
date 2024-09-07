@@ -543,7 +543,8 @@ const handleLikeToggle = async (itemId) => {
 
 
 
- 
+ const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
+
 
 
   const transportItem = ({item}) => {
@@ -711,9 +712,33 @@ const handleLikeToggle = async (itemId) => {
                <Text style={{
                 color:'black',
                 fontFamily:'Light',
-               }}>
+               }}
+               numberOfLines={isExpanded ? 0 : 3}
+               >
                  {item.Maelezo}
                </Text>
+                 {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
+                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'green',
+                    }
+
+                    ]}>Soma Zaidi -></Text>
+                </TouchableOpacity>
+              )}
+              {isExpanded && (
+                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'red',
+                    }
+
+                    ]}> Funga</Text>
+                </TouchableOpacity>
+              )}
                  
                </TouchableOpacity>
                )}
@@ -837,9 +862,32 @@ const handleLikeToggle = async (itemId) => {
                
              </View>
            {/*mwisho wa left info*/}
+
+           {/*mwanzo wa middle info*/}
+           {item.TickStatus == "Ndio Anastahili" && (
+           <View style={globalStyles.UserInfoMiddleContainer}>
+           
+             <Text style={globalStyles.UserInfoUsername}>
+               <FontAwesome name='check-square-o' 
+              size={20}
+              //color="black" 
+              color="green" 
+              
+               />
+             </Text>
+              </View>
+              )}
+            {/*mwisho wa middle info*/}
+
              
              {/*mwanzo wa right info*/}
-           <View style={globalStyles.UserInfoRightContainer}>
+           <View style={[
+            globalStyles.UserInfoRightContainer,
+            {
+              width: item.TickStatus == "Ndio Anastahili" ? '60%' : '75%'
+            }
+            ]
+          }>
            {item.company_name ? (
              <Text style={globalStyles.UserInfoUsername}>
              {item.company_name}</Text>
@@ -921,9 +969,33 @@ const handleLikeToggle = async (itemId) => {
                <Text style={{
                 color:'black',
                 fontFamily:'Light',
-               }}>
+               }}
+               numberOfLines={isExpanded ? 0 : 3}
+               >
                  {item.Maelezo}
                </Text>
+                 {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
+                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'green',
+                    }
+
+                    ]}>Soma Zaidi -></Text>
+                </TouchableOpacity>
+              )}
+              {isExpanded && (
+                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'red',
+                    }
+
+                    ]}> Funga</Text>
+                </TouchableOpacity>
+              )}
                  
                </TouchableOpacity>
                )}

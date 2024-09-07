@@ -179,37 +179,36 @@ const checkLoggedIn = async () => {
 
 
 
-
-
-
-
-  const removeUserSubmittedData = (KumbushoID) => {
-    setIsPending(true);
-    const apiUrl = `${EndPoint}/DeleteKumbushoLaChanjoByUserItsSelfView/?KumbushoID=${KumbushoID}`;
-    axios
-      .delete(apiUrl, {
-        headers: { 'Authorization': `Token ${userToken}`, 'Content-Type': 'application/json' },
-      })
-      .then((response) => {
-        if (response.status === 204) {
-          setQueryset(queryset.filter((item) => item.id !== KumbushoID));
-          showAlertFunction("Umefanikiwa kuondoa taarifa");
-          //setShowAlert(true);
-          setIsPending(false);
-        } else {
-          showAlertFunction("Imeshindikana kuondoa taarifa");
-          //setShowAlert(true);
-          setIsPending(false);
-        }
-        setIsPending(false);
-      })
-      .catch((error) => {
-        showAlertFunction("Imeshindikana kuondoa taarifa");
-        //setShowAlert(true);
-        setIsPending(false);
-        //console.log("ERRRR", error);
+const removeUserSubmittedData = async (postId) => {
+  setIsPending(true);
+    const token = await AsyncStorage.getItem('token');
+    //setUserToken(token);
+    //console.log("postId", postId);
+    try {
+       await axios.delete(EndPoint + `/DeleteKumbushoLaChanjoByUserItsSelfView/${postId}/delete/`, {
+      //await axios.delete(EndPoint + `/DeleteKumbushoLaMabadilikoYaLisheByUserItsSelfView/?KumbushoID=${KumbushoID}`, {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
       });
+       setQueryset(queryset.filter((item) => item.id !== postId));
+      setIsPending(false);
+
+      showAlertFunction('Umefanikiwa kufuta kumbusho');
+      navigation.navigate('Historia Za Kumbusho Za Ratiba Ya Chanjo');  // Navigate back to the previous screen
+    
+
+    } catch (error) {
+       setIsPending(false);
+      showAlertFunction('Imeshindikana kufuta kumbusho');
+     
+      //console.log(error);
+    }
   };
+
+
+
+
 
   const formatDate = (dateString) => {
     if (!dateString) return null;

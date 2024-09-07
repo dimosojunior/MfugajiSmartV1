@@ -103,7 +103,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetIdadiYaKukuView/?page=${current_page}&page_size=100`
+   const url = EndPoint + `/GetIdadiYaKukuView/?page=${current_page}&page_size=10000`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())

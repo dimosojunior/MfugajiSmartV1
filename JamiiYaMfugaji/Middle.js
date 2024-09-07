@@ -124,7 +124,7 @@ const navigation = useNavigation();
           paddingVertical: 10,
           borderRadius: 8,
         }}>
-          {isClicked ? 'Taarifa Taarifa' : 'Taarifa zaidi'}
+          {isClicked ? 'Funga' : 'Taarifa zaidi'}
         </Text>
       </TouchableOpacity>
 

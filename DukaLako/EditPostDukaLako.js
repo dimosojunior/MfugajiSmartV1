@@ -384,7 +384,7 @@ useEffect(() => {
 }
 
 
-  if (PichaYaPost2 && IsPicked) {
+  if (PichaYaPost2 && IsPicked2) {
   console.log("Image URI:", PichaYaPost2.uri || PichaYaPost2);
   formData.append('PichaYaPost2', {
     uri: PichaYaPost2.uri || PichaYaPost2,
@@ -395,7 +395,7 @@ useEffect(() => {
   console.log("No image selected or uri not found");
 }
 
-if (PichaYaPost3 && IsPicked) {
+if (PichaYaPost3 && IsPicked3) {
   console.log("Image URI:", PichaYaPost3.uri || PichaYaPost3);
   formData.append('PichaYaPost3', {
     uri: PichaYaPost3.uri || PichaYaPost3,
@@ -407,7 +407,7 @@ if (PichaYaPost3 && IsPicked) {
 }
 
 
-if (PichaYaPost4 && IsPicked) {
+if (PichaYaPost4 && IsPicked4) {
   console.log("Image URI:", PichaYaPost4.uri || PichaYaPost4);
   formData.append('PichaYaPost4', {
     uri: PichaYaPost4.uri || PichaYaPost4,
@@ -419,7 +419,7 @@ if (PichaYaPost4 && IsPicked) {
 }
 
 
-if (PichaYaPost5 && IsPicked) {
+if (PichaYaPost5 && IsPicked5) {
   console.log("Image URI:", PichaYaPost5.uri || PichaYaPost5);
   formData.append('PichaYaPost5', {
     uri: PichaYaPost5.uri || PichaYaPost5,

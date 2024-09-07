@@ -1,4 +1,4 @@
-import React, { useState,useContext,useRef, useEffect } from 'react';
+import React, { useState,useContext,useRef,memo,useCallback, useEffect } from 'react';
 import  {
   View,StyleSheet,Image,
   ActivityIndicator,
@@ -49,49 +49,39 @@ const prefetchImages = async (images) => {
   await Promise.all(prefetchPromises);
 };
 
-
-const Carousel = ({ images }) => {
+// Carousel component with memoization
+const Carousel = memo(({ images }) => {
   const flatlistRef = useRef();
-  const screenWidth = Dimensions.get("window").width;
+  const screenWidth = Dimensions.get('window').width;
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     if (flatlistRef.current && images.length > 0) {
       const interval = setInterval(() => {
-        if (flatlistRef.current) {
-          const newIndex = (activeIndex + 1) % images.length;
-          flatlistRef.current.scrollToIndex({
-            index: newIndex,
-            animated: true,
-          });
-          setActiveIndex(newIndex);
-        }
+        const newIndex = (activeIndex + 1) % images.length;
+        flatlistRef.current.scrollToIndex({ index: newIndex, animated: true });
+        setActiveIndex(newIndex);
       }, 2000);
 
       return () => clearInterval(interval);
     }
   }, [activeIndex, images.length]);
 
-  const getItemLayout = (data, index) => ({
-    length: screenWidth,
-    offset: screenWidth * index,
-    index: index,
-  });
+  const getItemLayout = useCallback(
+    (_, index) => ({
+      length: screenWidth,
+      offset: screenWidth * index,
+      index,
+    }),
+    [screenWidth]
+  );
 
-
-
-
-
- const Slide = ({ item }) => (
+  const Slide = ({ item }) => (
     <View>
       <TouchableOpacity activeOpacity={1}>
         <Image
           source={{ uri: `${EndPoint}/${item}` }}
-          style={{
-            height: height / 4 + 10,
-            width: screenWidth,
-            borderRadius: 10,
-          }}
+          style={{ height: height / 4 + 10, width: screenWidth, borderRadius: 10 }}
         />
       </TouchableOpacity>
     </View>
@@ -121,7 +111,7 @@ const Carousel = ({ images }) => {
 
   return (
     <View>
-       <FlatList
+      <FlatList
         data={images}
         ref={flatlistRef}
         getItemLayout={getItemLayout}
@@ -131,17 +121,12 @@ const Carousel = ({ images }) => {
         pagingEnabled
         onScroll={handleScroll}
       />
-      <View style={{ 
-        flexDirection: "row",
-         justifyContent: "center",
-          marginTop: 15,
-          marginBottom:15,
-        }}>
+      <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 15, marginBottom: 15 }}>
         {renderDotIndicators()}
       </View>
     </View>
   );
-};
+});
 
 
 
@@ -337,6 +322,9 @@ const checkLoggedIn = async () => {
     return `${day}/${month}/${year}`;
   };
  
+ const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
+
+
 
 
   const transportItem = ({item}) => {
@@ -460,9 +448,35 @@ const checkLoggedIn = async () => {
                <Text style={{
                 color:'black',
                 fontFamily:'Light',
-               }}>
+               }}
+               numberOfLines={isExpanded ? 0 : 3}
+               >
                  {item.Maelezo}
                </Text>
+
+                   {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
+                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'green',
+                    }
+
+                    ]}>Soma Zaidi -></Text>
+                </TouchableOpacity>
+              )}
+              {isExpanded && (
+                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'red',
+                    }
+
+                    ]}> Funga</Text>
+                </TouchableOpacity>
+              )}
+                 
                  
                </TouchableOpacity>
                )}
@@ -663,8 +677,7 @@ const checkLoggedIn = async () => {
 
  if(item.Title.toLowerCase().includes(input.toLowerCase())){
 
-  
-    return (
+   return (
 
       <CustomCard >
               <View 
@@ -729,7 +742,7 @@ const checkLoggedIn = async () => {
                  >{item.Title}</Text>
 
 
-      <Carousel images={carouselItems} />
+       <Carousel images={carouselItems} />
 {/*
 
                <View 
@@ -765,9 +778,35 @@ const checkLoggedIn = async () => {
                <Text style={{
                 color:'black',
                 fontFamily:'Light',
-               }}>
+               }}
+               numberOfLines={isExpanded ? 0 : 3}
+               >
                  {item.Maelezo}
                </Text>
+
+                   {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
+                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'green',
+                    }
+
+                    ]}>Soma Zaidi -></Text>
+                </TouchableOpacity>
+              )}
+              {isExpanded && (
+                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'red',
+                    }
+
+                    ]}> Funga</Text>
+                </TouchableOpacity>
+              )}
+                 
                  
                </TouchableOpacity>
                )}
@@ -842,6 +881,114 @@ const checkLoggedIn = async () => {
 
 
                   </TouchableOpacity>
+
+
+
+
+
+{/*mwanzo wa action buttons*/}
+
+{/*mwanzo wa mstari*/}
+ <View style={{
+  borderBottomColor:'green',
+  borderBottomWidth:1,
+  marginTop:10,
+ }}>
+   <Text>
+     
+   </Text>
+ </View>
+{/*mwiso wa mstari*/}
+
+  <TouchableOpacity 
+
+                  style={[globalStyles.AppItemButtonHomeScreen,
+                    {
+                      width:'90%',
+                    //padding:5,
+                   // borderRadius:6,
+                    marginTop:20,
+                    flexDirection:'row',
+                    justifyContent:'space-between',
+                    }
+
+
+                    ]}
+
+                 
+                >
+            {/*mwanzo wa view ya left*/}
+              <TouchableOpacity 
+
+               
+        >
+        <Pressable 
+      onPress={() => navigation.navigate('Edit Post DukaLako', {...item, postId: item.id })}
+
+          >
+         <View style={globalStyles.RightBtnContainer}>
+         <View>
+           <Text style={{
+          marginRight:5,
+          fontFamily:'Bold',
+          color:'green',
+          marginTop:5,
+         }}>Badilisha
+         </Text>
+         </View>
+        
+        <View>
+           <FontAwesome name='pencil-square-o' 
+      size={20}
+      color='green'  
+      
+       />
+        </View>
+        
+
+         </View>
+         </Pressable>
+         </TouchableOpacity>
+          {/*mwisho wa view ya left*/}
+
+
+       {/*mwanzo wa view ya right*/}
+         <Pressable 
+        onPress={() => navigation.navigate('Delete Post DukaLako', {...item, postId: item.id })}
+
+          >
+         <View style={globalStyles.RightBtnContainer}>
+         <View>
+           <Text style={{
+          marginRight:5,
+          fontFamily:'Bold',
+          color:'red',
+          marginTop:5,
+         }}>Futa
+         </Text>
+         </View>
+        
+        <View>
+           <FontAwesome name='trash-o' 
+      size={20}
+      color='brown'  
+      
+       />
+        </View>
+        
+
+         </View>
+         </Pressable>
+          {/*mwisho wa view ya right*/}
+
+
+                  </TouchableOpacity>
+
+
+
+
+{/*mwisho wa action buttons*/}
+
                 </View>
                 <View>
                  
@@ -851,6 +998,7 @@ const checkLoggedIn = async () => {
 
 
            )
+
 
 
 // hili bano la chini ni la if ya pili mwisho
@@ -958,7 +1106,7 @@ const checkLoggedIn = async () => {
                 <Text
                 style={globalStyles.AppChaguaHudumaTextHomeScreen}  
                 
-                >Huduma zako mwenyewe</Text>
+                >Posti zako mwenyewe</Text>
 
 
             {/*mwanzo wa Item View*/}

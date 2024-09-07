@@ -179,41 +179,35 @@ const checkLoggedIn = async () => {
 
 
 
-
-const removeUserSubmittedData = (KumbushoID) => {
+const removeUserSubmittedData = async (postId) => {
   setIsPending(true);
-  const apiUrl = `${EndPoint}/DeleteKumbushoLaUatamiajiWaMayaiByUserItsSelfView/?KumbushoID=${KumbushoID}`;
-
-  axios
-    .delete(apiUrl, {
-      headers: { 'Authorization': `Token ${userToken}` },
-    })
-    .then(() => {
-      // Baada ya ombi la kufuta, tutafanya ombi jingine ili kuthibitisha kama item imefutwa
-      const verifyUrl = `${EndPoint}/GetAllKumbushoLaUatamiajiWaMayaiView/?KumbushoID=${KumbushoID}`;
-      return axios.get(verifyUrl, {
-        headers: { 'Authorization': `Token ${userToken}` },
+    const token = await AsyncStorage.getItem('token');
+    //setUserToken(token);
+    //console.log("postId", postId);
+    try {
+       await axios.delete(EndPoint + `/DeleteKumbushoLaUatamiajiWaMayaiByUserItsSelfView/${postId}/delete/`, {
+      //await axios.delete(EndPoint + `/DeleteKumbushoLaMabadilikoYaLisheByUserItsSelfView/?KumbushoID=${KumbushoID}`, {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
       });
-    })
-    .then((response) => {
-      // Angalia kama item haipo kwenye orodha inayorejeshwa
-      const itemExists = response.data.queryset.some((item) => item.id === KumbushoID);
-      if (!itemExists) {
-        setQueryset(queryset.filter((item) => item.id !== KumbushoID));
-        showAlertFunction("Umefanikiwa kuondoa taarifa");
-      } else {
-        showAlertFunction("Imeshindikana kuondoa taarifa");
-      }
-    })
-    .catch((error) => {
-      // Handle network or other errors
-      showAlertFunction("Imeshindikana kuondoa taarifa");
-      console.log('errors:', error);
-    })
-    .finally(() => {
+       setQueryset(queryset.filter((item) => item.id !== postId));
       setIsPending(false);
-    });
-};
+
+      showAlertFunction('Umefanikiwa kufuta kumbusho');
+      navigation.navigate('Historia Za Kumbusho Za Uatamiaji Wa Mayai');  // Navigate back to the previous screen
+    
+
+    } catch (error) {
+       setIsPending(false);
+      showAlertFunction('Imeshindikana kufuta kumbusho');
+     
+      //console.log(error);
+    }
+  };
+
+
+
 
 
   // const removeUserSubmittedData = (KumbushoID) => {

@@ -1342,8 +1342,7 @@ const InventoryCard = ({item, index}) => {
             ]}
          >
            
-            Wiki ya 1 {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_2_KwaWiki_IdadiYaKuku <= 0 && ( <Text>
-              ndani ya siku {Remained_Days_For_Lasr_Week} </Text>)} tumia 
+            Wiki ya 1 tumia 
               wastani wa kilo 
             
           </Text>
@@ -1392,6 +1391,23 @@ const InventoryCard = ({item, index}) => {
       
        
         </View>
+        {/*mwanzo wa view ya ziada*/}
+        {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_2_KwaWiki_IdadiYaKuku <= 0 && (
+        <View style={{
+              width: '40%',
+              //marginLeft:30,
+            }}>
+           <Text style={{
+              //width: '50%',
+              color:'brown',
+              fontFamily:'Bold',
+              marginLeft:10,
+
+            }}>
+              (ndani ya siku {Remained_Days_For_Lasr_Week}) </Text>
+        </View>
+        )} 
+      {/*mwisho wa view ya ziada*/}
       {/*mwisho wa flow ya wiki ya 1*/}
 
 

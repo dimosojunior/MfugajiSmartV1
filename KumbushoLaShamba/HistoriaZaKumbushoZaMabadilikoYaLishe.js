@@ -181,41 +181,32 @@ const checkLoggedIn = async () => {
 
 //console.log("USERTOKEN", userToken);
 
-const deleteKumbusho = async (KumbushoID) => {
-  console.log("KumbushoID", KumbushoID);
+const removeUserSubmittedData = async (postId) => {
   setIsPending(true);
-  
-  try {
-    const response = await axios.delete(`${EndPoint}/DeleteKumbushoLaMabadilikoYaLisheByUserItsSelfView/?KumbushoID=${KumbushoID}`, {
-      headers: {
-        Authorization: `Token ${userToken}`,
-      },
-    });
+    const token = await AsyncStorage.getItem('token');
+    //setUserToken(token);
+    //console.log("postId", postId);
+    try {
+       await axios.delete(EndPoint + `/DeleteKumbushoLaMabadilikoYaLisheByUserItsSelfView/${postId}/delete/`, {
+      //await axios.delete(EndPoint + `/DeleteKumbushoLaMabadilikoYaLisheByUserItsSelfView/?KumbushoID=${KumbushoID}`, {
+        headers: {
+          Authorization: `Token ${userToken}`,
+        },
+      });
+       setQueryset(queryset.filter((item) => item.id !== postId));
+      setIsPending(false);
 
-    if (response.status === 204) {
-      // Immediately remove the item from the state after successful deletion
-      setQueryset(queryset.filter((item) => item.id !== KumbushoID));
-      showAlertFunction("Umefanikiwa kuondoa taarifa");
-    } 
-    else {
-      showAlertFunction("Imeshindikana kuondoa taarifa");
+      showAlertFunction('Umefanikiwa kufuta kumbusho');
+      navigation.navigate('Historia Za Kumbusho Za Mabadiliko Ya Lishe');  // Navigate back to the previous screen
+    
+
+    } catch (error) {
+       setIsPending(false);
+      showAlertFunction('Imeshindikana kufuta kumbusho');
+     
+      //console.log(error);
     }
-  }
-   catch (error) {
-  if (error.response) {
-    console.log("Server responded with an error: ", error.response.data);
-  } else if (error.request) {
-    console.log("No response received: ", error.request);
-  } else {
-    console.log("Error setting up request: ", error.message);
-  }
-  showAlertFunction("Imeshindikana kuondoa taarifa");
-  setIsPending(false);
-}
-   finally {
-    setIsPending(false);
-  }
-};
+  };
 
 
   // const removeUserSubmittedData = (KumbushoID) => {
@@ -333,7 +324,7 @@ const CartCard = ({item, index}) => {
 
        {/*mwanzo wa button*/}
           <TouchableOpacity
-            onPress={() => deleteKumbusho(item.id)}
+            onPress={() => removeUserSubmittedData(item.id)}
            style={globalStyles.VyakulaAddButtonContainerCartItems}
                  >
               <Text

@@ -581,7 +581,7 @@ const pickPdf = async () => {
          
 
           <TouchableOpacity
-        onPress ={() => navigation.navigate('Home Stack')}
+        onPress ={() => navigation.navigate('Historia Za Kumbusho Za Kusafisha Banda')}
            
             style={{
               
@@ -610,7 +610,8 @@ const pickPdf = async () => {
              paddingVertical:10,
 
            }}>
-              Rudi Mwanzo
+              Angalia kumbusho zako nyingine za usafishaji banda 
+               ulizowahi kuweka
             </Text>
           </TouchableOpacity>
           

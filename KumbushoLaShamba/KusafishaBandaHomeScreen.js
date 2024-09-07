@@ -102,7 +102,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllSikuView/?page=${current_page}&page_size=2`
+   const url = EndPoint + `/GetAllSikuView/?page=${current_page}&page_size=1000`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
@@ -665,79 +665,6 @@ return (
 
 
 
-
-
-        <Pressable
-          style={[{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 20,
-            justifyContent: "space-between",
-            backgroundColor: "rgba(0,0,0,0,)",
-            position:'absolute',
-            bottom:0,
-            width:'100%',
-
-          },
-           
-          ]}
-        >
-        {/*  <View style={{
-            width:'50%',
-          }}>
-            <Text style={{ 
-              fontFamily:'Medium'
-            }}>
-              Bei ya jumla
-            </Text>
-
-             <Text style={{ 
-              fontFamily:'Medium'
-            }}>
-              Tsh. {formatToThreeDigits(totalCartPrice)}/=
-            </Text>
-           
-          </View>*/}
-
-         
-
-          <TouchableOpacity
-        onPress ={() => navigation.navigate('Historia Za Kumbusho Za Kusafisha Banda')}
-           
-            style={{
-              
-              padding: 10,
-              width:'100%',
-              borderRadius: 6,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 10,
-            }}
-          >
-            
-            <Text style={{
-             //fontSize: 16, 
-             //fontWeight: "500", 
-             color: "white" ,
-            // padding:13,
-             backgroundColor: "green",
-             borderColor:'white',
-             borderWidth:1,
-             textAlign:'center',
-             borderRadius:8,
-             width:'100%',
-             fontFamily:'Light',
-             paddingVertical:10,
-
-           }}>
-              Angalia Kumbusho za kusafisha banda  ulizowahi kuweka
-            </Text>
-          </TouchableOpacity>
-          
-
-        </Pressable>
-   
 
 
 

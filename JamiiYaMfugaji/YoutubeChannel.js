@@ -308,7 +308,7 @@ const getItems = () => {
   hiyo linki hapo chini
 </Text>
 
-{/* {item.Phone && (
+{item.Phone && (
         <TouchableOpacity 
         onPress={() => { Linking.openURL(`whatsapp://send?phone=${item.Phone}&text=${message}`)}}>
           <View style={[globalStyles.menuItem, 
@@ -317,9 +317,9 @@ const getItems = () => {
             <Text style={[globalStyles.menuItemText, 
               {}]}>Kundi La Whatsapp</Text>
           </View>
-        </TouchableOpacity>)}*/}
+        </TouchableOpacity>)}
 
-
+{/*
 {item.Phone && (
         <TouchableOpacity 
         onPress={() => { Linking.openURL(`whatsapp://send?phone=${item.Phone}&text=${message}`)}}>
@@ -341,7 +341,7 @@ const getItems = () => {
             <Text style={[globalStyles.menuItemText, 
               {}]}>Kundi La Instagram</Text>
           </View>
-        </TouchableOpacity>)}
+        </TouchableOpacity>)}*/}
 
       </View>
 

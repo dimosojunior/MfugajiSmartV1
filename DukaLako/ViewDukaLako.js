@@ -650,6 +650,10 @@ const handleLikeToggle = async (itemId) => {
 
 
 
+const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
+
+
+
 const InventoryCard = ({item, index}) => {
    const carouselItems = [
       item.PichaYaPost,
@@ -730,9 +734,35 @@ const InventoryCard = ({item, index}) => {
                <Text style={{
                 color:'black',
                 fontFamily:'Light',
-               }}>
+               }}
+               numberOfLines={isExpanded ? 0 : 3}
+               >
                  {item.Maelezo}
                </Text>
+
+                   {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
+                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'green',
+                    }
+
+                    ]}>Soma Zaidi -></Text>
+                </TouchableOpacity>
+              )}
+              {isExpanded && (
+                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+                  <Text style={[styles.readMoreText,
+                    {
+                      fontFamily:'Medium',
+                      color:'red',
+                    }
+
+                    ]}> Funga</Text>
+                </TouchableOpacity>
+              )}
+                 
                  
                </Pressable>
                )}
