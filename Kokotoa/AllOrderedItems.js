@@ -318,6 +318,12 @@ useEffect(() => {
 
 
 
+
+//-------------------CALCULATION------
+// const JumlaYaMchanganyoWaMahindi_value = JumlaYaMchanganyoWaMahindi ? JumlaYaMchanganyoWaMahindi : 0;
+// const JumlaYaMchanganyoWaMahindi_IdadiYaKuku = JumlaYaMchanganyoWaMahindi_value;
+
+
 // console.log("-------------------------");
 // console.log("Mashudu_Ya_Alizeti_New_Value", Mashudu_Ya_Alizeti_New_Value);
 // console.log("Pumba_Za_Mahindi_New_Value", Pumba_Za_Mahindi_New_Value);
@@ -403,7 +409,7 @@ const ReportCard = ({item,calculatedItem , index}) => {
           </View>
           
 
-         {item && item.product && item.product.product_name &&(
+         {item && item.product && item.product.product_name  &&(
          <View style={
             globalStyles.TaarifaRight
           }>
@@ -1197,8 +1203,7 @@ userData={userData}
               }
               ]}>
               
-            Ili kupata mchanganyiko sahihi wa chakula unapaswa kuongeza, kiasi 
-            hiki kwenye chakula husika             
+            Kiasi cha chakula kilichoongezeka          
             
             </Text>
 
@@ -1215,13 +1220,13 @@ userData={userData}
               {
                 //textAlign:'center',
                 fontFamily:'Medium',
-                color:'yellow',
+                color:'white',
                 width:'45%',
 
               }
               ]}>
               
-            Ongeza kiasi cha mahindi            
+            kiasi cha pumba za mahindi kilichoongezwa          
             
             </Text>
           
@@ -1260,13 +1265,13 @@ userData={userData}
               {
                 //textAlign:'center',
                 fontFamily:'Medium',
-                color:'yellow',
+                color:'wheat',
                 width:'45%',
 
               }
               ]}>
               
-            Ongeza kiasi cha mashudu ya alizeti            
+             Kiasi cha mashudu ya alizeti kilichoongezwa           
             
             </Text>
           
@@ -1310,7 +1315,7 @@ userData={userData}
               }
               ]}>
               
-            Ongeza kiasi cha dagaa            
+             kiasi cha dagaa kilichoongezwa            
             
             </Text>
           

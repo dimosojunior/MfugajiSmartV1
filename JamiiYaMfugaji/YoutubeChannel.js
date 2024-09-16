@@ -303,9 +303,7 @@ const getItems = () => {
   fontFamily:'Medium',
 
 }}>
-  Pia unaweza kujiunga na makundi yetu ya whatsapp ,Facebook na 
-  Instagram kwa kubonyeza
-  hiyo linki hapo chini
+  Unaweza kuwasiliana nasi kwenye mitandao ya kijamii kupitia njia zifuatazo
 </Text>
 
 {item.Phone && (
@@ -315,11 +313,11 @@ const getItems = () => {
             {backgroundColor:COLORS.white}]}>
             <FontAwesome name="whatsapp" color="green" size={25}/>
             <Text style={[globalStyles.menuItemText, 
-              {}]}>Kundi La Whatsapp</Text>
+              {}]}>Ukurasa Wa Whatsapp</Text>
           </View>
         </TouchableOpacity>)}
 
-{/*
+
 {item.Phone && (
         <TouchableOpacity 
         onPress={() => { Linking.openURL(`whatsapp://send?phone=${item.Phone}&text=${message}`)}}>
@@ -327,7 +325,7 @@ const getItems = () => {
             {backgroundColor:COLORS.white}]}>
             <FontAwesome name="facebook" color="blue" size={25}/>
             <Text style={[globalStyles.menuItemText, 
-              {}]}>Kundi La Facebook</Text>
+              {}]}>Ukurasa Wa Facebook</Text>
           </View>
         </TouchableOpacity>)}
 
@@ -339,9 +337,9 @@ const getItems = () => {
             {backgroundColor:COLORS.white}]}>
             <FontAwesome name="instagram" color="#FF6347" size={25}/>
             <Text style={[globalStyles.menuItemText, 
-              {}]}>Kundi La Instagram</Text>
+              {}]}>Ukurasa Wa Instagram</Text>
           </View>
-        </TouchableOpacity>)}*/}
+        </TouchableOpacity>)}
 
       </View>
 
@@ -428,21 +426,19 @@ const getItems = () => {
   fontFamily:'Medium',
 
 }}>
-  Pia unaweza kujiunga na makundi yetu ya whatsapp ,Facebook na 
-  Instagram kwa kubonyeza
-  hiyo linki hapo chini
+  Unaweza kuwasiliana nasi kwenye mitandao ya kijamii kupitia njia zifuatazo
 </Text>
 
-{/* {item.Phone && (
+{item.Phone && (
         <TouchableOpacity 
         onPress={() => { Linking.openURL(`whatsapp://send?phone=${item.Phone}&text=${message}`)}}>
           <View style={[globalStyles.menuItem, 
             {backgroundColor:COLORS.white}]}>
             <FontAwesome name="whatsapp" color="green" size={25}/>
             <Text style={[globalStyles.menuItemText, 
-              {}]}>Kundi La Whatsapp</Text>
+              {}]}>Ukurasa Wa Whatsapp</Text>
           </View>
-        </TouchableOpacity>)}*/}
+        </TouchableOpacity>)}
 
 
 {item.Phone && (
@@ -452,7 +448,7 @@ const getItems = () => {
             {backgroundColor:COLORS.white}]}>
             <FontAwesome name="facebook" color="blue" size={25}/>
             <Text style={[globalStyles.menuItemText, 
-              {}]}>Kundi La Facebook</Text>
+              {}]}>Ukurasa Wa Facebook</Text>
           </View>
         </TouchableOpacity>)}
 
@@ -464,7 +460,7 @@ const getItems = () => {
             {backgroundColor:COLORS.white}]}>
             <FontAwesome name="instagram" color="#FF6347" size={25}/>
             <Text style={[globalStyles.menuItemText, 
-              {}]}>Kundi La Instagram</Text>
+              {}]}>Ukurasa Wa Instagram</Text>
           </View>
         </TouchableOpacity>)}
 
@@ -480,8 +476,6 @@ const getItems = () => {
 
 
            )
-
-
 
 
 
@@ -607,23 +601,12 @@ keyboardShouldPersistTaps="handled"
                   }
                 ]}  
                 
-                >Tazama Videos zetu kwa kubonyeza hiyo batani hapo chini</Text>
+                >
+                Tazama videos zenye masomo yanayohusu ufugaji wa kuku kwa kubonyeza 
+                batani hapo chini
+                </Text>
               
-               <Text
-                style={[
-                  globalStyles.AppChaguaHudumaTextYoutubeChannel,
-                  {
-                    fontFamily:'Medium',
-                    color:'green'
-
-
-                  }
-                ]}  
-                
-                >Usisahau Kusubscribe na kulike chaneli kama bado hujafanya
-                hivyo ili uwe wa kwanza kupata na kutazama videos zetu</Text>
-
-
+              
             {/*mwanzo wa Item View*/}
                 <View 
                 style={globalStyles.AppFlatListContainerYoutubeChannel} 

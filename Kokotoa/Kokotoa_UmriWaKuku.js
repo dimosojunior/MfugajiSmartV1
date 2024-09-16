@@ -387,6 +387,34 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
         <Pressable 
 
+
+      onPress={() =>
+        navigation.navigate('Ingiza Kiasi', { ...item,
+         KukuId, 
+         AinaYaKuku, 
+         StaterFeed,
+         GrowerFeed, 
+         LayerFeed, 
+         FinisherFeed,
+
+    TotalCPPercentageRequired_Starter,
+   TotalWangaPercentageRequired_Starter,
+   TotalMafutaPercentageRequired_Starter,
+
+   TotalCPPercentageRequired_Grower,
+   TotalWangaPercentageRequired_Grower,
+   TotalMafutaPercentageRequired_Grower,
+
+   TotalCPPercentageRequired_Layer,
+   TotalWangaPercentageRequired_Layer,
+   TotalMafutaPercentageRequired_Layer,
+
+   TotalCPPercentageRequired_Finisher,
+   TotalWangaPercentageRequired_Finisher,
+   TotalMafutaPercentageRequired_Finisher
+          })}
+       
+
         style={globalStyles.OverdoseImageContainerCartItems}
         >
       
@@ -1224,7 +1252,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
         <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako)</Text>
+    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako, , mwisho wiki 24)</Text>
 
      {/* <Image
         source={item?.RouteImage}

@@ -1,4 +1,4 @@
-import { StyleSheet,Image, Text,Dimensions, View } from "react-native";
+import { StyleSheet,Image, Text,Dimensions,TouchableOpacity, View } from "react-native";
 import React, {useState,useRef, useEffect, useContext} from 'react';
 
 import Colors from "./Colors";
@@ -40,6 +40,7 @@ const navigation = useNavigation();
     setShowAlert(false);
   };
 
+const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
 
 
 
@@ -49,7 +50,29 @@ const navigation = useNavigation();
         Zaidi kuhusu  {userData && userData.username ? userData.username : ''}
       </Text>
 
+
+
+ {userData && userData.Maelezo && (
+      <View style={{
+        marginTop:20,
+        width:'90%',
+      }}>
+        <Text style={{
+          color:'white',
+
+        }}
+        
+        >
+          {userData.Maelezo}
+        </Text>    
+                 
+      </View>
+      )}
+
+
+
       <View style={styles.completeContainer}>
+      {userData && userData.Mkoa && userData.Mkoa.JinaLaMkoa && (
         <Card
           icon={
             <FontAwesome
@@ -62,6 +85,9 @@ const navigation = useNavigation();
           cardText="Mkoa"
           style={{ backgroundColor: Colors.primary}}
         />
+        )}
+  
+        {userData && userData.AinaYaKuku && userData.AinaYaKuku.AinaYaKuku && (
         <Card
           icon={
             <FontAwesome 
@@ -73,6 +99,7 @@ const navigation = useNavigation();
           cardText="Aina Ya kuku Wako"
           style={{ backgroundColor: Colors.secondary }}
         />
+        )}
       </View>
 
       <View style={styles.bottomSection}>

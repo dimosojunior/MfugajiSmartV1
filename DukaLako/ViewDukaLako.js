@@ -27,7 +27,7 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
-import React, {useState,useCallback,useRef, useEffect, useContext} from 'react';
+import React, {useState,useCallback,useRef,memo, useEffect, useContext} from 'react';
 
 import Html from 'react-native-render-html';
 import { FontAwesome} from '@expo/vector-icons';
@@ -47,48 +47,56 @@ const {width, height} = Dimensions.get('window');
 
 
 
-const Carousel = ({ images }) => {
+
+
+
+
+// Function to prefetch images
+const prefetchImages = async (images) => {
+  const prefetchPromises = images.map((image) => {
+    if (image) {
+      return Image.prefetch(`${EndPoint}/${image}`);
+    }
+  });
+  await Promise.all(prefetchPromises);
+};
+
+// Carousel component with memoization
+const Carousel = memo(({ images }) => {
   const flatlistRef = useRef();
-  const screenWidth = Dimensions.get("window").width;
+  const screenWidth = Dimensions.get('window').width;
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    if (flatlistRef.current && images.length > 0) {
-      const interval = setInterval(() => {
-        if (flatlistRef.current) {
-          const newIndex = (activeIndex + 1) % images.length;
-          flatlistRef.current.scrollToIndex({
-            index: newIndex,
-            animated: true,
-          });
-          setActiveIndex(newIndex);
-        }
-      }, 2000);
+  if (flatlistRef.current && images.length > 0) {
+    const interval = setInterval(() => {
+      const newIndex = (activeIndex + 1) % images.length;
+      // Ensure flatlistRef is not null before trying to call scrollToIndex
+      if (flatlistRef.current) {
+        flatlistRef.current.scrollToIndex({ index: newIndex, animated: true });
+      }
+      setActiveIndex(newIndex);
+    }, 2000);
 
-      return () => clearInterval(interval);
-    }
-  }, [activeIndex, images.length]);
+    return () => clearInterval(interval);
+  }
+}, [activeIndex, images.length]);
 
-  const getItemLayout = (data, index) => ({
-    length: screenWidth,
-    offset: screenWidth * index,
-    index: index,
-  });
+  const getItemLayout = useCallback(
+    (_, index) => ({
+      length: screenWidth,
+      offset: screenWidth * index,
+      index,
+    }),
+    [screenWidth]
+  );
 
-
-
-
-
- const Slide = ({ item }) => (
+  const Slide = ({ item }) => (
     <View>
       <TouchableOpacity activeOpacity={1}>
         <Image
           source={{ uri: `${EndPoint}/${item}` }}
-          style={{
-            height: height / 4 + 10,
-            width: screenWidth,
-            borderRadius: 10,
-          }}
+          style={{ height: height / 4 + 10, width: screenWidth, borderRadius: 10 }}
         />
       </TouchableOpacity>
     </View>
@@ -115,6 +123,7 @@ const Carousel = ({ images }) => {
     ))
   );
 
+
   return (
     <View>
       <FlatList
@@ -127,21 +136,44 @@ const Carousel = ({ images }) => {
         pagingEnabled
         onScroll={handleScroll}
       />
-      <View style={{ 
-        flexDirection: "row",
-         justifyContent: "center",
-          marginTop: 15,
-          marginBottom:15,
-        }}>
+      <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 15, marginBottom: 15 }}>
         {renderDotIndicators()}
       </View>
     </View>
   );
-};
+});
 
 
 
 export default function ViewDukaLako ({navigation, route}) {
+
+
+    //kwa ajili ya kuzoom in/out
+  // Shared value for scaling
+  //---BUT ukionana unakutana na error ya React-native-reanimated mismatch
+  //basi hii na hizo import zake hapo juu ndo inasababisha ko utazitoa maana
+  //hizi kwa sasa zinahitaji react native 3.10.1 or 3.10.0 na utainstall kama
+  //hivi npx expo install react-native-reanimated
+  const scale = useSharedValue(1);
+
+  // Gesture handler for pinch-to-zoom
+  const pinchHandler = useAnimatedGestureHandler({
+    onActive: (event) => {
+      scale.value = event.scale;
+    },
+    onEnd: () => {
+      scale.value = withSpring(1);  // Reset to original size when gesture ends
+    },
+  });
+
+  // Animated style to apply the scaling
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+
 
    const { 
     
@@ -161,6 +193,7 @@ export default function ViewDukaLako ({navigation, route}) {
     profile_image,
     Likes,
     UserRole,
+    TickStatus,
     email
    } = route.params
 
@@ -202,49 +235,6 @@ const [userData, setUserData] = useState({});
 //FOR SEARCHING
 const [input, setInput] = useState('');
 
-
-const [likedItems, setLikedItems] = useState(new Set()); // Store liked items in a set
-
-
-//Load more
-const [queryset, setQueryset] = useState([]);
-const [current_page, setcurrent_page] = useState(1);
-const [isLoading, setIsLoading] = useState(false);
-const [loading, setLoading] = useState(false);
-const [endReached, setEndReached] = useState(false)
-const [isPending, setPending] = useState(true);
-
-
-
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        // Step 1: Fetch user token
-        const token = await AsyncStorage.getItem('userToken');
-        if (!token) {
-          console.log("No user Token");
-          return;
-        }
-        setUserToken(token);
-        console.log("My Token", token);
-
-        // Step 2: Fetch items
-        const itemsFetched = await getItems(token);
-        if (itemsFetched) {
-          // Step 3: Load liked status after fetching items
-          await loadLikedStatus(token, itemsFetched);
-        }
-      } catch (error) {
-        console.error('Error loading data:', error);
-      } finally {
-        setLoading(false);
-        setPending(false);
-      }
-    };
-
-    loadData();
-  }, []);
 
 
 
@@ -410,41 +400,69 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
 
 
 
-  // const nav = useNavigation();
-  // const DATA = [
-  //   {
-  //     id: 1,
-  //     name: "Bajeti Ya Chakula",
-  //     backgroundColor:"#6BC5E8",
-  //     imagesrc:im1
-      
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Kumbusho La Shamba",
-  //     backgroundColor:"#3A9EC2",
-  //     imagesrc:im2
-  //   },
-
-  //   {
-  //     id: 3,
-  //     name: "Kitabu Shamba",
-  //     backgroundColor:"#3A9EC2",
-  //     imagesrc:im3
-  //   },
-
-  //   {
-  //     id: 4,
-  //     name: "Jamii Ya Mfugaji",
-  //     backgroundColor:"#3A9EC2",
-  //     imagesrc:im4
-  //   }
-
-
-  // ];
 
 
 
+
+ const formatDate = (dateString) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+ 
+
+
+
+//-------------------GETTING ITEMS----------------
+
+const [likedItems, setLikedItems] = useState(new Set()); // Store liked items in a set
+
+
+//Load more
+const [queryset, setQueryset] = useState([]);
+const [current_page, setcurrent_page] = useState(1);
+const [isLoading, setIsLoading] = useState(false);
+const [loading, setLoading] = useState(false);
+const [endReached, setEndReached] = useState(false)
+const [isPending, setPending] = useState(true);
+
+
+
+
+
+
+//hii inafetch liked items by that user then ina fetch proudct step by step
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Step 1: Fetch user token
+        const token = await AsyncStorage.getItem('userToken');
+        if (!token) {
+          console.log("No user Token");
+          return;
+        }
+        setUserToken(token);
+        console.log("My Token", token);
+
+        // Step 2: Fetch items
+        const itemsFetched = await getItems(token);
+        if (itemsFetched) {
+          // Step 3: Load liked status after fetching items
+          await loadLikedStatus(token, itemsFetched);
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
+        setPending(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
 
   const getItems = async (token) => {
@@ -455,7 +473,7 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
       return null;
     } else {
       setIsLoading(true);
-      const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=50`;
+     const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=50`;
       return fetch(url)
         .then((res) => res.json())
         .then((data) => {
@@ -478,9 +496,6 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
   };
 
 
-
-
-
  const renderLoader = () => {
     return (
       isLoading ?
@@ -493,23 +508,6 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
   // const loadMoreItem = () => {
   //   setcurrent_page(current_page + 1);
   // };
-
-  // useEffect(() => {
-  //   setLoading(true)
-  //   getItems();
-  // }, []);
-
- const handleScroll = (event) =>{
-    const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
-    const scrollEndY = layoutMeasurement.height + contentOffset.y
-    const contetHeight = contentSize.height
-
-    if (scrollEndY >= contetHeight - 50) {
-      getItems()
-    }
-  }
-
-
 
 
 //hii function kazi yake ni kushow tu ni products zip huyu user aliyelogin
@@ -613,15 +611,9 @@ const handleLikeToggle = async (itemId) => {
 
 
 
- const formatDate = (dateString) => {
-    if (!dateString) return null;
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
- 
+
+
+
 
 
 
@@ -650,12 +642,40 @@ const handleLikeToggle = async (itemId) => {
 
 
 
-const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
+//-------------NI KWA AJILI YA KUEXPAND TEXT-----------
+
+const [textHeight, setTextHeight] = useState({});
+const [lineLimit, setLineLimit] = useState(3); // Number of lines to limit
+
+const handleTextLayout = (itemId, event) => {
+  const { height } = event.nativeEvent.layout;
+  const lineHeight = 18; // Assuming a line height of 18 (you can adjust this based on your styling)
+  const maxHeight = lineHeight * lineLimit; // Calculate the max height for 3 lines
+
+  if (height > maxHeight) {
+    setTextHeight(prev => ({ ...prev, [itemId]: height }));
+  } else {
+    setTextHeight(prev => ({ ...prev, [itemId]: 0 })); // No expansion needed if height is less than max
+  }
+};
+
+
+ //const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
+const [expandedItems, setExpandedItems] = useState({}); // State to manage text expansion
+
+  const toggleExpanded = (itemId) => {
+    setExpandedItems((prevExpandedItems) => ({
+      ...prevExpandedItems,
+      [itemId]: !prevExpandedItems[itemId], // Toggle the expanded state for the clicked item
+    }));
+  };
 
 
 
-const InventoryCard = ({item, index}) => {
-   const carouselItems = [
+
+  const TransportItem = ({item, index}) => {
+
+     const carouselItems = [
       item.PichaYaPost,
       item.PichaYaPost2,
       item.PichaYaPost3,
@@ -669,11 +689,11 @@ const InventoryCard = ({item, index}) => {
     ].filter(Boolean); // Filter out any null or undefined values
 
     //console.log("Carousel Items:", carouselItems);
-
- //console.log("Carousel Items:", carouselItems);
     const isLiked = likedItems.has(item.id);
 
 
+
+   
 
     return (
 
@@ -684,21 +704,100 @@ const InventoryCard = ({item, index}) => {
 
 
 
+         {/*mwanzo mwa informations za mtu aliyepost*/}
+
+            <View style={globalStyles.UserInfoContainer}>
+              
+            {/*mwanzo wa left info*/}
+             <View style={globalStyles.UserInfoLeftContainer}>
+             {item.profile_image ? ( 
+                  <Image
+
+                  style={globalStyles.UserInfoLeftImage}
+                   source={{
+                      uri: EndPoint + '/' + item.profile_image
+                    }}
+                      
+                      >
+                  </Image>
+                  ):(
+                  <Image
+
+                  style={globalStyles.UserInfoLeftImage}
+                   source={require('../assets/profile.jpg')} 
+                  >
+                  </Image>
+                )}
+               
+             </View>
+           {/*mwisho wa left info*/}
+
+           {/*mwanzo wa middle info*/}
+           {item.TickStatus == "Ndio Anastahili" && (
+           <View style={globalStyles.UserInfoMiddleContainer}>
+           
+             <Text style={globalStyles.UserInfoUsername}>
+               <FontAwesome name='check-square-o' 
+              size={20}
+              //color="black" 
+              color="green" 
+              
+               />
+             </Text>
+              </View>
+              )}
+            {/*mwisho wa middle info*/}
+
+             
+             {/*mwanzo wa right info*/}
+           <View style={[
+            globalStyles.UserInfoRightContainer,
+            {
+              width: item.TickStatus == "Ndio Anastahili" ? '60%' : '75%'
+            }
+            ]
+          }>
+           {item.company_name ? (
+             <Text style={globalStyles.UserInfoUsername}>
+             {item.company_name}</Text>
+             ):(
+              <Text style={globalStyles.UserInfoUsername}>
+             {item.username}</Text>
+             )}
+           </View>
+            {/*mwisho wa right info*/}
+
+
+
+            </View>
+           
+           {/*mwanzo mwa informations za mtu aliyepost*/}
+
                 <View style={{
                   //justifyContent:"space-between",
                 }}>
                   <Text 
 
-                  style={globalStyles.AppItemNameHomeScreen}
+                  style={[globalStyles.AppItemNameHomeScreen,
+                    {
+                      marginBottom:15,
+                    }
+
+                    ]}
 
                  >{item.Title}</Text>
 
 
-     <Carousel images={carouselItems} />
+ <PinchGestureHandler onGestureEvent={pinchHandler}>
+   <Animated.View style={[styles.imageContainer, animatedStyle]}>
 
+<Carousel images={carouselItems} />
 
-
-         {/*      <View 
+ </Animated.View>
+  </PinchGestureHandler>
+    
+      
+           {/*    <View 
                 style={globalStyles.AppItemImageContainerHomeScreen}
               >
               {item.PichaYaPost ? ( 
@@ -724,8 +823,12 @@ const InventoryCard = ({item, index}) => {
 
 
 
-           {item.Maelezo && (
-               <Pressable style={{
+
+
+
+
+  {item.Maelezo && (
+               <TouchableOpacity style={{
                  width:'90%',
                  marginHorizontal:20,
                }}>
@@ -735,24 +838,26 @@ const InventoryCard = ({item, index}) => {
                 color:'black',
                 fontFamily:'Light',
                }}
-               numberOfLines={isExpanded ? 0 : 3}
+               //numberOfLines={isExpanded ? 0 : 3}
+                numberOfLines={expandedItems[item.id] ? undefined : 3}
+          onLayout={(event) => handleTextLayout(item.id, event)}
                >
                  {item.Maelezo}
                </Text>
-
-                   {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
-                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                {textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
                       color:'green',
+                      //color:textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] ? 'white' : 'green',
                     }
 
                     ]}>Soma Zaidi -></Text>
                 </TouchableOpacity>
               )}
-              {isExpanded && (
-                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+              {expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
@@ -763,10 +868,8 @@ const InventoryCard = ({item, index}) => {
                 </TouchableOpacity>
               )}
                  
-                 
-               </Pressable>
+               </TouchableOpacity>
                )}
-
 
 
                   <TouchableOpacity 
@@ -787,12 +890,12 @@ const InventoryCard = ({item, index}) => {
                  
                 >
             {/*mwanzo wa view ya left*/}
-              <TouchableOpacity 
+              <Pressable 
 
         //      onPress={() => {
         //    navigation.navigate('View Duka Lako', item);    
-        // }} 
-        >
+        // }}
+         >
            <View style={globalStyles.LeftBtnContainer}>
             <Text 
           style={[globalStyles.AppItemButtonTextHomeScreen,
@@ -806,7 +909,7 @@ const InventoryCard = ({item, index}) => {
             ]}
         >{formatDate(item.Created)}</Text>
          </View>
-         </TouchableOpacity>
+         </Pressable>
           {/*mwisho wa view ya left*/}
 
 
@@ -828,7 +931,8 @@ const InventoryCard = ({item, index}) => {
         <View>
            <FontAwesome name='heart' 
       size={20}
-     color={isLiked ? 'red' : 'black'} 
+      //color="black" 
+      color={isLiked ? 'red' : 'black'} 
       
        />
         </View>
@@ -840,11 +944,6 @@ const InventoryCard = ({item, index}) => {
 
 
                   </TouchableOpacity>
-
-
-
-
-
                 </View>
                 <View>
                  
@@ -856,8 +955,27 @@ const InventoryCard = ({item, index}) => {
            )
 
 
-}
-  
+
+
+
+
+// mwisho wa render
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   return (
@@ -880,6 +998,7 @@ const InventoryCard = ({item, index}) => {
            <MinorHeader title="Mawasiliano"/>
 
            <ScrollView
+           ContentContainerStyle={styles.scrollContainer}
 keyboardShouldPersistTaps="handled" 
 // refreshControl={
 //         <RefreshControl
@@ -889,7 +1008,7 @@ keyboardShouldPersistTaps="handled"
 //        }
       showsVerticalScrollIndicator={false}
        
- onScroll={handleScroll} scrollEventThrottle={16}
+ //onScroll={handleScroll} scrollEventThrottle={16}
       >
 
 
@@ -908,7 +1027,23 @@ keyboardShouldPersistTaps="handled"
                 }}
                 resizeMode= "cover"
             >
-
+         
+        {/* mwanzo wa view*/}
+        {TickStatus === "Ndio Anastahili" && (
+         <View style={{
+          marginTop:10,
+         }}>
+          <Text style={{
+            color:'white',
+            fontFamily:'Medium',
+            marginLeft:20,
+            textAlign:'center',
+          }}>
+            AMEIDHINISHWA
+          </Text>
+        </View>
+        )}
+      {/* mwisho wa view*/}
         
               <View style={[globalStyles.topviewYoutubeChannel,
                 { 
@@ -923,11 +1058,14 @@ keyboardShouldPersistTaps="handled"
                 ]}>
 
 
+
+
+
                   <View style={globalStyles.welcomecontainer}>
 
 
 
-
+        
                      
                      <View
                       style={globalStyles.AppWelcomeMsgContainerYoutubeChannel} 
@@ -1026,7 +1164,7 @@ keyboardShouldPersistTaps="handled"
                   globalStyles.AppChaguaHudumaTextYoutubeChannel,
                   {
                     fontFamily:'Medium',
-                    color:'green',
+                    color:'black',
                     marginHorizontal:0,
                     width:'70%',
 
@@ -1180,7 +1318,8 @@ keyboardShouldPersistTaps="handled"
       <View style={[globalStyles.menuWrapper, 
         {backgroundColor:COLORS.white}]}>
        
-       
+  
+  {username != MtoaMaoniUsername ? (  
 <Text style={{
   marginTop:50,
   fontFamily:'Medium',
@@ -1188,6 +1327,19 @@ keyboardShouldPersistTaps="handled"
 }}>
   Unaweza kuwasiliana naye kupitia njia hizo hapo chini
 </Text>
+
+
+):(
+
+<Text style={{
+  marginTop:50,
+  fontFamily:'Medium',
+
+}}>
+  Watu wanaweza kuwasiliana na wewe kupitia njia zifuatazo
+</Text>
+
+)} 
 
  {phone && (
          <TouchableOpacity onPress={() => {   Linking.openURL(`tel:${phone}`)}}>
@@ -1269,22 +1421,58 @@ keyboardShouldPersistTaps="handled"
 
 
 
+
+
+
 { !isPending ? (
   <>
       
-      { queryset && queryset.length > 0 ? (
+    {/*  { queryset && queryset.length > 0 ? (
         <>
    {setLoading===true?(<ActivityIndicator/>):(
 
              <>
 
           {queryset.map((item, index) => {
-          return <InventoryCard item={item} key={item.id || index} />;
+          return <TransportItem item={item} key={item.id || index} />;
           })}
 
           {isLoading&&(<ActivityIndicator/>)}
           </>
           )}
+
+        
+
+
+         </>
+
+
+
+      ) : (*/}
+
+
+      { queryset && queryset.length > 0 ? (
+        <>
+
+         {setLoading===true?(<ActivityIndicator/>):(
+      <>
+                   <View style={styles.flatListContainer}>
+                    <FlatList
+                    data={queryset}
+                    renderItem={TransportItem}
+                    keyExtractor={(item) => item.id}
+                    showsVerticalScrollIndicator={false}
+
+                    ListFooterComponent={renderLoader}
+                    onEndReached={getItems}
+                    onEndReachedThreshold={0.5}
+                    ContentContainerStyle={styles.listContent}
+                  />
+                  </View>
+
+
+                        </>
+      )}
 
          </>
 
@@ -1320,7 +1508,6 @@ keyboardShouldPersistTaps="handled"
 
 
 )} 
-
 
 
 
@@ -1538,5 +1725,19 @@ keyboardShouldPersistTaps="handled"
 }
 
 const styles = StyleSheet.create({
+
+  flatListContainer:{
+    borderRadius:15,
+    overflow:'hidden',
+    // backgroundColor:'#f0f0f0',
+    // height:height,
+  },
+  listContent:{
+    paddingVertical:10,
+
+  },
+  scrollContainer:{
+    padding:20,
+  }
  
 });

@@ -268,7 +268,7 @@ const handleErrorMessage = (error) => {
               />
 
                <TextInput 
-              placeholder='Ingiza namba yako ya simu, +255' 
+              placeholder='Ingiza namba yako ya simu, 0*********' 
               //style={{width: '80%', height: 100}}
               style={[styles.textinput,{
                   width:width-20,

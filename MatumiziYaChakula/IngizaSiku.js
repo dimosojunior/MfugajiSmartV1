@@ -343,6 +343,9 @@ if (item.Siku.toString().toLowerCase().includes(input.toLowerCase())) {
 
 
         <Pressable 
+         onPress={() =>
+        navigation.navigate('Ingiza Idadi Ya Kuku', { ...item, KukuId, AinaYaKuku,UmriKwaWiki,UmriWaKukuId, Interval,UmriKwaSiku, StaterFeed, GrowerFeed, LayerFeed, FinisherFeed })}
+       
 
         style={globalStyles.OverdoseImageContainerCartItems}
         >
@@ -512,7 +515,7 @@ if (item.Siku.toString().toLowerCase().includes(input.toLowerCase())) {
         <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Tafadhali, tuambie unahitaji kutengeneza chakula cha muda gani ? (ingiza siku unazotaka kutengeneza chakula)</Text>
+    >Tafadhali, tuambie unahitaji kutengeneza chakula cha muda gani ? (ingiza siku unazotaka kutengeneza chakula, , mwisho siku 365)</Text>
 
      {/* <Image
         source={item?.RouteImage}

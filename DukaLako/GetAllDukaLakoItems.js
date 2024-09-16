@@ -58,16 +58,19 @@ const Carousel = memo(({ images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    if (flatlistRef.current && images.length > 0) {
-      const interval = setInterval(() => {
-        const newIndex = (activeIndex + 1) % images.length;
+  if (flatlistRef.current && images.length > 0) {
+    const interval = setInterval(() => {
+      const newIndex = (activeIndex + 1) % images.length;
+      // Ensure flatlistRef is not null before trying to call scrollToIndex
+      if (flatlistRef.current) {
         flatlistRef.current.scrollToIndex({ index: newIndex, animated: true });
-        setActiveIndex(newIndex);
-      }, 2000);
+      }
+      setActiveIndex(newIndex);
+    }, 2000);
 
-      return () => clearInterval(interval);
-    }
-  }, [activeIndex, images.length]);
+    return () => clearInterval(interval);
+  }
+}, [activeIndex, images.length]);
 
   const getItemLayout = useCallback(
     (_, index) => ({
@@ -332,6 +335,7 @@ const [isPending, setPending] = useState(true);
   //   checkLoggedIn();
   // }, [userToken]);
 
+//hii inafetch liked items by that user then ina fetch proudct step by step
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -539,12 +543,33 @@ const handleLikeToggle = async (itemId) => {
 
 
 
+//-------------NI KWA AJILI YA KUEXPAND TEXT-----------
+
+const [textHeight, setTextHeight] = useState({});
+const [lineLimit, setLineLimit] = useState(3); // Number of lines to limit
+
+const handleTextLayout = (itemId, event) => {
+  const { height } = event.nativeEvent.layout;
+  const lineHeight = 18; // Assuming a line height of 18 (you can adjust this based on your styling)
+  const maxHeight = lineHeight * lineLimit; // Calculate the max height for 3 lines
+
+  if (height > maxHeight) {
+    setTextHeight(prev => ({ ...prev, [itemId]: height }));
+  } else {
+    setTextHeight(prev => ({ ...prev, [itemId]: 0 })); // No expansion needed if height is less than max
+  }
+};
 
 
+ //const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
+const [expandedItems, setExpandedItems] = useState({}); // State to manage text expansion
 
-
- const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
-
+  const toggleExpanded = (itemId) => {
+    setExpandedItems((prevExpandedItems) => ({
+      ...prevExpandedItems,
+      [itemId]: !prevExpandedItems[itemId], // Toggle the expanded state for the clicked item
+    }));
+  };
 
 
   const transportItem = ({item}) => {
@@ -701,8 +726,7 @@ const handleLikeToggle = async (itemId) => {
 
 
 
-
-           {item.Maelezo && (
+  {item.Maelezo && (
                <TouchableOpacity style={{
                  width:'90%',
                  marginHorizontal:20,
@@ -713,23 +737,26 @@ const handleLikeToggle = async (itemId) => {
                 color:'black',
                 fontFamily:'Light',
                }}
-               numberOfLines={isExpanded ? 0 : 3}
+               //numberOfLines={isExpanded ? 0 : 3}
+                numberOfLines={expandedItems[item.id] ? undefined : 3}
+          onLayout={(event) => handleTextLayout(item.id, event)}
                >
                  {item.Maelezo}
                </Text>
-                 {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
-                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                {textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
                       color:'green',
+                      //color:textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] ? 'white' : 'green',
                     }
 
                     ]}>Soma Zaidi -></Text>
                 </TouchableOpacity>
               )}
-              {isExpanded && (
-                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+              {expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
@@ -825,8 +852,7 @@ const handleLikeToggle = async (itemId) => {
 
  if(item.Title.toLowerCase().includes(input.toLowerCase())){
   
-   
-    return (
+   return (
 
       <CustomCard >
               <View 
@@ -958,8 +984,7 @@ const handleLikeToggle = async (itemId) => {
 
 
 
-
-           {item.Maelezo && (
+  {item.Maelezo && (
                <TouchableOpacity style={{
                  width:'90%',
                  marginHorizontal:20,
@@ -970,23 +995,26 @@ const handleLikeToggle = async (itemId) => {
                 color:'black',
                 fontFamily:'Light',
                }}
-               numberOfLines={isExpanded ? 0 : 3}
+               //numberOfLines={isExpanded ? 0 : 3}
+                numberOfLines={expandedItems[item.id] ? undefined : 3}
+          onLayout={(event) => handleTextLayout(item.id, event)}
                >
                  {item.Maelezo}
                </Text>
-                 {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
-                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                {textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
                       color:'green',
+                      //color:textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] ? 'white' : 'green',
                     }
 
                     ]}>Soma Zaidi -></Text>
                 </TouchableOpacity>
               )}
-              {isExpanded && (
-                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+              {expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
@@ -1076,8 +1104,6 @@ const handleLikeToggle = async (itemId) => {
 
 
 
-
-
 // hili bano la chini ni la if ya pili mwisho
   }
 
@@ -1118,7 +1144,7 @@ const handleLikeToggle = async (itemId) => {
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza huduma unayohitaji" 
+                    placeholder="Tafuta" 
                      placeholderTextColor='black'
                     style={globalStyles.AppInputHomeScreenOtherPages}
                     
@@ -1139,6 +1165,7 @@ const handleLikeToggle = async (itemId) => {
 
                   {
                   backgroundColor:'green',
+                  width:'100%',
                 }
 
                 ]}>
@@ -1146,7 +1173,11 @@ const handleLikeToggle = async (itemId) => {
              <View style={globalStyles.ItselfLeftMinorContainer}>
              <TouchableOpacity 
                onPress={() => {
-            navigation.navigate('Your Posts');    
+            navigation.navigate('Your Posts');  
+
+        }}
+        style={{
+          width:'50%',
         }}
              >
               <Text style={[globalStyles.ItselfLeftMinorText,
@@ -1165,13 +1196,36 @@ const handleLikeToggle = async (itemId) => {
             onPress={() => {
             navigation.navigate('Duka Lako Form');    
         }}
-              style={globalStyles.ItselfRightMinorContainer}>
-              <View >
-                  <FontAwesome name='plus-square-o' 
+              style={[globalStyles.ItselfRightMinorContainer,
+                {
+                  width:'40%',
+                  //backgroundColor:'red',
+                }
+
+                ]}>
+              <View style={{
+                //backgroundColor:'red',
+              }}>
+                {/*  <FontAwesome name='plus-square-o' 
                   size={30}
                   color='brown'  
                   
-                   />
+                   />*/}
+                      <Text 
+              style={[
+                globalStyles.ItselfRightiMinorText,
+                {
+                 backgroundColor:'blue',
+                  color:'white',
+                  fontFamily:'Bold',
+                  //marginRight:30,
+                  width:'50%',
+                  textAlign:'center',
+                  borderRadius:5,
+                  paddingVertical:7,
+                }
+
+                ]}>POSTI</Text>
               </View>
               </TouchableOpacity>
              

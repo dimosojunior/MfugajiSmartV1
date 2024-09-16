@@ -408,9 +408,8 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('');
 
 
   <Text style={styles.dataContainerFormTitle}>
-  Karibu {username}, Tafadhali jaza sehemu zote
-   hapo chini ili kuweza kuweka kumbusho
-    la Uatamiaji wa mayai </Text>
+  Karibu {username}, tafadhali jaza taarifa muhimu hapo chini
+     </Text>
 
 
 
@@ -588,7 +587,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('');
                 color:'wheat',
               }
               ]}>
-                 Hello {username}, Tuambie unatumia kifaa gani kati hivi kuatamia ?
+                 Tuambie unatumia kifaa gani kati hivi kuatamia ?
             </Text>
             </View>
         

@@ -335,6 +335,9 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
 
         <Pressable 
+         onPress={() =>
+        navigation.navigate('Ratiba Ya Chanjo Form', {...item, JinaLaHuduma})}
+       
 
         style={globalStyles.OverdoseImageContainerCartItems}
         >
@@ -488,7 +491,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
         <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako)</Text>
+    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako, , mwisho wiki 24)</Text>
 
      {/* <Image
         source={item?.RouteImage}

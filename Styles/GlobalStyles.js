@@ -93,6 +93,24 @@ alertButton:{
 },
 
 
+ bottomview2:{
+    //flex:2,
+    backgroundColor:COLORS.white,
+    // borderTopLeftRadius:50,
+    // borderTopRightRadius:50,
+
+    borderWidth:.2,
+    borderColor:COLORS.green,
+    elevation: 3,
+
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: Platform.OS === "android" ? COLORS.green : COLORS.green,
+    shadowOpacity: 1,
+    shadowRadius: 2,
+    padding:10,
+  },
+  
+
 
 
   //---------------------MODAL STYLE-----------------
@@ -815,7 +833,7 @@ AppItemButtonHomeScreenOtherPages:{
 
 },
 AppItemButtonTextHomeScreenOtherPages:{
-   backgroundColor:COLORS.black,
+   backgroundColor:'green',
   textAlign:"center",
   //fontWeight:"bold",
   fontFamily:'Light',
@@ -823,7 +841,7 @@ AppItemButtonTextHomeScreenOtherPages:{
   paddingVertical:7,
   borderRadius:6,
   borderWidth:1,
-  borderColor:COLORS.green,
+  borderColor:'white',
 
 },
 AppWelcomeMsgContainerHomeScreenOtherPages:{
@@ -2895,7 +2913,7 @@ ItselfLeftMinorText:{
   backgroundColor:'green',
   paddingHorizontal:10,
   borderRadius:6,
-  width:'80%',
+  //width:'100%',
   paddingVertical:10,
   color:'white',
   textAlign:'center',

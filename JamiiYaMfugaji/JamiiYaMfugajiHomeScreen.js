@@ -81,7 +81,7 @@ const sendTextMessage = useCallback(async (phNumber, message) => {
 
 const message = "Mfugaji Smart!!"
 
-const HudumaKwaWatejaNumber = "0628431507";
+const HudumaKwaWatejaNumber = "0759536085";
 
   // const nav = useNavigation();
   // const DATA = [

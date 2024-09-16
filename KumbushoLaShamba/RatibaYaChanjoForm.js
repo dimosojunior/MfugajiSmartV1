@@ -423,7 +423,7 @@ useEffect(() => {
                   </View>
 
                   <Text style={styles.dataContainerFormTitle}>
-    Tafadhali jaza sehemu zote hapo chini. </Text>
+    Karibu {username}, tafadhali jaza taarifa muhimu hapo chini </Text>
 
 
 {/*

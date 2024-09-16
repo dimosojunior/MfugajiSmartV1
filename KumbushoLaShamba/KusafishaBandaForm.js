@@ -302,7 +302,7 @@ const pickPdf = async () => {
                   </View>
 
                   <Text style={styles.dataContainerFormTitle}>
-                  jaza taarifa zako ili kuweka kumbusho </Text>
+                  Karibu {username}, tafadhali jaza taarifa muhimu hapo chini </Text>
 
 
 {/*
@@ -355,7 +355,7 @@ const pickPdf = async () => {
                 color:'wheat',
               }
               ]}>
-                 Hello {username}, Unataka kukumbushwa
+                 Unataka kukumbushwa
                   mara moja tu au ijirudie ?
             </Text>
             </View>

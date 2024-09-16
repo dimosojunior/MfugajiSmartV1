@@ -77,6 +77,7 @@ const navigation = useNavigation();
     setShowAlert(false);
   };
 
+const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
 
 
 
@@ -124,12 +125,21 @@ const navigation = useNavigation();
 
 
 {item.Maelezo && (
-<View style={styles.maelezoContainerWafugaji}>
-  
-  <Text style={styles.maelezoTextWafugaji}>maelezo </Text>
-</View>
-)}
+      <View style={{
+        marginTop:20,
+        width:'90%',
+      }}>
+        <Text style={{
+          color:'white',
 
+        }}
+        
+        >
+          {item.Maelezo}
+        </Text>    
+                 
+      </View>
+      )}
 
 
 {/*mwanzo wa link*/}
@@ -142,7 +152,24 @@ const navigation = useNavigation();
 
  <View style={[globalStyles.menuWrapper, 
   {backgroundColor:'rgba(0,0,0,0)'}]}>
+
+
+    {item.phone && (
+         <TouchableOpacity onPress={() => {   Linking.openURL(`tel:${item.phone}`)}}>
+          <View style={[globalStyles.menuItem, {}]}>
+            <Icon name="phone" color="yellow" size={25}/>
+            <Text style={[globalStyles.menuItemText, {color:'white'}]}>Piga Simu</Text>
+          </View>
+        </TouchableOpacity>)}
        
+
+       {item.phone && (
+        <TouchableOpacity  onPress={() => sendTextMessage(phoneValue, message)}>
+          <View style={[globalStyles.menuItem, {}]}>
+            <Icon name="message" color="red" size={25}/>
+            <Text style={[globalStyles.menuItemText, {color:'white'}]}>Mtumie ujumbe kawaida</Text>
+          </View>
+        </TouchableOpacity>)}
 
         {item.phone && (
         <TouchableOpacity onPress={() => { Linking.openURL(`whatsapp://send?phone=${item.phone}&text=${message}`)}}>
@@ -154,13 +181,7 @@ const navigation = useNavigation();
           </View>
         </TouchableOpacity>)}
 
-        {item.phone && (
-        <TouchableOpacity  onPress={() => sendTextMessage(phoneValue, message)}>
-          <View style={[globalStyles.menuItem, {}]}>
-            <Icon name="message" color="red" size={25}/>
-            <Text style={[globalStyles.menuItemText, {color:'white'}]}>Mtumie ujumbe kawaida</Text>
-          </View>
-        </TouchableOpacity>)}
+        
 
           {item.email && (
          <TouchableOpacity onPress={() => {  Linking.openURL(`mailto:${item.email}?subject=Hello ${item.username}&body=${message}`)}}>
@@ -170,13 +191,7 @@ const navigation = useNavigation();
           </View>
         </TouchableOpacity>)}
 
-         {item.phone && (
-         <TouchableOpacity onPress={() => {   Linking.openURL(`tel:${item.phone}`)}}>
-          <View style={[globalStyles.menuItem, {}]}>
-            <Icon name="phone" color="yellow" size={25}/>
-            <Text style={[globalStyles.menuItemText, {color:'white'}]}>Piga Simu</Text>
-          </View>
-        </TouchableOpacity>)}
+       
   
 </View>
 

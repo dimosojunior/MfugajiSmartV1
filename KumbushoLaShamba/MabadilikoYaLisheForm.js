@@ -314,8 +314,8 @@ const [KundiLaKukuWake, setKundiLaKukuWake] = useState('');
 
 
   const LengoLaKufugaChoices = [
-    {id:1, label: 'Nafuga kwa ajili ya mayai', value: 'Nafuga kwa ajili ya mayai' },
-    {id:2, label: 'Nafuga kwa ajili ya nyama', value: 'Nafuga kwa ajili ya nyama' }
+    {id:1, label: 'Kwaajili Ya Mayai', value: 'Kwaajili Ya Mayai' },
+    {id:2, label: 'Kwaajili Ya Nyama', value: 'Kwaajili Ya Nyama' }
   ];
 
     const MudaWaKumbushoChoices = [
@@ -348,7 +348,7 @@ const [KundiLaKukuWake, setKundiLaKukuWake] = useState('');
             }}
 
               >
-              <MinorHeader title="Mayai" />
+              <MinorHeader title="Lishe" />
               <ImageBackground
                 source={require('../assets/bc1.png')}
                 style={[{ 
@@ -381,9 +381,8 @@ const [KundiLaKukuWake, setKundiLaKukuWake] = useState('');
 
 
   <Text style={styles.dataContainerFormTitle}>
-  Karibu {username}, Tafadhali jaza sehemu zote
-   hapo chini ili kuweza kuweka kumbusho
-    la Mabadiliko ya lishe </Text>
+  Karibu {username}, tafadhali jaza taarifa muhimu hapo chini
+     </Text>
 
 
 
@@ -487,7 +486,7 @@ const [KundiLaKukuWake, setKundiLaKukuWake] = useState('');
                 color:'wheat',
               }
               ]}>
-                 Ingiza kundi la kuku wako
+                 Sajili jina la kundi la kuku wako (mfano: kuku wa uyole)
             </Text>
             </View>
 
@@ -531,7 +530,7 @@ const [KundiLaKukuWake, setKundiLaKukuWake] = useState('');
                 color:'wheat',
               }
               ]}>
-                 Hello {username}, chagua lengo la wewe kufuga kuku ?
+                  Chagua lengo la wewe kufuga kuku ?
             </Text>
             </View>
         

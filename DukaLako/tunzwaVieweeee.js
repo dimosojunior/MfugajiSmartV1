@@ -46,11 +46,6 @@ import Animated, {
 const {width, height} = Dimensions.get('window');
 
 
-
-
-
-
-
 // Function to prefetch images
 const prefetchImages = async (images) => {
   const prefetchPromises = images.map((image) => {
@@ -68,19 +63,16 @@ const Carousel = memo(({ images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-  if (flatlistRef.current && images.length > 0) {
-    const interval = setInterval(() => {
-      const newIndex = (activeIndex + 1) % images.length;
-      // Ensure flatlistRef is not null before trying to call scrollToIndex
-      if (flatlistRef.current) {
+    if (flatlistRef.current && images.length > 0) {
+      const interval = setInterval(() => {
+        const newIndex = (activeIndex + 1) % images.length;
         flatlistRef.current.scrollToIndex({ index: newIndex, animated: true });
-      }
-      setActiveIndex(newIndex);
-    }, 2000);
+        setActiveIndex(newIndex);
+      }, 2000);
 
-    return () => clearInterval(interval);
-  }
-}, [activeIndex, images.length]);
+      return () => clearInterval(interval);
+    }
+  }, [activeIndex, images.length]);
 
   const getItemLayout = useCallback(
     (_, index) => ({
@@ -145,35 +137,8 @@ const Carousel = memo(({ images }) => {
 
 
 
+
 export default function ViewDukaLako ({navigation, route}) {
-
-
-    //kwa ajili ya kuzoom in/out
-  // Shared value for scaling
-  //---BUT ukionana unakutana na error ya React-native-reanimated mismatch
-  //basi hii na hizo import zake hapo juu ndo inasababisha ko utazitoa maana
-  //hizi kwa sasa zinahitaji react native 3.10.1 or 3.10.0 na utainstall kama
-  //hivi npx expo install react-native-reanimated
-  const scale = useSharedValue(1);
-
-  // Gesture handler for pinch-to-zoom
-  const pinchHandler = useAnimatedGestureHandler({
-    onActive: (event) => {
-      scale.value = event.scale;
-    },
-    onEnd: () => {
-      scale.value = withSpring(1);  // Reset to original size when gesture ends
-    },
-  });
-
-  // Animated style to apply the scaling
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: scale.value }],
-    };
-  });
-
-
 
    const { 
     
@@ -235,6 +200,49 @@ const [userData, setUserData] = useState({});
 //FOR SEARCHING
 const [input, setInput] = useState('');
 
+
+const [likedItems, setLikedItems] = useState(new Set()); // Store liked items in a set
+
+
+//Load more
+const [queryset, setQueryset] = useState([]);
+const [current_page, setcurrent_page] = useState(1);
+const [isLoading, setIsLoading] = useState(false);
+const [loading, setLoading] = useState(false);
+const [endReached, setEndReached] = useState(false)
+const [isPending, setPending] = useState(true);
+
+
+
+//hii inafetch liked items by that user then ina fetch proudct step by step
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        // Step 1: Fetch user token
+        const token = await AsyncStorage.getItem('userToken');
+        if (!token) {
+          console.log("No user Token");
+          return;
+        }
+        setUserToken(token);
+        console.log("My Token", token);
+
+        // Step 2: Fetch items
+        const itemsFetched = await getItems(token);
+        if (itemsFetched) {
+          // Step 3: Load liked status after fetching items
+          await loadLikedStatus(token, itemsFetched);
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
+        setPending(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
 
 
@@ -400,69 +408,41 @@ const htmlContent2 = '<p style=\"text-align:center\"><span style=\"color:#fff\">
 
 
 
+  // const nav = useNavigation();
+  // const DATA = [
+  //   {
+  //     id: 1,
+  //     name: "Bajeti Ya Chakula",
+  //     backgroundColor:"#6BC5E8",
+  //     imagesrc:im1
+      
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Kumbusho La Shamba",
+  //     backgroundColor:"#3A9EC2",
+  //     imagesrc:im2
+  //   },
+
+  //   {
+  //     id: 3,
+  //     name: "Kitabu Shamba",
+  //     backgroundColor:"#3A9EC2",
+  //     imagesrc:im3
+  //   },
+
+  //   {
+  //     id: 4,
+  //     name: "Jamii Ya Mfugaji",
+  //     backgroundColor:"#3A9EC2",
+  //     imagesrc:im4
+  //   }
+
+
+  // ];
 
 
 
-
- const formatDate = (dateString) => {
-    if (!dateString) return null;
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
- 
-
-
-
-//-------------------GETTING ITEMS----------------
-
-const [likedItems, setLikedItems] = useState(new Set()); // Store liked items in a set
-
-
-//Load more
-const [queryset, setQueryset] = useState([]);
-const [current_page, setcurrent_page] = useState(1);
-const [isLoading, setIsLoading] = useState(false);
-const [loading, setLoading] = useState(false);
-const [endReached, setEndReached] = useState(false)
-const [isPending, setPending] = useState(true);
-
-
-
-
-
-
-//hii inafetch liked items by that user then ina fetch proudct step by step
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        // Step 1: Fetch user token
-        const token = await AsyncStorage.getItem('userToken');
-        if (!token) {
-          console.log("No user Token");
-          return;
-        }
-        setUserToken(token);
-        console.log("My Token", token);
-
-        // Step 2: Fetch items
-        const itemsFetched = await getItems(token);
-        if (itemsFetched) {
-          // Step 3: Load liked status after fetching items
-          await loadLikedStatus(token, itemsFetched);
-        }
-      } catch (error) {
-        console.error('Error loading data:', error);
-      } finally {
-        setLoading(false);
-        setPending(false);
-      }
-    };
-
-    loadData();
-  }, []);
 
 
   const getItems = async (token) => {
@@ -473,7 +453,7 @@ const [isPending, setPending] = useState(true);
       return null;
     } else {
       setIsLoading(true);
-     const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=50`;
+      const url = EndPoint + `/GetAllDukaLakeByClickingPostedProductView/?ViewedUsernameProduct=${ViewedUsernameProduct}&page=${current_page}&page_size=50`;
       return fetch(url)
         .then((res) => res.json())
         .then((data) => {
@@ -496,6 +476,9 @@ const [isPending, setPending] = useState(true);
   };
 
 
+
+
+
  const renderLoader = () => {
     return (
       isLoading ?
@@ -509,8 +492,12 @@ const [isPending, setPending] = useState(true);
   //   setcurrent_page(current_page + 1);
   // };
 
+  // useEffect(() => {
+  //   setLoading(true)
+  //   getItems();
+  // }, []);
 
-  const handleScroll2 = (event) =>{
+ const handleScroll = (event) =>{
     const {layoutMeasurement, contentOffset, contentSize} = event.nativeEvent;
     const scrollEndY = layoutMeasurement.height + contentOffset.y
     const contetHeight = contentSize.height
@@ -624,9 +611,15 @@ const handleLikeToggle = async (itemId) => {
 
 
 
-
-
-
+ const formatDate = (dateString) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+ 
 
 
 
@@ -652,6 +645,7 @@ const handleLikeToggle = async (itemId) => {
       soundRef.current.unloadAsync();
     };
   }, []);
+
 
 
 
@@ -684,11 +678,8 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
   };
 
 
-
-
-  const TransportItem = ({item, index}) => {
-
-     const carouselItems = [
+const InventoryCard = ({item, index}) => {
+   const carouselItems = [
       item.PichaYaPost,
       item.PichaYaPost2,
       item.PichaYaPost3,
@@ -702,11 +693,11 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
     ].filter(Boolean); // Filter out any null or undefined values
 
     //console.log("Carousel Items:", carouselItems);
+
+ //console.log("Carousel Items:", carouselItems);
     const isLiked = likedItems.has(item.id);
 
 
-
-   
 
     return (
 
@@ -717,100 +708,21 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
 
 
 
-         {/*mwanzo mwa informations za mtu aliyepost*/}
-
-            <View style={globalStyles.UserInfoContainer}>
-              
-            {/*mwanzo wa left info*/}
-             <View style={globalStyles.UserInfoLeftContainer}>
-             {item.profile_image ? ( 
-                  <Image
-
-                  style={globalStyles.UserInfoLeftImage}
-                   source={{
-                      uri: EndPoint + '/' + item.profile_image
-                    }}
-                      
-                      >
-                  </Image>
-                  ):(
-                  <Image
-
-                  style={globalStyles.UserInfoLeftImage}
-                   source={require('../assets/profile.jpg')} 
-                  >
-                  </Image>
-                )}
-               
-             </View>
-           {/*mwisho wa left info*/}
-
-           {/*mwanzo wa middle info*/}
-           {item.TickStatus == "Ndio Anastahili" && (
-           <View style={globalStyles.UserInfoMiddleContainer}>
-           
-             <Text style={globalStyles.UserInfoUsername}>
-               <FontAwesome name='check-square-o' 
-              size={20}
-              //color="black" 
-              color="green" 
-              
-               />
-             </Text>
-              </View>
-              )}
-            {/*mwisho wa middle info*/}
-
-             
-             {/*mwanzo wa right info*/}
-           <View style={[
-            globalStyles.UserInfoRightContainer,
-            {
-              width: item.TickStatus == "Ndio Anastahili" ? '60%' : '75%'
-            }
-            ]
-          }>
-           {item.company_name ? (
-             <Text style={globalStyles.UserInfoUsername}>
-             {item.company_name}</Text>
-             ):(
-              <Text style={globalStyles.UserInfoUsername}>
-             {item.username}</Text>
-             )}
-           </View>
-            {/*mwisho wa right info*/}
-
-
-
-            </View>
-           
-           {/*mwanzo mwa informations za mtu aliyepost*/}
-
                 <View style={{
                   //justifyContent:"space-between",
                 }}>
                   <Text 
 
-                  style={[globalStyles.AppItemNameHomeScreen,
-                    {
-                      marginBottom:15,
-                    }
-
-                    ]}
+                  style={globalStyles.AppItemNameHomeScreen}
 
                  >{item.Title}</Text>
 
 
- <PinchGestureHandler onGestureEvent={pinchHandler}>
-   <Animated.View style={[styles.imageContainer, animatedStyle]}>
+     <Carousel images={carouselItems} />
 
-<Carousel images={carouselItems} />
 
- </Animated.View>
-  </PinchGestureHandler>
-    
-      
-           {/*    <View 
+
+         {/*      <View 
                 style={globalStyles.AppItemImageContainerHomeScreen}
               >
               {item.PichaYaPost ? ( 
@@ -836,11 +748,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
 
 
 
-
-
-
-
-  {item.Maelezo && (
+        {item.Maelezo && (
                <TouchableOpacity style={{
                  width:'90%',
                  marginHorizontal:20,
@@ -885,6 +793,8 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
                )}
 
 
+
+
                   <TouchableOpacity 
 
                   style={[globalStyles.AppItemButtonHomeScreen,
@@ -905,13 +815,22 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
             {/*mwanzo wa view ya left*/}
               <TouchableOpacity 
 
-             onPress={() => {
-           navigation.navigate('View Duka Lako', item);    
-        }} >
+        //      onPress={() => {
+        //    navigation.navigate('View Duka Lako', item);    
+        // }} 
+        >
            <View style={globalStyles.LeftBtnContainer}>
             <Text 
-          style={globalStyles.AppItemButtonTextHomeScreen}
-        >Wasiliana naye</Text>
+          style={[globalStyles.AppItemButtonTextHomeScreen,
+
+            {
+              backgroundColor:'black',
+              borderColor:'white',
+              borderWidth:1,
+            }
+
+            ]}
+        >{formatDate(item.Created)}</Text>
          </View>
          </TouchableOpacity>
           {/*mwisho wa view ya left*/}
@@ -935,8 +854,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
         <View>
            <FontAwesome name='heart' 
       size={20}
-      //color="black" 
-      color={isLiked ? 'red' : 'black'} 
+     color={isLiked ? 'red' : 'black'} 
       
        />
         </View>
@@ -948,6 +866,11 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
 
 
                   </TouchableOpacity>
+
+
+
+
+
                 </View>
                 <View>
                  
@@ -959,27 +882,8 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
            )
 
 
-
-
-
-
-// mwisho wa render
-  };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
+  
 
 
   return (
@@ -1011,7 +915,7 @@ keyboardShouldPersistTaps="handled"
 //        }
       showsVerticalScrollIndicator={false}
        
- onScroll={handleScroll2} scrollEventThrottle={16}
+ onScroll={handleScroll} scrollEventThrottle={16}
       >
 
 
@@ -1423,35 +1327,28 @@ keyboardShouldPersistTaps="handled"
 
 
 
-
-
-
 { !isPending ? (
   <>
       
-     { queryset && queryset.length > 0 ? (
+      { queryset && queryset.length > 0 ? (
         <>
    {setLoading===true?(<ActivityIndicator/>):(
 
              <>
 
           {queryset.map((item, index) => {
-          return <TransportItem item={item} key={item.id || index} />;
+          return <InventoryCard item={item} key={item.id || index} />;
           })}
 
           {isLoading&&(<ActivityIndicator/>)}
           </>
           )}
 
-        
-
-
          </>
 
 
 
       ) : (
-
        
 
  <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
@@ -1481,6 +1378,7 @@ keyboardShouldPersistTaps="handled"
 
 
 )} 
+
 
 
 

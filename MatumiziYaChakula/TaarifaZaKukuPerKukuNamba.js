@@ -737,147 +737,10 @@ const TotalVyakulaCard = () => {
       style={globalStyles.TaarifaOverdoseCartItemsContainer} >
 
 
-   {/* mwanzo wa flow ya 00*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {AinaYaKuku && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-            Aina yako ya kuku
-          </Text>
-          
-          </View>
-          )}
-
-         {AinaYaKuku && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {AinaYaKuku} 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 000*/}
+   
 
 
 
-
-
-      {/* mwanzo wa flow ya 00*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {UmriKwaWiki && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-            Umri wa kuku wako
-          </Text>
-          
-          </View>
-          )}
-
-         {UmriKwaWiki && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-           Wiki: {UmriKwaWiki} 
-          </Text>
-
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-           Siku: {Interval} 
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 00*/}
-
-
-
-       
-       {/* mwanzo wa flow ya 0*/}
-        <View 
-        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
-        >
-      
-     
-     {IdadiYaKukuWako > 0 && ( 
-     <View style={
-            globalStyles.TaarifaLeft
-          }>
-        <Text style={
-            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
-          }>
-            =></Text>
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
-         >
-           
-             Idadi Ya Kuku wako
-          </Text>
-          
-          </View>
-          )}
-
-         {IdadiYaKukuWako > 0 && ( 
-         <View style={
-            globalStyles.TaarifaRight
-          }>
-        
-          <Text 
-           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
-         >
-            {IdadiYaKuku}
-          </Text>
-          
-     </View>
-     )}
-
-      
-       
-        </View>
-      {/*mwisho wa flow ya 0*/}
 
 
 
@@ -1249,41 +1112,19 @@ const InventoryCard = ({item, index}) => {
 
  <Pressable style={globalStyles.MaelezoContainer1TaarifaZaKuku}>
 
-    <Text style={globalStyles.MaelezoText1TaarifaZaKuku}>
-    Haya ni maelekezo kwa siku {DisplayIdadiYaSiku} ambazo ulizijaza.   
-    </Text>
-
-  {total_Kilos_neededBasedOnUserDays > 0 && (
-     <Text style={[
-      globalStyles.MaelezoText2TaarifaZaKuku,
-      {
-    backgroundColor:'lightgreen',
-    padding:10,
-  }
-      ]}>
-   Kuku {IdadiYaKukuWako} aina ya {AinaYaKuku} wenye umri wa wiki {UmriKwaWiki},
-   yani kuanzia siku {Interval}, anahitaji wastani wa kiasi cha 
-   <Text> </Text>  
-   <Text style={globalStyles.MaelezoValue1TaarifaZaKuku} >
-   {total_Kilos_neededBasedOnUserDays_IdadiYaKuku.toFixed(2)} Kg </Text>
-   cha chakula, ambacho Kitatumika kwa wastani wa  
-   wiki {MudaWaZiada_IdadiYaKuku.toFixed(0)}
-    </Text>
-      )}
-
+  
 {total_Kilos_neededBasedOnUserDays > 0 && (
  <Text 
  style={[
   globalStyles.MaelezoText1TaarifaZaKuku,
 
   {
-    //backgroundColor:'black'
+    color:'black',
   }
 
 
 ]}>
-    Ambapo mgawanyo wa chakula kwa hizi wiki zote  {MudaWaZiada_IdadiYaKuku.toFixed(0)} utakuwa kama ifuatavyo kwa wiki nzima 
-    na kwa kila siku kwa aina ya {AinaYaKuku}, kwa siku {DisplayIdadiYaSiku};   
+   Mgawanyo wa chakula kwa siku {DisplayIdadiYaSiku}   
     </Text>
     )}
 
@@ -3409,7 +3250,7 @@ keyboardShouldPersistTaps="handled"
 <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Mchanganuo wa jumla kwa kuku {IdadiYaKuku} aina ya {AinaYaKuku},
+    >Mchanganuo wa jumla kwa kuku {IdadiYaKuku} {AinaYaKuku},
     umri kuanzia siku {Interval}, kwa siku {DisplayIdadiYaSiku}.
 
      </Text>

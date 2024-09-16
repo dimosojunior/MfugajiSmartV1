@@ -560,7 +560,7 @@ keyboardShouldPersistTaps="handled"
       <View style={[globalStyles.menuWrapper, 
         {backgroundColor:COLORS.white}]}>
        
-       
+   {username != MtoaMaoniUsername ? (       
 <Text style={{
   marginTop:50,
   fontFamily:'Medium',
@@ -568,6 +568,17 @@ keyboardShouldPersistTaps="handled"
 }}>
   Hello {MtoaMaoniUsername}, unaweza kuwasiliana na {username} kupitia njia hizo hapo chini
 </Text>
+):(
+<Text style={{
+  marginTop:50,
+  fontFamily:'Medium',
+
+}}>
+  Hello {MtoaMaoniUsername}, watu wengine wanaweza kuwasiliana na wewe kupitia njia hizi
+
+</Text>
+
+)}
 
  {phone && (
          <TouchableOpacity onPress={() => {   Linking.openURL(`tel:${phone}`)}}>

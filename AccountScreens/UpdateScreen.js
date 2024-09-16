@@ -333,14 +333,9 @@ const pickPdf = async () => {
         }
 
 
-        //  if (company_name) {
-        //     formData.append('company_name', company_name);
-        // } else {
-        //     showAlertFunction('Tafadhali ingiza jina la kampuni au biashara yako, na kama huna andika (Sina).');
-        //     setIsLoading(false);
-        //     return;
-        // }
-
+         if (company_name) {
+            formData.append('company_name', company_name);
+        } 
 
        
 
@@ -413,13 +408,19 @@ const pickPdf = async () => {
         //     return;
         // }
 
-          if (selectedAinaYaKuku) {
+        //   if (selectedAinaYaKuku) {
+        //   formData.append('AinaYaKuku', selectedAinaYaKuku);
+        // } else {
+        //   showAlertFunction('Tafadhali chagua aina ya kuku.');
+        //   setIsLoading(false);
+        //   return;
+        // }
+
+           if (selectedAinaYaKuku) {
           formData.append('AinaYaKuku', selectedAinaYaKuku);
-        } else {
-          showAlertFunction('Tafadhali chagua aina ya kuku.');
-          setIsLoading(false);
-          return;
-        }
+        } 
+
+
 
 
       // formData.append('Mkoa', selectedMkoa.id);
@@ -844,7 +845,7 @@ marginBottom:20,
 
                   {!isLoading && (
                     <TouchableOpacity onPress={handleUpdate} style={styles.ButtonContainerUpdate}>
-                      <Text style={styles.ButtonTextUpdate}>Badilisha</Text>
+                      <Text style={styles.ButtonTextUpdate}>Jisajili</Text>
                     </TouchableOpacity>
                   )}
                 </ScrollView>

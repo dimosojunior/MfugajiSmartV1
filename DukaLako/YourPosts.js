@@ -55,17 +55,20 @@ const Carousel = memo(({ images }) => {
   const screenWidth = Dimensions.get('window').width;
   const [activeIndex, setActiveIndex] = useState(0);
 
-  useEffect(() => {
-    if (flatlistRef.current && images.length > 0) {
-      const interval = setInterval(() => {
-        const newIndex = (activeIndex + 1) % images.length;
+ useEffect(() => {
+  if (flatlistRef.current && images.length > 0) {
+    const interval = setInterval(() => {
+      const newIndex = (activeIndex + 1) % images.length;
+      // Ensure flatlistRef is not null before trying to call scrollToIndex
+      if (flatlistRef.current) {
         flatlistRef.current.scrollToIndex({ index: newIndex, animated: true });
-        setActiveIndex(newIndex);
-      }, 2000);
+      }
+      setActiveIndex(newIndex);
+    }, 2000);
 
-      return () => clearInterval(interval);
-    }
-  }, [activeIndex, images.length]);
+    return () => clearInterval(interval);
+  }
+}, [activeIndex, images.length]);
 
   const getItemLayout = useCallback(
     (_, index) => ({
@@ -322,9 +325,34 @@ const checkLoggedIn = async () => {
     return `${day}/${month}/${year}`;
   };
  
- const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
+ 
+//-------------NI KWA AJILI YA KUEXPAND TEXT-----------
+
+const [textHeight, setTextHeight] = useState({});
+const [lineLimit, setLineLimit] = useState(3); // Number of lines to limit
+
+const handleTextLayout = (itemId, event) => {
+  const { height } = event.nativeEvent.layout;
+  const lineHeight = 18; // Assuming a line height of 18 (you can adjust this based on your styling)
+  const maxHeight = lineHeight * lineLimit; // Calculate the max height for 3 lines
+
+  if (height > maxHeight) {
+    setTextHeight(prev => ({ ...prev, [itemId]: height }));
+  } else {
+    setTextHeight(prev => ({ ...prev, [itemId]: 0 })); // No expansion needed if height is less than max
+  }
+};
 
 
+ //const [isExpanded, setIsExpanded] = useState(false); // State to manage text expansion
+const [expandedItems, setExpandedItems] = useState({}); // State to manage text expansion
+
+  const toggleExpanded = (itemId) => {
+    setExpandedItems((prevExpandedItems) => ({
+      ...prevExpandedItems,
+      [itemId]: !prevExpandedItems[itemId], // Toggle the expanded state for the clicked item
+    }));
+  };
 
 
   const transportItem = ({item}) => {
@@ -383,9 +411,34 @@ const checkLoggedIn = async () => {
                
              </View>
            {/*mwisho wa left info*/}
+
+             {/*mwanzo wa middle info*/}
+           {item.TickStatus == "Ndio Anastahili" && (
+           <View style={globalStyles.UserInfoMiddleContainer}>
+           
+             <Text style={globalStyles.UserInfoUsername}>
+               <FontAwesome name='check-square-o' 
+              size={20}
+              //color="black" 
+              color="green" 
+              
+               />
+             </Text>
+              </View>
+              )}
+            {/*mwisho wa middle info*/}
+
+             
              
              {/*mwanzo wa right info*/}
-           <View style={globalStyles.UserInfoRightContainer}>
+            <View style={[
+            globalStyles.UserInfoRightContainer,
+            {
+              width: item.TickStatus == "Ndio Anastahili" ? '60%' : '75%'
+            }
+            ]
+          }>
+
            {item.company_name ? (
              <Text style={globalStyles.UserInfoUsername}>
              {item.company_name}</Text>
@@ -438,7 +491,7 @@ const checkLoggedIn = async () => {
                 )}
                </View>*/}
 
-           {item.Maelezo && (
+         {item.Maelezo && (
                <TouchableOpacity style={{
                  width:'90%',
                  marginHorizontal:20,
@@ -449,24 +502,26 @@ const checkLoggedIn = async () => {
                 color:'black',
                 fontFamily:'Light',
                }}
-               numberOfLines={isExpanded ? 0 : 3}
+               //numberOfLines={isExpanded ? 0 : 3}
+                numberOfLines={expandedItems[item.id] ? undefined : 3}
+          onLayout={(event) => handleTextLayout(item.id, event)}
                >
                  {item.Maelezo}
                </Text>
-
-                   {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
-                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                {textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
                       color:'green',
+                      //color:textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] ? 'white' : 'green',
                     }
 
                     ]}>Soma Zaidi -></Text>
                 </TouchableOpacity>
               )}
-              {isExpanded && (
-                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+              {expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
@@ -477,9 +532,9 @@ const checkLoggedIn = async () => {
                 </TouchableOpacity>
               )}
                  
-                 
                </TouchableOpacity>
                )}
+
 
 
                   <TouchableOpacity 
@@ -592,7 +647,7 @@ const checkLoggedIn = async () => {
 
                
         >
-        <Pressable 
+       {/* <Pressable 
       onPress={() => navigation.navigate('Edit Post DukaLako', {...item, postId: item.id })}
 
           >
@@ -617,7 +672,7 @@ const checkLoggedIn = async () => {
         
 
          </View>
-         </Pressable>
+         </Pressable>*/}
          </TouchableOpacity>
           {/*mwisho wa view ya left*/}
 
@@ -677,7 +732,7 @@ const checkLoggedIn = async () => {
 
  if(item.Title.toLowerCase().includes(input.toLowerCase())){
 
-   return (
+    return (
 
       <CustomCard >
               <View 
@@ -713,9 +768,34 @@ const checkLoggedIn = async () => {
                
              </View>
            {/*mwisho wa left info*/}
+
+             {/*mwanzo wa middle info*/}
+           {item.TickStatus == "Ndio Anastahili" && (
+           <View style={globalStyles.UserInfoMiddleContainer}>
+           
+             <Text style={globalStyles.UserInfoUsername}>
+               <FontAwesome name='check-square-o' 
+              size={20}
+              //color="black" 
+              color="green" 
+              
+               />
+             </Text>
+              </View>
+              )}
+            {/*mwisho wa middle info*/}
+
+             
              
              {/*mwanzo wa right info*/}
-           <View style={globalStyles.UserInfoRightContainer}>
+            <View style={[
+            globalStyles.UserInfoRightContainer,
+            {
+              width: item.TickStatus == "Ndio Anastahili" ? '60%' : '75%'
+            }
+            ]
+          }>
+
            {item.company_name ? (
              <Text style={globalStyles.UserInfoUsername}>
              {item.company_name}</Text>
@@ -768,7 +848,7 @@ const checkLoggedIn = async () => {
                 )}
                </View>*/}
 
-           {item.Maelezo && (
+         {item.Maelezo && (
                <TouchableOpacity style={{
                  width:'90%',
                  marginHorizontal:20,
@@ -779,24 +859,26 @@ const checkLoggedIn = async () => {
                 color:'black',
                 fontFamily:'Light',
                }}
-               numberOfLines={isExpanded ? 0 : 3}
+               //numberOfLines={isExpanded ? 0 : 3}
+                numberOfLines={expandedItems[item.id] ? undefined : 3}
+          onLayout={(event) => handleTextLayout(item.id, event)}
                >
                  {item.Maelezo}
                </Text>
-
-                   {item.Maelezo.length > 100 && !isExpanded && ( // Only show 'Read more' if the text is long enough
-                <TouchableOpacity onPress={() => setIsExpanded(true)}>
+                {textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
                       color:'green',
+                      //color:textHeight[item.id] > lineLimit * 18 && !expandedItems[item.id] ? 'white' : 'green',
                     }
 
                     ]}>Soma Zaidi -></Text>
                 </TouchableOpacity>
               )}
-              {isExpanded && (
-                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+              {expandedItems[item.id] && (
+                <TouchableOpacity onPress={() => toggleExpanded(item.id)}>
                   <Text style={[styles.readMoreText,
                     {
                       fontFamily:'Medium',
@@ -807,9 +889,9 @@ const checkLoggedIn = async () => {
                 </TouchableOpacity>
               )}
                  
-                 
                </TouchableOpacity>
                )}
+
 
 
                   <TouchableOpacity 
@@ -922,7 +1004,7 @@ const checkLoggedIn = async () => {
 
                
         >
-        <Pressable 
+       {/* <Pressable 
       onPress={() => navigation.navigate('Edit Post DukaLako', {...item, postId: item.id })}
 
           >
@@ -947,7 +1029,7 @@ const checkLoggedIn = async () => {
         
 
          </View>
-         </Pressable>
+         </Pressable>*/}
          </TouchableOpacity>
           {/*mwisho wa view ya left*/}
 
@@ -1061,6 +1143,7 @@ const checkLoggedIn = async () => {
                 globalStyles.ItselfMajorContainer,
                 {
                   backgroundColor:'lightgreen',
+                  width:'100%',
                 }
 
                 ]}>
@@ -1069,6 +1152,9 @@ const checkLoggedIn = async () => {
              <TouchableOpacity 
                onPress={() => {
             navigation.navigate('See Notifications');    
+        }}
+        style={{
+          width:'50%',
         }}
              >
               <Text 
@@ -1079,7 +1165,7 @@ const checkLoggedIn = async () => {
                   color:'white'
                 }
 
-                ]}>Notifications</Text>
+                ]}>Taarifa</Text>
               </TouchableOpacity>
               </View>
              
@@ -1087,13 +1173,29 @@ const checkLoggedIn = async () => {
             onPress={() => {
             navigation.navigate('Duka Lako Form');    
         }}
-              style={globalStyles.ItselfRightMinorContainer}>
+              style={[globalStyles.ItselfRightMinorContainer,
+                {
+                  width:'40%',
+                  //backgroundColor:'red',
+                }
+
+                ]}>
               <View >
-                  <FontAwesome name='plus-square-o' 
+                  {/*<FontAwesome name='plus-square-o' 
                   size={30}
                   color='red'  
                   
-                   />
+                   />*/}
+                    <Text 
+              style={[
+                globalStyles.ItselfRightiMinorText,
+                {
+                  //backgroundColor:'white',
+                  color:'red',
+                  fontFamily:'Bold',
+                }
+
+                ]}>POSTI</Text>
               </View>
               </TouchableOpacity>
                 

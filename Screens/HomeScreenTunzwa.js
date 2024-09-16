@@ -6,7 +6,6 @@ import  {
   Linking,
   Animated,
   Alert,
-  Dimensions,
   Platform,Text,TouchableOpacity,TextInput,FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -25,8 +24,6 @@ import { EndPoint } from '../Constant/links';
 import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
-import SlidingComponent from './SlidingComponent';
-
 import { useFocusEffect } from '@react-navigation/native';
 import { PinchGestureHandler, State } from 'react-native-gesture-handler';
 import  {
@@ -36,8 +33,6 @@ import  {
   withSpring,
   withTiming 
 } from 'react-native-reanimated';
-
-const { width, height } = Dimensions.get('screen');
 
 export default function HomeScreen ({navigation}) {
 
@@ -323,23 +318,6 @@ const myphone = "0628431507";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //FOR SEARCHING
 const [input, setInput] = useState('');
 
@@ -607,66 +585,256 @@ return (
 
           <View style={globalStyles.container}>
 
-          
-{/* <View 
- style={{
-  flex:1,
-    //backgroundColor:'red',
-    // borderTopLeftRadius:50,
-    // borderTopRightRadius:50,
-    //width:'width',
+           <ImageBackground
 
-    borderWidth:.2,
-    borderColor:COLORS.green,
-    elevation: 3,
+                source={require('../assets/im2.jpg')}
+                style={{
+                    flex: 1,
+                    opacity:1,
+                }}
+                resizeMode= "cover"
+            >
 
-    shadowOffset: { width: 1, height: 1 },
-    shadowColor: Platform.OS === "android" ? COLORS.green : COLORS.green,
-    shadowOpacity: 1,
-    shadowRadius: 2,
-    //padding:10,
-    margin:0,
-    //height: height  + 10,
-   // marginBottom:100,
-   paddingBottom:40,
- }}
+              <View style={globalStyles.topview}>
+                  <View style={globalStyles.welcomecontainer}>
+                     
+                     <View
+                      style={globalStyles.AppWelcomeMsgContainerHomeScreen} 
+                     
+                     >
+                     <Animated.Text
+                style={[
+                    styles.welcomemessage,
+                    {
+                        opacity: fadeAnimSmart, // Tumia animation ya opacity
+                        color: 'white',
+                        fontSize: 25,
+                        fontFamily: 'Medium',
+                        marginTop:15,
+                    },
+                ]}
+            >
+                MFUGAJI SMART
+            </Animated.Text>
 
- >
-           <SlidingComponent />
-           </View>*/}
+            <Animated.Text
+                style={[
+                    styles.welcomemessage,
+                    {
+                        opacity: fadeAnimKidijitali, // Tumia animation ya opacity
+                        color: 'yellow',
+                        fontSize: 20,
+                        fontFamily: 'Regular',
+                    },
+                ]}
+            >
+                Fuga Kidijitali
+            </Animated.Text>
+                     </View>
+                     
+                
+                 <TouchableOpacity 
+                   onPress={() => {
+                navigation.replace('See Notifications');    
+                  }}
+                  style={[globalStyles.circle,
+                    {
+                      backgroundColor:'wheat',
+                      justifyContent:'space-around',
+                      alignItems:'center',
+                      flexDirection:'row',
+                    }
 
-<View style={{
-  flex:2,
-  backgroundColor:'lightyellow',
-  padding:0,
-  margin:0,
- // height:height,
- //marginBottom:-180,
-  marginBottom:-130,
+                    ]}
+                       >
+                    <Animated.View style={{
+                     opacity: fadeAnim
+                      }}>
+                     <FontAwesome name='bell-o' 
+                      size={20}
+                      color='black'
+                      style={[globalStyles.RightHeaderImageu,
+                        {
+                          fontFamily:'Bold',
+                        }
+                        ]}  
+                      
+                       />
+                       </Animated.View>
 
-}}>
+                      {unseenCount > 0 ? (
+                      <Text style={{
+                        color:'red',
+                        fontFamily:'Bold',
+                       }}>{unseenCount}</Text>
+                       ):(
 
-<SlidingComponent />
+                       <Text style={{
+                        color:'black',
+                        fontFamily:'Bold',
+                       }}>{unseenCount}</Text>
+                       )}
+                   {/*   <Image source={require('../assets/icon.png')} 
+                  style={globalStyles.RightHeaderImage} />*/}
 
-      </View>       
+                      </TouchableOpacity>
 
-            <View style={[globalStyles.bottomview,
 
-              {
-                //backgroundColor:'blue',
-                marginTop:50,
-              }
-              ]}>
+
+
+                  </View>
+
+                 {/* <Text style={{color:"black"}}> 
+                  Where will you go</Text>*/}
+                  
+
+                 {/* <View style={globalStyles.searchbar}>
+                    <Ionicons name="search-outline" 
+                    size={25} 
+                    color={COLORS.black} 
+
+                    style={globalStyles.AppIConHomeScreen}
+
+                      />
+                    <TextInput 
+                    value={input} onChangeText ={(text) => setInput(text)}
+                    placeholder="Tafuta huduma" 
+                     placeholderTextColor='black'
+                    style={globalStyles.AppInputHomeScreen}
+                    
+                    ></TextInput>
+                  </View>*/}
+
+
+
+                  {/*mwisho wa topview*/}
+              </View>
+</ImageBackground>
+
+
+              <View style={globalStyles.bottomview}>
+              <CustomCard elevated={true} 
+               style={globalStyles.AppCustomCardContainerHomeScreen}
+           
+            >
+                  <View 
+                  style={globalStyles.AppCustomSimuContainerHomeScreen}
+                  
+                  >
+                  {/*  <Text 
+                    style={globalStyles.AppCustomSimuTextHomeScreen}
+                   
+                    >Huduma kwa wateja</Text>*/}
+                    <Text
+                    style={[globalStyles.AppCustomSimuTextValueHomeScreen,
+
+                      {
+                        color:'green',
+                        fontFamily:'Medium',
+                      }
+
+                      ]} 
+                    >
+                  uza kuku/mayai hapa kwa haraka zaidi
+                    
+                    </Text>
+                  </View>
+
+                   <View 
+                style={globalStyles.AppCustomMahaliContainerHomeScreen}
+                
+                  >
+                 
+                   
+                     
+                 {Location ? (
+                <Text
+                  style={globalStyles.AppCustomMahaliTextHomeScreen} 
+                  
+                  ><FontAwesome5 name='phone' 
+                      size={20}
+                      color='brown'  
+                      
+                       />
+                       </Text>
+                  ):(
+                   <Text
+                     style={globalStyles.AppCustomMahaliTextHomeScreen} 
+                  
+                    >  
+                    <FontAwesome5 name='user-circle' 
+                      size={20}
+                      color='brown'  
+                      
+                       />
+                </Text>
+
+                  )}
+                  
+                    {Location ? (
+
+                    <TouchableOpacity
+                   onPress={() => {   Linking.openURL(`tel:${myphone}`)}}
+                    >
+                    
+                     <Text
+                    style={[
+                      globalStyles.AppCustomMahaliTextValueHomeScreen,
+                      {
+                        backgroundColor:'green',
+                        padding:4,
+                        borderRadius:5,
+                        color:'white',
+                         borderTopRightRadius:0, 
+                         borderBottomLeftRadius:0, 
+                         marginTop:5,
+                      }
+
+
+                      ]} 
+                    
+                  
+                    >
+                    Wasiliana nasi
+                    </Text>
+                   
+                    </TouchableOpacity>
+
+
+                    ):(
+                    <TouchableOpacity
+                    onPress={() => navigation.navigate('Update Stack')}
+                    >
+                    <Text
+                    style={[
+                      globalStyles.AppCustomMahaliTextValueHomeScreen,
+                      {
+                        backgroundColor:'brown',
+                        padding:4,
+                        borderRadius:5,
+                        color:'white',
+                         borderTopRightRadius:0, 
+                         borderBottomLeftRadius:0, 
+                         marginTop:5,
+                      }
+
+
+                      ]} 
+                    
+                  
+                    >
+                    Malizia usajili
+                    </Text>
+                    </TouchableOpacity>
+                    )}
+                  </View>
+                
+                </CustomCard>
+
 
 
                 <Text
-                style={[globalStyles.AppChaguaHudumaTextHomeScreen,
-                  {
-                    marginTop:0,
-                    marginBottom:0,
-                  }
-
-                  ]}  
+                style={globalStyles.AppChaguaHudumaTextHomeScreen}  
                 
                 >Chagua Huduma</Text>
 

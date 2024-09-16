@@ -511,7 +511,7 @@ keyboardShouldPersistTaps="handled"
 
     ]}  
   
-  >Wafugaji Wote</Text>
+  >Tafuta mfugaji wa karibu</Text>
 
       
 

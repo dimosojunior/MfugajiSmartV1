@@ -310,11 +310,11 @@ const CartCard = ({item, index}) => {
     style={globalStyles.VyakulaPriceCartItemsText}
   >
     
-      Lengo La Kufuga:  <Text style={{
+      kundi la kuku wako:  <Text style={{
         color:'green',
         fontFamily:'Bold'
       }}>
-         {item.LengoLaKufuga}
+         {item.KundiLaKukuWake}
       </Text> 
     </Text>
          

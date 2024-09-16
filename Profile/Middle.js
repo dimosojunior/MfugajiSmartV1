@@ -67,20 +67,26 @@ const navigation = useNavigation();
         Email : {userData && userData.email ? userData.email : ''}
         </Text>
       </View>
-
+        
+        
       <View style={styles.middleSectionTextContainer}>
+      {userData && userData.phone && (
         <View style={styles.middleSectionText1}>
           <Text style={styles.toptext}>Simu</Text>
           <Text style={styles.bottomtext}>
           {userData && userData.phone ? userData.phone : ''}
           </Text>
         </View>
+        )}
+
+        {userData && userData.Location && (
         <View style={styles.middleSectionText}>
           <Text style={styles.toptext}>Mahali</Text>
           <Text style={styles.bottomtext}>
           {userData && userData.Location ? userData.Location : 'Mbeya'}
           </Text>
         </View>
+        )}
 
        {/* <View style={styles.middleSectionText}>
           <Text style={styles.toptext}>Kanda</Text>

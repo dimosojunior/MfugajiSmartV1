@@ -102,7 +102,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllSikuView/?page=${current_page}&page_size=1000`
+   const url = EndPoint + `/GetAllSikuView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
@@ -267,7 +267,7 @@ const InventoryCard = ({item, index}) => {
   // hili bano la chini ni la if ya juu kama mtu akitype   
 }
 
-if (item.Siku.toString().toLowerCase().includes(input.toLowerCase()) || item.Wiki.toString().toLowerCase().includes(input.toLowerCase()) || item.Mwezi.toString().toLowerCase().includes(input.toLowerCase())) {
+if (item.Siku.toString().toLowerCase().includes(input.toLowerCase())) {
 return (
 
 
@@ -330,6 +330,9 @@ return (
 
 
         <Pressable 
+        onPress={() =>
+        navigation.navigate('Kusafisha Banda Form', { ...item, JinaLaHuduma })}
+       
 
         style={globalStyles.OverdoseImageContainerCartItems}
         >
@@ -487,7 +490,7 @@ return (
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza Siku / Wiki / Mwezi" 
+                    placeholder="Ingiza Siku" 
                      placeholderTextColor='black'
                     style={globalStyles.AppInputHomeScreenOtherPages}
                     

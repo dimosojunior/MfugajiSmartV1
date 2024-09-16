@@ -342,6 +342,9 @@ return (
 
 
         <Pressable 
+         onPress={() =>
+        navigation.navigate('Ingiza Siku', { ...item, KukuId, AinaYaKuku, StaterFeed, GrowerFeed, LayerFeed, FinisherFeed })}
+       
 
         style={globalStyles.OverdoseImageContainerCartItems}
         >
@@ -1182,7 +1185,7 @@ return (
         <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako)</Text>
+    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako, , mwisho wiki 24)</Text>
 
      {/* <Image
         source={item?.RouteImage}

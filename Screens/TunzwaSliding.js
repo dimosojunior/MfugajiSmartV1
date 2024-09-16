@@ -1,11 +1,13 @@
-i have expo react native screen, so within this screen, there is text written 'MFUGAJI SMART', so my problem is i want this text to be animated, means that to be playing all the time, i don't want tobe static, i want this word to be playing all the time,
-my full codes are;
-import React, { useState,useCallback, useEffect } from 'react';
+import React, { useState,useCallback,useRef, useEffect } from 'react';
 import  {
   View,StyleSheet,Image,
   ActivityIndicator,
   ImageBackground,
   Linking,
+  Animated,
+  Dimensions,
+  Alert,
+  SafeAreaView,
   Platform,Text,TouchableOpacity,TextInput,FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -24,9 +26,26 @@ import { EndPoint } from '../Constant/links';
 import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
-import { useFocusEffect } from '@react-navigation/native';
+// import Sliding from './Sliding';
 
-export default function HomeScreen ({navigation}) {
+import { useFocusEffect } from '@react-navigation/native';
+import { PinchGestureHandler, State } from 'react-native-gesture-handler';
+import  {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming 
+} from 'react-native-reanimated';
+
+import {HomeCustomCard} from '../RenderedComponents/HomeCustomCard';
+
+const { width, height } = Dimensions.get('screen');
+
+export default function SlidingComponent ({navigation}) {
+const screenWidth = Dimensions.get("window").width;
+
+  
 
   let [fontsLoaded] = useFonts({
     
@@ -40,6 +59,9 @@ export default function HomeScreen ({navigation}) {
     
   
 });
+
+
+
 
 
     const [showAlert, setShowAlert] = useState(false);
@@ -76,6 +98,59 @@ const message = "Mfugaji Smart!!"
 
 
 
+ const fadeAnimSmart = useRef(new Animated.Value(0)).current;
+const fadeAnimKidijitali = useRef(new Animated.Value(0)).current;
+
+useEffect(() => {
+    // Uhuishaji wa fade-in na fade-out wa maandishi kwa mfuatano
+    Animated.loop(
+        Animated.sequence([
+            Animated.timing(fadeAnimSmart, {
+                toValue: 1,
+                duration: 2000, // muda wa kuongezeka uwazi (2 sekunde)
+                useNativeDriver: true,
+            }),
+            Animated.timing(fadeAnimSmart, {
+                toValue: 0,
+                duration: 2000, // muda wa kupungua uwazi (2 sekunde)
+                useNativeDriver: true,
+            }),
+            // Kisha, uhuishaji wa 'Fuga Kidijitali'
+            Animated.timing(fadeAnimKidijitali, {
+                toValue: 1,
+                duration: 2000, // muda wa kuongezeka uwazi (2 sekunde)
+                useNativeDriver: true,
+            }),
+            Animated.timing(fadeAnimKidijitali, {
+                toValue: 0,
+                duration: 2000, // muda wa kupungua uwazi (2 sekunde)
+                useNativeDriver: true,
+            }),
+        ])
+    ).start();
+}, [fadeAnimSmart, fadeAnimKidijitali]);
+
+
+
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial opacity value is 0
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000, // Fade in duration
+          useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000, // Fade out duration
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [fadeAnim]);
+
   // const nav = useNavigation();
   // const DATA = [
   //   {
@@ -109,24 +184,6 @@ const message = "Mfugaji Smart!!"
 
   // ];
 
-
-//UPDATE USER TOKEN
-useFocusEffect(
-    React.useCallback(() => {
-      const updateUserToken = async () => {
-        const token = await AsyncStorage.getItem('userToken');
-        setUserToken(token || '');
-      };
-
-      updateUserToken();
-
-      // Listen for the 'updateUserToken' event
-      const unsubscribe = navigation.addListener('updateUserToken', updateUserToken);
-
-      // Cleanup the listener when the component unmounts
-      return unsubscribe;
-    }, [navigation])
-  );
 
 
 
@@ -211,7 +268,34 @@ const [userData, setUserData] = useState({});
 
 
 
+const [unseenCount, setUnseenCount] = useState(0);
 
+   useEffect(() => {
+    if (userToken) {
+        // Fetch unseen notifications count
+        axios.get(`${EndPoint}/CountUnseenNotificationsView/`, {
+            headers: { 'Authorization': `Token ${userToken}` }
+        })
+        .then(response => {
+            setUnseenCount(response.data.unseen_count);
+            //console.log("UNSEEN", unseenCount);
+        })
+        .catch(error => {
+            //console.error(error);
+        });
+
+        // Mark notifications as seen when the screen is loaded
+        // axios.post(`${EndPoint}/MarkNotificationsAsSeenView/`, {}, {
+        //     headers: { 'Authorization': `Token ${userToken}` }
+        // })
+        // .then(response => {
+        //     console.log(response.data.message);
+        // })
+        // .catch(error => {
+        //     console.error(error);
+        // });
+    }
+}, [userToken]);
 
 
 
@@ -224,11 +308,28 @@ const myphone = "0628431507";
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //FOR SEARCHING
 const [input, setInput] = useState('');
 
 //Load more
-const [queryset, setQueryset] = useState([]);
+const [queryset2, setQueryset2] = useState([]);
 const [current_page, setcurrent_page] = useState(1);
 const [isLoading, setIsLoading] = useState(false);
 const [loading, setLoading] = useState(false);
@@ -238,60 +339,42 @@ const [isPending, setPending] = useState(true);
 
 
 
-const getItems = () => {
-  if (endReached) {
-    setLoading(false);
-    setIsLoading(false);
-    setPending(false);
-    return;
-  } else {
-    setIsLoading(true);
+const getItems2 = () => {
+ 
+    setPending(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllHudumaView/?page=${current_page}&page_size=2`
+   const url = EndPoint + `/GetAllSlidingInformationsView/`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        if (data.queryset.length > 0) {
-          setQueryset([...queryset, ...data.queryset]);
-          setIsLoading(false);
-          setLoading(false);
-          setcurrent_page(current_page + 1);
+        if (data.queryset2.length > 0) {
+          setQueryset2([...queryset2, ...data.queryset2]);
+          
           setPending(false);
 
           // console.log("NEW CRRRENT", current_page);
-          // console.log(queryset);
+          // console.log(queryset2);
 
         } else {
-          setIsLoading(false);
-          setEndReached(true);
-          setLoading(false);
+          
           setPending(false);
         }
       });
-  }
+  
 };
 
 
 
 
 
- const renderLoader = () => {
-    return (
-      isLoading ?
-        <View style={globalStyles.loaderStyle}>
-          <ActivityIndicator size="large" color="red" />
-        </View> : null
-    );
-  };
-
   // const loadMoreItem = () => {
   //   setcurrent_page(current_page + 1);
   // };
 
   useEffect(() => {
-    setLoading(true)
-    getItems();
+    //setLoading(true)
+    getItems2();
   }, []);
 
 
@@ -304,201 +387,24 @@ const getItems = () => {
 
 
 
-  const transportItem = ({item}) => {
+  const transportItem = ({item, index}) => {
 
-    if (input === ""){
-
+    
     return (
 
-      <CustomCard >
-              <View 
-              style={globalStyles.AppItemContainerHomeScreen}
-              >
-                <View style={{
-                  //justifyContent:"space-between",
-                }}>
-                  <Text 
-
-                  style={globalStyles.AppItemNameHomeScreen}
-
-                 >{item.JinaLaHuduma}</Text>
+      <SafeAreaView >
+              
 
 
-               <View 
-                style={globalStyles.AppItemImageContainerHomeScreen}
-              >
-              {item.PichaYaHuduma ? ( 
-                  <Image
-
-                  style={[globalStyles.AppItemImageHomeScreen,
-                    {
-                     // height:400,
-                    }
-
-
-                    ]}
-                   source={{
-                      uri: EndPoint + '/' + item.PichaYaHuduma
-                    }}
-                      
-                      >
-                  </Image>
-                  ):(
-                  <Image
-
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={require('../assets/500.png')} 
-                  >
-                  </Image>
-                )}
-               </View>
-
-
-                  <TouchableOpacity 
-
-                  style={globalStyles.AppItemButtonHomeScreen}
-
-                   // onPress={() => 
-                   //  navigation.navigate('Mgawanyo Wa Huduma', item)}
-                  // onPress={() => 
-                   //  navigation.navigate('Angalia Huduma', item)}
-               onPress={() => {
-              if (item.JinaLaHuduma === 'Jamii Ya Wafugaji') {
-                navigation.navigate('Jamii Ya Mfugaji HomeScreen', item);
-              } else if (item.JinaLaHuduma === 'Duka Lako') {
-                navigation.navigate('Get All Duka Lako Items', item);
-              } else {
-                navigation.navigate('Mgawanyo Wa Huduma', item);
-              }
-            }}
-
-
-                   >
-                    <Text 
-                    style={globalStyles.AppItemButtonTextHomeScreen}
-                  >Ingia</Text>
-                  </TouchableOpacity>
-                </View>
-                <View>
-                 
-                </View>
-              </View>
-           </CustomCard>
-
-
-           )
+ 
 
 
 
+   <ImageBackground
 
-     // hili bano la chini ni la if ya juu kama mtu akitype   
-}
-
- if(item.JinaLaHuduma.toLowerCase().includes(input.toLowerCase())){
-
-
-
-return (
-
-      <CustomCard >
-              <View 
-              style={globalStyles.AppItemContainerHomeScreen}
-              >
-                <View style={{
-                  //justifyContent:"space-between",
-                }}>
-                  <Text 
-
-                  style={globalStyles.AppItemNameHomeScreen}
-
-                 >{item.JinaLaHuduma}</Text>
-
-
-               <View 
-                style={globalStyles.AppItemImageContainerHomeScreen}
-              >
-              {item.PichaYaHuduma ? ( 
-                  <Image
-
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={{
-                      uri: EndPoint + '/' + item.PichaYaHuduma
-                    }}
-                      
-                      >
-                  </Image>
-                  ):(
-                  <Image
-
-                  style={globalStyles.AppItemImageHomeScreen}
-                   source={require('../assets/500.png')} 
-                  >
-                  </Image>
-                )}
-               </View>
-
-
-                  <TouchableOpacity 
-
-                  style={globalStyles.AppItemButtonHomeScreen}
-
-                   // onPress={() => 
-                   //  navigation.navigate('Mgawanyo Wa Huduma', item)}
-                  
-                      onPress={() => {
-              if (item.JinaLaHuduma === 'Jamii Ya Wafugaji') {
-                navigation.navigate('Jamii Ya Mfugaji HomeScreen', item);
-              } else if (item.JinaLaHuduma === 'Duka Lako') {
-                navigation.navigate('Get All Duka Lako Items', item);
-              } else {
-                navigation.navigate('Mgawanyo Wa Huduma', item);
-              }
-            }}
-                   >
-                    <Text 
-                    style={globalStyles.AppItemButtonTextHomeScreen}
-                  >Ingia</Text>
-                  </TouchableOpacity>
-                </View>
-                <View>
-                 
-                </View>
-              </View>
-           </CustomCard>
-
-
-           )
-
-
-
-
-
-
-// hili bano la chini ni la if ya pili mwisho
-  }
-
-
-
-// mwisho wa render
-  };
-
-
-
-
-  return (
-
-       <>{!fontsLoaded ? (<View/>):(
-
-          <View style={globalStyles.container}>
-
-           <ImageBackground
-
-                source={require('../assets/im2.jpg')}
-                style={{
-                    flex: 1,
-                    opacity:1,
-                }}
-                resizeMode= "cover"
+             source={{ uri: `${EndPoint}/${item.PichaYa1}` }}
+          style={{ height: height / 4 + 10, width: width, borderRadius: 10 }}
+         
             >
 
               <View style={globalStyles.topview}>
@@ -508,48 +414,82 @@ return (
                       style={globalStyles.AppWelcomeMsgContainerHomeScreen} 
                      
                      >
-                        <Text 
-                         
-                     
-                        style={[
-                          styles.welcomemessage,
-                          
-                          globalStyles.AppWelcomeHeaderTextHomeScreen,
-                            {
-                            color:'white',
-                            fontSize:25,
-                            fontFamily:'Medium',
-                          }   
+                     <Animated.Text
+                style={[
+                    styles.welcomemessage,
+                    {
+                        opacity: fadeAnimSmart, // Tumia animation ya opacity
+                       color: item.MainTitleColor,
+                        fontSize: 25,
+                        fontFamily: 'Medium',
+                        marginTop:15,
+                    },
+                ]}
+            >
+                {item.MainTitle}
+            </Animated.Text>
 
-                          
-                        ]}
-                        >
-                      MFUGAJI SMART</Text>
-
-                       <Text 
-                         style={[
-                          styles.welcomemessage,
-                          
-                          globalStyles.AppWelcomeHeaderText2HomeScreen,
-                          {
-                            color:'yellow',
-                            fontSize:20,
-                            fontFamily:'Regular',
-                          }  
-
-                          
-                        ]} 
-                     
-                       >
-                      Fuga Kidijitali
-                      </Text>
+            <Animated.Text
+                style={[
+                    styles.welcomemessage,
+                    {
+                        opacity: fadeAnimKidijitali, // Tumia animation ya opacity
+                         color: item.MinorTitleColor,
+                        fontSize: 20,
+                        fontFamily: 'Regular',
+                    },
+                ]}
+            >
+                {item.MinorTitle}
+            </Animated.Text>
                      </View>
                      
-                      <View style={globalStyles.circle}>
-                      <Image source={require('../assets/icon.png')} 
-                  style={globalStyles.RightHeaderImage} />
+                
+                 <TouchableOpacity 
+                   onPress={() => {
+                navigation.navigate('See Notifications');    
+                  }}
+                  style={[globalStyles.circle,
+                    {
+                      backgroundColor:'wheat',
+                      justifyContent:'space-around',
+                      alignItems:'center',
+                      flexDirection:'row',
+                    }
 
-                      </View>
+                    ]}
+                       >
+                    <Animated.View style={{
+                     opacity: fadeAnim
+                      }}>
+                     <FontAwesome name='bell-o' 
+                      size={20}
+                      color='black'
+                      style={[globalStyles.RightHeaderImageu,
+                        {
+                          fontFamily:'Bold',
+                        }
+                        ]}  
+                      
+                       />
+                       </Animated.View>
+
+                      {unseenCount > 0 ? (
+                      <Text style={{
+                        color:'red',
+                        fontFamily:'Bold',
+                       }}>{unseenCount}</Text>
+                       ):(
+
+                       <Text style={{
+                        color:'black',
+                        fontFamily:'Bold',
+                       }}>{unseenCount}</Text>
+                       )}
+                   {/*   <Image source={require('../assets/icon.png')} 
+                  style={globalStyles.RightHeaderImage} />*/}
+
+                      </TouchableOpacity>
 
 
 
@@ -584,30 +524,52 @@ return (
 </ImageBackground>
 
 
-              <View style={globalStyles.bottomview}>
-              <CustomCard elevated={true} 
-               style={globalStyles.AppCustomCardContainerHomeScreen}
+
+
+            <HomeCustomCard 
+            //elevated={true} 
+             //  style={globalStyles.AppCustomCardContainerHomeScreen}
+             style={{
+              backgroundColor:item.BackgroundColor,
+            //marginHorizontal:24,
+            marginTop:-10,
+            padding:10,
+            borderRadius:10,
+            flexDirection:"row",
+            justifyContent:"space-around",
+            width:screenWidth - 24,
+            marginHorizontal:10,
+            alignItems:"center",
+
+             }}
            
             >
                   <View 
-                  style={globalStyles.AppCustomSimuContainerHomeScreen}
+                  style={[globalStyles.AppCustomSimuContainerHomeScreen,
+
+                    {
+                     // marginBottom:100,
+                    }
+
+
+                    ]}
                   
                   >
-                    <Text 
+                  {/*  <Text 
                     style={globalStyles.AppCustomSimuTextHomeScreen}
                    
-                    >Huduma kwa wateja</Text>
+                    >Huduma kwa wateja</Text>*/}
                     <Text
                     style={[globalStyles.AppCustomSimuTextValueHomeScreen,
 
                       {
-                        color:'green',
+                        color:item.DescriptionColor,
                         fontFamily:'Medium',
                       }
 
                       ]} 
                     >
-                  uza/nunua kuku  hapa
+                 {item.Description}
                     
                     </Text>
                   </View>
@@ -623,7 +585,8 @@ return (
                 <Text
                   style={globalStyles.AppCustomMahaliTextHomeScreen} 
                   
-                  ><FontAwesome5 name='phone' 
+                  ><FontAwesome5 
+                  name={item.IconName} 
                       size={20}
                       color='brown'  
                       
@@ -646,7 +609,7 @@ return (
                     {Location ? (
 
                     <TouchableOpacity
-                   onPress={() => {   Linking.openURL(`tel:${myphone}`)}}
+                   onPress={() => {   Linking.openURL(`tel:${item.phone}`)}}
                     >
                     
                      <Text
@@ -701,40 +664,59 @@ return (
                     )}
                   </View>
                 
-                </CustomCard>
+                </HomeCustomCard>
 
 
 
-                <Text
-                style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-                
-                >Chagua Huduma</Text>
 
 
-            {/*mwanzo wa Item View*/}
-                <View 
-                style={globalStyles.AppFlatListContainerHomeScreen} 
-               
-                >
 
+
+
+           </SafeAreaView>
+
+
+           )
+
+
+
+
+// mwisho wa render
+  };
+
+
+
+
+  return (
+
+       <>{!fontsLoaded ? (<View/>):(
+
+          <View style={globalStyles.container}>
+
+         
+    
+
+ 
 { !isLoading2 ? (
   <>
       
-      { queryset && queryset.length > 0 ? (
+      { queryset2 && queryset2.length > 0 ? (
         <>
 
          {setLoading===true?(<ActivityIndicator/>):(
       <>
 
                     <FlatList
-                    data={queryset}
+                    data={queryset2}
                     renderItem={transportItem}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item, index) => index.toString()}
                     showsVerticalScrollIndicator={false}
+                    horizontal={true}
+                   pagingEnabled={true}
 
-                    ListFooterComponent={renderLoader}
-                    onEndReached={getItems}
-                    onEndReachedThreshold={0.5}
+                    // ListFooterComponent={renderLoader}
+                    // onEndReached={getItems}
+                    // onEndReachedThreshold={0.5}
                   />
 
 
@@ -775,16 +757,6 @@ return (
 
 
 )} 
-                </View>
-
-          {/*Mwisho wa item View*/}
-
-
-
-
-
-               
-                </View>
 
 
 

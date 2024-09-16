@@ -283,7 +283,7 @@ const ReportCard = ({item, index}) => {
 
       <Pressable
       style={[
-        globalStyles.VyakulaCartItemsContainer,
+        globalStyles.VyakulaCartItemsContainerHistoria,
         
       ]} >
 
@@ -431,7 +431,7 @@ const ReportCard = ({item, index}) => {
 
       <Pressable
       style={[
-        globalStyles.VyakulaCartItemsContainer,
+        globalStyles.VyakulaCartItemsContainerHistoria,
         
       ]} >
 
