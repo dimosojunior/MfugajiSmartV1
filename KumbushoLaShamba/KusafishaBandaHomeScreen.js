@@ -492,6 +492,7 @@ return (
                     value={input} onChangeText ={(text) => setInput(text)}
                     placeholder="Ingiza Siku" 
                      placeholderTextColor='black'
+                     keyboardType="numeric"
                     style={globalStyles.AppInputHomeScreenOtherPages}
                     
                     ></TextInput>

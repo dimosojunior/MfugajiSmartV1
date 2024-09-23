@@ -5,6 +5,8 @@ import  {
   ImageBackground,
   Dimensions,
   Pressable,
+  Linking,
+  Alert,
   Platform,Text,TouchableOpacity,TextInput,FlatList} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -190,6 +192,24 @@ const [input, setInput] = useState('');
   );
 
 
+ const openUrl = async (url) => {
+        const isSupported = await Linking.canOpenURL(url);
+        if (isSupported) {
+            await Linking.openURL(url);
+        } else {
+            Alert.alert(`Programu imeshindwa kufungua hii linki: ${url}`);
+        }
+    }
+
+const sendTextMessage = useCallback(async (phNumber, message) => {
+        const separator = Platform.OS === 'ios' ? '&' : '?'
+        const url = `sms:${phNumber}${separator}body=${message}`
+        await Linking.openURL(url)
+    }, [])
+
+const message = "Naomba kuidhinishwa"
+
+const HudumaKwaWatejaNumber = "0623046899";
 
 
 useEffect(() => {
@@ -1191,8 +1211,14 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
                 globalStyles.ItselfRightiMinorText,
                 {
                   //backgroundColor:'white',
-                  color:'red',
+                  backgroundColor:'blue',
+                  color:'white',
                   fontFamily:'Bold',
+                  //marginRight:30,
+                  width:'50%',
+                  textAlign:'center',
+                  borderRadius:5,
+                  paddingVertical:7,
                 }
 
                 ]}>POSTI</Text>
@@ -1203,12 +1229,66 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
              {/*  mwisho wa Itself container*/}
             
 
-
+       {/*  mwanzo wa omba kuidhinishwa*/}
+             <View style={{
+              flexDirection:'row',
+              justifyContent:'space-between',
+              width:'95%',
+              marginTop:20,
+             }}>
 
                 <Text
-                style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+                style={[globalStyles.AppChaguaHudumaTextHomeScreen,
+                  {
+                    width:'40%',
+                  }
+
+                  ]}  
                 
                 >Posti zako mwenyewe</Text>
+              
+              <TouchableOpacity 
+             
+            onPress={() => { Linking.openURL(`whatsapp://send?phone=${HudumaKwaWatejaNumber}&text=${message}`)}}
+         
+            style={{
+              width:'45%',
+            }}
+              >
+            
+       
+                 <Text 
+              style={[
+                globalStyles.ItselfRightiMinorText,
+                {
+                  //backgroundColor:'white',
+                  backgroundColor:'green',
+                  color:'white',
+                  fontFamily:'Bold',
+                  //marginRight:30,
+                  // width:'45%',
+                  textAlign:'center',
+                  borderRadius:5,
+                  paddingVertical:7,
+                }
+
+                ]}>Omba Kuidhinishwa</Text>
+                </TouchableOpacity>
+
+                </View>
+               {/* mwisho wa omba kuidhinishwa*/}
+
+               {/*mwanzo wa mstari*/}
+             <View style={{
+              borderBottomColor:'green',
+              borderBottomWidth:1,
+              marginTop:10,
+             }}>
+               <Text>
+                 
+               </Text>
+             </View>
+            {/*mwiso wa mstari*/}
 
 
             {/*mwanzo wa Item View*/}
@@ -1249,7 +1329,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
        
 
  <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
-  <Text style={globalStyles.noitemText}>Huna huduma yoyote uliyowahi kuweka!! !
+  <Text style={globalStyles.noitemText}>Huna posti yoyote uliyowahi kuweka!! !
   </Text>
 
 

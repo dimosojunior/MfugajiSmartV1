@@ -144,9 +144,12 @@ const [isExpanded, setIsExpanded] = useState(false); // State to manage text exp
 
 {/*mwanzo wa link*/}
 <View style={styles.LinkContainerWafugaji}>
-  
+  {userData.username != item.username ? (
   <Text style={styles.LinkTextWafugaji}>Unaweza kuwasiliana na Mfugaji
-  , {item.username} kupitia;</Text>
+  , {item.username} kupitia njia hizi;</Text>
+  ):(
+ <Text style={styles.LinkTextWafugaji}>Watu wanaweza kuwasiliana na wewe kupitia njia hizi;</Text>
+  )}
 
 
 

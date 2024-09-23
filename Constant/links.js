@@ -1,7 +1,7 @@
 // export const EndPoint = 'https://dimosojunior.pythonanywhere.com';
 
 //for project or user
- //export const EndPoint = 'https://mfugajiappv1.pythonanywhere.com'
+//export const EndPoint = 'https://mfugajiappv1.pythonanywhere.com'
 
 export const EndPoint = 'https://mfugajismart.net'
 

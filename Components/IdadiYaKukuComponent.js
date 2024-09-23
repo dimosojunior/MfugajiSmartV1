@@ -404,6 +404,7 @@ keyboardShouldPersistTaps="handled"
                     value={input} onChangeText ={(text) => setInput(text)}
                     placeholder="Ingiza idadi ya kuku wako" 
                      placeholderTextColor='black'
+                     keyboardType="numeric"
                     style={globalStyles.AppInputHomeScreenOtherPages}
                     
                     ></TextInput>

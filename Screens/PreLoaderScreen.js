@@ -129,7 +129,7 @@ export default function PreLoaderScreen({ navigation }) {
   return (
      <ImageBackground
 
-                source={require('../assets/p.jpg')}
+                source={require('../assets/p.png')}
                 style={{
                     flex: 1,
                     opacity:1,

@@ -45,7 +45,7 @@ const UpdateScreen = ({ navigation }) => {
   };
 
 
-
+const [displayContentsState, setdisplayContentsState] = useState(false);
 
 
 
@@ -306,7 +306,7 @@ const pickPdf = async () => {
       showAlertFunction('Tatizo la mtandao, washa data na ujaribu tena.');
       setIsLoading(false);
     } else {
-      showAlertFunction('Kuna tatizo kwenye ubadilishaji wa taarifa zako');
+      //showAlertFunction('Kuna tatizo kwenye ubadilishaji wa taarifa zako');
       setIsLoading(false);
     }
   };
@@ -474,11 +474,14 @@ const pickPdf = async () => {
       }).then(response => {
         setIsLoading(false);
         showAlertFunction("Umefanikiwa Kubadilisha taarifa zako");
+        setdisplayContentsState(true);
         //console.log("Well");
       }).catch(error => {
         setIsLoading(false);
         console.log(error);
-        handleErrorMessage(error);
+        showAlertFunction('Kuna tatizo kwenye ubadilishaji wa taarifa zako');
+        setdisplayContentsState(false);
+        //handleErrorMessage(error);
       });
     }
   };
@@ -496,6 +499,10 @@ const pickPdf = async () => {
                 resizeMode="cover"
               >
                 <ScrollView keyboardShouldPersistTaps="handled">
+                {!displayContentsState && (
+                  <View>
+
+
                   <View style={styles.ImageAccountContainer}>
                     <Text style={styles.title}>MFUGAJI SMART</Text>
                     <Text style={styles.subtitle}>Fuga Kidijitali</Text>
@@ -848,7 +855,43 @@ marginBottom:20,
                       <Text style={styles.ButtonTextUpdate}>Jisajili</Text>
                     </TouchableOpacity>
                   )}
+
+
+
+
+                  </View>
+                  )}
+
+
+
+                {displayContentsState && (
+                  <View style={{
+                    justifyContent:'center',
+                    alignItems:'center',
+                    flex:1,
+                    width:'90%',
+                    marginHorizontal:20,
+                    height:height,
+                  }}>
+               <Text style={{
+                color:'white',
+                lineHeight:25,
+                fontFamily:'Medium',
+               }}>Hongera! {username}, usajili wako umekamilika na taarifa 
+               zako zimekusanywa kwa ukamilifu. Endelea kutumia huduma zote zinazopatikana 
+               ndani ya Mfugaji Smart App</Text>
+
+               <TouchableOpacity onPress={() => navigation.replace('Home Stack')} 
+               style={styles.ButtonContainerUpdate}>
+                      <Text style={styles.ButtonTextUpdate}>Endelea</Text>
+                    </TouchableOpacity>
+
+                  </View>
+                  )}
+
+
                 </ScrollView>
+
               </ImageBackground>
 
               <AwesomeAlert

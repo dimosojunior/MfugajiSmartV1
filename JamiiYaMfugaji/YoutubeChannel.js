@@ -306,7 +306,7 @@ const getItems = () => {
   Unaweza kuwasiliana nasi kwenye mitandao ya kijamii kupitia njia zifuatazo
 </Text>
 
-{item.Phone && (
+{/*{item.Phone && (
         <TouchableOpacity 
         onPress={() => { Linking.openURL(`whatsapp://send?phone=${item.Phone}&text=${message}`)}}>
           <View style={[globalStyles.menuItem, 
@@ -315,31 +315,34 @@ const getItems = () => {
             <Text style={[globalStyles.menuItemText, 
               {}]}>Ukurasa Wa Whatsapp</Text>
           </View>
+        </TouchableOpacity>)}*/}
+
+ {item.WhatsappLink && (
+        <TouchableOpacity onPress={() => {openUrl(item.WhatsappLink)}}>
+          <View style={[globalStyles.menuItem, {backgroundColor:COLORS.white}]}>
+            <FontAwesome name="whatsapp" color="green" size={25}/>
+            <Text style={[globalStyles.menuItemText,{}]}>Ukurasa wa Whatsapp</Text>
+          </View>
         </TouchableOpacity>)}
 
-
-{item.Phone && (
-        <TouchableOpacity 
-        onPress={() => { Linking.openURL(`whatsapp://send?phone=${item.Phone}&text=${message}`)}}>
-          <View style={[globalStyles.menuItem, 
-            {backgroundColor:COLORS.white}]}>
+ {item.FaceBook && (
+        <TouchableOpacity onPress={() => {openUrl(item.FaceBook)}}>
+          <View style={[globalStyles.menuItem, {backgroundColor:COLORS.white}]}>
             <FontAwesome name="facebook" color="blue" size={25}/>
-            <Text style={[globalStyles.menuItemText, 
-              {}]}>Ukurasa Wa Facebook</Text>
+            <Text style={[globalStyles.menuItemText,{}]}>Ukurasa wa Facebook</Text>
+          </View>
+        </TouchableOpacity>)}
+
+ {item.Instagram && (
+        <TouchableOpacity onPress={() => {openUrl(item.Instagram)}}>
+          <View style={[globalStyles.menuItem, {backgroundColor:COLORS.backgroundColor}]}>
+            <FontAwesome name="instagram" color="red" size={25}/>
+            <Text style={[globalStyles.menuItemText,{}]}>Ukurasa wa Instagram</Text>
           </View>
         </TouchableOpacity>)}
 
 
-{item.Phone && (
-        <TouchableOpacity 
-        onPress={() => { Linking.openURL(`whatsapp://send?phone=${item.Phone}&text=${message}`)}}>
-          <View style={[globalStyles.menuItem, 
-            {backgroundColor:COLORS.white}]}>
-            <FontAwesome name="instagram" color="#FF6347" size={25}/>
-            <Text style={[globalStyles.menuItemText, 
-              {}]}>Ukurasa Wa Instagram</Text>
-          </View>
-        </TouchableOpacity>)}
+
 
       </View>
 

@@ -196,6 +196,7 @@ const [queryset, setQueryset] = useState([]);
           break;
       }
       setIsLoading(false);
+
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -365,7 +366,12 @@ const addCartItem = async () => {
      setPending2(false);
      console.log("ERROR", error);
     //Alert.alert('Error', 'Failed to add item to cart');
-    showAlertFunction("Imeshindikana kuchagua chakula");
+     if (error.response && error.response.data && error.response.data.error) {
+      showAlertFunction(error.response.data.error);
+    } else {
+      showAlertFunction("Imeshindikana kuchagua chakula");
+    }
+    
     
   }
 };

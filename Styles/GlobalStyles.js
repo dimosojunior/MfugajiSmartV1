@@ -410,6 +410,7 @@ ProjectBodyInputIcon:{
 noitemTextContainer:{
   justifyContent:'center',
   alignItems:'center',
+  marginTop:50,
 
 
 },
@@ -417,7 +418,7 @@ noitemTextContainer:{
 noitemText:{
   textAlign:'center',
   color:'red',
-  fontFamily:'Light'
+  fontFamily:'Medium'
 
 
 },
@@ -432,7 +433,7 @@ ErrorImageContainer:{
 },
 ErrorImage:{
   width:'60%',
-  height:height/3,
+  height:height/2,
   borderRadius:10,
 
 },
@@ -445,8 +446,8 @@ ErrorImageContainerHomePage:{
 
 },
 ErrorImageHomePage:{
-  width:'50%',
-  height:height/4 -10,
+  width:'100%',
+  height:height/2,
   borderRadius:30,
 
 },

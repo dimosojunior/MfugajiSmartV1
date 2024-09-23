@@ -1,6 +1,6 @@
 {
-  "name": "mfugaji-smart",
-  "version": "1.0.2",
+  "name": "ms",
+  "version": "1.0.1",
   "main": "expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -13,12 +13,12 @@
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-picker/picker": "^2.7.7",
     "@react-navigation/bottom-tabs": "^6.6.0",
-    "@react-navigation/drawer": "^6.7.1",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.4.0",
     "axios": "^1.7.2",
     "expo": "~51.0.20",
     "expo-app-loading": "^2.1.1",
+    "expo-application": "^5.9.1",
     "expo-av": "~14.0.7",
     "expo-checkbox": "^3.0.0",
     "expo-constants": "~16.0.2",

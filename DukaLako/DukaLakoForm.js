@@ -71,7 +71,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
  
@@ -86,7 +86,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     let result2 = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
  
@@ -101,7 +101,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     let result3 = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
  
@@ -118,7 +118,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     let result4 = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
  
@@ -135,7 +135,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
     let result5 = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
  
@@ -331,7 +331,7 @@ const handleUpdate = async () => {
         <>
           {!isLoading ? (
             <View style={{ flex: 1 }}>
-              <MinorHeader title="Ongeza Huduma" />
+              <MinorHeader title="Ongeza Posti" />
               <ImageBackground
                 source={require('../assets/bc1.png')}
                 style={{ flex: 1, opacity: 1 }}
@@ -350,7 +350,7 @@ const handleUpdate = async () => {
 
 
                   <Text style={styles.dataContainerFormTitle}>
-                  Jaza sehemu zote hapo chini ili kuweza kuweka huduma
+                  Jaza sehemu zote hapo chini ili kuweza kuweka posti
                   mpya </Text>
 
 

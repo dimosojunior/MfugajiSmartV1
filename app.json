@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Mfugaji-Smart",
-    "slug": "Mfugaji-Smart",
-    "version": "1.0.2",
+    "name": "MS",
+    "slug": "MS",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,8 +15,8 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 2,
-      "package": "ttpc.MfugajiSmart",
+      "versionCode": 1,
+      "package": "ttpc.MS",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
@@ -27,7 +27,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "d2f572a0-7bf4-4d7d-8afc-c4d8936683db"
+        "projectId": "8c8e8cdf-bdf4-4df2-8993-1f7614db109d"
       }
     }
   }

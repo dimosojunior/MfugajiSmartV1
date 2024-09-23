@@ -38,6 +38,8 @@ import  {
   withTiming 
 } from 'react-native-reanimated';
 
+
+
 const { width, height } = Dimensions.get('screen');
 export default function SlidingComponent () {
 
@@ -546,7 +548,7 @@ const renderDotIndicators = () => {
                 
                  <TouchableOpacity 
                    onPress={() => {
-                navigation.navigate('See Notifications');    
+                navigation.replace('See Notifications');    
                   }}
                   style={[globalStyles.circle,
                     {

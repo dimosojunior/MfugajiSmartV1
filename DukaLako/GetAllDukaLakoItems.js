@@ -86,7 +86,9 @@ const Carousel = memo(({ images }) => {
       <TouchableOpacity activeOpacity={1}>
         <Image
           source={{ uri: `${EndPoint}/${item}` }}
-          style={{ height: height / 4 + 10, width: screenWidth, borderRadius: 10 }}
+          style={{ height: height / 3 + 50,
+           width: screenWidth, 
+           borderRadius: 10 }}
         />
       </TouchableOpacity>
     </View>
@@ -1326,7 +1328,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
        
 
  <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
-  <Text style={globalStyles.noitemText}>Hakuna huduma yoyote iliyopo kwasasa!! !
+  <Text style={globalStyles.noitemText}>Hakuna posti yoyote iliyopo kwasasa!! !
   </Text>
 
 

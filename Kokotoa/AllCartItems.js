@@ -403,7 +403,7 @@ const CartCard = ({item, index}) => {
 
       <Pressable
       style={[
-        globalStyles.VyakulaCartItemsContainer,
+        globalStyles.VyakulaCartItemsContainerHistoria,
         
       ]} >
 
