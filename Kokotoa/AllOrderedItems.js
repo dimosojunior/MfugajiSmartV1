@@ -691,8 +691,7 @@ unachotakiwa kuweka</Text>
 <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Maelekezo jinsi ya kuchanganya chakula cha kilo {TotalFoodAmount} kulingana
-    na vyakula ulivyovichagua
+    >Maelekezo jinsi ya kuchanganya chakula cha kilo {TotalFoodAmount} kwa {AinaYaKuku} umri wa siku {UmriKwaSiku}
 
      </Text>
 
@@ -1203,106 +1202,17 @@ userData={userData}
               }
               ]}>
               
-            Kiasi cha chakula kilichoongezeka          
+            USHAURI         
             
             </Text>
 
 
-                {Pumba_Za_Mahindi_New_Value > 0  && (
+              
 
               <View style={{
-                flexDirection:'row',
-                justifyContent:'space-between',
-                alignItems:'center',
-              }}>
-
-               <Text style={[globalStyles.ModalTitleViewProduct,
-              {
-                //textAlign:'center',
-                fontFamily:'Medium',
-                color:'white',
-                width:'45%',
-
-              }
-              ]}>
-              
-            kiasi cha pumba za mahindi kilichoongezwa          
-            
-            </Text>
-          
-            <Text style={[globalStyles.ModalTitleViewProduct,
-              {
-                //textAlign:'center',
-                fontFamily:'Medium',
-                color:'yellow',
-                 width:'30%',
-
-              }
-              ]}>
-              
-            {Pumba_Za_Mahindi_New_Value.toFixed(2)} Kg
-            
-            
-            </Text>
-           
-   
-            </View>
-
-             )}
-
-
-
-
-            {Mashudu_Ya_Alizeti_New_Value > 0  && (
-
-              <View style={{
-                flexDirection:'row',
-                justifyContent:'space-between',
-                alignItems:'center',
-              }}>
-
-               <Text style={[globalStyles.ModalTitleViewProduct,
-              {
-                //textAlign:'center',
-                fontFamily:'Medium',
-                color:'wheat',
-                width:'45%',
-
-              }
-              ]}>
-              
-             Kiasi cha mashudu ya alizeti kilichoongezwa           
-            
-            </Text>
-          
-            <Text style={[globalStyles.ModalTitleViewProduct,
-              {
-                //textAlign:'center',
-                fontFamily:'Medium',
-                color:'yellow',
-                 width:'30%',
-
-              }
-              ]}>
-              
-            {Mashudu_Ya_Alizeti_New_Value.toFixed(2)} Kg
-            
-            
-            </Text>
-           
-   
-            </View>
-
-             )}
-
-
-
-            {Dagaa_New_Value > 0  && (
-
-              <View style={{
-                flexDirection:'row',
-                justifyContent:'space-between',
-                alignItems:'center',
+                flexDirection:'column',
+                // justifyContent:'space-between',
+                // alignItems:'center',
               }}>
 
                <Text style={[globalStyles.ModalTitleViewProduct,
@@ -1310,37 +1220,21 @@ userData={userData}
                 //textAlign:'center',
                 fontFamily:'Medium',
                 color:'yellow',
-                width:'45%',
+                width:'100%',
 
               }
               ]}>
-              
-             kiasi cha dagaa kilichoongezwa            
-            
+              Hongera! Mchanganyiko huu ni mzuri. Hakikisha unaandaa chakula hiki katika 
+              hali ya usafi na zingatia ubora wa kila malighafi ili kupata matokeo mazuri zaidi.
+
+              Hifadhi mchanaganyiko wa chakula cha kuku katika sehemu kavu na salama ili kuzuia kuoza.
+             
             </Text>
           
-            <Text style={[globalStyles.ModalTitleViewProduct,
-              {
-                //textAlign:'center',
-                fontFamily:'Medium',
-                color:'yellow',
-                 width:'30%',
-
-              }
-              ]}>
-              
-            {Dagaa_New_Value.toFixed(2)} Kg
-            
-            
-            </Text>
            
-   
             </View>
 
-             )}
-
-
- 
+            
             
 
             <View style={[globalStyles.ButtonConatinerViewProduct,

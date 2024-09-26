@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ImageBackground, Text, ScrollView, SafeAreaView, View, Image, TouchableOpacity, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, ImageBackground,Pressable, Text, ScrollView, SafeAreaView, View, Image, TouchableOpacity, Dimensions } from 'react-native';
+
 import { useFonts } from 'expo-font';
+import {globalStyles} from '../Styles/GlobalStyles';
+import { Ionicons, FontAwesome,AntDesign, FontAwesome5} from '@expo/vector-icons';
+
+import COLORS  from '../Constant/colors';
+
 
 const SeraScreen = ({ navigation }) => {
   let [fontsLoaded] = useFonts({
@@ -41,6 +46,13 @@ const SeraScreen = ({ navigation }) => {
       RouteImage: require('../assets/Loading/l2.json'),
       id: '5',
     },
+
+     {
+      RouteName: 'Kwa maelekezo zaidi',
+      RouteImage: require('../assets/Loading/l2.json'),
+      id: '6',
+    },
+
 
   
   ]);
@@ -190,6 +202,7 @@ const SeraScreen = ({ navigation }) => {
                     alignItems: 'center',
                   }}>
                    <TouchableOpacity>
+                   {item.id != "6" ? (
                       <Text style={{
                         textAlign: 'center',
                         fontSize: 18,
@@ -197,6 +210,17 @@ const SeraScreen = ({ navigation }) => {
                         color: 'green',
                         fontFamily: 'Bold'
                       }}>VIGEZO NA MASHARTI</Text>
+                      ):(
+
+                      <Text style={{
+                        textAlign: 'center',
+                        fontSize: 18,
+                        marginTop: height / 15,
+                        color: 'green',
+                        fontFamily: 'Bold'
+                      }}>WASILIANA NASI</Text>
+
+                      )}
                     </TouchableOpacity>
                     <View style={{
                       width: '100%',
@@ -539,6 +563,90 @@ const SeraScreen = ({ navigation }) => {
                    )}
 
                   {/*mwisho wa ITEM ya ID ya 5*/}
+
+
+
+
+
+
+                {/*mwanzo wa ITEM ya ID ya 6*/}
+                    {item.id == "6" && (
+                      <>
+                   
+                    <Text style={[styles.title, { fontFamily: 'Medium' }]}>
+                      <Text> </Text>Msaada kwa wateja
+                    </Text>
+
+                    <View style={[styles.title, { marginTop: 10 }]}>
+                     {/*mwanzo wa text ya 2*/}
+                      <Text style={{ marginBottom: 15, color: 'white', fontFamily: 'Light' }}>
+                    - Ili kuweza kuwasiliana nasi moja kwa moja ili kupata msaada kutoka kwetu tumia namba hiyo hapo chini.
+                      </Text>
+                    {/*mwisho wa text ya 2/1*/}
+
+
+                      </View>
+
+
+
+
+          {/*  mwanzo wa Itself container*/}
+              <View style={[globalStyles.ItselfMajorContainer,
+
+                  {
+                  backgroundColor:'green',
+                  marginHorizontal:10,
+                  width:'95%',
+                  marginTop:50,
+                }
+
+                ]}>
+             
+             <View style={globalStyles.ItselfLeftMinorContainer}>
+             <Pressable 
+           // onPress={() => {   Linking.openURL(`tel:${HudumaKwaWatejaNumber}`)}}
+            
+             >
+              <Text style={[globalStyles.ItselfLeftMinorText,
+                 {
+                  backgroundColor:'yellow',
+                  color:'black'
+                }
+
+                ]}>0759 536 085</Text>
+              </Pressable>
+              </View>
+             
+              
+            <Pressable 
+           // onPress={() => {   Linking.openURL(`tel:${HudumaKwaWatejaNumber}`)}}
+            
+              style={globalStyles.ItselfRightMinorContainer}>
+              <View >
+                  <FontAwesome name='phone' 
+                  size={30}
+                  color='white'  
+                  
+                   />
+              </View>
+              </Pressable>
+                
+              </View>
+             {/*  mwisho wa Itself container*/}
+            
+
+                  
+
+                   
+
+
+
+
+
+                   </>
+                   )}
+
+                  {/*mwisho wa ITEM ya ID ya 6*/}
 
 
 

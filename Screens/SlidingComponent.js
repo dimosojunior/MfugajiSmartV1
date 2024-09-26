@@ -747,7 +747,7 @@ const renderDotIndicators = () => {
 
                     ):(
                     <TouchableOpacity
-                    onPress={() => navigation.navigate('Update Stack')}
+                    onPress={() => navigation.replace('Update Stack')}
                     >
                     <Text
                     style={[
