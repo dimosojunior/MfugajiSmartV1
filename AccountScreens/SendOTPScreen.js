@@ -17,6 +17,7 @@ import {useFonts} from 'expo-font';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { COLORS, SIZES } from '../Screens/src/Constant';
 import LotterViewScreen from '../Screens/LotterViewScreen';
+import { LinearGradient } from 'expo-linear-gradient';
 //import SvgIcon from '../assets/SvgIcon';
 //import OTPInputView from '@twotalltotems/react-native-otp-input';
 
@@ -182,7 +183,7 @@ const handleErrorMessage = (error) => {
               />*/}
 
 
-              <TextInput 
+          {/*    <TextInput 
               placeholder='Ingiza email yako' 
               //style={{width: '80%', height: 100}}
               style={[styles.textinput,{
@@ -196,6 +197,78 @@ const handleErrorMessage = (error) => {
               
               keyboardType="email-address"
               />
+*/}
+
+
+
+    
+
+        {/*  mwanzo wa email*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:0,
+              }
+
+              ]}
+          >
+
+            <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="envelope-o" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
+
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'88%',
+            //backgroundColor:'black',
+
+            //paddingVertical:20,
+          }]}
+          placeholder="Ingiza email yako"
+          //keyboardType="numeric"
+           keyboardType={'email-address'}
+          
+          value={email}
+          onChangeText={setEmail}
+        placeholderTextColor="black"
+        />
+
+      
+        </View>
+      {/*  mwisho wa email*/}
+
+
+
+
              
              {!isPending && (
               <Pressable 
@@ -343,10 +416,9 @@ const handleErrorMessage = (error) => {
 
 export default SendOTPScreen;
 
-
 const styles = StyleSheet.create({
   mainCon: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: 'white',
     flex: 1,
   },
   loginIcon: {
@@ -409,9 +481,48 @@ registerLbl:{
         padding:10,
         borderRadius:8,
         fontFamily:'Light',
+
+        borderWidth:2,
+        borderColor:'black',
     },
 
 
+
+    dataContainerForPassword: {
+      color: COLORS.white,
+        fontSize: SIZES.h3,
+        // borderBottomColor: COLORS.lightGrey,
+        borderColor: COLORS.green,
+        borderWidth: 1,
+        paddingVertical: 10,
+        marginHorizontal: 15,
+        marginVertical: 5,
+        marginTop: 50,
+        padding:10,
+        borderRadius:8,
+        width:width-100,
+        flexDirection:'row',
+        justifyContent:'space-between',
+        flex:1,
+
+        borderWidth:2,
+        borderColor:'black',
+        
+         
+    },
+
+  
+    textinputi: {
+        color: COLORS.white,
+        //fontSize: SIZES.h3,
+        fontFamily:'Light',
+        
+        
+        marginHorizontal: 0,
+        
+        padding:0,
+        
+    },
 
 
 

@@ -1,9 +1,12 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState,useCallback, useEffect } from 'react';
 
 import { View,SafeAreaView,ImageBackground,KeyboardAvoidingView,
   Pressable,
- TextInput, Alert, Image, StyleSheet, ActivityIndicator, Text, Dimensions, ScrollView, Touchable, TouchableOpacity } from 'react-native';
+ TextInput,
+ Linking,
+  
+  Alert, Image, StyleSheet, ActivityIndicator,Platform, Text, Dimensions, ScrollView, Touchable, TouchableOpacity } from 'react-native';
 
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,6 +21,7 @@ import {useFonts} from 'expo-font';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { COLORS, SIZES } from '../Screens/src/Constant';
 import LotterViewScreen from '../Screens/LotterViewScreen';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const { width, height } = Dimensions.get('window');
@@ -50,6 +54,31 @@ let [fontsLoaded] = useFonts({
     
   
 });
+
+
+
+
+
+  const openUrl = async (url) => {
+        const isSupported = await Linking.canOpenURL(url);
+        if (isSupported) {
+            await Linking.openURL(url);
+        } else {
+            Alert.alert(`Programu imeshindwa kufungua hii linki: ${url}`);
+        }
+    }
+
+const sendTextMessage = useCallback(async (phNumber, message) => {
+        const separator = Platform.OS === 'ios' ? '&' : '?'
+        const url = `sms:${phNumber}${separator}body=${message}`
+        await Linking.openURL(url)
+    }, [])
+
+const message = "Mfugaji Smart!!"
+
+const HudumaKwaWatejaNumber = "0759536085";
+
+
 
 
 
@@ -221,18 +250,18 @@ const handleErrorMessage = (error) => {
 
 
 
-      
+    
        <KeyboardAvoidingView behavior="position" style={styles.mainCon}>
         <ScrollView 
         keyboardShouldPersistTaps="handled"
         >
 
-        <View style={{padding: 20}}>
+        <View style={{padding: 0}}>
           <Pressable style={{
             //backgroundColor:'green',
           }}>
            {/* <SvgIcon icon={'back'} width={30} height={30} />*/}
-             <LottieView
+     {/*        <LottieView
         style={{
         height: height/4,
          width:'100%',
@@ -249,19 +278,87 @@ const handleErrorMessage = (error) => {
         source={require('../assets/Loading/l1.json')} // Replace with your animation JSON file
         autoPlay
         loop
-      />
+      />*/}
        
+
+             <Image
+
+                  style={globalStyles.SignupImageJuu}
+                   source={require('../assets/500.png')} 
+                  >
+                  </Image>
+
+
+
           </Pressable>
         </View>
-        <View style={{position: 'relative', bottom: 30}}>
+
+
+
+ {/*mwanzo wa msaada kwa wateja*/}
+      <TouchableOpacity
+       onPress={() => {   Linking.openURL(`tel:${HudumaKwaWatejaNumber}`)}}
+            
+      style={{
+        alignItems:'center',
+        justifyContent:'space-between',
+        flexDirection:'row',
+        backgroundColor:'yellow',
+        paddingHorizontal:10,
+        paddingVertical:6,
+        width:'90%',
+        marginTop:15,
+        borderRadius:8,
+        flex:2,
+        marginTop:-30,
+        marginLeft:20,
+      }}>
+
+       <Text style={{
+        color:'green',
+       // marginTop:15,
+        //textAlign:'right',
+        fontFamily:'Medium',
+        width:'80%',
+      }}>
+      Msaada kwa wateja <Text style={{
+        color:'red',
+        fontFamily:'Medium',
+      }}> {HudumaKwaWatejaNumber} </Text>
+      </Text>
+
+
+      <FontAwesome name='phone' 
+                size={28}
+                color='green' 
+                style={{
+                  //marginTop:15,
+                  marginLeft:10,
+                  width:'10%',
+                }} 
+                
+                 />
+        
+      </TouchableOpacity>
+
+
+{/*mwisho wa msaada kwa wateja*/}
+
+        <View style={{position: 'relative', 
+        flex:2,
+
+        //marginTop:10,
+
+        //bottom: 30
+      }}>
           <View style={styles.loginIcon}>
             {/*<SvgIcon icon={'enterOtp'} width={280} height={280} />*/}
        
           </View>
           <View style={styles.container}>
-            <View style={styles.loginLblCon}>
+           {/* <View style={styles.loginLblCon}>
               <Text style={styles.loginLbl}>Mfugaji Smart</Text>
-            </View>
+            </View>*/}
             <View style={styles.forgotDes}>
               <Text style={styles.forgotDesLbl}>
                 Ingiza taarifa zako kwa usahihi
@@ -278,20 +375,68 @@ const handleErrorMessage = (error) => {
                
               />*/}
 
-              <TextInput 
-              placeholder='Ingiza jina lako kamili' 
-              //style={{width: '80%', height: 100}}
-              style={[styles.textinput,{
-                  width:width-20,
-                  //height:70,
-                  color:'black',
-              }]} 
-              placeholderTextColor="black"
-             value={username}
-              onChangeText={text => setUsername(text)} 
               
-             // keyboardType="email-address"
-              />
+                 {/*  mwanzo wa username*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:0,
+              }
+
+              ]}
+          >
+
+            <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="user-circle" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
+
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'88%',
+            //backgroundColor:'black',
+
+            //paddingVertical:20,
+          }]}
+          placeholder="Ingiza jina unalotumia"
+          //keyboardType="numeric"
+          
+          value={username}
+          onChangeText={setUsername}
+        placeholderTextColor="black"
+        />
+
+      
+        </View>
+      {/*  mwisho wa username*/}
 
 
            
@@ -305,10 +450,41 @@ const handleErrorMessage = (error) => {
 
               ]}
           >
+
+               <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="key" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
           <TextInput
           style= {[styles.textinputi,{ 
             color: 'black',
-          width:'75%'
+          width:'65%'
         }]}
           placeholder="Neno siri"
           secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
@@ -372,6 +548,14 @@ const handleErrorMessage = (error) => {
         
       </TouchableOpacity>
 
+
+
+
+
+   
+
+
+
 {/*mwanzo wa forget password*/}
 
             {!isPending && (
@@ -381,7 +565,7 @@ const handleErrorMessage = (error) => {
                 justifyContent:'space-between',
                 alignItems:'center',
                   backgroundColor:'green',
-                  marginTop:50,
+                  marginTop:20,
                   paddingVertical:10,
                   paddingHorizontal:40,
                   borderRadius:8,
@@ -418,6 +602,7 @@ const handleErrorMessage = (error) => {
                         </TouchableOpacity>
                      
                     </View>}
+
 
 
 
@@ -494,6 +679,7 @@ const handleErrorMessage = (error) => {
 
 </ScrollView>
       </KeyboardAvoidingView>
+      
 
       
 
@@ -516,8 +702,11 @@ export default SigninScreen;
 
 
 const styles = StyleSheet.create({
-  mainCon: {
-    backgroundColor: 'lightgreen',
+    mainCon: {
+    backgroundColor: '#fdb9b1',
+    //fed4d0, fdb9b1, fed1ce, ffcfcb
+
+   // backgroundColor:'#00BF8F',
     flex: 1,
   },
   loginIcon: {
@@ -525,27 +714,32 @@ const styles = StyleSheet.create({
   },
   formCon: {
     alignItems: 'center',
+
   },
   container: {
     paddingHorizontal: 20,
     marginTop: 50,
+
   },
   loginLblCon: {
     position: 'relative',
-    bottom: 40,
+    bottom: 20,
+
   },
   loginLbl: {
-    color: '#000',
+    color: 'black',
     fontSize: 40,
     marginBottom:10,
+    fontFamily:'Regular',
     //fontFamily: Fonts.type.NotoSansExtraBold,
   },
   forgotDes: {
     position: 'relative',
-    bottom: 35,
+    bottom: 20,
   },
   forgotDesLbl: {
     color: '#000',
+    fontFamily:'Medium'
    // fontFamily: Fonts.type.NotoSansRegular,
   },
   //registerLbl: {color: '#0057ff', fontFamily: Fonts.type.NotoSansSemiBold},
@@ -580,6 +774,15 @@ registerLbl:{
         padding:10,
         borderRadius:8,
         fontFamily:'Light',
+
+        borderWidth:2,
+        borderColor:'black',
+    //       elevation: 3,
+
+    // shadowOffset: { width: 1, height: 1 },
+    // shadowColor: Platform.OS === "android" ? COLORS.white : COLORS.white,
+    // shadowOpacity: 1,
+    // shadowRadius: 2,
     },
 
 
@@ -600,6 +803,9 @@ registerLbl:{
         flexDirection:'row',
         justifyContent:'space-between',
         flex:1,
+
+        borderWidth:2,
+        borderColor:'black',
         
          
     },
@@ -614,6 +820,9 @@ registerLbl:{
         marginHorizontal: 0,
         
         padding:0,
+
+
+
         
     },
 

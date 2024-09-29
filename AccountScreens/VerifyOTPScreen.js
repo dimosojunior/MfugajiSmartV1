@@ -17,6 +17,7 @@ import {useFonts} from 'expo-font';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { COLORS, SIZES } from '../Screens/src/Constant';
 import LotterViewScreen from '../Screens/LotterViewScreen';
+import { LinearGradient } from 'expo-linear-gradient';
 //import SvgIcon from '../assets/SvgIcon';
 //import OTPInputView from '@twotalltotems/react-native-otp-input';
 //import OTPInputView from 'react-native-otp-input';
@@ -107,11 +108,13 @@ const handleErrorMessage = (error) => {
 
       if (otp.length > 6) {
     showAlertFunction("tafadhali codes zimezidi, codes lazima ziwe 6");
+    setPending(false);
     return;
   }
 
   if (otp.length < 6) {
     showAlertFunction("tafadhali codes ziko pungufu, codes lazima ziwe 6");
+    setPending(false);
     return;
   }
 
@@ -126,11 +129,13 @@ const handleErrorMessage = (error) => {
 
      if (newPassword.length < 4) {
     showAlertFunction("tafadhali neno siri linapaswa kuwa na tarakimu zaidi ya 4");
+    setPending(false);
     return;
   }
 
   if (newPassword !== password2) {
-      showAlertFunction("Nywira ulizoingiza hazifanani");
+      showAlertFunction("Neno siri ulizoingiza hazifanani");
+      setPending(false);
       return;
     }
 
@@ -267,10 +272,41 @@ if (text && index < otpRefs.length - 1) {
 
               ]}
           >
+
+                 <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="key" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
           <TextInput
           style= {[styles.textinputi,{ 
             color: 'black',
-          width:'75%'
+          width:'65%'
         }]}
           placeholder="Neno siri jipya"
           secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
@@ -314,9 +350,40 @@ if (text && index < otpRefs.length - 1) {
 
               ]}
           >
+
+                 <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="key" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
           <TextInput
           style= {[styles.textinputi,{ 
-            color: 'black',width:'75%',
+            color: 'black',width:'65%',
             //paddingVertical:20,
           }]}
           placeholder=" Thibitisha neno siri"
@@ -506,8 +573,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 20,
   },
-  mainCon: {
-    backgroundColor: 'lightgreen',
+   mainCon: {
+    backgroundColor: 'white',
+   // backgroundColor:'#00BF8F',
     flex: 1,
   },
   loginIcon: {
@@ -525,7 +593,7 @@ const styles = StyleSheet.create({
     bottom: 40,
   },
   loginLbl: {
-    color: '#000',
+    color: 'black',
     fontSize: 40,
     marginBottom:10,
     //fontFamily: Fonts.type.NotoSansExtraBold,
@@ -570,6 +638,15 @@ registerLbl:{
         padding:10,
         borderRadius:8,
         fontFamily:'Light',
+
+        borderWidth:2,
+        borderColor:'black',
+    //       elevation: 3,
+
+    // shadowOffset: { width: 1, height: 1 },
+    // shadowColor: Platform.OS === "android" ? COLORS.white : COLORS.white,
+    // shadowOpacity: 1,
+    // shadowRadius: 2,
     },
 
 
@@ -590,6 +667,9 @@ registerLbl:{
         flexDirection:'row',
         justifyContent:'space-between',
         flex:1,
+
+        borderWidth:2,
+        borderColor:'black',
         
          
     },
@@ -604,9 +684,10 @@ registerLbl:{
         marginHorizontal: 0,
         
         padding:0,
+
+
+
         
     },
-
-
 
 });

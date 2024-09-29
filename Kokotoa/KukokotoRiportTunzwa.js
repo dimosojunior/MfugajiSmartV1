@@ -317,15 +317,6 @@ const formatToThreeDigits = (number) => {
 
 
 
- //calculate total kilos per week based on the number of kuku 
-const TotalCPPercentageRequired_value = TotalCPPercentageRequired ? (TotalCPPercentageRequired / 100) * TotalFoodAmount : 0;
-const TotalCPPercentageRequired_Displayed = TotalCPPercentageRequired_value;
-
-
- //calculate total kilos per week based on the number of kuku 
-const TotalMafutaPercentageRequired_value = TotalMafutaPercentageRequired ? (TotalMafutaPercentageRequired / 100) * TotalFoodAmount : 0;
-const TotalMafutaPercentageRequired_Displayed = TotalMafutaPercentageRequired_value;
-
 
 
 
@@ -350,212 +341,151 @@ const TotalVyakulaCard = () => {
       style={globalStyles.TaarifaOverdoseCartItemsContainer} >
 
 
-  
-
-
-
-
-
-
-
-{/*mwanzo wa mgawanyo wa chakula kwa siku ulizozichagua*/}
-
-{TotalCPValue >= 1 &&  (
-   <View style={{
-    flexDirection:'row',
-    width:'100%',
-    alignItems:'center',
-    justifyContent:'space-between',
-    marginBottom:10,
-   }}>
-
-
-   <Text style={{
-    width:'30%',
-    color:'green',
-    fontFamily:'Medium',
-   }}>
-   Kirutubisho
+   {/* mwanzo wa flow ya 0*/}
+        <View 
+        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
+        >
+      
      
-   </Text>
+     {TotalCPValue >= 1 && ( 
+     <View style={
+            globalStyles.TaarifaLeft
+          }>
+        <Text style={
+            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
+          }>
+            =></Text>
+          <Text 
+           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
+         >
+           
+           Kiasi cha protini kinachoweza kupatikana
+          </Text>
+          
+          </View>
+          )}
 
-    <Text style={{
-    width:'30%',
-    color:'green',
-    fontFamily:'Medium',
-   }}>
-   Kilichopatikana
+         {TotalCPValue >= 1 && ( 
+         <View style={
+            globalStyles.TaarifaRight
+          }>
+        
+          <Text 
+           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
+         >
+            {TotalCPValue.toFixed(2)} Kg 
+          </Text>
+          
+     </View>
+     )}
+
+      
+       
+        </View>
+      {/*mwisho wa flow ya 0*/}
+
+
+
+
+
+
+
+
+
+
+{/* mwanzo wa flow ya 2*/}
+        <View 
+        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
+        >
+      
      
-   </Text>
+     {TotalMafutaValue >= 1 && ( 
+     <View style={
+            globalStyles.TaarifaLeft
+          }>
+        <Text style={
+            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
+          }>
+            =></Text>
+          <Text 
+           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
+         >
+           
+           Kiasi cha mafuta kinachoweza kupatikana
+          </Text>
+          
+          </View>
+          )}
 
-    <Text style={{
-    width:'30%',
-    color:'green',
-    fontFamily:'Medium',
-   }}>
-   Kinachohitajika
-     
-   </Text>
+         {TotalMafutaValue >= 1 && ( 
+         <View style={
+            globalStyles.TaarifaRight
+          }>
+        
+          <Text 
+           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
+         >
+            {TotalMafutaValue.toFixed(2)} Kg 
+          </Text>
+          
+     </View>
+     )}
 
-     
-</View>
-)}
-
-
-{/*mwanzo wa mstari*/}
- <View style={{
-  borderBottomColor:'green',
-  borderBottomWidth:1,
-  marginTop:0,
-  marginBottom:10,
- }}>
-   {/*<Text>
-     
-   </Text>*/}
- </View>
-{/*mwiso wa mstari*/}
-
-
-{/*mwzanzo wa kirutubisho*/}
-
-{TotalCPValue >= 1 &&  (
-   <View style={{
-    flexDirection:'row',
-    width:'100%',
-    alignItems:'center',
-    justifyContent:'space-between',
-   }}>
-
-
-   <Text style={{
-    width:'30%',
-    color:'black',
-    fontFamily:'Light',
-   }}>
-   Protini
-     
-   </Text>
-
-    <Text style={{
-    width:'30%',
-    color:'black',
-    fontFamily:'Light',
-   }}>
-    {TotalCPValue.toFixed(2)} Kg 
-     
-   </Text>
-
-    <Text style={{
-    width:'30%',
-    color:'black',
-    fontFamily:'Light',
-   }}>
-   
-     {TotalCPPercentageRequired_Displayed.toFixed(2)} Kg
-   </Text>
-
-     
-</View>
-)}
-{/*mwisho wa kirutubisho*/}
+      
+       
+        </View>
+      {/*mwisho wa flow ya 2*/}
 
 
 
+      {/* mwanzo wa flow ya 22*/}
+        <View 
+        style={globalStyles.TaarifaOverdoseLeftCartItemsContainer}
+        >
+      
 
+      {TotalMEValue >= 1 && ( 
+     <View style={
+            globalStyles.TaarifaLeft
+          }>
+        <Text style={
+            globalStyles.TaarifaOverdoseItemNameCartItemsMshale
+          }>
+            =></Text>
+          <Text 
+           style={globalStyles.TaarifaOverdoseItemNameCartItemsText}
+         >
+           
+           Kiasi cha Energy kinachoweza kupatikana
+          </Text>
+          
+          </View>
+          )}
 
+         {TotalMEValue >= 1 && ( 
+         <View style={
+            globalStyles.TaarifaRight
+          }>
+        
+          <Text 
+           style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
+         >
+            {TotalMEValue.toFixed(2)} Kca/Kg 
+          </Text>
+          
+     </View>
+     )}
 
-
-{/*mwzanzo wa kirutubisho*/}
-
-{TotalMafutaValue >= 1 &&  (
-   <View style={{
-    flexDirection:'row',
-    width:'100%',
-    alignItems:'center',
-    justifyContent:'space-between',
-   }}>
-
-
-   <Text style={{
-    width:'30%',
-    color:'black',
-    fontFamily:'Light',
-   }}>
-   Mafuta
-     
-   </Text>
-
-    <Text style={{
-    width:'30%',
-    color:'black',
-    fontFamily:'Light',
-   }}>
-    {TotalMafutaValue.toFixed(2)} Kg 
-     
-   </Text>
-
-    <Text style={{
-    width:'30%',
-    color:'black',
-    fontFamily:'Light',
-   }}>
-   
-     {TotalMafutaPercentageRequired_Displayed.toFixed(2)} Kg
-   </Text>
-
-     
-</View>
-)}
-{/*mwisho wa kirutubisho*/}
+      
+       
+        </View>
+      {/*mwisho wa flow ya 22*/}
 
 
 
 
 
 
-
-{/*mwzanzo wa kirutubisho*/}
-
-{TotalMEValue >= 1 &&  (
-   <View style={{
-    flexDirection:'row',
-    width:'100%',
-    alignItems:'center',
-    justifyContent:'space-between',
-   }}>
-
-
-   <Text style={{
-    width:'30%',
-    color:'black',
-    fontFamily:'Light',
-   }}>
-   Energy
-     
-   </Text>
-
-    <Text style={{
-    width:'30%',
-    color:'black',
-    fontFamily:'Light',
-   }}>
-    {TotalMEValue.toFixed(2)} Kg/kca 
-     
-   </Text>
-
-    <Text style={{
-    width:'30%',
-    color:'black',
-    fontFamily:'Light',
-   }}>
-   
-     {TotalMEPercentageRequired.toFixed(2)} Kg/kca
-   </Text>
-
-     
-</View>
-)}
-{/*mwisho wa kirutubisho*/}
 
 
 

@@ -715,7 +715,7 @@ const renderDotIndicators = () => {
 
                   )}
                   
-                    {Location ? (
+                  
 
                     <TouchableOpacity
                    onPress={() => {   Linking.openURL(`tel:${item.phone}`)}}
@@ -745,32 +745,6 @@ const renderDotIndicators = () => {
                     </TouchableOpacity>
 
 
-                    ):(
-                    <TouchableOpacity
-                    onPress={() => navigation.replace('Update Stack')}
-                    >
-                    <Text
-                    style={[
-                      globalStyles.AppCustomMahaliTextValueHomeScreen,
-                      {
-                        backgroundColor:'brown',
-                        padding:4,
-                        borderRadius:5,
-                        color:'white',
-                         borderTopRightRadius:0, 
-                         borderBottomLeftRadius:0, 
-                         marginTop:5,
-                      }
-
-
-                      ]} 
-                    
-                  
-                    >
-                    Malizia usajili
-                    </Text>
-                    </TouchableOpacity>
-                    )}
                   </View>
                 
                 </HomeCustomCard>

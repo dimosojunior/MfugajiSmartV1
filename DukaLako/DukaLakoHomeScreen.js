@@ -65,13 +65,13 @@ export default function DukaLakoHomeScreen ({navigation}) {
     {
       id: 1,
       name: "Ongeza Huduma Yako",
-      imagesrc:require('../assets/im1.jpg')
+      imagesrc:require('../assets/icon.png')
       
     },
     {
       id: 2,
       name: "Duka Lako",      
-      imagesrc:require('../assets/im2.jpg')
+      imagesrc:require('../assets/icon.png')
     }
   ];
 

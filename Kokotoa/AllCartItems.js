@@ -55,6 +55,11 @@ const AllCartItems = ({navigation, route}) => {
    TotalWangaPercentageRequired_Finisher,
    TotalMafutaPercentageRequired_Finisher,
 
+   TotalMEPercentageRequired_Starter,
+   TotalMEPercentageRequired_Grower,
+   TotalMEPercentageRequired_Layer,
+   TotalMEPercentageRequired_Finisher,
+
 
 
      StaterFeed,
@@ -64,6 +69,7 @@ const AllCartItems = ({navigation, route}) => {
     AinaYaKuku,
     UmriKwaWiki,
    UmriKwaSiku,
+   Interval,
   // setSelectedProductIds
     //id //id ya Chakula
    } = route.params
@@ -331,7 +337,7 @@ const makeOrder = async () => {
   //setIsOrderButtonVisible(false);
   try {
     const response = await axios.post(
-      EndPoint + `/VyakulaOrder/?TotalCPPercentageRequired_Finisher=${TotalCPPercentageRequired_Finisher}&TotalWangaPercentageRequired_Finisher=${TotalWangaPercentageRequired_Finisher}&TotalMafutaPercentageRequired_Finisher=${TotalMafutaPercentageRequired_Finisher}&TotalCPPercentageRequired_Layer=${TotalCPPercentageRequired_Layer}&TotalWangaPercentageRequired_Layer=${TotalWangaPercentageRequired_Layer}&TotalMafutaPercentageRequired_Layer=${TotalMafutaPercentageRequired_Layer}&TotalCPPercentageRequired_Grower=${TotalCPPercentageRequired_Grower}&TotalWangaPercentageRequired_Grower=${TotalWangaPercentageRequired_Grower}&TotalMafutaPercentageRequired_Grower=${TotalMafutaPercentageRequired_Grower}&TotalCPPercentageRequired_Starter=${TotalCPPercentageRequired_Starter}&TotalWangaPercentageRequired_Starter=${TotalWangaPercentageRequired_Starter}&TotalMafutaPercentageRequired_Starter=${TotalMafutaPercentageRequired_Starter}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}`,
+      EndPoint + `/VyakulaOrder/?TotalMEPercentageRequired_Starter=${TotalMEPercentageRequired_Starter}&TotalMEPercentageRequired_Grower=${TotalMEPercentageRequired_Grower}&TotalMEPercentageRequired_Layer=${TotalMEPercentageRequired_Layer}&TotalMEPercentageRequired_Finisher=${TotalMEPercentageRequired_Finisher}&TotalCPPercentageRequired_Finisher=${TotalCPPercentageRequired_Finisher}&TotalWangaPercentageRequired_Finisher=${TotalWangaPercentageRequired_Finisher}&TotalMafutaPercentageRequired_Finisher=${TotalMafutaPercentageRequired_Finisher}&TotalCPPercentageRequired_Layer=${TotalCPPercentageRequired_Layer}&TotalWangaPercentageRequired_Layer=${TotalWangaPercentageRequired_Layer}&TotalMafutaPercentageRequired_Layer=${TotalMafutaPercentageRequired_Layer}&TotalCPPercentageRequired_Grower=${TotalCPPercentageRequired_Grower}&TotalWangaPercentageRequired_Grower=${TotalWangaPercentageRequired_Grower}&TotalMafutaPercentageRequired_Grower=${TotalMafutaPercentageRequired_Grower}&TotalCPPercentageRequired_Starter=${TotalCPPercentageRequired_Starter}&TotalWangaPercentageRequired_Starter=${TotalWangaPercentageRequired_Starter}&TotalMafutaPercentageRequired_Starter=${TotalMafutaPercentageRequired_Starter}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaWiki=${UmriKwaWiki}&Interval=${Interval}&UmriKwaSiku=${UmriKwaSiku}`,
       { 
         total_price: totalCartPrice,
         total_Kilos: totalCartKilos,
@@ -805,6 +811,7 @@ style={globalStyles.AppChaguaHudumaTextHomeScreen}
            FinisherFeed,
            UmriKwaWiki,
            UmriKwaSiku,
+           Interval,
            UnaKiasiGaniChaChakula
         })}
        

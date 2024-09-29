@@ -26,13 +26,19 @@ const KusafishaBandaForm = ({ navigation, route }) => {
 
   const { 
     
-    id,
-    Siku,
+    // id,
+    // Siku,
+    
+    // Wiki,
+    // Mwezi,
     JinaLaHuduma,
-    Wiki,
-    Mwezi, 
+    input 
    } = route.params
-   const siku = Siku;
+
+const Wiki = 0;
+const Mwezi = 0;
+
+   const siku = input;
 
 
 

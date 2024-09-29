@@ -40,6 +40,32 @@ container: {
   },
 
 
+SignupImageJuu:{
+
+  width:'100%',
+  height:height/2 - 50,
+  borderRadius:8,
+  opacity:1,
+
+},
+UmriInitialImage:{
+
+  width:'100%',
+  height:height/2,
+  borderRadius:8,
+  opacity:1,
+
+},
+
+tuambieSiku:{
+  fontFamily:'Medium',
+  marginLeft:20,
+  width:'90%',
+  marginTop:15,
+  marginBottom:15,
+
+},
+
 //-----------------AWERESOME  ALERT----------------------
 
 alertContainer:{

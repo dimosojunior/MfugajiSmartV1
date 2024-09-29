@@ -58,6 +58,8 @@ const AllOrderedItems = ({navigation, route}) => {
    GrowerFeed,
     AinaYaKuku,
     UmriKwaSiku,
+    UmriKwaWiki,
+    Interval,
     
 
     TotalFoodMixerPercentage,
@@ -68,6 +70,7 @@ const AllOrderedItems = ({navigation, route}) => {
     TotalCPPercentageRequired,
      TotalWangaPercentageRequired,
      TotalMafutaPercentageRequired,
+     TotalMEPercentageRequired,
 
      TotalConstantFoodMixerPercentage,
      TotalMixerKios_ForConstantFoodGroups
@@ -262,9 +265,9 @@ const [constant_queryset, setconstant_queryset] = useState([]);
 useEffect(() => {
     const fetchAllData = async () => {
         try {
-            const response1 = axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`);
+            const response1 = axios.get(`${EndPoint}/GetAllVyakulaOrderItemsView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&TotalMEPercentageRequired=${TotalMEPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaWiki=${UmriKwaWiki}&Interval=${Interval}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`);
             
-            const response2 = axios.get(`${EndPoint}/GetConstantFoodKilosForEachItemView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`);
+            const response2 = axios.get(`${EndPoint}/GetConstantFoodKilosForEachItemView/?id=${id}&TotalMixerKios_ForConstantFoodGroups=${TotalMixerKios_ForConstantFoodGroups}&TotalConstantFoodMixerPercentage=${TotalConstantFoodMixerPercentage}&TotalCPPercentageRequired=${TotalCPPercentageRequired}&TotalWangaPercentageRequired=${TotalWangaPercentageRequired}&TotalMafutaPercentageRequired=${TotalMafutaPercentageRequired}&TotalMEPercentageRequired=${TotalMEPercentageRequired}&AinaYaKuku=${AinaYaKuku}&StaterFeed=${StaterFeed}&GrowerFeed=${GrowerFeed}&LayerFeed=${LayerFeed}&FinisherFeed=${FinisherFeed}&UmriKwaWiki=${UmriKwaWiki}&Interval=${Interval}&UmriKwaSiku=${UmriKwaSiku}&TotalFoodAmount=${TotalFoodAmount}&TotalFoodMixerPercentage=${TotalFoodMixerPercentage}&UnaKiasiGaniChaChakula=${UnaKiasiGaniChaChakula}`);
 
             const [result1, result2] = await Promise.all([response1, response2]);
 
@@ -691,7 +694,7 @@ unachotakiwa kuweka</Text>
 <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Maelekezo jinsi ya kuchanganya chakula cha kilo {TotalFoodAmount} kwa {AinaYaKuku} umri wa siku {UmriKwaSiku}
+    >Maelekezo jinsi ya kuchanganya chakula cha kilo {TotalFoodAmount} kwa {AinaYaKuku}  umri kuanzia siku {Interval}
 
      </Text>
 
@@ -934,6 +937,7 @@ userData={userData}
           TotalCPPercentageRequired,
       TotalWangaPercentageRequired,
       TotalMafutaPercentageRequired,
+      TotalMEPercentageRequired,
            
              StaterFeed,
                FinisherFeed,
@@ -942,6 +946,8 @@ userData={userData}
                 AinaYaKuku,
                 
                UmriKwaSiku,
+               UmriKwaWiki,
+               Interval,
                TotalConstantFoodMixerPercentage,
                TotalMixerKios_ForConstantFoodGroups
 

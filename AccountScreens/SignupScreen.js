@@ -16,6 +16,7 @@ import { Ionicons, FontAwesome, MaterialCommunityIcons} from '@expo/vector-icons
 import {useFonts} from 'expo-font';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { COLORS, SIZES } from '../Screens/src/Constant';
+import { LinearGradient } from 'expo-linear-gradient';
 const {width,height} = Dimensions.get('window');
 const SignupScreen = ({ navigation }) => {
 
@@ -195,6 +196,9 @@ const handleErrorMessage = (error) => {
 
         <>{!fontsLoaded ? (<View/>):(
 
+
+       
+
       
        <KeyboardAvoidingView behavior="position" style={styles.mainCon}>
         <ScrollView 
@@ -252,22 +256,143 @@ const handleErrorMessage = (error) => {
                
               />*/}
 
-              <TextInput 
-              placeholder='Ingiza jina unalotumia' 
-              //style={{width: '80%', height: 100}}
-              style={[styles.textinput,{
-                  width:width-20,
-                  //height:70,
-                  color:'black',
-              }]} 
-              placeholderTextColor="black"
-             value={username}
-              onChangeText={text => setUsername(text)} 
-              
-             // keyboardType="email-address"
-              />
+          
 
-               <TextInput 
+                 {/*  mwanzo wa username*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:0,
+              }
+
+              ]}
+          >
+
+            <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="user-circle" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
+
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'88%',
+            //backgroundColor:'black',
+
+            //paddingVertical:20,
+          }]}
+          placeholder="Ingiza jina unalotumia"
+          //keyboardType="numeric"
+          
+          value={username}
+          onChangeText={setUsername}
+        placeholderTextColor="black"
+        />
+
+      
+        </View>
+      {/*  mwisho wa username*/}
+
+
+
+
+               {/*  mwanzo wa namba ya simu*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:20,
+              }
+
+              ]}
+          >
+
+            <View style={{
+          width:'10%',
+          //justifyContent:"center",
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+           <Image
+
+          style={{
+            width:30,
+            height:30,
+          }}
+           source={require('../assets/tz.jpg')} 
+          >
+          </Image>
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
+
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'88%',
+
+            //paddingVertical:20,
+          }]}
+          placeholder=" Namba ya simu"
+          keyboardType="numeric"
+          
+          value={phone}
+          onChangeText={setPhone}
+        placeholderTextColor="black"
+        />
+
+      
+        </View>
+      {/*  mwisho wa namba ya simu*/}
+
+
+          {/*     <TextInput 
               placeholder='Ingiza namba yako ya simu, 0*********' 
               //style={{width: '80%', height: 100}}
               style={[styles.textinput,{
@@ -281,24 +406,74 @@ const handleErrorMessage = (error) => {
               onChangeText={setPhone}
               
              // keyboardType="email-address"
-              />
+              />*/}
 
-                <TextInput 
-              placeholder='Ingiza email yako' 
-              //style={{width: '80%', height: 100}}
-              style={[styles.textinput,{
-                  width:width-20,
-                  //height:70,
-                  color:'black',
-                  marginTop:20,
-              }]} 
-              placeholderTextColor="black"
-             keyboardType={'email-address'}
-            value={email}
-            onChangeText={text => setEmail(text)} 
-              
-             // keyboardType="email-address"
-              />
+       
+  
+
+        {/*  mwanzo wa email*/}
+            <View 
+            style={[styles.dataContainerForPassword, 
+              {
+                 width:width-20,
+                marginTop:20,
+              }
+
+              ]}
+          >
+
+            <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="envelope-o" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
+
+          <TextInput
+          style= {[styles.textinputi,{ 
+            color: 'black',width:'88%',
+            //backgroundColor:'black',
+
+            //paddingVertical:20,
+          }]}
+          placeholder="Ingiza email yako"
+          //keyboardType="numeric"
+           keyboardType={'email-address'}
+          
+          value={email}
+          onChangeText={setEmail}
+        placeholderTextColor="black"
+        />
+
+      
+        </View>
+      {/*  mwisho wa email*/}
+
 
 
            
@@ -312,10 +487,42 @@ const handleErrorMessage = (error) => {
 
               ]}
           >
+
+                <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="key" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
+
           <TextInput
           style= {[styles.textinputi,{ 
             color: 'black',
-          width:'75%'
+          width:'65%'
         }]}
           placeholder="Neno siri"
           secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
@@ -362,9 +569,40 @@ const handleErrorMessage = (error) => {
 
               ]}
           >
+
+               <View style={{
+          width:'10%',
+          //justifyContent:"center",
+         // backgroundColor:'red',
+        }}>
+
+         {/* Add a button to toggle password visibility */}
+        <TouchableOpacity
+          
+          style={{ 
+            alignSelf: 'flex-start', 
+            marginRight: 0,color:'black',
+            flexDirection:'row',
+            alignItems:'center',
+             }}
+          >
+
+          <FontAwesome size={25} color="green" name="key" />
+
+        {/*  <Text style={{
+           color: 'black', 
+           fontSize: 16,
+           fontWeight:'bold',
+           marginLeft:10,
+            }}>
+            +255
+          </Text>*/}
+        </TouchableOpacity>
+
+        </View>
           <TextInput
           style= {[styles.textinputi,{ 
-            color: 'black',width:'75%',
+            color: 'black',width:'65%',
             //paddingVertical:20,
           }]}
           placeholder=" Thibitisha neno siri"
@@ -396,6 +634,26 @@ const handleErrorMessage = (error) => {
         </View>
         </View>
       {/*  mwisho wa neno siri*/}
+
+
+
+
+
+
+
+
+
+
+
+
+       
+
+
+
+
+
+
+
 
 
 
@@ -554,6 +812,8 @@ const handleErrorMessage = (error) => {
 </ScrollView>
       </KeyboardAvoidingView>
 
+     
+
 
          )}</>
     )
@@ -566,7 +826,7 @@ export default SignupScreen;
 
 const styles = StyleSheet.create({
   mainCon: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: 'white',
     flex: 1,
   },
   loginIcon: {
@@ -629,6 +889,9 @@ registerLbl:{
         padding:10,
         borderRadius:8,
         fontFamily:'Light',
+
+        borderWidth:2,
+        borderColor:'black',
     },
 
 
@@ -649,6 +912,9 @@ registerLbl:{
         flexDirection:'row',
         justifyContent:'space-between',
         flex:1,
+
+        borderWidth:2,
+        borderColor:'black',
         
          
     },

@@ -182,235 +182,6 @@ const formatToThreeDigits = (number) => {
 
 
 
-
-const InventoryCard = ({item, index}) => {
-  
-
-
-//mwanzo wa search
-   if (input === ""){
-
- 
- return (
-
-
- 
-<>
-{input != '' && (
-
-
-      <TouchableOpacity
-
-      //  onPress={() =>
-      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
-      // }
-
-       // onPress={() => {
-       // navigation.navigate('Vyakula Vyote', { ...item,UmriwaKukuId,UmriKwaWiki, UmriKwaSiku, KukuId, AinaYaKuku,  StaterFeed,GrowerFeed, LayerFeed, FinisherFeed });
-        // setIsModalVisible(false); // Update state when modal opens
-        // setModalVisible(false);
-      //}}
-       
-     
-      
-      style={[
-        globalStyles.IdadiYaKukuFirstContainer,
-        {
-          //backgroundColor:'red',
-          width:'100%',
-          //flexDirection:'row',
-          justifyContent:'center',
-          alignItems:'center',
-        }
-      ]} >
-
-
-        <View 
-        style={{
-          //backgroundColor:'red'
-        }}
-        >
-
-      <Text style={{
-        backgroundColor:'green',
-        paddingVertical:30,
-        marginVertical:10,
-        color:'white',
-        borderRadius:8,
-        paddingHorizontal:30,
-
-      }}> Umri wa kuku wako: {input}</Text>
-            
-          
-        </View>
-
-
-
-      </TouchableOpacity>
-
-
-
-
-
-
-)}
-</>
-
-
-
-
-
-
-)
-
-
-
-  // hili bano la chini ni la if ya juu kama mtu akitype   
-}
-
-if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
- return (
-
-
-
-      <TouchableOpacity
-       onPress={() =>
-        navigation.navigate('Ratiba Ya Chanjo Form', {...item, JinaLaHuduma})}
-       
-     
-      
-      style={globalStyles.OverdoseCartItemsContainer} >
-
-
-        <View 
-        style={globalStyles.OverdoseLeftCartItemsContainer}
-        >
-
-        {item.UmriKwaWiki && (  
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Wiki  :
-
-          </Text>
-          )}
-
-         {item.Interval && (  
-          <Text 
-           style={globalStyles.OverdoseItemNameCartItemsText}
-         >
-            Siku :
-          </Text>
-          )}
-
-
-      
-
-         
-        {/*  <Text
-           style={globalStyles.OverdoseIconCartItemsText}
-          >
-            
-        <FontAwesome
-        style={globalStyles.OverdoseIcon1CartItems}
-          
-          name="cart-arrow-down"
-          size={15}
-          color="black"
-        />
-           
-          </Text>*/}
-       
-
-           
-
-
-
-
-      
-            
-          
-        </View>
-
-
-
-        <Pressable 
-         onPress={() =>
-        navigation.navigate('Ratiba Ya Chanjo Form', {...item, JinaLaHuduma})}
-       
-
-        style={globalStyles.OverdoseImageContainerCartItems}
-        >
-      
-
-
-
-
-        {item.UmriKwaWiki && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            {item.UmriKwaWiki}
-          </Text>
-          )}
-
-         {item.Interval && (  
-          <Text 
-           style={[globalStyles.OverdoseItemNameCartItemsText,
-            {
-              color:'green'
-
-           }
-           ]}
-         >
-            {item.Interval}
-          </Text>
-          )}
-
-
-
-
-
-
-
-
-        </Pressable>
-
-
-
-
-
-
-
-
-
-      </TouchableOpacity>
-
-
-
-
-
-
-)
-
-
-
-
-
-
-
-
-// hili bano la chini ni la if ya pili mwisho
-  }
-
-
-
-}
   
   return (
 
@@ -423,7 +194,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
  {!isPending ? (
 
      <View style={[globalStyles.container
-     ,{backgroundColor:COLORS.white}]}>
+     ,{backgroundColor:'#fdb9b1'}]}>
          
      
 
@@ -434,11 +205,87 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
       
 
 
+ <ScrollView 
+        keyboardShouldPersistTaps="handled"
+        >
 
 
 
 
-    <View style={globalStyles.searchbarOtherPages}>
+
+
+
+
+{/*mwanzo wa view ya image*/}
+ <View>
+
+
+
+<View style={{
+          width:width,
+          //justifyContent:'center',
+         // alignItems:'center',
+          //flex:1,
+          //backgroundColor:'#fdb9b1',
+          //height:height,
+        }}>
+
+     
+      <Image
+
+      style={globalStyles.UmriInitialImage}
+       source={require('../assets/300.png')} 
+      >
+      </Image>
+
+      </View>
+
+
+     
+
+
+</View>
+
+
+{/*Mwisho wa view ya image*/}
+
+
+
+
+
+
+
+
+       {/*mwanzo wa search*/}
+
+         <View style={{position: 'relative', 
+        flex:2,
+        position: 'relative',
+        backgroundColor:'#fdb9b1',
+        marginTop:-30,
+
+        //marginTop:10,
+
+        //bottom: 30
+      }}>
+
+<Text style={globalStyles.tuambieSiku}>
+  Tuambie kuku wako wana umri gani (Ingiza siku)
+</Text>
+
+     <View style={[globalStyles.searchbarOtherPages,
+
+      {
+
+        //flex:2,
+        // marginTop:-30,
+        
+
+      }
+
+
+      ]}>
+
 
                  <View style={globalStyles.searchbarIconContainerOtherPages}>
                     <Ionicons name="search-outline" 
@@ -453,7 +300,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza wiki" 
+                    placeholder="Ingiza siku" 
                      placeholderTextColor='black'
                      keyboardType="numeric"
                     style={globalStyles.AppInputHomeScreenOtherPages}
@@ -466,66 +313,64 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
 
 
-  {input != '' ? (
-  <Text
-      style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+
+
+
+
+
+  {input != '' && (
+
+
+
+ <TouchableOpacity
+
+
+     onPress={() =>
+        navigation.navigate('Ratiba Ya Chanjo Form', {input, JinaLaHuduma})}
+       
       
-      >Tafadhali chagua umri wa kuku wako wa wiki {input} hapo chini kuendelea</Text>
- 
-
- ):(
-
- <View>
-
-
-
-<View style={{
-          width:width,
-          //justifyContent:'center',
+      style={[
+        globalStyles.IdadiYaKukuFirstContainer,
+        {
+          //backgroundColor:'red',
+          width:'90%',
+          //flexDirection:'row',
+          justifyContent:'center',
           alignItems:'center',
-          //flex:1,
-          backgroundColor:'lightgreen',
-          height:height,
-        }}>
+          marginLeft:20,
+        }
+      ]} >
 
-        <Text
-    style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-    
-    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako, , mwisho wiki 24)</Text>
 
-     {/* <Image
-        source={item?.RouteImage}
+        <View 
         style={{
-          height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-       }}
-      />*/}
-       <LottieView
-        style={{
-        height: height/2,
-         width:'80%',
-         borderRadius:5,
-         // backgroundColor:'red',
-         // justifyContent:'center',
-         // alignItems:'center',
-         zIndex:1,
-
-        // flex:1,
-
+          //backgroundColor:'red'
         }}
-        source={require('../assets/Loading/l2.json')} // Replace with your animation JSON file
-        autoPlay
-        loop
-      />
+        >
 
-      </View>
+      <Text style={{
+        backgroundColor:'green',
+        paddingVertical:10,
+        marginVertical:10,
+        color:'white',
+        borderRadius:8,
+        paddingHorizontal:30,
+        lineHeight:30,
+        fontFamily:'Medium',
+
+      }}>Bonyeza kundelea mbele kwa kuku wenye umri wa siku: <Text style={{
+        color:'red',
+        fontFamily:'Bold',
+        fontSize:20,
+      }}> {input}</Text>
+            </Text>
+          
+        </View>
 
 
 
+      </TouchableOpacity>
 
-
-</View>
 
  )}
 
@@ -533,75 +378,26 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
 
 
+
+
+
+
+    </View>
+
+ {/*mwisho wa search*/}
+
+
+
+
+
+
+
+
+
+
        
 
 
-
-
-
-
-
-
-
-       
-
-
-
-
-
-
-
-      
-    {queryset && queryset.length > 0 ? (
-
-        <>
-
-         {setLoading===true?(<ActivityIndicator/>):(
-      <>
-
-   
-      <FlatList
-          data={queryset}
-          showsVerticalScrollIndicator={false}
-         // style={{marginTop: 12, width: '100%'}}
-          renderItem={InventoryCard}
-          numColumns={2}
-          ListFooterComponent={renderLoader}
-          onEndReached={getItems}
-          onEndReachedThreshold={0.5}
-          keyboardShouldPersistTaps="handled"
-        />
-                
- </>
-      )}
-
-         </>
-
-
-
-   ) :(
-   <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
-  <Text style={globalStyles.noitemText}>Hakuna taarifa za umri wa kuku! !
-  </Text>
-
-
-  <View style={globalStyles.ErrorImageContainerHomePage}>
-      <Image 
-          source={require('../assets/500.png')}  
-           style={globalStyles.ErrorImageHomePage}
-          
-          //source={item.ArticleImage} 
-          //resizeMode='contain'
-          contentContainerStyle={{ padding: 20 }}
-          
-          />
-  </View>
-
-
-
-</View>
-
-  )}  
 
 
 
@@ -626,7 +422,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
 
 
-
+</ScrollView>
 
 
  <AwesomeAlert

@@ -41,6 +41,7 @@ const VyakulaVyote = ({navigation, route}) => {
     AinaYaKuku,
     UmriKwaWiki,
    UmriKwaSiku,
+   Interval,
   
   TotalCPPercentageRequired_Starter,
    TotalWangaPercentageRequired_Starter,
@@ -57,6 +58,11 @@ const VyakulaVyote = ({navigation, route}) => {
    TotalCPPercentageRequired_Finisher,
    TotalWangaPercentageRequired_Finisher,
    TotalMafutaPercentageRequired_Finisher,
+
+   TotalMEPercentageRequired_Starter,
+   TotalMEPercentageRequired_Grower,
+   TotalMEPercentageRequired_Layer,
+   TotalMEPercentageRequired_Finisher,
 
 
     IdadiYaKilos,
@@ -478,6 +484,7 @@ const CartCard = ({ item }) => {
              FinisherFeed,
              UmriKwaSiku,
              UmriKwaWiki,
+             Interval,
 
              TotalCPPercentageRequired_Starter,
          TotalWangaPercentageRequired_Starter,
@@ -493,7 +500,12 @@ const CartCard = ({ item }) => {
 
          TotalCPPercentageRequired_Finisher,
          TotalWangaPercentageRequired_Finisher,
-         TotalMafutaPercentageRequired_Finisher
+         TotalMafutaPercentageRequired_Finisher,
+
+         TotalMEPercentageRequired_Starter,
+       TotalMEPercentageRequired_Grower,
+       TotalMEPercentageRequired_Layer,
+       TotalMEPercentageRequired_Finisher
            })
 
     } else {
@@ -517,13 +529,13 @@ const CartCard = ({ item }) => {
         }
 
         ]}>
-        { (item.product_name === "Mashudu ya alizeti" || item.product_name === "Pumba za mahindi" || item.product_name === "Dagaa") && (
+        { (item.product_name === "Mashudu ya alizeti" || item.product_name === "Pumba za mahindi") && (
            <Text style={[globalStyles.VyakulaItemNameCartItemsText,
            
          {
           //width:'70%',
           marginLeft:20,
-          color:'green',
+          color:'red',
           fontSize:10,
          }
 
@@ -632,12 +644,36 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
 
   return (
       <Pressable style={[
+        globalStyles.VyakulaCartItemsContainerKubwa,
+        {
+          //width:'90%',
+        }
+
+        ]}>
+        { (item.product_name === "Mashudu ya alizeti" || item.product_name === "Pumba za mahindi") && (
+           <Text style={[globalStyles.VyakulaItemNameCartItemsText,
+           
+         {
+          //width:'70%',
+          marginLeft:20,
+          color:'red',
+          fontSize:10,
+         }
+
+            ]}>
+            lazima uchague
+          </Text>
+          )}
+      
+      <Pressable style={[
         globalStyles.VyakulaCartItemsContainer,
         {
           //width:'90%',
         }
 
         ]}>
+
+
         <View style={[
           globalStyles.VyakulaLeftCartItemsContainer,
           {
@@ -684,7 +720,10 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
             ]}>
             {item.product_name}
           </Text>
+
+         
         </View>
+
         <Pressable style={[
           globalStyles.VyakulaImageContainerCartItems,
           {
@@ -706,8 +745,10 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
           )}
         </Pressable>
       </Pressable>
-    );
 
+
+      </Pressable>
+    );
 
 
 
@@ -1236,7 +1277,7 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
         { 
           opacity: pressed ? 0.5 : 1,
           paddingVertical:30,
-          backgroundColor:'black',
+          backgroundColor:'green',
           flexDirection:'row',
           justifyContent:'space-between',
          // flex: currentQueryset === 4 ? 1 : 0.45, // Cover full width if only one button
@@ -1258,6 +1299,7 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
              FinisherFeed,
              UmriKwaWiki,
              UmriKwaSiku,
+             Interval,
 
              TotalCPPercentageRequired_Starter,
          TotalWangaPercentageRequired_Starter,
@@ -1273,7 +1315,12 @@ if(item.product_name.toLowerCase().includes(input.toLowerCase())){
 
          TotalCPPercentageRequired_Finisher,
          TotalWangaPercentageRequired_Finisher,
-         TotalMafutaPercentageRequired_Finisher
+         TotalMafutaPercentageRequired_Finisher,
+
+         TotalMEPercentageRequired_Starter,
+       TotalMEPercentageRequired_Grower,
+       TotalMEPercentageRequired_Layer,
+       TotalMEPercentageRequired_Finisher
            })
        
             }}

@@ -86,7 +86,7 @@ const Carousel = memo(({ images }) => {
       <TouchableOpacity activeOpacity={1}>
         <Image
           source={{ uri: `${EndPoint}/${item}` }}
-          style={{ height: height / 3 + 50,
+          style={{ height: height / 3 + 150,
            width: screenWidth, 
            borderRadius: 10 }}
         />

@@ -28,15 +28,21 @@ const RatibaYaChanjoForm = ({ navigation, route }) => {
 
   const { 
     
-    id,
-    UmriKwaWiki,
-    UmriKwaSiku,
-    JinaLaHuduma
+    // id,
+    // UmriKwaWiki,
+    // UmriKwaSiku,
+    JinaLaHuduma,
+    input
    } = route.params
 
+//set UmriKwaWiki=0, kwasababu kule kwenye views ni lazima iipokee hii
 
+const UmriKwaWiki = 0;
+const UmriKwaSiku = input;
+// const UmriKwaWiki_value =  input / 7;
 
-const UmriWaKukuKwaSiku = UmriKwaSiku;
+const UmriWaKukuKwaSiku = input;
+// console.log("UmriWaKukuKwaSiku", UmriWaKukuKwaSiku);
 
 
 
@@ -599,7 +605,7 @@ style={{
       <View style={{ width: '90%', marginHorizontal: 20 }}>
         <Text style={[globalStyles.haippo, { color: 'wheat' }]}>
           Hizi ndizo chanjo ulizobakisha kutokakana na umri 
-          wa kuku wako wenye umri wa wiki {UmriKwaWiki}
+          wa kuku wako wenye umri wa siku {UmriWaKukuKwaSiku}
         </Text>
       </View>
       <View style={{ flexDirection: 'column', flexWrap: 'wrap' }}>

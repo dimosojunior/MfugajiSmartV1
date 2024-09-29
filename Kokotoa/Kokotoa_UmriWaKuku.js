@@ -54,6 +54,11 @@ const Kokotoa_UmriWaKuku = ({navigation, route}) => {
    TotalWangaPercentageRequired_Finisher,
    TotalMafutaPercentageRequired_Finisher,
 
+   TotalMEPercentageRequired_Starter,
+   TotalMEPercentageRequired_Grower,
+   TotalMEPercentageRequired_Layer,
+   TotalMEPercentageRequired_Finisher,
+
 
     id 
    } = route.params
@@ -318,7 +323,12 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
    TotalCPPercentageRequired_Finisher,
    TotalWangaPercentageRequired_Finisher,
-   TotalMafutaPercentageRequired_Finisher
+   TotalMafutaPercentageRequired_Finisher,
+
+   TotalMEPercentageRequired_Starter,
+   TotalMEPercentageRequired_Grower,
+   TotalMEPercentageRequired_Layer,
+   TotalMEPercentageRequired_Finisher
           })}
        
             
@@ -411,7 +421,12 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
    TotalCPPercentageRequired_Finisher,
    TotalWangaPercentageRequired_Finisher,
-   TotalMafutaPercentageRequired_Finisher
+   TotalMafutaPercentageRequired_Finisher,
+
+   TotalMEPercentageRequired_Starter,
+   TotalMEPercentageRequired_Grower,
+   TotalMEPercentageRequired_Layer,
+   TotalMEPercentageRequired_Finisher
           })}
        
 

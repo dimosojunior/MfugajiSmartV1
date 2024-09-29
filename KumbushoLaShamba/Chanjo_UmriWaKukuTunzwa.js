@@ -20,55 +20,24 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 import MinorHeader from '../Header/MinorHeader';
 import COLORS  from '../Constant/colors';
 
-import LottieView from 'lottie-react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
 
+import LottieView from 'lottie-react-native';
 const {width, height} = Dimensions.get('window');
 
-const IngizaKiasi = ({navigation, route}) => {
 
-   const { 
-    StaterFeed,
-   FinisherFeed,
-   LayerFeed,
-   GrowerFeed,
-   TotalCPPercentageRequired_Starter,
-   TotalWangaPercentageRequired_Starter,
-   TotalMafutaPercentageRequired_Starter,
-
-   TotalCPPercentageRequired_Grower,
-   TotalWangaPercentageRequired_Grower,
-   TotalMafutaPercentageRequired_Grower,
-
-   TotalCPPercentageRequired_Layer,
-   TotalWangaPercentageRequired_Layer,
-   TotalMafutaPercentageRequired_Layer,
-
-   TotalCPPercentageRequired_Finisher,
-   TotalWangaPercentageRequired_Finisher,
-   TotalMafutaPercentageRequired_Finisher,
-
-   TotalMEPercentageRequired_Starter,
-   TotalMEPercentageRequired_Grower,
-   TotalMEPercentageRequired_Layer,
-   TotalMEPercentageRequired_Finisher,
-
-    AinaYaKuku,
-   KukuId,
-   UmriKwaWiki,
-   UmriKwaSiku,
-   Interval,
-    id //id ya umri wa kuku
+const KusafishaBandaHomeScreen = ({navigation, route}) => {
+ const { 
+    
+    id,
+    JinaLaHuduma 
    } = route.params
 
-  const UmriwaKukuId = id;
-  const UnaKiasiGaniChaChakula = 0;
-  const selectedProductIds = 0;
-  const setSelectedProductIds = 0
-  const totalCartPrice = 0;
-   const totalCartKilos = 0;
+
+  
 
     // To change color
 // const theme = useContext(themeContext)
@@ -133,7 +102,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetIdadiYaKilosView/?page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetAllSikuView/?page=${current_page}&page_size=500`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
@@ -166,7 +135,7 @@ const getItems = () => {
     return (
       isLoading ?
         <View style={globalStyles.loaderStyle}>
-          <ActivityIndicator size="large" color="lightgreen" />
+          <ActivityIndicator size="large" color="red" />
         </View> : null
     );
   };
@@ -220,9 +189,12 @@ const InventoryCard = ({item, index}) => {
 
 //mwanzo wa search
    if (input === ""){
- 
-return (
 
+ return (
+
+
+
+ 
 <>
 {input != '' && (
 
@@ -267,7 +239,7 @@ return (
         borderRadius:8,
         paddingHorizontal:30,
 
-      }}>Bonyeza kuendelea kutengeneza chakula cha Kg: {input}</Text>
+      }}> Unataka kukukmbushwa baada ya siku: {input}</Text>
             
           
         </View>
@@ -285,148 +257,184 @@ return (
 </>
 
 
-)
 
+
+
+)
 
 
 
   // hili bano la chini ni la if ya juu kama mtu akitype   
 }
 
-if (item.IdadiYaKilos.toString().toLowerCase().includes(input.toLowerCase())) {
-
+if (item.Siku.toString().toLowerCase().includes(input.toLowerCase())) {
 return (
 
-<>
-{input != '' ? (
 
- <TouchableOpacity
 
-      //  onPress={() =>
-      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
-      // }
-
-        onPress={() => {
-        navigation.navigate('Vyakula Vyote', { ...item,
-          UmriwaKukuId,
-          UmriKwaWiki, 
-          UmriKwaSiku,
-          Interval, 
-          KukuId, 
-          AinaYaKuku,  
-          StaterFeed,
-          GrowerFeed, 
-          LayerFeed, 
-          FinisherFeed,
-
-    TotalCPPercentageRequired_Starter,
-   TotalWangaPercentageRequired_Starter,
-   TotalMafutaPercentageRequired_Starter,
-
-   TotalCPPercentageRequired_Grower,
-   TotalWangaPercentageRequired_Grower,
-   TotalMafutaPercentageRequired_Grower,
-
-   TotalCPPercentageRequired_Layer,
-   TotalWangaPercentageRequired_Layer,
-   TotalMafutaPercentageRequired_Layer,
-
-   TotalCPPercentageRequired_Finisher,
-   TotalWangaPercentageRequired_Finisher,
-   TotalMafutaPercentageRequired_Finisher,
-
-   TotalMEPercentageRequired_Starter,
-   TotalMEPercentageRequired_Grower,
-   TotalMEPercentageRequired_Layer,
-   TotalMEPercentageRequired_Finisher
-        });
-        // setIsModalVisible(false); // Update state when modal opens
-        // setModalVisible(false);
-      }}
+      <TouchableOpacity
+       onPress={() =>
+        navigation.navigate('Kusafisha Banda Form', { ...item, JinaLaHuduma })}
        
      
       
-      style={[
-        globalStyles.IdadiYaKukuFirstContainer,
-        {
-          //backgroundColor:'red',
-          width:'100%',
-          //flexDirection:'row',
-          justifyContent:'center',
-          alignItems:'center',
-        }
-      ]} >
+      style={globalStyles.OverdoseCartItemsContainer} >
 
 
         <View 
-        style={{
-          //backgroundColor:'red'
-        }}
+        style={globalStyles.OverdoseLeftCartItemsContainer}
         >
 
-      <Text style={{
-        backgroundColor:'green',
-        paddingVertical:10,
-        marginVertical:10,
-        color:'white',
-        borderRadius:8,
-        paddingHorizontal:30,
-        lineHeight:30,
-        fontFamily:'Medium',
+            
+          <Text 
+           style={globalStyles.OverdoseItemNameCartItemsText}
+         >
+            Siku :
+          </Text>
+          
 
-      }}>Bonyeza kuendelea 
-      kutengeneza chakula cha Kilo:<Text style={{
-        color:'red',
-        fontFamily:'Bold',
-        fontSize:20,
-      }}> {item.IdadiYaKilos}</Text>
-            </Text>
+
+        
+          <Text 
+           style={globalStyles.OverdoseItemNameCartItemsText}
+         >
+            Wiki  :
+
+          </Text>
+          
+
+      
+
+
+          
+          <Text 
+           style={globalStyles.OverdoseItemNameCartItemsText}
+         >
+            Mwezi
+          </Text>
+          
+
+
+       
+
+           
+
+
+
+
+      
+            
           
         </View>
 
 
 
+        <Pressable 
+        onPress={() =>
+        navigation.navigate('Kusafisha Banda Form', { ...item, JinaLaHuduma })}
+       
+
+        style={globalStyles.OverdoseImageContainerCartItems}
+        >
+      
+
+
+
+
+        {item.Siku && (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            {item.Siku}
+          </Text>
+          )}
+
+         {item.Wiki > 0 ? (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            {item.Wiki}
+          </Text>
+          ):(
+
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            0
+          </Text>
+
+
+          )}
+
+
+
+
+
+
+
+ {item.Mwezi > 0 ? (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            {item.Mwezi}
+          </Text>
+          ):(
+
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            0
+          </Text>
+
+
+          )}
+
+
+
+
+        </Pressable>
+
+
+
+
+
+
+
+
+
       </TouchableOpacity>
 
-):(
-
-
-<View style={{
-          width:width,
-          //justifyContent:'center',
-          alignItems:'center'
-        }}>
-     {/* <Image
-        source={item?.RouteImage}
-        style={{
-          height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-       }}
-      />*/}
-       <LottieView
-        style={{
-        height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-
-        }}
-        source={require('../assets/Loading/l1.json')} // Replace with your animation JSON file
-        autoPlay
-        loop
-      />
-
-      </View>
 
 
 
-
-)}
-</>
 
 
 )
-
 
 
 
@@ -448,23 +456,23 @@ return (
  {!isPending ? (
 
      <View style={[globalStyles.container
-     ,{
-      
-      backgroundColor: input != '' ? 
-              COLORS.white : 'lightgreen'
-    }]}>
+     ,{backgroundColor:COLORS.white}]}>
          
      
 
 
 
-  <MinorHeader title="Kiasi"/>
+  <MinorHeader title={JinaLaHuduma}/>
 
       
 
 
+{/*<Text
+  style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+  
+  >Chagua Unataka Kukumbushwa baada ya muda gani ?</Text>
 
-
+*/}
 
 
     <View style={globalStyles.searchbarOtherPages}>
@@ -482,7 +490,7 @@ return (
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
                     value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza kiasi" 
+                    placeholder="Ingiza Siku" 
                      placeholderTextColor='black'
                      keyboardType="numeric"
                     style={globalStyles.AppInputHomeScreenOtherPages}
@@ -495,11 +503,15 @@ return (
 
 
 
+
+            
+
+ 
   {input != '' ? (
   <Text
       style={globalStyles.AppChaguaHudumaTextHomeScreen}  
       
-      >Unataka kutengeneza chakula cha Kg {input} ?</Text>
+      >Tafdhali chagua siku {input} hapo chini ambazo unahitaji kukumbushwa ili kuendelea</Text>
  
 
  ):(
@@ -510,18 +522,17 @@ return (
 
 <View style={{
           width:width,
-          justifyContent:'center',
+          //justifyContent:'center',
           alignItems:'center',
           //flex:1,
           backgroundColor:'lightgreen',
-          //height:height,
+          height:height,
         }}>
 
         <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Tafadhali, ingiza kiasi cha chakula ulichonacho au 
-    unachohitaji kutengeneza kwa kilo.</Text>
+    >Tafadhali, tuambie unahitaji kukumbushwa baada ya muda gani ? (ingiza wastani wa  siku unazohitaji kukumbushwa)</Text>
 
      {/* <Image
         source={item?.RouteImage}
@@ -596,7 +607,6 @@ return (
           ListFooterComponent={renderLoader}
           onEndReached={getItems}
           onEndReachedThreshold={0.5}
-          keyboardShouldPersistTaps="handled"
         />
                 
  </>
@@ -608,7 +618,7 @@ return (
 
    ) :(
    <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
-  <Text style={globalStyles.noitemText}>Hakuna taarifa zozote za kiasi cha chakula! !
+  <Text style={globalStyles.noitemText}>Hakuna Muda wowote uliowekwa! !
   </Text>
 
 
@@ -640,16 +650,24 @@ return (
 
 
 
-{/*<View style={{
+<View style={{
   marginBottom:100,
 }}>
-  <Text style={{
+  {/*<Text style={{
     color:'white',
-  }}>Vuta juu</Text>
+  }}>Vuta juu</Text>*/}
 </View>
-*/}
+
 
 {/*mwanzo kwaajili ya kupress order*/}
+
+
+
+
+
+{/*mwanzo kwaajili ya kupress order*/}
+
+
 
 
 
@@ -670,7 +688,7 @@ return (
                 contentContainerStyle={globalStyles.alertContainer}
                 customView={
                   <View style={globalStyles.alertContent}>
-                    <Image source={require('../assets/icon.png')} style={globalStyles.alertImage} />
+                    <Image source={require('../assets/splashe.png')} style={globalStyles.alertImage} />
                     <Text style={globalStyles.alertTitle}>MFUGAJI SMART</Text>
                     <Text style={globalStyles.alertMessage}>{alertMessage}</Text>
                   </View>
@@ -699,6 +717,6 @@ return (
   );
 };
 
-export default IngizaKiasi;
+export default KusafishaBandaHomeScreen;
 
 const styles = StyleSheet.create({});
