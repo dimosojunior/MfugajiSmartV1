@@ -46,16 +46,17 @@ const TaarifaZaKukuPerKukuNamba = ({navigation, route}) => {
     Interval,
     UmriWaKukuIdKwaajiliYaPerKuku,
     Siku,
+    inputi2,
     
 
-    IdadiYaKuku
+    //IdadiYaKuku
    } = route.params
 
   
-
+  const IdadiYaKuku = inputi2;
   const AinaYaKuku_Name = AinaYaKuku;
   const UmriWaKukuKwaSiku = UmriKwaSiku;
-  const IdadiYaKukuWako = IdadiYaKuku;
+  const IdadiYaKukuWako = inputi2;
   const id = UmriWaKukuId;
 
 
@@ -776,7 +777,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {total_Kilos_neededBasedOnUserDays_IdadiYaKuku.toFixed(2)} Kg
+            {total_Kilos_neededBasedOnUserDays_IdadiYaKuku.toFixed(1)} Kg
           </Text>
           
      </View>
@@ -829,7 +830,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalStarterFeedBasedOnUser_IdadiYaKuku.toFixed(2)} Kg
+            {TotalStarterFeedBasedOnUser_IdadiYaKuku.toFixed(1)} Kg
           </Text>
           
      </View>
@@ -880,7 +881,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalGrowerFeedBasedOnUser_IdadiYaKuku.toFixed(2)} Kg
+            {TotalGrowerFeedBasedOnUser_IdadiYaKuku.toFixed(1)} Kg
           </Text>
           
      </View>
@@ -931,7 +932,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalLayerFeedBasedOnUser_IdadiYaKuku.toFixed(2)} Kg
+            {TotalLayerFeedBasedOnUser_IdadiYaKuku.toFixed(1)} Kg
           </Text>
           
      </View>
@@ -984,7 +985,7 @@ const TotalVyakulaCard = () => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {TotalFinisherFeedBasedOnUser_IdadiYaKuku.toFixed(2)} Kg
+            {TotalFinisherFeedBasedOnUser_IdadiYaKuku.toFixed(1)} Kg
           </Text>
           
      </View>
@@ -1203,7 +1204,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_1_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_1_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1223,7 +1224,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_1_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_1_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -1289,7 +1290,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_2_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_2_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1305,7 +1306,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_2_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_2_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -1369,7 +1370,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_3_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_3_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1385,7 +1386,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_3_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_3_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -1448,7 +1449,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_4_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_4_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1464,7 +1465,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_4_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_4_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -1527,7 +1528,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_5_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_5_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1543,7 +1544,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_5_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_5_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -1609,7 +1610,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_6_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_6_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1625,7 +1626,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_6_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_6_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -1701,7 +1702,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_7_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_7_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1717,7 +1718,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_7_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_7_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -1783,7 +1784,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_8_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_8_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1799,7 +1800,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_8_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_8_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -1864,7 +1865,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_9_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_9_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1880,7 +1881,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_9_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_9_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -1944,7 +1945,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_10_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_10_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -1960,7 +1961,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_10_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_10_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2024,7 +2025,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_11_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_11_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2040,7 +2041,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_11_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_11_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2107,7 +2108,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_12_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_12_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2123,7 +2124,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_12_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_12_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2188,7 +2189,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_13_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_13_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2204,7 +2205,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_13_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_13_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2268,7 +2269,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_14_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_14_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2284,7 +2285,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_14_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_14_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2354,7 +2355,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_15_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_15_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2370,7 +2371,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_15_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_15_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2434,7 +2435,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_16_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_16_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2450,7 +2451,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_16_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_16_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2514,7 +2515,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_17_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_17_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2530,7 +2531,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_17_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_17_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2597,7 +2598,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_18_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_18_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2613,7 +2614,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_18_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_18_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2678,7 +2679,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_19_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_19_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2694,7 +2695,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_19_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_19_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2760,7 +2761,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_20_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_20_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2776,7 +2777,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_20_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_20_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2847,7 +2848,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_21_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_21_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2863,7 +2864,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_21_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_21_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -2931,7 +2932,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_22_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_22_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -2947,7 +2948,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_22_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_22_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -3012,7 +3013,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_23_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_23_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -3028,7 +3029,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_23_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_23_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -3092,7 +3093,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaZaKukuMaelezoOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_24_KwaWiki_IdadiYaKuku.toFixed(2)}Kg 
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_24_KwaWiki_IdadiYaKuku.toFixed(1)}Kg 
           </Text>
           
      </View>
@@ -3108,7 +3109,7 @@ const InventoryCard = ({item, index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_24_KwaSiku_IdadiYaKuku.toFixed(2)}Kg
+            {KiasiChaChakulaBasedOnUserKwaKukuWaUmriWaWiki_24_KwaSiku_IdadiYaKuku.toFixed(1)}Kg
           </Text>
           
      </View>
@@ -3296,7 +3297,7 @@ keyboardShouldPersistTaps="handled"
      </Text>*/}
 
 
-       
+
       
      
            {setLoading===true?(<ActivityIndicator/>):(

@@ -78,7 +78,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
       setPichaYaPost(result.assets[0].uri); // Use assets array
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
-     console.log("RESULT 1" ,result);
+    // console.log("RESULT 1" ,result);
   };
 
 
@@ -93,7 +93,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
       setPichaYaPost2(result2.assets[0].uri); // Use assets array
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
-     console.log("RESULT 2" ,result2);
+     //console.log("RESULT 2" ,result2);
   };
 
 
@@ -108,7 +108,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
       setPichaYaPost3(result3.assets[0].uri); // Use assets array
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
-     console.log("RESULT 3" ,result3);
+    // console.log("RESULT 3" ,result3);
   };
 
 
@@ -125,7 +125,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
       setPichaYaPost4(result4.assets[0].uri); // Use assets array
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
-     console.log("RESULT 4" ,result4);
+     //console.log("RESULT 4" ,result4);
   };
 
 
@@ -142,7 +142,7 @@ const [PichaYaPost5, setPichaYaPost5] = useState(null);
       setPichaYaPost5(result5.assets[0].uri); // Use assets array
       //console.log("PROJECT IMAGE", PichaYaPost)
      // processImage(); // Use assets array
-     console.log("RESULT 5" ,result5);
+    // console.log("RESULT 5" ,result5);
   };
 
   //MWISHO WA PICK IMAGE FROM THE PHONE
@@ -229,7 +229,7 @@ const [Maelezo, setMaelezo] = useState('');
       showAlertFunction('Tatizo la mtandao, washa data na ujaribu tena.');
       setIsLoading(false);
     } else {
-      showAlertFunction('Kuna tatizo kwenye ubadilishaji wa taarifa zako');
+      showAlertFunction('Kuna tatizo kwenye uwekaji wa taarifa mpya, punguza kiasi cha picha au jaribu kuposti picha zenye size ndogo');
       setIsLoading(false);
     }
   };

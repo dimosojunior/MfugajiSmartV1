@@ -435,10 +435,21 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
       
 
 
-
-
-        {item.UmriKwaWiki && (  
+       
+        {item.UmriKwaWiki >= 24 ? (  
           <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            {item.UmriKwaWiki} na zaidi
+          </Text>
+          ):(
+
+            <Text 
            style={[globalStyles.OverdoseItemNameCartItemsText,
             {
               color:'green'
@@ -448,9 +459,21 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
          >
             {item.UmriKwaWiki}
           </Text>
+
           )}
 
-         {item.Interval && (  
+         {item.UmriKwaWiki >= 24 ? (  
+          <Text 
+           style={[globalStyles.OverdoseItemNameCartItemsText,
+            {
+              color:'green'
+
+           }
+           ]}
+         >
+            168 na zaidi
+          </Text>
+          ):(
           <Text 
            style={[globalStyles.OverdoseItemNameCartItemsText,
             {
@@ -461,6 +484,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
          >
             {item.Interval}
           </Text>
+
           )}
 
 
@@ -1242,14 +1266,25 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
 
 
-  {input != '' ? (
+  {input != '' && input > 24 && (
+  <Text
+      style={globalStyles.AppChaguaHudumaTextHomeScreen}  
+      
+      >Ingiza wiki 24 ili kuendelea kama kuku wako wana umri zaidi ya wiki 24 (Miezi 6)</Text>
+ 
+)}
+
+
+  {input != '' && input <= 24 && (
   <Text
       style={globalStyles.AppChaguaHudumaTextHomeScreen}  
       
       >Tafdhali chagua umri wa kuku wako wa wiki {input} hapo chini kuendelea</Text>
  
 
- ):(
+ )}
+
+    {input == '' && (
 
  <View>
 
@@ -1267,7 +1302,7 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
         <Text
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
-    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako, , mwisho wiki 24)</Text>
+    >Tafadhali, tuambie kuku wako wana umri gani? (ingiza wiki walizonazo kuku wako, mwisho wiki 24)</Text>
 
      {/* <Image
         source={item?.RouteImage}

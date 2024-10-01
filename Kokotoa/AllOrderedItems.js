@@ -420,7 +420,7 @@ const ReportCard = ({item,calculatedItem , index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-         {calculatedItem.Amount_For_Each_Product.toFixed(2)} Kg 
+         {calculatedItem.Amount_For_Each_Product.toFixed(1)} Kg 
           </Text>
           
      </View>
@@ -544,7 +544,7 @@ const ConstantFoodCard = ({item,constantCalculatedItem , index}) => {
           <Text 
            style={globalStyles.TaarifaOverdoseItemNameCartItemsText2}
          >
-         {constantCalculatedItem.total_Constant_Kilos_For_Each_Item.toFixed(2)} Kg 
+         {constantCalculatedItem.total_Constant_Kilos_For_Each_Item.toFixed(1)} Kg 
           </Text>
           
      </View>
@@ -698,12 +698,29 @@ unachotakiwa kuweka</Text>
 
      </Text>
 
+        <Text
+    style={{
+      color:'red',
+      fontFamily:'Medium',
+      marginLeft:10,
+      marginTop:10,
+    }}  
+    
+    >Block 1
+
+     </Text>
+    
+
+
   
      {queryset && queryset.length > 0 ? (
+
     
     <View style={
       globalStyles.TaarifaOverdoseCartItemsContainer
     }>
+
+
 
       <>
                 {queryset.map((item, index) => {
@@ -786,6 +803,20 @@ userData={userData}
 
 />
  */}
+
+
+   <Text
+    style={{
+      color:'red',
+      fontFamily:'Medium',
+      marginLeft:10,
+      marginTop:20,
+    }}  
+    
+    >Block 2
+
+     </Text>
+    
 
 
    {constant_queryset && constant_queryset.length > 0 && (
@@ -1225,7 +1256,7 @@ userData={userData}
               {
                 //textAlign:'center',
                 fontFamily:'Medium',
-                color:'yellow',
+                color:'white',
                 width:'100%',
 
               }

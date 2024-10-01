@@ -124,7 +124,7 @@ const pickPdf = async () => {
 
 
 
-
+const [KundiLaKukuWake, setKundiLaKukuWake] = useState('');
 
 // State variable to store the RoomClasses data
   const [AinaYaChanjo, setAinaYaChanjo] = useState([]);
@@ -316,6 +316,18 @@ useEffect(() => {
     if (userToken) {
       const formData = new FormData();
 
+
+         if (KundiLaKukuWake) {
+            formData.append('KundiLaKukuWake', KundiLaKukuWake);
+        } else {
+            showAlertFunction('Tafadhali ingiza kundi la kuku wako.');
+            setIsLoading(false);
+            return;
+        }
+
+
+
+
      
          // Hakikisha kuwa selectedMkoa na selectedAinaYaKuku sio null
         if (selectedAinaYaKuku && selectedAinaYaKuku.id) {
@@ -348,6 +360,8 @@ useEffect(() => {
         }
 
 
+       
+
 
        // Append the image file
     // formData.append('profile_image', {
@@ -374,6 +388,8 @@ useEffect(() => {
          setModalVisible(false);
         setIsModalVisible(false); // Reset state when modal closes
        setdisplayContentsState(false);
+        setKundiLaKukuWake('');
+
       }).catch(error => {
         setIsLoading(false);
         console.log(error);
@@ -465,7 +481,14 @@ useEffect(() => {
 
 
 
-
+<TextInput
+  placeholder='Sajili kundi la kuku wako'
+  value={KundiLaKukuWake}
+  onChangeText={setKundiLaKukuWake}
+  placeholderTextColor={COLORS.white}
+  //keyboardType="numeric"
+  style={styles.MyTextInput}
+/>
 
 
 

@@ -441,7 +441,7 @@ const TotalVyakulaCard = () => {
     color:'black',
     fontFamily:'Light',
    }}>
-    {TotalCPValue.toFixed(2)} Kg 
+    {TotalCPValue.toFixed(1)} Kg 
      
    </Text>
 
@@ -451,7 +451,7 @@ const TotalVyakulaCard = () => {
     fontFamily:'Light',
    }}>
    
-     {TotalCPPercentageRequired_Displayed.toFixed(2)} Kg
+     {TotalCPPercentageRequired_Displayed.toFixed(1)} Kg
    </Text>
 
      
@@ -490,7 +490,7 @@ const TotalVyakulaCard = () => {
     color:'black',
     fontFamily:'Light',
    }}>
-    {TotalMafutaValue.toFixed(2)} Kg 
+    {TotalMafutaValue.toFixed(1)} Kg 
      
    </Text>
 
@@ -500,7 +500,7 @@ const TotalVyakulaCard = () => {
     fontFamily:'Light',
    }}>
    
-     {TotalMafutaPercentageRequired_Displayed.toFixed(2)} Kg
+     {TotalMafutaPercentageRequired_Displayed.toFixed(1)} Kg
    </Text>
 
      
@@ -539,7 +539,7 @@ const TotalVyakulaCard = () => {
     color:'black',
     fontFamily:'Light',
    }}>
-    {TotalMEValue.toFixed(2)} Kg/kca 
+    {TotalMEValue.toFixed(1)} Kg/kca 
      
    </Text>
 
@@ -549,7 +549,7 @@ const TotalVyakulaCard = () => {
     fontFamily:'Light',
    }}>
    
-     {TotalMEPercentageRequired.toFixed(2)} Kg/kca
+     {TotalMEPercentageRequired.toFixed(1)} Kg/kca
    </Text>
 
      
@@ -623,7 +623,7 @@ const ReportCard = ({item,calculatedItem , index}) => {
               color:'green',
               fontFamily:'Bold'
             }}>
-             {calculatedItem.Amount_For_Each_Product.toFixed(2)} Kg
+             {calculatedItem.Amount_For_Each_Product.toFixed(1)} Kg
             </Text>  
             
           </Text>
@@ -652,7 +652,7 @@ const ReportCard = ({item,calculatedItem , index}) => {
               color:'green',
               fontFamily:'Bold'
             }}>
-             {calculatedItem.NewPercentage.toFixed(2)}%
+             {calculatedItem.NewPercentage.toFixed(1)}%
             </Text>  
             
           </Text>*/}
@@ -663,7 +663,7 @@ const ReportCard = ({item,calculatedItem , index}) => {
           style={globalStyles.VyakulaPriceCartItemsText}
         >
           
-            CP: {TotalCPValue.toFixed(2)}
+            CP: {TotalCPValue.toFixed(1)}
             
           </Text>*/}
           
@@ -877,7 +877,7 @@ unachotakiwa kuweka</Text>
     style={globalStyles.AppChaguaHudumaTextHomeScreen}  
     
     >Mchanganuo wa virutubisho na kiasi chake kinachoweza 
-    kupatikana kwenye mchanganyiko wa chakula cha kilo {TotalFoodAmount}.
+    kupatikana kwenye mchanganyiko wa chakula cha kilo {TotalFoodAmount} kwa {AinaYaKuku}  umri kuanzia siku {Interval}.
 
      </Text>
     

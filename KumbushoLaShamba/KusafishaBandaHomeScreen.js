@@ -195,7 +195,7 @@ const formatToThreeDigits = (number) => {
  {!isPending ? (
 
      <View style={[globalStyles.container
-     ,{backgroundColor:'#fdb9b1'}]}>
+     ,globalStyles.ImagePosterColor]}>
          
      
 
@@ -235,7 +235,7 @@ const formatToThreeDigits = (number) => {
       <Image
 
       style={globalStyles.UmriInitialImage}
-       source={require('../assets/300.png')} 
+       source={require('../assets/300.jpg')} 
       >
       </Image>
 
@@ -259,16 +259,19 @@ const formatToThreeDigits = (number) => {
 
        {/*mwanzo wa search*/}
 
-         <View style={{position: 'relative', 
+         <View style={[{position: 'relative', 
         flex:2,
         position: 'relative',
-        backgroundColor:'#fdb9b1',
+        //backgroundColor:'#fdb9b1',
         marginTop:-30,
 
         //marginTop:10,
 
         //bottom: 30
-      }}>
+      },
+      globalStyles.ImagePosterColor
+
+      ]}>
 
 <Text style={globalStyles.tuambieSiku}>
 Tafadhali, tuambie unahitaji kukumbushwa baada ya muda gani ? (ingiza wastani wa  siku unazohitaji kukumbushwa)

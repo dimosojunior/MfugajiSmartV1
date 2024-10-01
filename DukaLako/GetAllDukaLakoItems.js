@@ -658,7 +658,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
             }
             ]
           }>
-           {item.company_name ? (
+           {item.company_name && item.company_name != 'null' ? (
              <Text style={globalStyles.UserInfoUsername}>
              {item.company_name}</Text>
              ):(
@@ -916,7 +916,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
             }
             ]
           }>
-           {item.company_name ? (
+           {item.company_name && item.company_name != 'null' ? (
              <Text style={globalStyles.UserInfoUsername}>
              {item.company_name}</Text>
              ):(
@@ -1238,7 +1238,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
           <View style={[globalStyles.ItselfMajorContainer,
 
                   {
-                  backgroundColor:'green',
+                  backgroundColor:'black',
                 }
 
                 ]}>
@@ -1251,8 +1251,8 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
              >
               <Text style={[globalStyles.ItselfLeftMinorText,
                  {
-                  backgroundColor:'yellow',
-                  color:'black'
+                  backgroundColor:'brown',
+                  color:'white'
                 }
 
                 ]}>Malizia Usajili ili uweze kuweka posti mpya</Text>

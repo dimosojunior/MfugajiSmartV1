@@ -256,9 +256,15 @@ const handleErrorMessage = (error) => {
         keyboardShouldPersistTaps="handled"
         >
 
-        <View style={{padding: 0}}>
+        <View style={{
+          //paddingTop: 10,
+          flex:1,
+          //marginTop:height/25,
+          marginTop:15,
+        }}>
           <Pressable style={{
             //backgroundColor:'green',
+
           }}>
            {/* <SvgIcon icon={'back'} width={30} height={30} />*/}
      {/*        <LottieView
@@ -284,7 +290,7 @@ const handleErrorMessage = (error) => {
              <Image
 
                   style={globalStyles.SignupImageJuu}
-                   source={require('../assets/500.png')} 
+                   source={require('../assets/400.jpg')} 
                   >
                   </Image>
 
@@ -398,7 +404,7 @@ const handleErrorMessage = (error) => {
           
           style={{ 
             alignSelf: 'flex-start', 
-            marginRight: 0,color:'black',
+            marginRight: 0,color:'white',
             flexDirection:'row',
             alignItems:'center',
              }}
@@ -407,7 +413,7 @@ const handleErrorMessage = (error) => {
           <FontAwesome size={25} color="green" name="user-circle" />
 
         {/*  <Text style={{
-           color: 'black', 
+           color: 'white', 
            fontSize: 16,
            fontWeight:'bold',
            marginLeft:10,
@@ -421,8 +427,8 @@ const handleErrorMessage = (error) => {
 
           <TextInput
           style= {[styles.textinputi,{ 
-            color: 'black',width:'88%',
-            //backgroundColor:'black',
+            color: 'white',width:'88%',
+            //backgroundColor:'white',
 
             //paddingVertical:20,
           }]}
@@ -431,7 +437,7 @@ const handleErrorMessage = (error) => {
           
           value={username}
           onChangeText={setUsername}
-        placeholderTextColor="black"
+        placeholderTextColor="white"
         />
 
       
@@ -462,7 +468,7 @@ const handleErrorMessage = (error) => {
           
           style={{ 
             alignSelf: 'flex-start', 
-            marginRight: 0,color:'black',
+            marginRight: 0,color:'white',
             flexDirection:'row',
             alignItems:'center',
              }}
@@ -471,7 +477,7 @@ const handleErrorMessage = (error) => {
           <FontAwesome size={25} color="green" name="key" />
 
         {/*  <Text style={{
-           color: 'black', 
+           color: 'white', 
            fontSize: 16,
            fontWeight:'bold',
            marginLeft:10,
@@ -483,14 +489,14 @@ const handleErrorMessage = (error) => {
         </View>
           <TextInput
           style= {[styles.textinputi,{ 
-            color: 'black',
+            color: 'white',
           width:'65%'
         }]}
           placeholder="Neno siri"
           secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
          value={password}
           onChangeText={(text) => setPassword(text)}
-        placeholderTextColor="black"
+        placeholderTextColor="white"
         />
 
         <View style={{
@@ -502,12 +508,12 @@ const handleErrorMessage = (error) => {
         <TouchableOpacity
           onPress={() => setPasswordVisible(!isPasswordVisible)}
           style={{ alignSelf: 'flex-end', marginRight: 0,color:'black' }}>
-          <Text style={{ color: 'black', fontSize: 16,fontWeight:'bold' }}>
+          <Text style={{ color: 'white', fontSize: 16,fontWeight:'bold' }}>
             {/*{isPasswordVisible ? 'Hide' : 'Show'} Password*/}
             {isPasswordVisible ? (
-              <FontAwesome size={25} color="black" name="eye-slash" />
+              <FontAwesome size={25} color="white" name="eye-slash" />
             ):(
-              <FontAwesome size={25} color="black" name="eye" />
+              <FontAwesome size={25} color="white" name="eye" />
             )}
           </Text>
         </TouchableOpacity>
@@ -538,7 +544,7 @@ const handleErrorMessage = (error) => {
 
       <Ionicons name='arrow-forward-circle' 
                 size={28}
-                color='black' 
+                color='white' 
                 style={{
                   marginTop:15,
                   marginLeft:10,
@@ -572,7 +578,7 @@ const handleErrorMessage = (error) => {
                   color:'white',
                   borderColor:'white',
                   borderWidth:1,
-               // backgroundColor:'black'
+               // backgroundColor:'white'
               }}
               onPress={handleLogin}>
                 <Text style={styles.registerLbl}>Ingia</Text>
@@ -621,7 +627,8 @@ const handleErrorMessage = (error) => {
                   color:'white',
                   borderColor:'green',
                   borderWidth:1,
-               // backgroundColor:'black'
+               // backgroundColor:'white'
+               marginBottom:20,
               }}
              onPress={() => navigation.navigate("Signup Stack")}
               >
@@ -629,7 +636,7 @@ const handleErrorMessage = (error) => {
                 <Text style={[styles.registerLbl,
 
                   {
-                    color:'black',
+                    color:'white',
                     //marginLeft:20,
                   }
 
@@ -703,10 +710,11 @@ export default SigninScreen;
 
 const styles = StyleSheet.create({
     mainCon: {
-    backgroundColor: '#fdb9b1',
+    //backgroundColor: '#fdb9b1',
     //fed4d0, fdb9b1, fed1ce, ffcfcb
 
    // backgroundColor:'#00BF8F',
+   backgroundColor: '#233329',
     flex: 1,
   },
   loginIcon: {
@@ -738,7 +746,7 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
   forgotDesLbl: {
-    color: '#000',
+    color: 'white',
     fontFamily:'Medium'
    // fontFamily: Fonts.type.NotoSansRegular,
   },
@@ -805,7 +813,7 @@ registerLbl:{
         flex:1,
 
         borderWidth:2,
-        borderColor:'black',
+        borderColor:'white',
         
          
     },

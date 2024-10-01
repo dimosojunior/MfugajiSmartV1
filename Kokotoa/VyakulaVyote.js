@@ -65,15 +65,17 @@ const VyakulaVyote = ({navigation, route}) => {
    TotalMEPercentageRequired_Finisher,
 
 
-    IdadiYaKilos,
+    //IdadiYaKilos,
     
    KukuId,
+   inputi,
     UmriwaKukuId //id ya umri wa kuku
 
    } = route.params
 
   // const UmriwaKukuId = id;
-  const UnaKiasiGaniChaChakula = IdadiYaKilos;
+  // const UnaKiasiGaniChaChakula = IdadiYaKilos;
+   const UnaKiasiGaniChaChakula = inputi;
 
 
     // To change color

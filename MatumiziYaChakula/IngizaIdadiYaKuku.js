@@ -20,15 +20,16 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 import MinorHeader from '../Header/MinorHeader';
 import COLORS  from '../Constant/colors';
 
-import LottieView from 'lottie-react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
 
+import LottieView from 'lottie-react-native';
 const {width, height} = Dimensions.get('window');
 
-const IngizaIdadiYaKuku = ({navigation, route}) => {
 
+const IngizaIdadiYaKuku = ({navigation, route}) => {
    const { 
     
      id, //hii ni id ya siku
@@ -43,11 +44,14 @@ const IngizaIdadiYaKuku = ({navigation, route}) => {
     UmriWaKukuId,
     
     Interval,
-    Siku,
+    // Siku,
+    inputi
     
    } = route.params
 
  
+const Siku = inputi;
+  //const KukuId = id;
 
     // To change color
 // const theme = useContext(themeContext)
@@ -100,7 +104,7 @@ const [isPending, setPending] = useState(true);
 
 
 //FOR SEARCHING
-const [input, setInput] = useState('');
+const [inputi2, setinputi2] = useState('');
 
 
 const getItems = () => {
@@ -112,7 +116,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetIdadiYaKukuView/?page=${current_page}&page_size=10000`
+   const url = EndPoint + `/GetUmriWaKukuView/?page=${current_page}&page_size=24`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
@@ -145,7 +149,7 @@ const getItems = () => {
     return (
       isLoading ?
         <View style={globalStyles.loaderStyle}>
-          <ActivityIndicator size="large" color="lightgreen" />
+          <ActivityIndicator size="large" color="red" />
         </View> : null
     );
   };
@@ -192,182 +196,6 @@ const formatToThreeDigits = (number) => {
 
 
 
-
-const InventoryCard = ({item, index}) => {
-  
-
-
-//mwanzo wa search
-   if (input === ""){
- 
-return (
-
-<>
-{input != '' && (
-
-
-      <TouchableOpacity
-
-     
-       
-     
-      
-      style={[
-        globalStyles.IdadiYaKukuFirstContainer,
-        {
-          //backgroundColor:'red',
-          width:'100%',
-          //flexDirection:'row',
-          justifyContent:'center',
-          alignItems:'center',
-        }
-      ]} >
-
-
-        <View 
-        style={{
-          //backgroundColor:'red'
-        }}
-        >
-
-      <Text style={{
-        backgroundColor:'black',
-        paddingVertical:30,
-        marginVertical:10,
-        color:'white',
-        borderRadius:8,
-        paddingHorizontal:30,
-
-      }}>Bonyeza kuendelea kutengeneza chakula cha kuku: {input}</Text>
-            
-          
-        </View>
-
-
-
-
-      </TouchableOpacity>
-
-
-
-
-
-
-)}
-</>
-
-
-)
-
-
-
-
-  // hili bano la chini ni la if ya juu kama mtu akitype   
-}
-
-if (item.IdadiYaKuku.toString().toLowerCase().includes(input.toLowerCase())) {
-
-return (
-
-<>
-{input != '' ? (
-
-
-      <TouchableOpacity
-      //  onPress={() =>
-      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
-      // }
-
-        onPress={() => {
-        navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId, AinaYaKuku,UmriKwaWiki,UmriWaKukuId, Interval,UmriKwaSiku, Siku, StaterFeed, GrowerFeed, LayerFeed, FinisherFeed });
-        // setIsModalVisible(false); // Update state when modal opens
-        // setModalVisible(false);
-      }}
-       
-     
-      
-      style={[
-        globalStyles.IdadiYaKukuFirstContainer,
-        {
-          //backgroundColor:'red',
-          width:'100%',
-          //flexDirection:'row',
-          justifyContent:'center',
-          alignItems:'center',
-        }
-      ]} >
-
-
-        <View 
-        style={{
-          //backgroundColor:'red'
-        }}
-        >
-
-      <Text style={{
-        backgroundColor:'green',
-        paddingVertical:30,
-        marginVertical:10,
-        color:'white',
-        borderRadius:8,
-        paddingHorizontal:30,
-
-      }}>Bonyeza kuendelea kutengeneza chakula cha kuku: {item.IdadiYaKuku}</Text>
-            
-          
-        </View>
-
-      </TouchableOpacity>
-
-
-):(
-
-
-<View style={{
-          width:width,
-          //justifyContent:'center',
-          alignItems:'center'
-        }}>
-     {/* <Image
-        source={item?.RouteImage}
-        style={{
-          height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-       }}
-      />*/}
-       <LottieView
-        style={{
-        height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-
-        }}
-        source={require('../assets/Loading/l1.json')} // Replace with your animation JSON file
-        autoPlay
-        loop
-      />
-
-      </View>
-
-
-
-
-)}
-</>
-
-
-)
-
-
-
-
-// hili bano la chini ni la if ya pili mwisho
-  }
-
-
-
-}
   
   return (
 
@@ -380,11 +208,7 @@ return (
  {!isPending ? (
 
      <View style={[globalStyles.container
-     ,{
-      
-      backgroundColor: input != '' ? 
-              COLORS.white : 'lightgreen'
-    }]}>
+     ,globalStyles.ImagePosterColor]}>
          
      
 
@@ -395,11 +219,91 @@ return (
       
 
 
+ <ScrollView 
+        keyboardShouldPersistTaps="handled"
+        >
 
 
 
 
-    <View style={globalStyles.searchbarOtherPages}>
+
+
+
+
+{/*mwanzo wa view ya image*/}
+ <View>
+
+
+
+<View style={{
+          width:width,
+          //justifyContent:'center',
+         // alignItems:'center',
+          //flex:1,
+          //backgroundColor:'#fdb9b1',
+          //height:height,
+        }}>
+
+     
+      <Image
+
+      style={globalStyles.UmriInitialImage}
+       source={require('../assets/400.jpg')} 
+      >
+      </Image>
+
+      </View>
+
+
+     
+
+
+</View>
+
+
+{/*Mwisho wa view ya image*/}
+
+
+
+
+
+
+
+
+       {/*mwanzo wa search*/}
+
+         <View style={[{position: 'relative', 
+        flex:2,
+        position: 'relative',
+        //backgroundColor:'#fdb9b1',
+        marginTop:-30,
+
+        //marginTop:10,
+
+        //bottom: 30
+      },
+      globalStyles.ImagePosterColor
+
+      ]}>
+
+<Text style={globalStyles.tuambieSiku}>
+Tafadhali, ingiza idadi ya kuku wako ulionao ili uweze kuendelea 
+    kutengeneza chakula kwa idadi ya kuku ulionao
+</Text>
+
+     <View style={[globalStyles.searchbarOtherPages,
+
+      {
+
+        //flex:2,
+        // marginTop:-30,
+        
+
+      }
+
+
+      ]}>
+
 
                  <View style={globalStyles.searchbarIconContainerOtherPages}>
                     <Ionicons name="search-outline" 
@@ -413,8 +317,8 @@ return (
 
                     <View style={globalStyles.searchbarInputContainerOtherPages}>
                     <TextInput 
-                    value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza idadi ya kuku wako" 
+                    value={inputi2} onChangeText ={(text) => setinputi2(text)}
+                    placeholder="Ingiza idadi ya kuku" 
                      placeholderTextColor='black'
                      keyboardType="numeric"
                     style={globalStyles.AppInputHomeScreenOtherPages}
@@ -427,140 +331,94 @@ return (
 
 
 
-  {input != '' ? (
-  <Text
-      style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-      
-      >Angalia matokeo ya idadi ya kuku ulioingiza, halafu chagua kuendelea</Text>
- 
-
- ):(
-
- <View>
 
 
 
-<View style={{
-          width:width,
+
+
+  {inputi2 != '' && (
+
+
+
+ <TouchableOpacity
+
+
+      onPress={() => {
+        navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { inputi2, KukuId, AinaYaKuku,UmriKwaWiki,UmriWaKukuId, Interval,UmriKwaSiku, Siku, StaterFeed, GrowerFeed, LayerFeed, FinisherFeed });
+        // setIsModalVisible(false); // Update state when modal opens
+        // setModalVisible(false);
+      }}
+       
+            
+      style={[
+        globalStyles.IdadiYaKukuFirstContainer,
+        {
+          //backgroundColor:'red',
+          width:'90%',
+          //flexDirection:'row',
           justifyContent:'center',
           alignItems:'center',
-          //flex:1,
-          backgroundColor:'lightgreen',
-          //height:height,
-        }}>
+          marginLeft:20,
+        }
+      ]} >
 
-        <Text
-    style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-    
-    >Tafadhali, ingiza idadi ya kuku wako ulionao ili uweze kuendelea 
-    kutengeneza chakula kwa idadi ya kuku ulionao</Text>
 
-     {/* <Image
-        source={item?.RouteImage}
+        <View 
         style={{
-          height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-       }}
-      />*/}
-       <LottieView
-        style={{
-        height: height/2,
-         width:'80%',
-         borderRadius:5,
-         // backgroundColor:'red',
-         // justifyContent:'center',
-         // alignItems:'center',
-         zIndex:1,
-
-        // flex:1,
-
+          //backgroundColor:'red'
         }}
-        source={require('../assets/Loading/l2.json')} // Replace with your animation JSON file
-        autoPlay
-        loop
-      />
+        >
 
-      </View>
+      <Text style={{
+        backgroundColor:'green',
+        paddingVertical:10,
+        marginVertical:10,
+        color:'white',
+        borderRadius:8,
+        paddingHorizontal:30,
+        lineHeight:30,
+        fontFamily:'Medium',
+
+      }}>Bonyeza kuendelea kutengeneza chakula cha kuku  <Text style={{
+        color:'red',
+        fontFamily:'Bold',
+        fontSize:20,
+      }}> {inputi2}</Text>
+            </Text>
+          
+        </View>
 
 
 
+      </TouchableOpacity>
 
-
-</View>
 
  )}
 
 
 
+
+
+
+
+
+
+    </View>
+
+ {/*mwisho wa search*/}
+
+
+
+
+
+
+
+
+
+
        
 
 
-
-
-
-
-
-
-
-       
-
-
-
-
-
-
-
-      
-      { queryset && queryset.length > 0 ? (
-        <>
-
-         {setLoading===true?(<ActivityIndicator/>):(
-      <>
-
-   
-      <FlatList
-          data={queryset}
-          showsVerticalScrollIndicator={false}
-         // style={{marginTop: 12, width: '100%'}}
-          renderItem={InventoryCard}
-          numColumns={2}
-          ListFooterComponent={renderLoader}
-          onEndReached={getItems}
-          onEndReachedThreshold={0.5}
-          keyboardShouldPersistTaps="handled"
-        />
-                
- </>
-      )}
-
-         </>
-
-
-
-   ) :(
-   <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
-  <Text style={globalStyles.noitemText}>Hakuna taarifa zozote za idadi ya kuku! !
-  </Text>
-
-
-  <View style={globalStyles.ErrorImageContainerHomePage}>
-      <Image 
-          source={require('../assets/500.png')}  
-           style={globalStyles.ErrorImageHomePage}
-          
-          //source={item.ArticleImage} 
-          //resizeMode='contain'
-          contentContainerStyle={{ padding: 20 }}
-          
-          />
-  </View>
-
-
-
-</View>
-
-  )}  
 
 
 
@@ -585,7 +443,7 @@ return (
 
 
 
-
+</ScrollView>
 
 
  <AwesomeAlert
@@ -603,7 +461,7 @@ return (
                 contentContainerStyle={globalStyles.alertContainer}
                 customView={
                   <View style={globalStyles.alertContent}>
-                    <Image source={require('../assets/icon.png')} style={globalStyles.alertImage} />
+                    <Image source={require('../assets/splashe.png')} style={globalStyles.alertImage} />
                     <Text style={globalStyles.alertTitle}>MFUGAJI SMART</Text>
                     <Text style={globalStyles.alertMessage}>{alertMessage}</Text>
                   </View>

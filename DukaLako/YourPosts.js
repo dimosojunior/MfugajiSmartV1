@@ -461,7 +461,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
             ]
           }>
 
-           {item.company_name ? (
+           {item.company_name && item.company_name != 'null' ? (
              <Text style={globalStyles.UserInfoUsername}>
              {item.company_name}</Text>
              ):(
@@ -818,7 +818,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
             ]
           }>
 
-           {item.company_name ? (
+           {item.company_name && item.company_name != 'null' ? (
              <Text style={globalStyles.UserInfoUsername}>
              {item.company_name}</Text>
              ):(

@@ -133,8 +133,9 @@ export default function PreLoaderScreen({ navigation }) {
                 style={{
                     flex: 1,
                     opacity:1,
+                    width:'100%',
                 }}
-                resizeMode= "cover"
+                resizeMode= "contain"
             >
 
     <View style={styles.container}>

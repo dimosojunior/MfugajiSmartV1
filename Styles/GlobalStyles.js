@@ -63,6 +63,12 @@ tuambieSiku:{
   width:'90%',
   marginTop:15,
   marginBottom:15,
+  color:'white',
+
+},
+
+ImagePosterColor:{
+  backgroundColor: '#233329',
 
 },
 
@@ -2445,14 +2451,14 @@ shadowOffset: { width: 1, height: 1 },
 shadowColor: Platform.OS === "android" ? COLORS.green : COLORS.green,
 shadowOpacity: 1,
 shadowRadius: 2,
-paddingVertical:10,
+//paddingVertical:10,
 
 },
 
 AppItemImageYoutubeChannel:{
    //position:"absolute",
-  width:'80%',
-  height:height/6,
+  width:'100%',
+  height:height/4,
   borderRadius:10,
 },
 

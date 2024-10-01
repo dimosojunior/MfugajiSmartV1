@@ -20,15 +20,17 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 import MinorHeader from '../Header/MinorHeader';
 import COLORS  from '../Constant/colors';
 
-import LottieView from 'lottie-react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
 
+import LottieView from 'lottie-react-native';
 const {width, height} = Dimensions.get('window');
 
-const IngizaKiasi = ({navigation, route}) => {
 
+const IngizaKiasi = ({navigation, route}) => {
+ 
    const { 
     StaterFeed,
    FinisherFeed,
@@ -69,6 +71,7 @@ const IngizaKiasi = ({navigation, route}) => {
   const setSelectedProductIds = 0
   const totalCartPrice = 0;
    const totalCartKilos = 0;
+  //const KukuId = id;
 
     // To change color
 // const theme = useContext(themeContext)
@@ -121,7 +124,7 @@ const [isPending, setPending] = useState(true);
 
 
 //FOR SEARCHING
-const [input, setInput] = useState('');
+const [inputi, setInputi] = useState('');
 
 
 const getItems = () => {
@@ -133,7 +136,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetIdadiYaKilosView/?page=${current_page}&page_size=500`
+   const url = EndPoint + `/GetUmriWaKukuView/?page=${current_page}&page_size=24`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
@@ -166,7 +169,7 @@ const getItems = () => {
     return (
       isLoading ?
         <View style={globalStyles.loaderStyle}>
-          <ActivityIndicator size="large" color="lightgreen" />
+          <ActivityIndicator size="large" color="red" />
         </View> : null
     );
   };
@@ -213,101 +216,154 @@ const formatToThreeDigits = (number) => {
 
 
 
-
-const InventoryCard = ({item, index}) => {
   
+  return (
+
+    <>{!fontsLoaded ? (<View/>):(
 
 
-//mwanzo wa search
-   if (input === ""){
- 
-return (
-
-<>
-{input != '' && (
+    <>
 
 
-      <TouchableOpacity
+ {!isPending ? (
 
-      //  onPress={() =>
-      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
-      // }
-
-       // onPress={() => {
-       // navigation.navigate('Vyakula Vyote', { ...item,UmriwaKukuId,UmriKwaWiki, UmriKwaSiku, KukuId, AinaYaKuku,  StaterFeed,GrowerFeed, LayerFeed, FinisherFeed });
-        // setIsModalVisible(false); // Update state when modal opens
-        // setModalVisible(false);
-      //}}
-       
+     <View style={[globalStyles.container
+     ,globalStyles.ImagePosterColor]}>
+         
      
+
+
+
+  <MinorHeader title="Kiasi Cha Chakula"/>
+
       
-      style={[
-        globalStyles.IdadiYaKukuFirstContainer,
-        {
-          //backgroundColor:'red',
-          width:'100%',
-          //flexDirection:'row',
-          justifyContent:'center',
-          alignItems:'center',
-        }
-      ]} >
 
 
-        <View 
-        style={{
-          //backgroundColor:'red'
-        }}
+ <ScrollView 
+        keyboardShouldPersistTaps="handled"
         >
 
-      <Text style={{
-        backgroundColor:'green',
-        paddingVertical:30,
-        marginVertical:10,
-        color:'white',
-        borderRadius:8,
-        paddingHorizontal:30,
-
-      }}>Bonyeza kuendelea kutengeneza chakula cha Kg: {input}</Text>
-            
-          
-        </View>
-
-
-
-      </TouchableOpacity>
 
 
 
 
 
 
-)}
-</>
 
-
-)
-
+{/*mwanzo wa view ya image*/}
+ <View>
 
 
 
-  // hili bano la chini ni la if ya juu kama mtu akitype   
-}
+<View style={{
+          width:width,
+          //justifyContent:'center',
+         // alignItems:'center',
+          //flex:1,
+          //backgroundColor:'#fdb9b1',
+          //height:height,
+        }}>
 
-if (item.IdadiYaKilos.toString().toLowerCase().includes(input.toLowerCase())) {
+     
+      <Image
 
-return (
+      style={globalStyles.UmriInitialImage}
+       source={require('../assets/300.jpg')} 
+      >
+      </Image>
 
-<>
-{input != '' ? (
+      </View>
+
+
+     
+
+
+</View>
+
+
+{/*Mwisho wa view ya image*/}
+
+
+
+
+
+
+
+
+       {/*mwanzo wa search*/}
+
+         <View style={[{position: 'relative', 
+        flex:2,
+        position: 'relative',
+       // backgroundColor:'#fdb9b1',
+        marginTop:-30,
+
+        //marginTop:10,
+
+        //bottom: 30
+      },
+      globalStyles.ImagePosterColor
+
+      ]}>
+
+<Text style={globalStyles.tuambieSiku}>
+Tafadhali, ingiza kiasi cha chakula ulichonacho au 
+    unachohitaji kutengeneza kwa kilo
+</Text>
+
+     <View style={[globalStyles.searchbarOtherPages,
+
+      {
+
+        //flex:2,
+        // marginTop:-30,
+        
+
+      }
+
+
+      ]}>
+
+
+                 <View style={globalStyles.searchbarIconContainerOtherPages}>
+                    <Ionicons name="search-outline" 
+                    size={25} 
+                    color={COLORS.black} 
+
+                    style={globalStyles.AppIConHomeScreenOtherPages}
+
+                      />
+                    </View>
+
+                    <View style={globalStyles.searchbarInputContainerOtherPages}>
+                    <TextInput 
+                    value={inputi} onChangeText ={(text) => setInputi(text)}
+                    placeholder="Ingiza kiasi cha chakula" 
+                     placeholderTextColor='black'
+                     keyboardType="numeric"
+                    style={globalStyles.AppInputHomeScreenOtherPages}
+                    
+                    ></TextInput>
+                    </View>
+                    
+                  </View>
+
+
+
+
+
+
+
+
+
+  {inputi != '' && (
+
+
 
  <TouchableOpacity
 
-      //  onPress={() =>
-      //   navigation.navigate('Taarifa Za Kuku Per Kuku Namba', { ...item, KukuId,UmriWaKukuId, AinaYaKuku, UmriKwaWiki })
-      // }
-
-        onPress={() => {
-        navigation.navigate('Vyakula Vyote', { ...item,
+    onPress={() => {
+        navigation.navigate('Vyakula Vyote', {inputi,
           UmriwaKukuId,
           UmriKwaWiki, 
           UmriKwaSiku,
@@ -344,16 +400,17 @@ return (
         // setModalVisible(false);
       }}
        
-     
       
+           
       style={[
         globalStyles.IdadiYaKukuFirstContainer,
         {
           //backgroundColor:'red',
-          width:'100%',
+          width:'90%',
           //flexDirection:'row',
           justifyContent:'center',
           alignItems:'center',
+          marginLeft:20,
         }
       ]} >
 
@@ -374,12 +431,11 @@ return (
         lineHeight:30,
         fontFamily:'Medium',
 
-      }}>Bonyeza kuendelea 
-      kutengeneza chakula cha Kilo:<Text style={{
+      }}>Bonyeza kuendelea kutengeneza chakula cha kilo  <Text style={{
         color:'red',
         fontFamily:'Bold',
         fontSize:20,
-      }}> {item.IdadiYaKilos}</Text>
+      }}> {inputi}</Text>
             </Text>
           
         </View>
@@ -388,247 +444,33 @@ return (
 
       </TouchableOpacity>
 
-):(
-
-
-<View style={{
-          width:width,
-          //justifyContent:'center',
-          alignItems:'center'
-        }}>
-     {/* <Image
-        source={item?.RouteImage}
-        style={{
-          height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-       }}
-      />*/}
-       <LottieView
-        style={{
-        height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-
-        }}
-        source={require('../assets/Loading/l1.json')} // Replace with your animation JSON file
-        autoPlay
-        loop
-      />
-
-      </View>
-
-
-
-
-)}
-</>
-
-
-)
-
-
-
-
-// hili bano la chini ni la if ya pili mwisho
-  }
-
-
-
-}
-  
-  return (
-
-    <>{!fontsLoaded ? (<View/>):(
-
-
-    <>
-
-
- {!isPending ? (
-
-     <View style={[globalStyles.container
-     ,{
-      
-      backgroundColor: input != '' ? 
-              COLORS.white : 'lightgreen'
-    }]}>
-         
-     
-
-
-
-  <MinorHeader title="Kiasi"/>
-
-      
-
-
-
-
-
-
-    <View style={globalStyles.searchbarOtherPages}>
-
-                 <View style={globalStyles.searchbarIconContainerOtherPages}>
-                    <Ionicons name="search-outline" 
-                    size={25} 
-                    color={COLORS.black} 
-
-                    style={globalStyles.AppIConHomeScreenOtherPages}
-
-                      />
-                    </View>
-
-                    <View style={globalStyles.searchbarInputContainerOtherPages}>
-                    <TextInput 
-                    value={input} onChangeText ={(text) => setInput(text)}
-                    placeholder="Ingiza kiasi" 
-                     placeholderTextColor='black'
-                     keyboardType="numeric"
-                    style={globalStyles.AppInputHomeScreenOtherPages}
-                    
-                    ></TextInput>
-                    </View>
-                    
-                  </View>
-
-
-
-
-  {input != '' ? (
-  <Text
-      style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-      
-      >Unataka kutengeneza chakula cha Kg {input} ?</Text>
- 
-
- ):(
-
- <View>
-
-
-
-<View style={{
-          width:width,
-          justifyContent:'center',
-          alignItems:'center',
-          //flex:1,
-          backgroundColor:'lightgreen',
-          //height:height,
-        }}>
-
-        <Text
-    style={globalStyles.AppChaguaHudumaTextHomeScreen}  
-    
-    >Tafadhali, ingiza kiasi cha chakula ulichonacho au 
-    unachohitaji kutengeneza kwa kilo.</Text>
-
-     {/* <Image
-        source={item?.RouteImage}
-        style={{
-          height: height/2 - 70,
-         width:'80%',
-         borderRadius:5,
-       }}
-      />*/}
-       <LottieView
-        style={{
-        height: height/2,
-         width:'80%',
-         borderRadius:5,
-         // backgroundColor:'red',
-         // justifyContent:'center',
-         // alignItems:'center',
-         zIndex:1,
-
-        // flex:1,
-
-        }}
-        source={require('../assets/Loading/l2.json')} // Replace with your animation JSON file
-        autoPlay
-        loop
-      />
-
-      </View>
-
-
-
-
-
-</View>
 
  )}
 
 
 
+
+
+
+
+
+
+    </View>
+
+ {/*mwisho wa search*/}
+
+
+
+
+
+
+
+
+
+
        
 
 
-
-
-
-
-
-
-
-       
-
-
-
-
-
-
-
-      
-      { queryset && queryset.length > 0 ? (
-        <>
-
-         {setLoading===true?(<ActivityIndicator/>):(
-      <>
-
-   
-      <FlatList
-          data={queryset}
-          showsVerticalScrollIndicator={false}
-         // style={{marginTop: 12, width: '100%'}}
-          renderItem={InventoryCard}
-          numColumns={2}
-          ListFooterComponent={renderLoader}
-          onEndReached={getItems}
-          onEndReachedThreshold={0.5}
-          keyboardShouldPersistTaps="handled"
-        />
-                
- </>
-      )}
-
-         </>
-
-
-
-   ) :(
-   <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
-  <Text style={globalStyles.noitemText}>Hakuna taarifa zozote za kiasi cha chakula! !
-  </Text>
-
-
-  <View style={globalStyles.ErrorImageContainerHomePage}>
-      <Image 
-          source={require('../assets/500.png')}  
-           style={globalStyles.ErrorImageHomePage}
-          
-          //source={item.ArticleImage} 
-          //resizeMode='contain'
-          contentContainerStyle={{ padding: 20 }}
-          
-          />
-  </View>
-
-
-
-</View>
-
-  )}  
 
 
 
@@ -653,6 +495,7 @@ return (
 
 
 
+</ScrollView>
 
 
  <AwesomeAlert
@@ -670,7 +513,7 @@ return (
                 contentContainerStyle={globalStyles.alertContainer}
                 customView={
                   <View style={globalStyles.alertContent}>
-                    <Image source={require('../assets/icon.png')} style={globalStyles.alertImage} />
+                    <Image source={require('../assets/splashe.png')} style={globalStyles.alertImage} />
                     <Text style={globalStyles.alertTitle}>MFUGAJI SMART</Text>
                     <Text style={globalStyles.alertMessage}>{alertMessage}</Text>
                   </View>

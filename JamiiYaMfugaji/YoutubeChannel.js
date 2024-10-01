@@ -599,14 +599,16 @@ keyboardShouldPersistTaps="handled"
                 style={[
                   globalStyles.AppChaguaHudumaTextYoutubeChannel,
                   {
-                    fontFamily:'Light'
+                    fontFamily:'Medium',
+                    width:'95%',
+                    marginLeft:0,
 
                   }
                 ]}  
                 
                 >
                 Tazama videos zenye masomo yanayohusu ufugaji wa kuku kwa kubonyeza 
-                batani hapo chini
+                picha hapo chini
                 </Text>
               
               
