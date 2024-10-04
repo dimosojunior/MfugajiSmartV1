@@ -251,6 +251,24 @@ const getProducts = () => {
   };
 
 
+   const formatDate2 = (dateString) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+    const year = date.getFullYear();
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+  };
+
+ 
+
+
+
 const formatToThreeDigits = (number) => {
   if (number !== null) {
     return number.toLocaleString('en-US', {
@@ -296,11 +314,11 @@ const ReportCard = ({item, index}) => {
          <Text 
            style={globalStyles.VyakulaItemNameCartItemsText}
          >
-            Awamu ya ukokotoaji:  <Text style={{
+            Tarehe:  <Text style={{
               color:'green',
               fontFamily:'Bold'
             }}>
-            {item.id}
+              {formatDate(item.created)}
             </Text>  
           </Text>
 
@@ -374,11 +392,11 @@ const ReportCard = ({item, index}) => {
           style={globalStyles.VyakulaPriceCartItemsText}
         >
           
-            Tarehe <Text style={{
+            Muda: <Text style={{
               color:'green',
               fontFamily:'Bold'
             }}>
-             {formatDate(item.created)}
+             {formatDate2(item.created)}
             </Text> 
           </Text>
 

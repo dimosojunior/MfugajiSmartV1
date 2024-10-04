@@ -327,7 +327,7 @@ const handleErrorMessage = (error) => {
         fontFamily:'Medium',
         width:'80%',
       }}>
-      Msaada kwa wateja <Text style={{
+      Msaada wakati wa kujisajili <Text style={{
         color:'red',
         fontFamily:'Medium',
       }}> {HudumaKwaWatejaNumber} </Text>

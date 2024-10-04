@@ -363,7 +363,7 @@ const getItems = () => {
   } else {
     setIsLoading(true);
     //const url = EndPoint + `/GetAllUniversities/?page=${current_page}&page_size=2`;
-   const url = EndPoint + `/GetAllHudumaView/?page=${current_page}&page_size=2`
+   const url = EndPoint + `/GetAllHudumaView/?page=${current_page}&page_size=10`
     // console.log(url);
     fetch(url)
       .then((res) => res.json())

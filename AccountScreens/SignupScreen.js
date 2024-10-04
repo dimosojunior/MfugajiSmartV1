@@ -144,7 +144,7 @@ const handleErrorMessage = (error) => {
   }
 
   if (phone.length !== 10) {
-    showAlertFunction("Namba ya simu lazima iwe na tarakimu 13");
+    showAlertFunction("Namba ya simu lazima iwe na tarakimu 10");
     return;
   }
 

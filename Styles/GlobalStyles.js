@@ -75,7 +75,7 @@ ImagePosterColor:{
 //-----------------AWERESOME  ALERT----------------------
 
 alertContainer:{
-  backgroundColor:'black',
+  backgroundColor:'#233329',
   borderWidth:1,
   borderColor:'white',
   alignItems:'center',

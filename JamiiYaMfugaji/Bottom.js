@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   },
 
  LinkTextWafugaji:{
-    color:'white',
+    color:'green',
     marginTop:15,
     marginBottom:20,
   },

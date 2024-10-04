@@ -1264,7 +1264,14 @@ userData={userData}
               Hongera! Mchanganyiko huu ni mzuri. Hakikisha unaandaa chakula hiki katika 
               hali ya usafi na zingatia ubora wa kila malighafi ili kupata matokeo mazuri zaidi.
 
-              Hifadhi mchanaganyiko wa chakula cha kuku katika sehemu kavu na salama ili kuzuia kuoza.
+              Hifadhi mchanaganyiko wa chakula cha kuku katika sehemu kavu na salama ili kuzuia kuoza. 
+
+              Unaweza kufanya makadirio ya malighafi zilizopo kwenye block namba 1. 
+
+              Kwa msaada zaidi piga simu: <Text style={{
+                color:'yellow',
+                fontFamily:'Bold',
+              }}>0759 536 085</Text>
              
             </Text>
           

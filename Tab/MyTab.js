@@ -138,8 +138,8 @@ function MyTab( {navigation}){
       />
 
 
-{/*
-<Tab.Screen
+
+{/*<Tab.Screen
       name="Test Tab"
       component={Test}
       options={ ({route}) => ({
@@ -166,8 +166,8 @@ function MyTab( {navigation}){
       //     })}
       />
 
-
 */}
+
 
      
 

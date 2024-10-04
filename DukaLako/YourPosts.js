@@ -209,9 +209,9 @@ const sendTextMessage = useCallback(async (phNumber, message) => {
         await Linking.openURL(url)
     }, [])
 
-const message = "Naomba kuidhinishwa"
+const message = "Tafadhali! naomba kuidhinisha biashara yangu"
 
-const HudumaKwaWatejaNumber = "0623046899";
+const HudumaKwaWatejaNumber = "0678125579";
 
 
 useEffect(() => {

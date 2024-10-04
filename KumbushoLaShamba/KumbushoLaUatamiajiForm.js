@@ -791,10 +791,9 @@ style={{
     color:'white',
     fontFamily:'Medium',
   }}>
-     Ahsante kwa kuweka kumbusho la uatamiaji wa mayai ya ndege,
-     utakumbushwa taarifa za uatamiaji wa mayai ya
-      ndege aina ya  {AinaYaNdege} yenye siku {SikuYaNgapiTokaKuatamiwa} tangu kuanza 
-     kuatamiwa tarehe husika ikifika.
+     Hongera! kumbusho la uatamiaji wa mayai limefanikiwa. Utakumbushwa kujiandaa 
+
+     kupokea vifaranga siku chache kabla ya mayai kuanguliwa.
   </Text>
 
    <TouchableOpacity 

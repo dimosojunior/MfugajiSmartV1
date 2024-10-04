@@ -485,7 +485,7 @@ useEffect(() => {
   placeholder='Sajili kundi la kuku wako'
   value={KundiLaKukuWake}
   onChangeText={setKundiLaKukuWake}
-  placeholderTextColor={COLORS.white}
+  placeholderTextColor= "wheat"
   //keyboardType="numeric"
   style={styles.MyTextInput}
 />

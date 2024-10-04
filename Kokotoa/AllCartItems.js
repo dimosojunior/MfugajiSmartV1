@@ -589,13 +589,13 @@ const CartCard = ({item, index}) => {
 
 
 
-
+{cart && cart.length > 0 && (
  <Text
 style={globalStyles.AppChaguaHudumaTextHomeScreen}  
 
 >Mchanganuo wa vyakula ulivyovichagua</Text>
 
-
+)}
   
    {cart && cart.length > 0 ? (
 
@@ -610,19 +610,31 @@ style={globalStyles.AppChaguaHudumaTextHomeScreen}
 
 
    ) :(
-   <View style={[globalStyles.noitemTextContainer,{backgroundColor:COLORS.white}]}>
-  <Text style={globalStyles.noitemText}>hujachagua chakula chochote kwa sasa! !
-  </Text>
+   <View style={[globalStyles.noitemTextContainer,
+    {backgroundColor:COLORS.white,
+      marginTop:0,
+      paddingTop:0,
 
+    }]}>
+ {/* <Text style={globalStyles.noitemText}>hujachagua chakula chochote kwa sasa! !
+  </Text>
+*/}
 
   <View style={globalStyles.ErrorImageContainerHomePage}>
       <Image 
-          source={require('../assets/500.png')}  
-           style={globalStyles.ErrorImageHomePage}
+          source={require('../assets/p.jpg')}  
+           style={[globalStyles.ErrorImageHomePage,
+            {
+              height:height,
+              width:width,
+              borderRadius:0,
+            }
+
+            ]}
           
           //source={item.ArticleImage} 
           //resizeMode='contain'
-          contentContainerStyle={{ padding: 20 }}
+          contentContainerStyle={{ padding: 0 }}
           
           />
   </View>

@@ -283,7 +283,7 @@ const formatToThreeDigits = (number) => {
       ]}>
 
 <Text style={globalStyles.tuambieSiku}>
-Tafadhali, tuambie unahitaji kutengeneza chakula cha muda gani ? (ingiza siku unazotaka kutengeneza chakula)
+Tafadhali, tuambie unahitaji kutengeneza chakula cha muda gani ? (ingiza siku unazotaka kutengeneza chakula, mwisho siku 168 "Miezi 6")
 
 </Text>
 

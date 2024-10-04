@@ -817,8 +817,7 @@ style={{
     fontFamily:'Medium',
   }}>
     Hongera! Kumbusho lako la mabadiliko ya lishe limefanikiwa, 
-    utakumbushwa kubadilisha lishe pamoja na muda sahihi wa 
-    kuwapatia kuku wako vitamini
+    utakumbushwa muda sahihi wa kubadilisha lishe.
 
   </Text>
 

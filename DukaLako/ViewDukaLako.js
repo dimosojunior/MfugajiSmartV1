@@ -354,8 +354,9 @@ keyboardShouldPersistTaps="handled"
             color:'white',
             fontFamily:'Medium',
             marginLeft:20,
+            textAlign:'center',
           }}>
-            Ameidhinishwa
+            AMEIDHINISHWA
           </Text>
         </View>
         )}

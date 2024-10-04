@@ -375,7 +375,7 @@ const TotalVyakulaCard = () => {
     color:'green',
     fontFamily:'Medium',
    }}>
-   Kirutubisho
+   Virutubisho
      
    </Text>
 
@@ -384,7 +384,7 @@ const TotalVyakulaCard = () => {
     color:'green',
     fontFamily:'Medium',
    }}>
-   Kilichopatikana
+   Vilivyopo
      
    </Text>
 
@@ -393,7 +393,7 @@ const TotalVyakulaCard = () => {
     color:'green',
     fontFamily:'Medium',
    }}>
-   Kinachohitajika
+   Vilivyohitajika
      
    </Text>
 
@@ -530,26 +530,26 @@ const TotalVyakulaCard = () => {
     color:'black',
     fontFamily:'Light',
    }}>
-   Energy
+   Nishati
      
    </Text>
 
     <Text style={{
     width:'30%',
-    color:'black',
+    color:'green',
     fontFamily:'Light',
    }}>
-    {TotalMEValue.toFixed(1)} Kg/kca 
+    {TotalMEValue.toFixed(1)} Kcal/kg 
      
    </Text>
 
     <Text style={{
     width:'30%',
-    color:'black',
+    color:'green',
     fontFamily:'Light',
    }}>
    
-     {TotalMEPercentageRequired.toFixed(1)} Kg/kca
+     {TotalMEPercentageRequired} Kcal/kg
    </Text>
 
      
