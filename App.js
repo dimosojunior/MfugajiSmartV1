@@ -40,7 +40,7 @@ export default function App({navigation}) {
     const latestVersion = data.latest_version;
 
    // const currentVersion = Application.nativeApplicationVersion;
-    const currentVersion = "1";
+    const currentVersion = "5";
 
     console.log("currentVersion:", currentVersion);
     console.log("latestVersion:", latestVersion);

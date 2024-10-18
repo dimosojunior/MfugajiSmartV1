@@ -574,7 +574,7 @@ const SeraScreen = ({ navigation }) => {
                       <>
                    
                     <Text style={[styles.title, { fontFamily: 'Medium' }]}>
-                      <Text> </Text>Msaada kwa wateja
+                      <Text> </Text>Msaada wakati wa kujisajili
                     </Text>
 
                     <View style={[styles.title, { marginTop: 10 }]}>

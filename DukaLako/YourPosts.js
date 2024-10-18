@@ -1251,8 +1251,12 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
               
               <TouchableOpacity 
              
-            onPress={() => { Linking.openURL(`whatsapp://send?phone=${HudumaKwaWatejaNumber}&text=${message}`)}}
+            //onPress={() => { Linking.openURL(`whatsapp://send?phone=${HudumaKwaWatejaNumber}&text=${message}`)}}
          
+   onPress={() => { Linking.openURL(`whatsapp://send?phone=${HudumaKwaWatejaNumber}&text=${message}`)}}
+   
+       
+
             style={{
               width:'45%',
             }}

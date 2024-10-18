@@ -54,7 +54,7 @@ export default function PreLoaderScreen({ navigation }) {
   const checkLoggedIn = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (!token) {
-      navigation.replace('Signin Stack');
+      navigation.replace('Signup Stack');
     } else if (token !== null) { //else if (token !== null) {
       try {
         const userResponse = await axios.get(
@@ -115,7 +115,7 @@ export default function PreLoaderScreen({ navigation }) {
         <Text style={styles.errorText}>{errorMessage}</Text>
 
         <TouchableOpacity
-          onPress={() => navigation.replace('Signin Stack')}
+          onPress={() => navigation.replace('Signup Stack')}
         >
           <Btn textColor='white' bgColor={black} btnLabel="Jaribu Tena" />
         </TouchableOpacity>

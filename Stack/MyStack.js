@@ -93,7 +93,7 @@ import DeletePostDukaLako from '../DukaLako/DeletePostDukaLako';
 import EditPostDukaLako from '../DukaLako/EditPostDukaLako';
 
 
-
+import AllChattingScreen from '../Chatting/AllChattingScreen';
 
 import MyTab from '../Tab/MyTab';
 
@@ -685,6 +685,22 @@ function MyStack( {navigation}){
                      <Stack.Screen
       name="Delete Post DukaLako"
       component={DeletePostDukaLako}
+      // options={ () => ({ 
+      //       headerLeft: () => <Header  title='About Page' />,
+      //     })}
+      />
+
+
+
+
+
+
+
+
+
+       <Stack.Screen
+      name="All Chatting Screen"
+      component={AllChattingScreen}
       // options={ () => ({ 
       //       headerLeft: () => <Header  title='About Page' />,
       //     })}

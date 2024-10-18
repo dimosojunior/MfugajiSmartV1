@@ -72,6 +72,13 @@ ImagePosterColor:{
 
 },
 
+SenderProfileImage:{
+  width:'50%',
+  height:height/14,
+  borderRadius:40,
+
+},
+
 //-----------------AWERESOME  ALERT----------------------
 
 alertContainer:{

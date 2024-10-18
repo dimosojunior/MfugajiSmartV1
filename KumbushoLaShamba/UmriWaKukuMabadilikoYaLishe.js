@@ -26,10 +26,110 @@ import axios from 'axios';
 import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feather,AntDesign, FontAwesome} from '@expo/vector-icons';
 
 import LottieView from 'lottie-react-native';
+
+
+
+
+//  import { BannerAd, BannerAdSize, TestIds, InterstitialAd, AdEventType, RewardedInterstitialAd, RewardedAdEventType } from 'react-native-google-mobile-ads';
+
+
+// const adUnitId = __DEV__ ? TestIds.REWARDED_INTERSTITIAL : 'ca-app-pub-4524511699441606/6815431262';
+// const adUnitId2 = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-4524511699441606/7007002951';
+
+// const interstitial = InterstitialAd.createForAdRequest(adUnitId2, {
+//   requestNonPersonalizedAdsOnly: true
+// });
+
+// const rewardedInterstitial = RewardedInterstitialAd.createForAdRequest(adUnitId, {
+//   requestNonPersonalizedAdsOnly: true
+// });
+
+
+
+
+
 const {width, height} = Dimensions.get('window');
 
 
 const UmriWaKukuMabadilikoYaLishe = ({navigation, route}) => {
+
+
+
+
+   // MWANZO WA ADS
+  // const [interstitialLoaded, setInterstitialLoaded] = useState(false);
+  // const [rewardedInterstitialLoaded, setRewardedInterstitialLoaded] = useState(false);
+  
+  // const loadInterstitial = () => {
+  //   const unsubscribeLoaded = interstitial.addAdEventListener(
+  //     AdEventType.LOADED,
+  //     () => {
+  //       setInterstitialLoaded(true);
+  //     }
+  //   );
+
+  //   const unsubscribeClosed = interstitial.addAdEventListener(
+  //     AdEventType.CLOSED,
+  //     () => {
+  //       setInterstitialLoaded(false);
+  //       interstitial.load();
+  //     }
+  //   );
+
+  //   interstitial.load();
+
+  //   return () => {
+  //     unsubscribeClosed();
+  //     unsubscribeLoaded();
+  //   }
+  // }
+
+  // const loadRewardedInterstitial = () => {
+  //   const unsubscribeLoaded = rewardedInterstitial.addAdEventListener(
+  //     RewardedAdEventType.LOADED,
+  //     () => {
+  //       setRewardedInterstitialLoaded(true);
+  //     }
+  //   );
+
+  //   const unsubscribeEarned = rewardedInterstitial.addAdEventListener(
+  //     RewardedAdEventType.EARNED_REWARD,
+  //     reward => {
+  //       console.log(`User earned reward of ${reward.amount} ${reward.type}`);
+  //     }
+  //   );
+
+  //   const unsubscribeClosed = rewardedInterstitial.addAdEventListener(
+  //     AdEventType.CLOSED,
+  //     () => {
+  //       setRewardedInterstitialLoaded(false);
+  //       rewardedInterstitial.load();
+  //     }
+  //   );
+
+  //   rewardedInterstitial.load();
+
+  //   return () => {
+  //     unsubscribeLoaded();
+  //     unsubscribeClosed();
+  //     unsubscribeEarned();
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const unsubscribeInterstitialEvents = loadInterstitial();
+  //   const unsubscribeRewardedInterstitialEvents = loadRewardedInterstitial();
+
+  //   return () => {
+  //     unsubscribeInterstitialEvents();
+  //     unsubscribeRewardedInterstitialEvents();
+  //   };
+  // }, [])
+
+
+// MWISHO WA ADS
+
+
 const { 
     
     id,
@@ -276,7 +376,24 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
 
       <TouchableOpacity
        onPress={() =>
-        navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma})}
+        navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma})
+      }
+
+
+        //  onPress={async () => {
+        //   if (rewardedInterstitialLoaded) {
+        //     try {
+        //       await rewardedInterstitial.show();
+        //       navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma});
+        //     } catch (error) {
+        //       console.log('Error showing ad', error);
+        //       //Alert.alert('Error', 'Failed to show ad. Please try again.');
+        //       navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma});
+        //     }
+        //   } else {
+        //     navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma});
+        //   }
+        // }}
        
      
       
@@ -338,6 +455,22 @@ if (item.UmriKwaWiki.toString().toLowerCase().includes(input.toLowerCase())) {
         <Pressable 
          onPress={() =>
         navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma})}
+       
+
+         //  onPress={async () => {
+        //   if (rewardedInterstitialLoaded) {
+        //     try {
+        //       await rewardedInterstitial.show();
+        //       navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma});
+        //     } catch (error) {
+        //       console.log('Error showing ad', error);
+        //       //Alert.alert('Error', 'Failed to show ad. Please try again.');
+        //       navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma});
+        //     }
+        //   } else {
+        //     navigation.navigate('Mabadiliko Ya Lishe Form', {...item,AinaYaKuku, JinaLaHuduma});
+        //   }
+        // }}
        
 
         style={globalStyles.OverdoseImageContainerCartItems}

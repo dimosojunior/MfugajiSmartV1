@@ -25,10 +25,105 @@ import LotterViewScreen from '../Screens/LotterViewScreen';
 
 import {CustomCard} from '../RenderedComponents/CustomCard';
 import MinorHeader from '../Header/MinorHeader';
+
+
+//  import { BannerAd, BannerAdSize, TestIds, InterstitialAd, AdEventType, RewardedInterstitialAd, RewardedAdEventType } from 'react-native-google-mobile-ads';
+
+
+// const adUnitId = __DEV__ ? TestIds.REWARDED_INTERSTITIAL : 'ca-app-pub-4524511699441606/6815431262';
+// const adUnitId2 = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-4524511699441606/7007002951';
+
+// const interstitial = InterstitialAd.createForAdRequest(adUnitId2, {
+//   requestNonPersonalizedAdsOnly: true
+// });
+
+// const rewardedInterstitial = RewardedInterstitialAd.createForAdRequest(adUnitId, {
+//   requestNonPersonalizedAdsOnly: true
+// });
+
+
+
 const { width, height } = Dimensions.get('window');
 
 
 export default function MgawanyoWaHuduma ({navigation, route}) {
+
+
+
+
+   // MWANZO WA ADS
+  // const [interstitialLoaded, setInterstitialLoaded] = useState(false);
+  // const [rewardedInterstitialLoaded, setRewardedInterstitialLoaded] = useState(false);
+  
+  // const loadInterstitial = () => {
+  //   const unsubscribeLoaded = interstitial.addAdEventListener(
+  //     AdEventType.LOADED,
+  //     () => {
+  //       setInterstitialLoaded(true);
+  //     }
+  //   );
+
+  //   const unsubscribeClosed = interstitial.addAdEventListener(
+  //     AdEventType.CLOSED,
+  //     () => {
+  //       setInterstitialLoaded(false);
+  //       interstitial.load();
+  //     }
+  //   );
+
+  //   interstitial.load();
+
+  //   return () => {
+  //     unsubscribeClosed();
+  //     unsubscribeLoaded();
+  //   }
+  // }
+
+  // const loadRewardedInterstitial = () => {
+  //   const unsubscribeLoaded = rewardedInterstitial.addAdEventListener(
+  //     RewardedAdEventType.LOADED,
+  //     () => {
+  //       setRewardedInterstitialLoaded(true);
+  //     }
+  //   );
+
+  //   const unsubscribeEarned = rewardedInterstitial.addAdEventListener(
+  //     RewardedAdEventType.EARNED_REWARD,
+  //     reward => {
+  //       console.log(`User earned reward of ${reward.amount} ${reward.type}`);
+  //     }
+  //   );
+
+  //   const unsubscribeClosed = rewardedInterstitial.addAdEventListener(
+  //     AdEventType.CLOSED,
+  //     () => {
+  //       setRewardedInterstitialLoaded(false);
+  //       rewardedInterstitial.load();
+  //     }
+  //   );
+
+  //   rewardedInterstitial.load();
+
+  //   return () => {
+  //     unsubscribeLoaded();
+  //     unsubscribeClosed();
+  //     unsubscribeEarned();
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const unsubscribeInterstitialEvents = loadInterstitial();
+  //   const unsubscribeRewardedInterstitialEvents = loadRewardedInterstitial();
+
+  //   return () => {
+  //     unsubscribeInterstitialEvents();
+  //     unsubscribeRewardedInterstitialEvents();
+  //   };
+  // }, [])
+
+
+// MWISHO WA ADS
+
 
    const { 
     
@@ -796,7 +891,7 @@ const getItems = () => {
             <Text style={{ 
               fontFamily:'Medium'
             }}>
-            Tazama michanganyo ya mwanzo
+            Tazama michanganyo yako ya mwanzo
             </Text>
            
           </View>
@@ -806,26 +901,7 @@ const getItems = () => {
         onPress={() =>
         navigation.navigate('All Orders')}
 
-        //  onPress={() =>
-        // navigation.navigate('All Orders', 
-        //   { KukuId,UnaKiasiGaniChaChakula,
-        //     selectedProductIds, 
-        //     setSelectedProductIds,
-        //      UmriwaKukuId,
-        //      totalCartPrice,
-        //       totalCartKilos,
-
-        //      AinaYaKuku,  
-        //      StaterFeed,
-        //      GrowerFeed, 
-        //      LayerFeed, 
-        //      FinisherFeed,
-        //      UmriKwaWiki,
-        //      UmriKwaSiku
-        //    })}
-       
-
-           
+      
             style={{
               
               padding: 10,

@@ -392,13 +392,17 @@ const pickPdf = async () => {
         //     return;
         // }
 
-        if (selectedRole) {
+        // if (selectedRole) {
+        //   formData.append('Role', selectedRole);
+        // } else {
+        //   showAlertFunction('Tafadhali chagua aina ya mtumiaji.');
+        //   setIsLoading(false);
+        //   return;
+        // }
+
+         if (selectedRole) {
           formData.append('Role', selectedRole);
-        } else {
-          showAlertFunction('Tafadhali chagua aina ya mtumiaji.');
-          setIsLoading(false);
-          return;
-        }
+        } 
 
         // if (selectedAinaYaKuku && selectedAinaYaKuku.id) {
         //     formData.append('AinaYaKuku', selectedAinaYaKuku.id);

@@ -27,9 +27,17 @@ import {MaterialIcons,Entypo,MaterialCommunityIcons,FontAwesome5, Ionicons,Feath
 
 import COLORS  from '../Constant/colors';
 
+ 
+
 const { width, height } = Dimensions.get('window');
 
 const AllCartItems = ({navigation, route}) => {
+
+
+
+
+
+
 
   const { 
     selectedProductIds,  // Received from previous page
@@ -825,7 +833,11 @@ style={globalStyles.AppChaguaHudumaTextHomeScreen}
            UmriKwaSiku,
            Interval,
            UnaKiasiGaniChaChakula
-        })}
+        })
+
+      }
+
+
        
            
             style={{

@@ -513,7 +513,7 @@ const [NambaYakeYaSimu, setNambaYakeYaSimu] = useState('');
                 color:'wheat',
               }
               ]}>
-                 Ingiza kiasi cha mayai ulichonacho
+                 Ingiza idadi ya mayai uliyonayo
             </Text>
             </View>
 

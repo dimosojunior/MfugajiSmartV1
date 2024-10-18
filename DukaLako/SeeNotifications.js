@@ -369,7 +369,14 @@ const checkLoggedIn = async () => {
                   ):(
                   <Image
 
-                  style={globalStyles.UserInfoLeftImage}
+                   style={[globalStyles.UserInfoLeftImagee,
+                    {
+                      width:'100%',
+                      height:height/11,
+                      borderRadius:40,
+                    }
+
+                    ]}
                    source={require('../assets/profile.jpg')} 
                   >
                   </Image>

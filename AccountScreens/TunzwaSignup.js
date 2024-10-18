@@ -64,61 +64,6 @@ const emailRegex = /\S+@\S+\.\S+/;
 
 const [errorMessage, setErrorMessage] = useState('');
 
-
-
-
-
-
-
-
-
-
-  //const navigation = useNavigation();
-
-  useEffect(() => {
-    checkLoggedIn();
-  }, []);
-
-  const checkLoggedIn = async () => {
-    const token = await AsyncStorage.getItem('userToken');
-    if (token) {
-      try {
-        const userResponse = await axios.get(
-          EndPoint + '/Account/user_data/',
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          }
-        );
-
-        const userData = userResponse.data;
-        // Fetch and set cart data here
-        // const cartResponse = await axios.get(
-        //   'https://hotelappapisv1.pythonanywhere.com/Hotel/Cart/',
-        //   {
-        //     headers: {
-        //       Authorization: `Token ${token}`,
-        //     },
-        //   }
-        // );
-
-        // const cartData = cartResponse.data;
-        // // Update the cart state with the fetched data
-        // setCart(cartData);
-
-        // navigation.replace('Home Stack', { userData });
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Home Stack' }],
-        });
-      } catch (error) {
-        
-      }
-    }
-  };
-
-
 const handleErrorMessage = (error) => {
     if (error.response) {
       // The request was made and the server responded with an error status code
@@ -216,59 +161,11 @@ const handleErrorMessage = (error) => {
         phone: phone,
       });
       //Alert.alert("You have registered Successfully");
-       showAlertFunction("Umefanikiwa kujisajili na Mfugaji Smart");
-      //navigation.replace('Home Stack');
+       showAlertFunction("Umefanikiwa kujisajili");
+      navigation.replace('Signin Stack');
 
-      //const token = response.data.token; // Extract the token from the response
+      const token = response.data.token; // Extract the token from the response
       // You can now save the token to your app's state, AsyncStorage, or Redux store
-    
-
-//mwanzo wa kusave user data
-
-
- const token = response.data.token;
-      await AsyncStorage.setItem('userToken', token);
-      //navigation.emit('updateUserToken', token);
-
-      // Now, make another request to get user data
-      const userResponse = await axios.get(EndPoint + '/Account/user_data/', {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      });
-
-      const userData = userResponse.data;
-      // Save user data to AsyncStorage
-      await AsyncStorage.setItem('userData', JSON.stringify(userData));
-
-      // Emit the 'updateUserToken' event
-      // hii inasaidia kupata a login user token automatically without
-      // page refreshing
-      EventRegister.emit('updateUserToken', token);
-
-
-
-      // Pass the userData to Home Stack
-      // navigation.replace('MainScreen', { userData });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Home Stack' }],
-      });
-
-
-
-//mwisho wa kusave data
-
-
-
-
-
-
-
-
-
-
-
     } catch (error) {
       if (error.response) {
         if (error.response.data.email) {
@@ -708,7 +605,7 @@ const handleErrorMessage = (error) => {
             color: 'black',width:'65%',
             //paddingVertical:20,
           }]}
-          placeholder=" Rudia neno siri"
+          placeholder=" Thibitisha neno siri"
           secureTextEntry={!isPasswordVisible} // Toggle secureTextEntry based on isPasswordVisible state
           value={password2}
           onChangeText={setPassword2}
