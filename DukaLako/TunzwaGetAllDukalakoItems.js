@@ -917,9 +917,15 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
 
          >
            <View style={globalStyles.LeftBtnContainer}>
-            <Text 
+          {/*  <Text 
           style={globalStyles.AppItemButtonTextHomeScreen}
-        >Wasiliana naye</Text>
+        >Wasiliana naye</Text>*/}
+            <FontAwesome name='phone' 
+            size={20}
+            color="black" 
+            style={globalStyles.AppItemButtonTextHomeScreen}
+            
+       />
          </View>
          </TouchableOpacity>
           {/*mwisho wa view ya left*/}
@@ -930,21 +936,38 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
          <TouchableOpacity 
           onPress={() => navigation.navigate('All Chatting Screen', item)}
           >
-         <View style={globalStyles.RightBtnContainer}>
+         <View style={[globalStyles.RightBtnContainer,
+          {
+            backgroundColor:'green',
+            flexDirection:'row',
+            alignItems:'center',
+            justifyContent:'space-between',
+            paddingVertical:8,
+            paddingHorizontal:10,
+            borderRadius:8,
+          }
+
+          ]}>
          <View>
-           <Text style={{
+          {/* <Text style={{
           marginRight:5,
           fontFamily:'Bold',
           color:'red',
           marginTop:5,
          }}> 4
-         </Text>
+         </Text>*/}
+         <Text 
+          style={{
+            color:'white',
+            marginRight:10,
+          }}
+        >Chati</Text>
          </View>
         
         <View>
            <FontAwesome name='comment-o' 
       size={20}
-      color="black" 
+      color="white" 
             
        />
         </View>
@@ -1203,10 +1226,10 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
 
              onPress={() => {
            navigation.navigate('View Duka Lako', item);    
-        }} 
+        }}
 
 
-        //     onPress={async () => {
+        //   onPress={async () => {
         //   if (rewardedInterstitialLoaded) {
         //     try {
         //       await rewardedInterstitial.show();
@@ -1223,16 +1246,67 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
 
 
 
-
-
-        >
+         >
            <View style={globalStyles.LeftBtnContainer}>
-            <Text 
+          {/*  <Text 
           style={globalStyles.AppItemButtonTextHomeScreen}
-        >Wasiliana naye</Text>
+        >Wasiliana naye</Text>*/}
+            <FontAwesome name='phone' 
+            size={20}
+            color="black" 
+            style={globalStyles.AppItemButtonTextHomeScreen}
+            
+       />
          </View>
          </TouchableOpacity>
           {/*mwisho wa view ya left*/}
+
+
+
+           {/*mwanzo wa view ya comment*/}
+         <TouchableOpacity 
+          onPress={() => navigation.navigate('All Chatting Screen', item)}
+          >
+         <View style={[globalStyles.RightBtnContainer,
+          {
+            backgroundColor:'green',
+            flexDirection:'row',
+            alignItems:'center',
+            justifyContent:'space-between',
+            paddingVertical:8,
+            paddingHorizontal:10,
+            borderRadius:8,
+          }
+
+          ]}>
+         <View>
+          {/* <Text style={{
+          marginRight:5,
+          fontFamily:'Bold',
+          color:'red',
+          marginTop:5,
+         }}> 4
+         </Text>*/}
+         <Text 
+          style={{
+            color:'white',
+            marginRight:10,
+          }}
+        >Chati</Text>
+         </View>
+        
+        <View>
+           <FontAwesome name='comment-o' 
+      size={20}
+      color="white" 
+            
+       />
+        </View>
+        
+
+         </View>
+         </TouchableOpacity>
+          {/*mwisho wa view ya comment*/}
 
 
        {/*mwanzo wa view ya right*/}

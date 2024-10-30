@@ -17,6 +17,10 @@ import {useFonts} from 'expo-font';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import { COLORS, SIZES } from '../Screens/src/Constant';
 import { LinearGradient } from 'expo-linear-gradient';
+
+import * as Notifications from 'expo-notifications';
+
+
 const {width,height} = Dimensions.get('window');
 const SignupScreen = ({ navigation }) => {
 
@@ -32,6 +36,29 @@ const SignupScreen = ({ navigation }) => {
     
   
 });
+
+
+
+const registerForPushNotificationsAsync = async () => {
+  let token;
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+
+  if (existingStatus !== 'granted') {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+
+  if (finalStatus !== 'granted') {
+    //showAlertFunction('Failed to get push token for notifications!');
+    console.log("Failed to get push token for notifications!")
+    return;
+  }
+
+  token = (await Notifications.getExpoPushTokenAsync()).data;
+  return token;
+  // console.log("Expo Token", token);
+};
 
 
   const [showAlert, setShowAlert] = useState(false);
@@ -205,6 +232,17 @@ const handleErrorMessage = (error) => {
 
 
 
+  // Fetch the Expo push token
+  const expoPushToken = await registerForPushNotificationsAsync();
+
+  if (!expoPushToken) {
+    showAlertFunction("Push notification token could not be generated.");
+    return;
+  }
+
+
+
+
     setPending(true);
 
     try {
@@ -214,6 +252,7 @@ const handleErrorMessage = (error) => {
         password: password,
         username: username,
         phone: phone,
+        expo_push_token: expoPushToken, // Pass the token here
       });
       //Alert.alert("You have registered Successfully");
        showAlertFunction("Umefanikiwa kujisajili na Mfugaji Smart");
@@ -261,6 +300,13 @@ const handleErrorMessage = (error) => {
 
 
 
+// Send push notification after registration
+    await axios.post('https://exp.host/--/api/v2/push/send', {
+      to: expoPushToken,
+      sound: 'default',
+      title: 'Karibu Mfugaji Smart!',
+      body: 'Asante kwa kujisajili. Tunakukaribisha kwenye Mfugaji Smart!',
+    });
 
 
 

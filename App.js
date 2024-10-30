@@ -11,13 +11,29 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import React, { useState, useEffect } from 'react';
 import { EndPoint } from './Constant/links';
-import * as Application from 'expo-application';
+//import * as Application from 'expo-application';
 import AwesomeAlert from 'react-native-awesome-alerts';
 //import registerNNPushToken, { getPushDataObject } from 'native-notify';
+import * as Notifications from 'expo-notifications';
 export default function App({navigation}) {
 
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
+
+useEffect(() => {
+  const subscription = Notifications.addNotificationReceivedListener(notification => {
+    console.log("Received push notification:", notification);
+  });
+
+  return () => subscription.remove();
+}, []);
 
   // registerNNPushToken(22686, 'a2QsBx8kDDbDbIpLTkJWAt');
 

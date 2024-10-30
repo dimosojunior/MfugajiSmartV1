@@ -13,6 +13,9 @@ import { useNavigation } from '@react-navigation/native';
 import {useFonts} from 'expo-font';
 
 import LottieView from 'lottie-react-native';
+
+//import { WebView } from 'expo-router';
+
 const Test =({navigation}) => {
 
    let [fontsLoaded] = useFonts({
