@@ -211,7 +211,7 @@ const sendTextMessage = useCallback(async (phNumber, message) => {
 
 const message = "Tafadhali! naomba kuidhinisha biashara yangu"
 
-const HudumaKwaWatejaNumber = "0678125579";
+const HudumaKwaWatejaNumber = "0759536085";
 
 
 useEffect(() => {

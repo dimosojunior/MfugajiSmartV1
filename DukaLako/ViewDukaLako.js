@@ -511,7 +511,7 @@ keyboardShouldPersistTaps="handled"
                   paddingVertical:7,
                   color:'white',
                   fontFamily:'Bold',
-                }}>Toa Maoni</Text>
+                }}>Mripoti</Text>
                 </TouchableOpacity>
 
                 </View>

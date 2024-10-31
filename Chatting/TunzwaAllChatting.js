@@ -38,36 +38,63 @@ import { useFocusEffect } from '@react-navigation/native';
 const { width, height } = Dimensions.get('window');
 
 
-
-
-
-  
-
 const AllChattingScreen = ({ navigation, route }) => {
-
-   const {
-    id,
-    Title 
-
-  } = route.params;
-
+  const { id, Title } = route.params;
   const post_id = id;
 
 
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+
+    const [modalVisible, setModalVisible] = useState(false);
+ const [isModalVisible, setIsModalVisible] = useState(false); // New state variable
+
+
+
+
+  
+ const showAlertFunction = (message2) => {
+    setAlertMessage(message2);
+    setShowAlert(true);
+  };
+
+  const hideAlert = () => {
+    setShowAlert(false);
+  };
+
+
+  let [fontsLoaded] = useFonts({
+    'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
+    'Medium': require('../assets/fonts/Poppins-Medium.ttf'),
+    'SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
+    'Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+    'Thin': require('../assets/fonts/Poppins-Thin.ttf'),
+    'Light': require('../assets/fonts/Poppins-Light.ttf'),
+  });
+
+
+
+
   const [queryset, setQueryset] = useState([]);
-  const [current_page, setCurrentPage] = useState(1);
-  //const [isLoading, setIsLoading] = useState(false);
-  //const [loading, setLoading] = useState(false);
-  const [endReached, setEndReached] = useState(false);
   const [userToken, setUserToken] = useState('');
+  const [message, setMessage] = useState('');
   const [isPending, setIsPending] = useState(true);
   const [isPending2, setIsPending2] = useState(false);
+  const [isPending3, setIsPending3] = useState(false);
+  const [replyMessage, setReplyMessage] = useState(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem("userToken").then(token => {
+      setUserToken(token);
+      getItems(token); // Fetch items on mount
+    });
+  }, []);
 
 
- const [userData, setUserData] = useState({});
+
+
+const [userData, setUserData] = useState({});
   //const [userToken, setUserToken] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -87,17 +114,15 @@ const AllChattingScreen = ({ navigation, route }) => {
     })
   }, [userData]);
 
-
-
   useEffect(() => {
 
    
     checkLoggedIn();
     // Fetch cart items only if the user is authenticated
-    if (userToken) {
+    // if (userToken) {
      
-     getItems();
-    }
+    //  getItems();
+    // }
 
   }, [userToken]);
 
@@ -171,129 +196,51 @@ const AllChattingScreen = ({ navigation, route }) => {
 
 
 
-//console.log("username",username);
-  
-  //const [messages, setQueryset] = useState([]);
-  const [message, setMessage] = useState('');
-    const [replyMessage, setReplyMessage] = useState(null); // Added for reply feature
 
-
-
-   const [modalVisible, setModalVisible] = useState(false);
- const [isModalVisible, setIsModalVisible] = useState(false); // New state variable
-
-
-
-  
- const showAlertFunction = (message2) => {
-    setAlertMessage(message2);
-    setShowAlert(true);
-  };
-
-  const hideAlert = () => {
-    setShowAlert(false);
-  };
-
-
-  let [fontsLoaded] = useFonts({
-    'Bold': require('../assets/fonts/Poppins-Bold.ttf'),
-    'Medium': require('../assets/fonts/Poppins-Medium.ttf'),
-    'SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
-    'Regular': require('../assets/fonts/Poppins-Regular.ttf'),
-    'Thin': require('../assets/fonts/Poppins-Thin.ttf'),
-    'Light': require('../assets/fonts/Poppins-Light.ttf'),
-  });
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const updateUserToken = async () => {
-        const token = await AsyncStorage.getItem('userToken');
-        setUserToken(token || '');
-      };
-      updateUserToken();
-      const unsubscribe = navigation.addListener('updateUserToken', updateUserToken);
-      return unsubscribe;
-    }, [navigation])
-  );
-
-
-
-
-// useEffect(() => {
-
-   
-//     checkLoggedIn();
-//     // Fetch cart items only if the user is authenticated
-//     if (userToken) {
-     
-//      getItems();
-//     }
-
-//   }, [userToken]);
-
-
-// const checkLoggedIn = async () => {
-//   const token = await AsyncStorage.getItem('userToken');
-//   setUserToken(token);
-  
-  
- 
-// };
-
-
-
-
-
-  const getItems = () => {
- 
-    //setIsPending(true);
+  const getItems = async (token) => {
     setIsPending(true);
     const url = `${EndPoint}/GetChatMessagesView/?post_id=${post_id}`;
-    fetch(url, {
-      method: 'GET',
-      //headers: { 'Authorization': `Token ${userToken}` },
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.queryset.length > 0) {
-        //setQueryset([...queryset, ...data.queryset]);
-        setQueryset(data.queryset); 
-       
-        setIsPending(false);
-       // console.log("Data Obtained");
-      } else {
-       
-        setIsPending(false);
-        //console.log("Data NOT Obtained");
-          
-      }
-     
-
-    })
-    // .catch(() => {
-    //   setIsPending(false);
-    // });
-
-  
+    try {
+      const res = await axios.get(url);
+      
+      // Set messages in the correct nested format
+      setQueryset(res.data.queryset);
+      setIsPending(false);
+    } catch (error) {
+      console.log("Error fetching messages:", error);
+      setIsPending(false);
+    }
   };
 
-
- const sendMessage = async () => {
+  const sendMessage = async () => {
     setIsPending2(true);
     const token = await AsyncStorage.getItem('userToken');
 
     if (token) {
       const formData = new FormData();
       formData.append('message', message);
-      if (replyMessage) formData.append('reply_to', replyMessage.id); // Append the reply message ID if replying
+      if (replyMessage) formData.append('replyTo', replyMessage.id);
 
       try {
-        const response = await axios.post(EndPoint + `/AddChatMessageView/${post_id}/`, formData, {
+        const response = await axios.post(`${EndPoint}/AddChatMessageView/${post_id}/`, formData, {
           headers: { Authorization: `Token ${token}`, 'Content-Type': 'multipart/form-data' }
         });
-        setQueryset((prev) => [...prev, response.data]);
+
+        // Update local state with the new message
+        if (replyMessage) {
+          setQueryset(prev => 
+            prev.map(msg => 
+              msg.id === replyMessage.id 
+              ? { ...msg, replies: [...(msg.replies || []), response.data] } 
+              : msg
+            )
+          );
+        } else {
+          setQueryset(prev => [...prev, { ...response.data, replies: [] }]);
+        }
+
         setMessage('');
-        setReplyMessage(null); // Reset reply state after sending
+        setReplyMessage(null);
       } catch (error) {
         console.log("Message not sent:", error);
       } finally {
@@ -310,11 +257,9 @@ const AllChattingScreen = ({ navigation, route }) => {
 
 
 
-
-
-
 const removeUserSubmittedData = async (postId) => {
-  //setIsPending(true);
+
+  setIsPending3(true);
     const token = await AsyncStorage.getItem('token');
     //setUserToken(token);
     //console.log("postId", postId);
@@ -327,20 +272,20 @@ const removeUserSubmittedData = async (postId) => {
       });
        setQueryset(queryset.filter((item) => item.id !== postId));
       //setIsPending(false);
+      setIsPending3(false);
 
       //showAlertFunction('Umefanikiwa kufuta kumbusho');
      // navigation.navigate('Historia Za Kumbusho Za Kusafisha Banda');  // Navigate back to the previous screen
     
 
     } catch (error) {
+      setIsPending3(false);
        //setIsPending(false);
       //showAlertFunction('Imeshindikana kufuta kumbusho');
      
       //console.log(error);
     }
   };
-
-
 
 
 
@@ -356,111 +301,80 @@ const removeUserSubmittedData = async (postId) => {
 
 
 
+  const renderReply = (reply) => (
+    <View key={reply.id} style={{ 
+      flexDirection: 'row', marginVertical: 5,
+       marginLeft: 30,
+       // backgroundColor:'grey',
+        }}>
+      <Image
+        source={{ uri: EndPoint + '/' + (reply.SenderImage || 'assets/profile.jpg') }}
+        style={{ width: 30, height: 30, borderRadius: 15 }}
+      />
+      <View style={{ flex: 1, marginLeft: 10 }}>
+        <Text style={{
 
-
-
-
-
-const MsgComponent = ({ item, index }) => (
-    <View style={{
-        width:'100%',
-        alignItems:'flex-end',
-
-    }}>
-
-{/* mwanzo wa view ya Message Container*/}
-    <View style={[styles.messageContainer, item.sender === username ? styles.sender : styles.receiver]}>
-      
-
-     {/* mwanzo wa view ya kulia*/}
-      <View style={{
-        width:'60%',
-
-      }}>
-
-    
-
-       {item.sender &&  (
-      <Text style={[styles.senderName,
-        {
-            color:'green',
-            marginTop:0,
-            fontFamily:'Medium',
-        }
-
-        ]}>{item.sender}</Text>
-      )}
-
-      <Text style={styles.messageText}>{item.message}</Text>
-
-          {item.reply_to && <Text style={{ color: 'grey' }}>
-        Replied Message: {item.reply_to.message}</Text>}
-
+        }}>{reply.sender}</Text>
+        <Text>{reply.message}</Text>
+        <Text style={{ fontSize: 12, color: 'grey' }}>{new Date(reply.created_at).toLocaleDateString()}</Text>
       </View>
-
-       {/* mwisho wa view ya kulia*/}
-
-
-        {/* mwanzo wa view ya kushoto*/}
-     
-      <View style={{
-        width:'30%',
-
-      }}>
-
-       {item.SenderImage ? ( 
-               <Image
-
-                  style={[globalStyles.SenderProfileImage,
-                    {
-                      // width:'100%',
-                      // height:height/11,
-                      // borderRadius:40,
-                    }
-
-                    ]}
-                   source={{
-                      uri: EndPoint + '/' + item.SenderImage
-                    }}
-                      
-                      >
-                  </Image>
-                  ):(
-                  <Image
-
-                  style={globalStyles.SenderProfileImage}
-                   source={require('../assets/profile.jpg')} 
-                  >
-                  </Image>
-                )}
-
-   {item.created_at &&  (
-      <Text style={[styles.senderName,
-        {
-            color:'green'
-        }
-
-        ]}>{formatDate(item.created_at)}</Text>
-      )}
-
-      </View>
-  {/* mwisho wa view ya kushoto*/}
-
     </View>
-{/* mwisho wa view ya Message Container*/}
+  );
 
+  const renderMessage = ({ item }) => (
+    <View style={{ 
+      flexDirection: 'column', marginVertical: 5,
+
+       }}>
+      <View style={{ 
+        flexDirection: 'row', 
+        alignItems: 'center',
+        //backgroundColor:'red'
+         elevation: 1,
+
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: Platform.OS === "android" ? 'black' : 'black',
+    shadowOpacity: 1,
+    shadowRadius: 2,
+    //borderWidth:.2,
+    borderColor:COLORS.green,
+    padding:10,
+    borderRadius: 10,
+    borderTopRightRadius:0,
+         }}>
+        <Image
+          source={{ uri: EndPoint + '/' + (item.SenderImage || 'assets/profile.jpg') }}
+          style={{ width: 40, height: 40, borderRadius: 20 }}
+        />
+        <View style={{ flex: 1, marginLeft: 10 }}>
+          <Text style={{
+            color:'green',
+            fontFamily:'Medium',
+          }}>{item.sender}</Text>
+          <Text>{item.message}</Text>
+          <Text style={{ fontSize: 12, color: 'grey' }}>{new Date(item.created_at).toLocaleDateString()}</Text>
+        </View>
+
+        {/* mwanzo wa Reply button*/}
+        <View style={{
+
+        }}>
+        <TouchableOpacity onPress={() => handleReply(item)}>
+          <Text style={{ color: 'blue' }}>Reply</Text>
+        </TouchableOpacity>
 
 
 {username === item.sender && (
-<TouchableOpacity
+   <TouchableOpacity
 onPress={() => removeUserSubmittedData(item.id)}
 style={{
-    marginRight:20,
+    //marginRight:20,
     //marginBottom:20,
+    marginTop:15,
 }}
 >
 
-
+{!isPending3 && (
 <MaterialCommunityIcons
 
         style={{
@@ -473,42 +387,33 @@ style={{
           color="red" 
         
     />
+  
+    )}
 
 </TouchableOpacity>
 )}
 
 
-<TouchableOpacity
-onPress={() => handleReply(item)}
-style={{
-    marginRight:20,
-    //marginBottom:20,
-}}
->
+        </View>
+          {/* mwisho wa Reply button*/}
 
 
-<FontAwesome
+      </View>
 
-        style={{
-            // marginHorizontal: 15,
-            //color: COLORS.white
-        }}
-        name="phone"
-        size={17}
-          //color="black" 
-          color="blue" 
+      <View style={{
+        backgroundColor:'wheat',
+      }}>
         
-    />
+      {item.replies && item.replies.map(renderReply)}
+       </View>
 
-</TouchableOpacity>
 
     </View>
   );
 
+  return (
 
-    return (
-
-          <>{!fontsLoaded ? (<View/>):(
+           <>{!fontsLoaded ? (<View/>):(
 
 
     <>
@@ -519,71 +424,30 @@ style={{
 
 
 
-           <View style={[
-      globalStyles.container
-     ,
-         { 
-          backgroundColor: isModalVisible ? 
-          COLORS.black : COLORS.white,
+    <View style={{ flex: 1 }}>
 
-           opacity: isModalVisible ? 
-          0.1 : 1,
-
-           }
-     ]}>
-        
-           {/* <ChatHeader data={data} />*/}
-            <ImageBackground
-                source={require('../assets/bc1.png')} 
-                style={{
-                    flex: 1,
-                    width:'100%',
-                    margin:0,
-                    padding:0,
-                }}
-            >
-
-
-
-
-<Text
-style={[globalStyles.AppChaguaHudumaTextHomeScreen,
-    {
-        color:'white',
-        textAlign:'center',
-        marginTop:height/15,
-    }
-
-    ]}  
-
->Posti inahusiana na: {Title}</Text>
-
-
-
-
-
-             {queryset && queryset.length > 0 ? (
+    {queryset && queryset.length > 0 ? (
 
                   <>
 
-                 <FlatList
-                data={queryset}
-               keyExtractor={(item, index) => index.toString()}
-                renderItem={MsgComponent}
-                //style={styles.chatContainer}
-                style={{ 
+
+      <FlatList
+        data={queryset}
+        renderItem={renderMessage}
+        keyExtractor={(item) => item.id.toString()}
+        showsVerticalScrollIndicator={false}
+         style={{ 
                     flex: 1,
                     marginTop:15,
-                    marginBottom:50,
+                    marginBottom:20,
+                    marginHorizontal:15,
                 }}
-              />
-
-
-                 {replyMessage && (
+      />
+      {replyMessage && (
         <View style={{ padding: 10, backgroundColor: '#f0f0f0' }}>
-          <Text>Replying to: {replyMessage.message}</Text>
+          <Text>Reply ujumbe: {replyMessage.message}</Text>
           <TouchableOpacity onPress={() => setReplyMessage(null)}>
-            <Text style={{ color: 'red' }}>Cancel</Text>
+            <Text style={{ color: 'red' }}>Funga</Text>
           </TouchableOpacity>
         </View>
       )}
@@ -609,51 +473,35 @@ style={[globalStyles.AppChaguaHudumaTextHomeScreen,
 
   )} 
 
-     </ImageBackground>
 
 
 
-
-
-
-
-            <View
-                style={{
-                    backgroundColor: 'lightgreen', 
-                    elevation: 5,
-                    // height: 60,
-                    flexDirection:'row',
-                    alignItems:'center',
-                    paddingVertical:7,
-                    justifyContent:'space-evenly'
-                }}
-            >
-
-                <TextInput
-                    style={{
-                        backgroundColor: COLORS.white,
-                        width:'80%',
-                        borderRadius:8,
-                        borderWidth:0.5,
-                        borderColor: COLORS.white,
-                        paddingHorizontal: 15,
-                        color: COLORS.black,
-                        paddingVertical:20,
-                    }}
-                    placeholder = "Andika ujumbe"
-                    placeholderTextColor = "green"
-                    multiline = {true}
-                    value={message}
-                       onChangeText={setMessage}
-                />
-             
-             {!isPending2 ? (
-               <TouchableOpacity
-              onPress={sendMessage}
-               >
-
-
-                <FontAwesome
+      <View style={{ flexDirection: 'row',
+       alignItems: 'center', padding: 10,
+       width:'100%',
+        }}>
+        <TextInput
+          value={message}
+          onChangeText={setMessage}
+          placeholder="Andika ujumbe"
+           placeholderTextColor = "black"
+          style={{ flex: 1, 
+            borderWidth: 1, 
+            borderColor: 'green',
+             padding: 10, 
+             borderRadius: 5, 
+             width:'80%',
+             marginRight:10,
+           }}
+        />
+        <TouchableOpacity 
+        onPress={sendMessage} 
+        disabled={isPending2}
+        style={{
+          width:'10%'
+        }}
+        >
+          {isPending2 ?  <ActivityIndicator size="large" color="green" /> :  <FontAwesome
                         style={{
                             // marginHorizontal: 15,
                             color: "green",
@@ -666,27 +514,9 @@ style={[globalStyles.AppChaguaHudumaTextHomeScreen,
                           //color="black" 
                           color="green" 
                         
-                    />
-
-               </TouchableOpacity>
-                ):(
-
-                <TouchableOpacity
-              onPress={sendMessage}
-               >
-
-
-               <ActivityIndicator size="large" color="green" />
-
-               </TouchableOpacity>
-                )}
-
-            </View>
-
-
-
-
-
+                    />}
+        </TouchableOpacity>
+      </View>
 
 
 
@@ -715,20 +545,11 @@ style={[globalStyles.AppChaguaHudumaTextHomeScreen,
               />
 
 
+    </View>
 
 
 
-
-
-
-
-
-
-
-        </View>
-
-
-               ):(
+       ):(
 
 <LotterViewScreen />
 
@@ -741,143 +562,7 @@ style={[globalStyles.AppChaguaHudumaTextHomeScreen,
 
 
     )}</>
-    );
+  );
 };
 
-// define your styles
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-
-
-      masBox: {
-        alignSelf: 'flex-end',
-        marginHorizontal: 10,
-        minWidth: 80,
-        maxWidth: '80%',
-        paddingHorizontal: 10,
-        marginVertical: 5,
-        paddingTop: 5,
-        borderRadius: 8
-    },
-    timeText: {
-        fontFamily: 'AveriaSerifLibre-Light',
-        fontSize: 10
-    },
-    dayview: {
-        alignSelf: 'center',
-        height: 30,
-        width: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
-        // backgroundColor: COLORS.white,
-        borderRadius: 30,
-        marginTop: 10
-    },
-    iconView: {
-        width: 42,
-        height: 42,
-        borderRadius: 21,
-        alignItems: 'center',
-        justifyContent: 'center',
-        // backgroundColor: COLORS.blackcolor,
-    },
-    TriangleShapeCSS: {
-        position: 'absolute',
-        // top: -3,
-        width: 0,
-        height: 0,
-        // borderBottomLeftRadius:5,
-        backgroundColor: 'transparent',
-        borderStyle: 'solid',
-        borderLeftWidth: 15,
-        borderRightWidth: 5,
-        borderBottomWidth: 20,
-        borderLeftColor: 'transparent',
-        borderRightColor: 'transparent',
-        // borderBottomColor: '#757474'
-    },
-    left: {
-        borderBottomColor: COLORS.white,
-        left: 2,
-        bottom: 10,
-        transform: [{ rotate: '0deg' }]
-    },
-    right: {
-        borderBottomColor: COLORS.black,
-        right: 2,
-        // top:0,
-        bottom: 5,
-        transform: [{ rotate: '103deg' }]
-    },
-
-
-
-
-
-
-
-
- container: { 
-  flex: 1,
-   padding: 10
-   },
-
-  chatContainer: { 
-    flex: 1 ,
-    //backgroundColor:'red',
-   // flex:1,
-    marginBottom:200,
-  },
-  input: { 
-    borderWidth: 1, 
-    padding: 10,
-    paddingVertical:50,
-     marginVertical: 5,
-     borderRadius:10,
-     width:'75%', 
-     //textAlign:'left',
-   },
-
-
-  messageContainer: {
-   padding: 10, 
-   marginTop: 20,
-    borderRadius: 30,
-     width: '90%',
-     //marginLeft:20,
-     alignItems:'center',
-     justifyContent:'space-between',
-     flexDirection:'row',
-     flex:1,
-     borderTopRightRadius:0,
-     //marginTop:30,
-     //marginBottom:300,
-     },
-
-  sender: {
-   backgroundColor: '#DCF8C6', 
-   alignSelf: 'flex-end',
-   alignItems:'flex-end',
-
-    },
-  receiver: {
-   backgroundColor: 'wheat', //'#E4E6EB', 
-   alignSelf: 'flex-start',
-   alignItems:'flex-start', 
-},
-
-
-  messageText: { 
-    //fontSize: 16
-    fontFamily:'Light',
-    //width:'60%',
-     },
-  senderName: { fontSize: 12, color: 'grey' },
-
-
-});
-
-//make this component available to the app
 export default AllChattingScreen;

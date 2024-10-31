@@ -292,12 +292,29 @@ const removeUserSubmittedData = async (postId) => {
   const formatDate = (dateString) => {
     if (!dateString) return null;
     const date = new Date(dateString);
+
     const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
     const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
+
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `Tarehe: ${day}/${month}/${year},  ${hours}:${minutes}`;
   };
+
  
+
+// Step 1: Add state for tracking reply visibility
+  const [showReplies, setShowReplies] = useState({});
+
+   // Function to toggle replies for a specific comment
+  const toggleReplies = (commentId) => {
+    setShowReplies((prev) => ({
+      ...prev,
+      [commentId]: !prev[commentId], // Toggle the visibility
+    }));
+  };
 
 
 
@@ -307,16 +324,32 @@ const removeUserSubmittedData = async (postId) => {
        marginLeft: 30,
        // backgroundColor:'grey',
         }}>
-      <Image
-        source={{ uri: EndPoint + '/' + (reply.SenderImage || 'assets/profile.jpg') }}
-        style={{ width: 30, height: 30, borderRadius: 15 }}
-      />
+     
+
+        {reply.SenderImage ? ( 
+                  <Image
+
+                  style={{ width: 30, height: 30, borderRadius: 15 }}
+                   source={{
+                      uri: EndPoint + '/' + reply.SenderImage
+                    }}
+                      
+                      >
+                  </Image>
+                  ):(
+                  <Image
+
+                  style={{ width: 30, height: 30, borderRadius: 15 }}
+                   source={require('../assets/profile.jpg')} 
+                  >
+                  </Image>
+                )}
       <View style={{ flex: 1, marginLeft: 10 }}>
         <Text style={{
 
         }}>{reply.sender}</Text>
         <Text>{reply.message}</Text>
-        <Text style={{ fontSize: 12, color: 'grey' }}>{new Date(reply.created_at).toLocaleDateString()}</Text>
+        <Text style={{ fontSize: 12, color: 'grey' }}>{formatDate(reply.created_at)}</Text>
       </View>
     </View>
   );
@@ -342,17 +375,37 @@ const removeUserSubmittedData = async (postId) => {
     borderRadius: 10,
     borderTopRightRadius:0,
          }}>
-        <Image
+
+       {/* <Image
           source={{ uri: EndPoint + '/' + (item.SenderImage || 'assets/profile.jpg') }}
           style={{ width: 40, height: 40, borderRadius: 20 }}
-        />
+        />*/}
+
+          {item.SenderImage ? ( 
+                  <Image
+
+                  style={{ width: 40, height: 40, borderRadius: 20 }}
+                   source={{
+                      uri: EndPoint + '/' + item.SenderImage
+                    }}
+                      
+                      >
+                  </Image>
+                  ):(
+                  <Image
+
+                  style={{ width: 40, height: 40, borderRadius: 20 }}
+                   source={require('../assets/profile.jpg')} 
+                  >
+                  </Image>
+                )}
         <View style={{ flex: 1, marginLeft: 10 }}>
           <Text style={{
             color:'green',
             fontFamily:'Medium',
           }}>{item.sender}</Text>
           <Text>{item.message}</Text>
-          <Text style={{ fontSize: 12, color: 'grey' }}>{new Date(item.created_at).toLocaleDateString()}</Text>
+          <Text style={{ fontSize: 12, color: 'grey' }}>{formatDate(item.created_at)}</Text>
         </View>
 
         {/* mwanzo wa Reply button*/}
@@ -404,8 +457,19 @@ style={{
         backgroundColor:'wheat',
       }}>
         
-      {item.replies && item.replies.map(renderReply)}
+       {showReplies[item.id] && item.replies && item.replies.map(renderReply)}
        </View>
+
+
+{/* Toggle replies button */}
+{/* Show "View Replies" button only if there are replies */}
+    {item.replies && item.replies.length > 0 && (
+      <TouchableOpacity onPress={() => toggleReplies(item.id)} style={{ padding: 5, marginLeft: 50 }}>
+        <Text style={{ color: showReplies[item.id] ? 'red' : 'blue' }}>
+          {showReplies[item.id] ? "Funga Replies" : "Angalia Replies..."}
+        </Text>
+      </TouchableOpacity>
+      )}
 
 
     </View>

@@ -923,7 +923,13 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
             <FontAwesome name='phone' 
             size={20}
             color="black" 
-            style={globalStyles.AppItemButtonTextHomeScreen}
+            style={[globalStyles.AppItemButtonTextHomeScreen,
+              {
+                backgroundColor:'yellow',
+                color:'black'
+              }
+
+              ]}
             
        />
          </View>
@@ -961,7 +967,7 @@ const [expandedItems, setExpandedItems] = useState({}); // State to manage text 
             color:'white',
             marginRight:10,
           }}
-        >Chati</Text>
+        >{item.comment_count}</Text>
          </View>
         
         <View>

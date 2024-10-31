@@ -38,6 +38,17 @@ const SignupScreen = ({ navigation }) => {
 });
 
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+   const showAlertFunction = (message) => {
+    setAlertMessage(message);
+    setShowAlert(true);
+  };
+
+  const hideAlert = () => {
+    setShowAlert(false);
+  };
 
 const registerForPushNotificationsAsync = async () => {
   let token;
@@ -51,27 +62,19 @@ const registerForPushNotificationsAsync = async () => {
 
   if (finalStatus !== 'granted') {
     //showAlertFunction('Failed to get push token for notifications!');
-    console.log("Failed to get push token for notifications!")
+    //console.log("Failed to get push token for notifications!")
+    showAlertFunction('Failed to get push token for notifications!');
     return;
   }
 
   token = (await Notifications.getExpoPushTokenAsync()).data;
+
   return token;
   // console.log("Expo Token", token);
+  showAlertFunction('Your push token: ', token);
 };
 
 
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
-
-   const showAlertFunction = (message) => {
-    setAlertMessage(message);
-    setShowAlert(true);
-  };
-
-  const hideAlert = () => {
-    setShowAlert(false);
-  };
 
  const [isPasswordVisible, setPasswordVisible] = useState(false);
 
@@ -236,7 +239,7 @@ const handleErrorMessage = (error) => {
   const expoPushToken = await registerForPushNotificationsAsync();
 
   if (!expoPushToken) {
-    showAlertFunction("Push notification token could not be generated.");
+    showAlertFunction("Imeshindikana, Kifaa chako kimeshindwa kutengeneza token");
     return;
   }
 
@@ -306,6 +309,7 @@ const handleErrorMessage = (error) => {
       sound: 'default',
       title: 'Karibu Mfugaji Smart!',
       body: 'Asante kwa kujisajili. Tunakukaribisha kwenye Mfugaji Smart!',
+      data: { targetScreen: 'Home Stack' }, // The screen name to navigate to
     });
 
 

@@ -46,9 +46,11 @@ const [isExpanded, setIsExpanded] = useState(false); // State to manage text exp
 
   return (
     <View style={styles.bottomContainer}>
+    {userData && userData.Maelezo && (
       <Text style={{ fontSize: 20, color: Colors.white, fontWeight: "bold" }}>
         Zaidi kuhusu  {userData && userData.username ? userData.username : ''}
       </Text>
+      )}
 
 
 

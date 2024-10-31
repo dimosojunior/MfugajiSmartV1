@@ -9,7 +9,7 @@ import MyStack from './Stack/MyStack';
 
 import { NavigationContainer } from '@react-navigation/native';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { EndPoint } from './Constant/links';
 //import * as Application from 'expo-application';
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -17,6 +17,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import * as Notifications from 'expo-notifications';
 export default function App({navigation}) {
 
+ const navigationRef = useRef(); // Use a ref to hold the navigation container
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -32,8 +33,31 @@ useEffect(() => {
     console.log("Received push notification:", notification);
   });
 
-  return () => subscription.remove();
+   // Listen for notification responses (when user taps the notification)
+    const responseListener = Notifications.addNotificationResponseReceivedListener(response => {
+      const targetScreen = response.notification.request.content.data.targetScreen;
+
+      // Navigate to the specified screen
+      if (targetScreen && navigationRef.current) {
+        navigationRef.current.navigate(targetScreen);
+      }
+      
+     });
+
+    return () => {
+      // Clean up listeners on unmount
+      responseListener.remove();
+      subscription.remove();
+    };
+
+
+  
 }, []);
+
+
+
+
+  
 
   // registerNNPushToken(22686, 'a2QsBx8kDDbDbIpLTkJWAt');
 

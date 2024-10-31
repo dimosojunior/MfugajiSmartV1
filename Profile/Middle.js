@@ -50,7 +50,7 @@ const navigation = useNavigation();
          />):(
 
          <Image style={styles.image} 
-        source={require("../assets/i2.jpg")}
+        source={require("../assets/profile.jpg")}
          />)}
 
 
